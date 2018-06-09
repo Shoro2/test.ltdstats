@@ -1,0 +1,15 @@
+#scrollbox
+{
+    width: 100%;
+    max-width: 1300;
+    background-color: darkgray;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.content
+{
+    padding:20px;
+}

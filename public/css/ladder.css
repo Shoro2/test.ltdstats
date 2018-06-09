@@ -1,0 +1,36 @@
+
+
+.main-content
+{
+    padding: 5px !important;
+}
+
+.filter_label
+{
+    background-color: darkgray;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.filter_input
+{
+    margin: 5px;
+}
+
+#filter-invis{
+    display: none;
+    position: relative;
+}
+
+#filter
+{
+    display: inline;
+    position: relative;
+}
+
+.table_header
+{
+    margin: 5px;
+    padding: 5px;
+}

@@ -1,0 +1,179 @@
+html
+    head
+        title Legion TD 2 Statistics - #{title} 
+        link(rel="stylesheet", href="https://attrib.github.io/main.css")
+        link(rel='stylesheet', href='/css/bootstrap.css')
+        link(rel='stylesheet', href='/css/test.css')
+        meta(name="revisit-after", content="2 days")
+        meta(name="robots", content="index, follow")
+        meta(name="page-topic", content="Gaming, Statistics")
+        meta(name="keywords", content="legion, legion td, legion td 2, statistics, profile, stats, ladder, guides, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics")
+        meta(name="description", content="A community made platform to look up Player profiles, online ladder, guides, statistics and much more!")
+        script(async src="https://www.googletagmanager.com/gtag/js?id=UA-111925592-1")
+    body
+        header
+        .container
+            nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+                img(src="https://test.ltdstats.com/img/favicon.ico", width="16px", height="16px")
+                a.navbar-brand(href='#') LTDStats.com
+                button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+                    span.navbar-toggler-icon
+                div#navbarsExampleDefault.collapse.navbar-collapse
+                    ul.navbar-nav.mr-auto
+                        if(title=="Home")
+                            li.nav-item.active
+                                a.nav-link(href='/') Home 
+                        else
+                            li.nav-item
+                                a.nav-link(href='/') Home
+                        if(title.includes("Profile")) 
+                            li.nav-item.active
+                                a.nav-link(href='/profile') Profile
+                        else
+                            li.nav-item
+                                a.nav-link(href='/profile') Profile
+                        if(title.includes("Ladder"))      
+                            li.nav-item.active
+                                a.nav-link(href='/ladder') Ladder
+                        else
+                            li.nav-item
+                                a.nav-link(href='/ladder') Ladder
+                        if(title=="Games")
+                            li.nav-item.active
+                                a.nav-link(href='/replay') Replay
+                        else
+                            li.nav-item
+                                a.nav-link(href='/replay') Replay
+                        if(title=="Compare")
+                            li.nav-item.active
+                                a.nav-link(href='/compare') Compare
+                        else
+                            li.nav-item
+                                a.nav-link(href='/compare') Compare
+                        if(title=="Builder")
+                            li.nav-item.active
+                                a.nav-link(href='/builder') Builder
+                        else
+                            li.nav-item
+                                a.nav-link(href='/builder') Builder
+                        if(title=="Units")
+                            li.nav-item.active
+                                a.nav-link(href='/units') Units
+                        else
+                            li.nav-item
+                                a.nav-link(href='/units') Units
+                        if(title=="LIHL")
+                            li.nav-item.active
+                                a.nav-link(href='/lihl') LIHL
+                        else
+                            li.nav-item
+                                a.nav-link(href='/lihl') LIHL
+                        if(title.includes("Guide"))
+                            li.nav-item.dropdown.active
+                                a#dropdown01.nav-link.dropdown-toggle(href='/guides', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Guides
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/guides') General
+                                    a.dropdown-item(href='/guides/element') Element
+                                    a.dropdown-item(href='/guides/forsaken') Forsaken
+                                    a.dropdown-item(href='/guides/grove') Grove
+                                    a.dropdown-item(href='/guides/mech') Mech
+                                    a.dropdown-item(href='/guides/mastermind') Mastermind
+                        else
+                            li.nav-item.dropdown
+                                a#dropdown01.nav-link.dropdown-toggle(href='/guides', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Guides
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/guides') General
+                                    a.dropdown-item(href='/guides/element') Element
+                                    a.dropdown-item(href='/guides/forsaken') Forsaken
+                                    a.dropdown-item(href='/guides/grove') Grove
+                                    a.dropdown-item(href='/guides/mech') Mech
+                                    a.dropdown-item(href='/guides/mastermind') Mastermind
+                        if(title.includes("Stats"))
+                            li.nav-item.dropdown.active
+                                a#dropdown01.nav-link.dropdown-toggle(href='/stats', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Statistics
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/stats') Overview
+                                    a.dropdown-item(href='/stats/player') Player Statistics
+                                    a.dropdown-item(href='/stats/overall') Overall Statistics
+                                    a.dropdown-item(href='/stats/daily') Daily Statistics
+                                    a.dropdown-item(href='/stats/patch') Patch Statistics
+                        else
+                            li.nav-item.dropdown
+                                a#dropdown01.nav-link.dropdown-toggle(href='/stats', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Statistics
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/stats') Overview
+                                    a.dropdown-item(href='/stats/player') Player Statistics
+                                    a.dropdown-item(href='/stats/overall') Overall Statistics
+                                    a.dropdown-item(href='/stats/daily') Daily Statistics
+                                    a.dropdown-item(href='/stats/patch') Patch Statistics
+                    
+                    if(title.includes("Profile"))
+                        .form-inline.my-2.my-lg-0
+                            input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
+                    if(title.includes("Ladder") || title.includes("Player Stats") || title.includes("Livegame") || title.includes("Units"))
+                        .form-inline.my-2.my-lg-0
+                            input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
+                    if(title.includes("Daily"))
+                        .form-inline.my-2.my-lg-0
+                            input#playername.form-control.mr-sm-2(type='date', placeholder='Search', aria-label='Search')
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
+                    if(title.includes("Compare"))
+                        .form-inline.my-2.my-lg-0
+                            input#playername.form-control.mr-sm-2(type='text', placeholder='Player 1', aria-label='Player 1')
+                            input#playername2.form-control.mr-sm-2(type='text', placeholder='Player 2', aria-label='Player 2')
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Compare
+                    if(title.includes("Patch"))
+                        .form-inline.my-2.my-lg-0
+                            select#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search', onchange="getPatch();")
+                                option(value="") Select
+                                option(value="v1.78a") v1.9
+                                option(value="v1.78a") v1.78a
+                                option(value="v1.78") v1.78
+                                option(value="v1.77a") v1.77a                                
+                                option(value="v1.77") v1.77
+                                option(value="v1.76a") v1.76a
+                                option(value="v1.76") v1.76
+                                option(value="v1.75b") v1.75b
+                                option(value="v1.75") v1.75
+                                option(value="v1.74") v1.74
+                                option(value="v1.73") v1.73
+                                option(value="v1.72") v1.72
+                                option(value="v1.71") v1.71
+                                option(value="v1.70") v1.70
+                                option(value="v1.69a") v1.69a
+                                option(value="v1.69") v1.69
+                                option(value="v1.68") v1.68
+                                option(value="v1.67") v1.67
+                                option(value="v1.66") v1.66
+                                option(value="v1.65") v1.65
+                                option(value="v1.64") v1.64
+                                option(value="v1.63") v1.63
+                                option(value="v1.62") v1.62
+                                option(value="v1.61") v1.61
+                                option(value="v1.60") v1.60    
+                link(rel="stylesheet", type="text/css", href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css")
+                script(src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js")
+                script(src="/js/cookiemessage.js")
+            #overlay
+                #text Would you mind to turn off your AdBlock for this website?
+                p.
+                #buttons  Dont ask again
+                    input#mycheck(type="checkbox")
+                    button#mybutton(type="button", onclick="off();") Close
+            .main-content
+                block content
+            footer
+                div.myfooter
+                    a.linkfooter(href="/about") About
+                    a.linkfooter(href="/cookies") Cookie Policies
+                    a.linkfooter(href="/faq") FAQ
+                    a.linkfooter(href="/contact") Give Feedback
+                script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+                script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+                script(src='/js/bootstrap.js')
+                script(src="/js/ads.js")
+                script(src="/js/checkads.js")
+                script(src="/js/cookies.js")
+                script window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-111925592-2');

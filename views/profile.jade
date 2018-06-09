@@ -1,0 +1,202 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/profile.css')
+    .tabmenu
+        .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Stats
+        .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Elograph
+        .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Games
+        .tab_top_active#tab_top_4(onclick="javascript:openTab(4);") Collection
+        .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Builds
+        .style(style='clear: both;')
+        .tab_box#tab_box_1
+            .profile
+                h1#player_name1
+                #playerbadge_level.badge
+                #playerbadge_rank.badge
+                h3#player_elo1
+                h4#player_performance1
+                h4 badges: (id)
+                #player_icon1
+                #general.meinbalken_small
+                    .p General:
+                #element.meinbalken_small
+                    .p Element:
+                #grove.meinbalken_small
+                    .p Grove:
+                #forsaken.meinbalken_small
+                    .p Forsaken:
+                #mech.meinbalken_small
+                    .p Mech:
+                #mastermind.meinbalken_small
+                    .p Mastermind:
+            .meinbalken_big#grosserBalken
+        .tab_box#tab_box_2
+            .profile
+                h1#player_name2
+                #chartContainer
+                    canvas#myChart
+        .tab_box#tab_box_3
+            .profile
+                .wrap.active
+                    .content
+                        b Game:
+                        select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
+                                option(value="1") Game 1 (Date, ID)
+                                option(value="1") Game 2 (Date, ID)
+                                option(value="1") Game 3 (Date, ID)
+                                option(value="1") Game 4 (Date, ID)
+                        <!-- general -->
+                        #game_setWave
+                            b Wave:
+                            select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
+                                option(value="all") All
+                                option(value="1") 1
+                                option(value="2") 2
+                                option(value="3") 3
+                                option(value="4") 4
+                                option(value="5") 5
+                                option(value="6") 6
+                                option(value="7") 7
+                                option(value="8") 8
+                                option(value="9") 9
+                                option(value="10") 10
+                                option(value="11") 11
+                                option(value="12") 12
+                                option(value="13") 13
+                                option(value="14") 14
+                                option(value="15") 15
+                                option(value="16") 16
+                                option(value="17") 17
+                                option(value="18") 18
+                                option(value="19") 19
+                                option(value="20") 20
+                                option(value="21") 21
+                        <!-- players -->
+                        b Details:
+                        table#gamedetails_table(cellspacing="0", cellpadding="0")
+                            tr
+                                th Name
+                                th Elo
+                                th Value
+                                th Worker
+                                th Income
+                                th Kills
+                                th Leaks
+                            tr#game_player1(onclick="javascript: getPlayerBuild(0);")
+                                td#name_1
+                                td#elo_1
+                                td#value_1
+                                td#worker_1
+                                td#income_1
+                                td#kills_1
+                                td#leaks_1
+                            tr#game_player2(onclick="javascript: getPlayerBuild(1);")
+                                td#name_2
+                                td#elo_2
+                                td#value_2
+                                td#worker_2
+                                td#income_2
+                                td#kills_2
+                                td#leaks_2
+                            tr
+                                td(colspan="7" style="height:10px;")
+                            tr#game_player3(onclick="javascript: getPlayerBuild(2);")
+                                td#name_3
+                                td#elo_3
+                                td#value_3
+                                td#worker_3
+                                td#income_3
+                                td#kills_3
+                                td#leaks_3
+                            tr#game_player4(onclick="javascript: getPlayerBuild(3);")
+                                td#name_4
+                                td#elo_4
+                                td#value_4
+                                td#worker_4
+                                td#income_4
+                                td#kills_4
+                                td#leaks_4
+                        b.gamedetails_schrift Build:
+                        b.gamedetails_schrift  Mercs sent:
+                        b.gamedetails_schrift  Mercs received:
+                        #gamedetails_build.gamedetails_kasten(onclick="showBuild();")
+                        #gamedetails_mercs_sent.gamedetails_kasten
+                        #gamedetails_mercs_received.gamedetails_kasten     
+        .tab_box#tab_box_4
+            .profile
+                h1#player_name4
+        .tab_box#tab_box_5
+            .profile
+                .mittig#selector Race:
+                    select#setRace2.form-control.mr-sm-2.meinselect(type='text', onchange="drawPlayerBuilds()")
+                        option(value="Mastermind") Mastermind
+                        option(value="Element") Element
+                        option(value="Grove") Grove
+                        option(value="Forsaken") Forsaken
+                        option(value="Mech") Mech
+                    | Wave:
+
+                    select#setWave2.form-control.mr-sm-2.meinselect(onchange="drawPlayerBuilds()")
+                        option(value="1") 1
+                        option(value="2") 2
+                        option(value="3") 3
+                        option(value="4") 4
+                        option(value="5") 5
+                        option(value="6") 6
+                        option(value="7") 7
+                        option(value="8") 8
+                        option(value="9") 9
+                        option(value="10") 10
+                        option(value="11") 11
+                        option(value="12") 12
+                        option(value="13") 13
+                        option(value="14") 14
+                        option(value="15") 15
+                        option(value="16") 16
+                        option(value="17") 17
+                        option(value="18") 18
+                        option(value="19") 19
+                        option(value="20") 20
+                        option(value="21") 21
+                #filter(onclick="toggleFilters();") Hide Filters
+                .wrap.active
+                    .content
+                        h1#playername
+                        #totalgames
+                        #chancetoleak
+                        #whatmademeleak
+                        #chancetolose
+                        #chancetosend
+                        #whatmadehimleak
+                        #chancetowin
+                        #label Average Build:
+                        #avgbuild
+    script(src="/js/jquery.js")
+    script(src="/js/tabmenu.js")
+    script(src="/js/profile.js")
+    script(src="/js/Chart.js")
+    link(rel='stylesheet', href='/css/tabmenu.css')
+    script init();openTab(1);
+    #divumtable.hidden
+                    #showhide(onclick="showBuild();") Close
+                        table#buildtable(onclick="showBuild();")
+                            - for(var i=0;i<28;i++)
+                                tr(id=i, onclick="showBuild();")
+                                    td(id=i+".0", class="pictable")
+                                    td(id=i+".1", class="pictable")
+                                    td(id=i+".2", class="pictable")
+                                    td(id=i+".3", class="pictable")
+                                    td(id=i+".4", class="pictable")
+                                    td(id=i+".5", class="pictable")
+                                    td(id=i+".6", class="pictable")
+                                    td(id=i+".7", class="pictable")
+                                    td(id=i+".8", class="pictable")
+                                    td(id=i+".9", class="pictable")
+                                    td(id=i+".10", class="pictable")
+                                    td(id=i+".11", class="pictable")
+                                    td(id=i+".12", class="pictable")
+                                    td(id=i+".13", class="pictable")
+                                    td(id=i+".14", class="pictable")
+                                    td(id=i+".15", class="pictable")
+                                    td(id=i+".16", class="pictable")
+                                    td(id=i+".17", class="pictable")

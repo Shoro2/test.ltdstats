@@ -1,0 +1,22 @@
+.meinebox {
+    margin: 50px;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.playerbox {
+}
+
+.meineTabelle {
+    width: 100%;
+}

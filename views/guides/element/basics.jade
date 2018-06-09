@@ -1,0 +1,163 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Element Basics
+        #guide_author 
+            i by 
+                a(href="/profile#GvR+Mr+Mister") GvR Mr Mister
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile#GvR+Mr+Mister") GvR Mr Mister
+            #infobox_version Version: v1.71
+            #infobox_section Section: Element Guides
+            #infobox_content Content:
+                ul
+                    - for(var i = 1 ; i < 21; i++){
+                        li 
+                            a(href="#wave"+i)= "Wave"+ i
+                    - }
+        p.
+        #guide_content
+            | View the complete build order 
+            a(href='/builder?b=IwfQjgpgNhC2EDsAuIYHMCWB7BIMBMBkADABoBnAQzAFdKRyAHDAJwxRoXb3wAAAgAAS8AUAkYssSHCE7cCvACDCAYOMnTcclApWD+AcHVSZ2nrwDwglQEhjm2Vx18rACDESTWp+YBwggAQVKlp6JlZuMwIAQGVeABgANwAzVggQaDhEJEooR3l8ZWF4+1MfAkUAUFUoSmlYfOdqmrqsBqj8PX0DRgB3DAR8AAtKXoBrRp4DV2FXBETsGA5y/BnZ0u8C1xtA10Z8DHIAYwxGGEmCGwBYQUU9/sGR8Yv8GxF9G1r6l53d+cWIMsCu8PmBUix0lAsCx8C8ANDxfSVWDJRAYAAeL0RSJY5ByLCOuRgLBeN1urjBaVQ0NhHV8VkUKi+bRe/kCak8DjpACRBL4DCi0ZiOlZbkzWu0VqLbMzJQVRe4+gNhqMJh0AgFbmIFlgli9NVqlY9VfrNSo4f9dYD9YJrHDKRDqTCXgBEF3WAWorjClbuj0OyE0l7c3muVyC73B21hgNO2krQiEYSKCMYl5J5MhOgMZhsIHOfgAYGEHg0ZQK/F5AVcLEkaBo6V6lES6Q6xZLsqju07HV5fJ6DxVzw6icErhKOr1I+j8TUvWhYwgJI6vF4CHnLEXy5W/Gi64XS5elX4+83h46KkLp63LwMimv55WIkqQA==') here
+            p
+            | Hello everyone,
+            p
+            | today im gonna show you the very basics of a high push element build.
+            br
+            i Note: In earlygame you can/should always build Protons if you have a leftover
+            p
+            b#wave1 Wave 1:
+            br
+            |                         Start with an Aqua and add 5 Protons. Make sure you place 1 Proton on the other side of the lane so the units split:
+            br
+            img(src='/img/ele_level1.png')
+            p
+            b#wave2 Wave 2:
+            br
+            |                         Add another Aqua:
+            br
+            img(src='/img/ele_level2.png')
+            p
+            b#wave3 Wave 3:
+            br
+            |                         It rly depends on your enemy what to do here:
+            ul
+                | If the enemy player started with 1 worker and already sent a snail on level 1 or 2 you can push here. If not up the upper Aqua into a Rogue Wave.
+            ul
+                | If the enemy player started with 2 workers and already sent a snail on level 1 or 2 you can push here but you can leak small to a single snail or even hard to a doublesnail. I recommend to add as many Protons as you can.
+            ul
+                | If the enemy player started with 2 workers and did not send yet, you should not push and up your Aqua for sure.
+            br
+            img(src='/img/ele_level3_1.png')
+            p
+            img(src='/img/ele_level3_2.png')
+            p
+            b#wave4 Wave 4:
+            br
+            |                         If you pushed last level up your Aqua now, else just push your worker now.
+            br
+            img(src='/img/ele_level3_2.png')
+            p
+            b#wave5 Wave 5:
+            br
+            |                         Time for the Fire Elemental. With this split you will be able to kill the boss for sure, no matter what the enemy sends.
+            br
+            img(src='/img/ele_level5.png')
+            p
+            b#wave6 Wave 6:
+            br
+            |                         Up a Proton, push for the rest of your gold. If its a rly slow game and you can greed you can skip the upgrade and go workers instead.
+            br
+            img(src='/img/ele_level6.png')
+            p
+            b#wave7 Wave 7:
+            br
+            |                         Up another Proton, push.
+            br
+            img(src='/img/ele_level7.png')
+            p
+            b#wave8 Wave 8:
+            br
+            |                         Aqua pretty strong here, you will not need that much value here but for 9. If you decide to push a 7/8 worker here you will leak hard against a 9/10 send. Only do this if your team is strong for level 9/10.
+            br
+            img(src='/img/ele_level8.png')
+            p
+            b If the enemy saves for 8 its your job to hold it.
+            p
+            b#wave9 Wave 9:
+            br
+            |                         First critical wave for Element. If the enemy is doing a big save for 9 i recommend to get 2 violets. For maximum push follow this build:
+            br
+            img(src='/img/ele_level9.png')
+            p
+            b#wave10 Wave 10:
+            br
+            |                         Also a hard level if the enemy is saving. Disciple is the key unit on this level.
+            br
+            img(src='/img/ele_level10.png')
+            p
+            b#wave11 Wave 11:
+            br
+            |                         Just more Violets.
+            br
+            img(src='/img/ele_level11.png')
+            p
+            b#wave12 Wave 12:
+            br
+            |                         If you want a Phenix for level 13 you should do the Fire Lord here. 
+            br
+            img(src='/img/ele_level12.png')
+            p
+            b#wave13 Wave 13:
+            br
+            |                         Element is rly strong here if you can afford a Phenix, but Violets are not bad on 13 too. 
+            br
+            img(src='/img/ele_level13.png')
+            p
+            b If the enemy saves for 13 its your job to hold it.
+            p
+            b#wave14 Wave 14:
+            br
+            |                         Another critical wave for Element. If you went for the Phenix you will have a hard time here, if the enemy saves for 15 get (another) Firelord here
+            br
+            img(src='/img/ele_level14.png')
+            p
+            b#wave15 Wave 15:
+            br
+            |                         Phenix/Violet time!
+            br
+            img(src='/img/ele_level15.png')
+            p
+            b#wave16 Wave 16:
+            br
+            img(src='/img/ele_level16.png')
+            p
+            b#wave17 Wave 17:
+            br
+            img(src='/img/ele_level17.png')
+            p
+            b#wave18 Wave 18:
+            br
+            |                         Level 18 is a hard level again, if the enemy saves for it you are pretty much fucked without a hard overvalue.
+            br
+            img(src='/img/ele_level18.png')
+            p
+            b#wave19 Wave 19:
+            br
+            |                         Element is the strongest race for level 19 imo.
+            br
+            img(src='/img/ele_level19.png')
+            p
+            b If the enemy saves for 19 its your job to hold it.
+            p
+            b#wave20 Wave 20:
+            br
+            |                         Since Phenix deals a ton of single target damage, its good for 20 too.
+            br
+            img(src='/img/ele_level20.png')
+            p
+            p
+            | View the complete build order 
+            a(href='/builder?b=IwfQjgpgNhC2EDsAuIYHMCWB7BIMBMBkADABoBnAQzAFdKRyAHDAJwxRoXb3wAAAgAAS8AUAkYssSHCE7cCvACDCAYOMnTcclApWD+AcHVSZ2nrwDwglQEhjm2Vx18rACDESTWp+YBwggAQVKlp6JlZuMwIAQGVeABgANwAzVggQaDhEJEooR3l8ZWF4+1MfAkUAUFUoSmlYfOdqmrqsBqj8PX0DRgB3DAR8AAtKXoBrRp4DV2FXBETsGA5y/BnZ0u8C1xtA10Z8DHIAYwxGGEmCGwBYQUU9/sGR8Yv8GxF9G1r6l53d+cWIMsCu8PmBUix0lAsCx8C8ANDxfSVWDJRAYAAeL0RSJY5ByLCOuRgLBeN1urjBaVQ0NhHV8VkUKi+bRe/kCak8DjpACRBL4DCi0ZiOlZbkzWu0VqLbMzJQVRe4+gNhqMJh0AgFbmIFlgli9NVqlY9VfrNSo4f9dYD9YJrHDKRDqTCXgBEF3WAWorjClbuj0OyE0l7c3muVyC73B21hgNO2krQiEYSKCMYl5J5MhOgMZhsIHOfgAYGEHg0ZQK/F5AVcLEkaBo6V6lES6Q6xZLsqju07HV5fJ6DxVzw6icErhKOr1I+j8TUvWhYwgJI6vF4CHnLEXy5W/Gi64XS5elX4+83h46KkLp63LwMimv55WIkqQA==') here

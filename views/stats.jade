@@ -1,0 +1,31 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/tabmenu.css')
+    link(rel='stylesheet', href='/css/stats.css')
+    .content
+        .tabmenu
+            .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Overview
+            .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Player
+            .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Patch
+            .tab_top_active#tab_top_4(onclick="javascript:openTab(4);") Daily
+            .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Overall
+            .style(style='clear: both;')
+            .tab_box#tab_box_1
+                #chartContainer
+                    canvas#myChart
+            .tab_box#tab_box_2
+                #chartContainer
+                    canvas#myChart
+            .tab_box#tab_box_3
+                #chartContainer
+                    canvas#myChart
+            .tab_box#tab_box_4
+                #chartContainer
+                    canvas#myChart
+            .tab_box#tab_box_5
+                #chartContainer
+                    canvas#myChart
+    script(src="/js/Chart.js")
+    script(src="/js/stats.js")
+    script(src="/js/tabmenu.js")
+    script document.body.onload = function() {openTab(1)};

@@ -1,0 +1,9 @@
+extend ../layout
+block content
+    link(rel='stylesheet', href='../css/quill.snow.css')
+    .content
+        #editor
+        script(src="../js/quill.js")
+        script(src="../js/createguide.js")
+        button(onclick="javascript: save();") Create
+        

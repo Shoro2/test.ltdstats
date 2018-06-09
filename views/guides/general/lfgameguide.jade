@@ -1,0 +1,512 @@
+extend ../../layout
+block content
+    .content
+        .guides(style="text-align:center;")
+            h2 LForward's Game Guide [general]
+            i
+              | Last updated for version 1.64 14th December 2017
+              p
+                | Changelog:
+                br
+                |                     Added content to chapter "Worker"
+                br
+                |                     Slightly changed "Sending Every Level vs. Saving"
+                br
+                |                     Updated "Mercenaries"
+                br
+                |                     Removed Honeyflower/Butcher in "Synergy"
+                br
+                |                     Updated "Counters"
+            br
+            h1 Table Of Content
+            a(href='#introduction')
+              | Introduction
+              br
+            i
+              | Basic – Stuff that I recommend to read before you even start up the game, just some general info that is comprehensible and helps you get a better start at Legion TD 2.
+            br
+            a(href='#game') The Game
+            br
+            a(href='#king')
+              | The King
+              br
+            a(href='#custom')
+              | Practice Mode and Custom Games
+              br
+            a(href='#attack')
+              | Attack and Armor Types
+              p
+            i
+              | Beginner – Play a couple of games, maybe even 1-2 normal games and then read the beginner chapters, evaluate what you did different and what you should aim to improve on.
+            br
+            a(href='#mistakes') Common Mistakes / Misconceptions
+            br
+            a(href='#placement') Placement
+            br
+            a(href='#income') Income
+            br
+            a(href='#workers') Workers
+            p
+              i
+                | Advanced – This section simply includes a lot of information, you can browse this again if you aren't sure about something but always keep in mind that the meta can change quick and that every game is unique.
+              br
+              a(href='#sending') Sending Every Level vs. Saving
+              br
+              a(href='#bounty') Bounty
+              br
+              a(href='#mercs') Mercenaries
+              br
+              a(href='#synergy') Synergy
+              br
+              a(href='#counters') Counters
+            p
+              i
+                | Professional – Not as professional as it looks, mostly stuff that isn't related to the game but instead applies to how we look at things and how things affect us.
+              br
+              a(href='#mindset') Mindset – Professional
+              br
+              a(href='#mental') Mental Fitness – Professional
+              br
+              a(href='#conclusion') Conclusion
+              br
+            h2#introduction Introduction
+            br
+            |                     Hey there, I'm LForward.
+            br
+            |                     I’ve been following the Legion TD 2 project since 2014 and I gave myself the goal to help wherever possible to make the game a better experience for new players and to make it possible for everyone to become a competitive player. I started playing the Warcraft Mod again shortly before Legion TD 2 got announced. I was very hyped at that point and decided to spend my time playing the Warcraft Mod to get better at Legion TD in general. At the beginning I was slightly overwhelmed as the current version was so much different from what I was used to play in 2011/2012 so I searched the internet for some kind of guide, I found something but it wasn't exactly what I was searching for, I wanted a source that gives me in-depth information and helps me get actively better.
+            br
+            |                     I ended up browsing twitch since youtube failed to show me professional content. I found a streamer 
+            a(href='https://www.youtube.com/channel/UCjFpOx4MAQrhAUKJ8LyY35Q') Otto Piiroinen
+            |  and started to understand why he was performing better than me, I was able climb to a decent level extremely fast but then I came to a point of frustration, now it was my teammates that were the reason for me losing, it wasn't me anymore. I felt that there was only a small number of really competitive players so my decision was to increase the size of the competitive Legion TD community, I started streaming where I focused myself on explaining as much as possible, shortly after that I decided to work on my biggest project so far, a comprehensive guide for Warcraft 3 Legion TD Mega, at the time the most played Warcraft 3 Map.
+            br
+            |                     It took me a while to finish it but I think I did a pretty good job for creating it after 1-1.5 years of experience, you can read up on it HERE if you're curious about it. As you can probably see on the guide, I created a youtube channel as well, it mostly included General and Unit Guides at that point but it evolved to the #1 source for Legion TD on the whole web with daily videos where I try to explain what I am doing, why I am doing it and what could've been done better, because for me, reflecting after a bad game is the most important part about learning. Understanding what went wrong in a game leads to improvement rather than frustration.
+            br
+            |                     Long-story short, I am today trying to work out the same for Legion TD 2, it will take a while because it needs a lot of experience and because Legion TD 2 addresses other aspects of the strategy genre than its precursor.
+            br
+            |                     Here are my channels for reference ;)
+            br
+            a(href='https://youtube.com/lfwc3') YouTube
+            br
+            a(href='https://twitch.tv/lforward') Twitch
+            br
+            |                     This guide in its current size is just a small beggining. I want to improve it by a lot and grow it to the #1 source for beginners and for advanced players. I will add more content, in-depth straegies and theory-crafting to this guide if it fits the topic. With every major game update I also want to try refresh it so you guys can always stay up to date. You can see the current guide version at the very beginning on the top-left.
+            br
+            |                     Anyway have fun with the guide and feel free to question anything coming up in here, I am here to answer questions to this topic ;)
+            br
+            h2#game The Game
+            br
+            |                     For a general explanation of the basic game, check out 
+            a(href='https://legiontd2.com/community/threads/legion-td-2-gameplay-guide.11258/') Jules Gameplay Guide
+            br
+            |                     Legion TD 2 is played by 2 teams of 4 players each. Players can deploy fighters that come to life during day to defend versus the upcoming waves, you use Gold to deploy additonal fighters or to create Workers gathering Mythium for you. Mythium can be used to summon mercenaries, those are additonal creatures that help you attack the enemy team. Sending mercenaries will continuously reward income that you receive at the end of every wave. Your mercenaries will attack a specific player on the opposide team on the following wave.
+            br
+            |                     If someone on the enemy team leaks creatures to the catch area (middle), your team receives bonus gold. If these creatures even make it to the king, they will add permanent damage to him. The king automatically upgrades throughout the game but he has a very low Regeneration, early king leaks can make a big difference later on.
+            br
+            |                     Many people would say the game revolves around survival, whoever survives longer wins. My definition is that you have to kill the enemy team first. The difference between these 2 statements? In my example you are actively trying to pressure and break the other team’s defences. That's exactly how you should see the game. Making the enemy team leak and putting pressure on them as early as you can is key to victory. Your tools for this are the mercenaries and your currency for hiring these is Mythium. More workers allow you to put even more pressure on your enemies and make smart decision on which level you can beat the enemy team. Towards the mid and lategame it is extremely improtant to communicate with your team about sending. People often send by themselves early and coordinate a bigger attack after Wave 10 to finish the enemy team. Listen to what the experienced players in your team have to say and try to add your input.
+            br
+            h2#king The King
+            br
+            |                     The heart of the game. Defending your king while taking down the enemy king is the goal of the game. You need to actively hire mercenaries while not forgetting about your own defense. Fighters that defended their lanes will warp in front of the king where they can still try to decrease the amount of creeps reaching the king.
+            br
+            |                     The king automatically upgrades every 3 waves, but his regeneration is pretty low. Early leak to the king can make a big difference as it leaves him injured. Most games end after Wave 10 but this is not a guarantee. The number of creatures needed to take down the king depends on the characteristics of the Wave, how many Hitpoints they have lost already and which mercenaries have been sent to support them. The king itself is AI-controlled and focuses creatures depending on their „Dps to HP-ratio“ while also calculating Aura effects into this.
+            br
+            h2#custom Practice Mode and Custom Games
+            br
+            |                     How can I train a certain build without ruining games of my teammates? A question that a lot of new players are probably asking themselves these days. The answer is simple and Legion TD 2 offers all the tools that you need with their Practice Games (automated matching with Bots) or Custom Games. I recommend starting with a Custom Game where you're playing all alone without any Bots, by default you send mercenaries to yourself where you can test even more stuff and how your builds perform in differrent situations.
+            br
+            |                     If you're testing I suggest trying as many strategies as possible and also adjusting fighter placement to change focus and aggro of your fighters. It's also good to find out weaknesses of enemy tactics by figuring out if you should send a Lizard or a Fiend, a Dino or a Mole and many others. You'll have a lot of fun trying all that stuff out if you're into testing and your teammates will thank you for getting some experience before trying out your build on a normal match.
+            br
+            |                     For a full list of commands, please check 
+            a(href='https://legiontd2.com/community/threads/debug-commands.11145/') this post
+            br
+            |                     And for the new players I would like to add something here, use practice games a lot and if you keep losing there you might need to change up your strategy a little bit or analyse what went wrong. 
+            br
+            h2#attack Attack and Armor Types
+            br
+            |                     Just some phrases that help you to easily understand where the strengths and weaknesses of Armors lie.
+            br
+            |                     Arcane is the Anti-Magic Armor, leaving a weakness versus every other type of attack.
+            br
+            |                     Natural is the opposite of Arcane, weak vs Magic but strong versus everything else.
+            br
+            |                     Swift is like a Light Armor, it takes more damage from Pierce, neutral damage from Magic and less from Impact attacks.
+            br
+            |                     Fortified works the opposite way, it takes more damage from Impact attacks, almost neutral from Magic and way less from Pierce.
+            br
+            |                     Sometimes synergy is more important than the perfect Attack/Armor setup, keep that in mind, you don't want too many units later on that are not functioning well with your unit composition, for more info check out the Synergy chapter.
+            br
+            h2#mistakes Common Mistakes / Misconceptions
+            br
+            |                     Legion TD is a Tower Defense, this means I have to passively build towers to defend against the arriving waves of creatures.
+            br
+            |                     YOU have to take action. Legion TD is a versus game, your goal is to defeat the enemy king. This will only work by taking action yourself by creating workers and mining more mythium. This resource will allow you to attack the opposing team by hiring additional mercenaries.
+            br
+            |                     Legion TD is a slow-paced game and if I follow a building guide of a high elo player I will easily win every game with the same build order.
+            br
+            |                     While this might help you with the basics of the game you need to remember that every game is unique and calls upon a new challenge. You have to react to every action your enemy is taking. I created over 20 specific unit guides for Warcraft 3 Legion TD which is being used by thousands of players. To this day I am still the player that knows best about some of those units and I will come out ahead on almost all of my games because Legion TD is a reactive game and following a blunt build pattern will not help you in most of the cases. It also won't help you grow into a strong player. Try to find your own style, using recommended builds or guides as a base is good but always try to evolve and experiment.
+            br
+            |                     My own 1v1 is more important than the whole 4v4.
+            br
+            |                     You can carry a game by yourself but Legion TD is a team game, and every member is as valuable to the team, having the most value or workers is one thing but it doesn't mean anything if you're not able to play the game as a team. Take part in the team communication and decision-making if you want to increase your chances of winning. Even helping players that struggle with their build can improve your chances of winning, there's always space to improve on.
+            br
+            h2#placement Placement
+            br
+            |                     Correct Fighter Placement allows you to get the most out of your fighter value. It changes the way your units focus down creeps and how the enemy creatures aggro onto your fighters. While it is hard to say what the perfect placement is, there are several examples of bad placements that affect how efficiently your defense performs. To begin with I want to sort out two terms that often get mixed up, it's important to know what they mean before reading the rest of this chapter.
+            br
+            |                     Focus: How your fighters attack creeps, the best outcome is if all your fighters can focus down one creep after the other to lower the enemy damage output the fastest.
+            br
+            |                     Aggro: That's how your fighters share the damage taken from the opposite side, it's perfect if all your fighters took damage and as few as possible died.
+            br
+            |                     The Golden Rule of PvP games tells you to put tanks in front and the damage dealers (Dps) in the back, but what happens if you add more roles. It's not as simple as it looks and that's why I want to explain the terms and show examples so you can better place your fighters in the future.
+            br
+            |                     Tank – Obviously meant for the front, their damage output is low and all they can do is soak up a lot of damage. If they run into an unfavourable matchup you may have to repurpose them as a semi-tank so they don't die too quickly. Even in this scenario make sure that they take most of the damage before any creatures even makes it to your backline. Example: Golem.
+            br
+            |                     Semi-Tank – Functioning similarly to the Tank, they mostly have the difference in their numbers. If you deploy Semi-Tanks, you want to have multiple of those and you want them all to share the aggro evenly. Perfect scenario is that they all survive with a similar amount of health. Example: Canopie
+            br
+            |                     Ranged-Tank – A fighter with range that is built in front to take some of the early aggro but soon lets your tanks take over and transitions into a ranged DPS tower. Great example: Fenix, takes early damage and loses Mana which allows it to deal bonus damage. Be careful that they don't die or you miss out on a lot of your damage output.
+            br
+            |                     Melee-DPS – Starting with the example of the Doppelganger. This fighter has the best melee DPS in the game but it is extremely fragile. Even though they are Melee they should be placed behind your frontline or at the side to flank. If they die early you quickly lose a significant amount of your Dps for little reward.
+            br
+            |                     Ranged-DPS – Almost all these units are meant to not take any damage early into the fight. You can gamble and try to make them take some early aggro but the risk is usually not worth it. They mainly have a low amount of Hitpoints but put out the most damage in your whole setup.
+            br
+            |                     Auras – They are almost a chapter for themselves and it depends a lot from aura to aura where it should be placed.
+            br
+            |                     APS/MPS – High Range unit but with a really small aura range. The rule of thumb here is to place it in front of lower ranged targets that you want to give the aura to. Care is needed as you don't want them to die too early into the fight as these auras are extremely valuable.
+            br
+            |                     Butcher/Head Chef – Melee fighters with a small aura range, they aren't supposed to tank the waves unless they are your main line of defense. Place them behind, or next to the fighters you want to give their lifesteal aura to.
+            br
+            |                     Starcaller – Medium range but small aura range, needs to be placed in front of melee mana units, or in close range of ranged mana-dependant units.
+            br
+            |                     Special Fighters – Dark Mage (Buff), Ranger (Buff) or Daphne (Debuff) should generally be placed in the back so they can use their abilities for as long as possible.
+            br
+            h2#income Income
+            br
+            |                     Income is extremely important to survive throughout the game. In the Early Game you should try to get as much Income as possible while leaking as little as possible, some leaks and high income are better than no leaks and moderate income in most circumstances. With a high early income you will have an easier time in Late Game. Early high income snowballs your lane and allows you to get significantly higher values later on in the game. It's tough to give an estimate of how high your income should be at different stages of the game as every game is different. It also matters how early you get your workers and how many leaks contributed to you getting more time to gather Mythium. As a rule of thumb I would say 120 Income, when Granddaddy (Level 10) spawns is a good indicator for you. If you're below this you either didn't push workers early enough or the game had a low amount of leaks which results in everyone having less Income than usual. If you're below 100 Income it will be extremely difficult to survive in the real late game (15+).
+            br
+            h2#workers Workers
+            br
+            |                     Workers gather mythium and they are your tool to get a lot of income while also being able to pressure your enemy lane with smart sends. More Workers means more pressure and more Income, a win-win as long as you are able to hold your own lane.
+            br
+            |                     The first 10 levels (Early Game) will decide how you place yourself for the rest of the game, if you're behind in Workers early it will cause trouble to your Income and additionally your enemy lane (the lane you are sending to) is under less pressure and has an easier time holding.
+            br
+            |                     Remember, the sooner you get your workers, the income you can gain.
+            br
+            |                     Some people like to hear how many Workers they should have at a certain Wave but it's hard to generalize as it depends on so many factors(Enemy saving or sending?/How much time has passed?/How much did you leak?/How much did your team make the enemy leak?/What do you want to build next)? As you can see it can be difficult to determine but here is a general guideline I usually follow:
+            br
+            |                     Wave 1 – 1-2 Workers, depending on what start you're doing, getting the 2nd Worker during Wave 1 is also not a big loss as you just start gaining Mythium after Wave 1 spawned.
+            br
+            |                     Wave 2 – 2 Workers, most builds have their 2nd Worker now but there are some exceptions such as Pyro 2 or Violet 2, they will get their worker later.
+            br
+            |                     Wave 3 – 2 Workers, there's a small number of Fighters that can get their 3rd Worker already for 3 but it also involves a high risk.
+            br
+            |                     Wave 4 – 3 Workers, if your setup is at least good for Wave 4, if the enemy team saved you definitely want to stay on 2 Workers.
+            br
+            |                     Wave 5 – 3 Workers, some builds could have a 4th Worker here already.
+            br
+            |                     Wave 6 - 3-4 Workers depending on you setup + saving behaviour etc.
+            br
+            |                     Wave 7 – 4-5 Workers, having a lot of Arcane allows to get even more Workers with some builds.
+            br
+            |                     Wave 8 – 4-6 Workers, Ranged Units are better than Melees here
+            br
+            |                     Wave 9 – 5-7 Workers, Be careful if you built a lot of Arcane for 7 and 8, Level 9 could punish you.
+            br
+            |                     Wave 10 – 6-8 Workers, Holding Wave 10 is important as it is a Do or Die Wave, you lose over 100 Gold if you leak the Boss so don't overdo it, if you need 5 Workers to hold it, you should stay on 5 but should get more Workers immediately atfer you killed the Boss.
+            br
+            |                     Wave 11 – If enemy team didn't save it's common to have 8-10 Workers here, now it depends a lot on whether the enemy team is saving or if you are saving etc.
+            br
+            |                     Wave 12-13 - Common to get additional workers if the enemy keep sending to you and you are still holding but be careful that you don't fall behind in value.
+            br
+            |                     Wave 14-15 - I do not recommend to get any workers on these waves unless you plan to end the game here. Simple reason for this is the 2x Worker after 15 which makes it way more effecient to wait.
+            br
+            |                     After Wave 15 - 2x Worker Time, can be helpful to push your income which pays off in about 3 waves here or if you want to put more pressure on the enemy, probably the biggest reason why most games end between 17-19 is that people get too many workers and fall behind too much but the additonal mythium-gain can also help you a lot if you plan to finish off the enemy on a wave they did not expect it on.
+            br
+            h2 Sending Every Level vs. Saving
+            br
+            |                     This is a topic often discussed and I will only give my input. As of recently, the sending system was changed. This means you now know who is going to send against you and who you are sending to, allowing you to better predict which level to send on. Since income is a big factor in the early game of Legion TD 2 I do not recommend long saves during the first 10 levels as you miss out on so much income. You should check your enemy lane every wave and determine what the best wave and mercenaries are to break him. This should work independently from your teammates in the early game.
+            br
+            |                     Late game is a different story, in my opinion starting with wave 11, every bigger save could potentially kill a team. Therefore saving is likely the better strategy now. However, it depends a lot on the enemy team.
+            br
+            |                     Firstly, as a team, you should find out when the enemy team collectively is the worst, also keep in mind that it usually needs a save of 2-3 rounds to kill a team in a single wave, thanks to the 2x worker after wave 15 even income sends can be very deadly in lategame now.
+            br
+            |                     If you get into the situation that a team is saving against you, you should not get any additional workers and build up for the wave that you expect them to send on, now you have multiple options:
+            br
+            |                     a) You send on the same wave as you expect them to send on, keep in mind that your team send is most likely gonna be weaker than the send you will be facing.
+            br
+            |                     b) You undercut them, which means you send a wave earlier than what you expect them to send on, only works if they're weak on that wave and if they are saving for a long time already.
+            br
+            |                     c) You keep sending for Income every wave in order to hold their send. Keep in mind that this might create some leaks on their side which they can use to gather even more mythium, they might even get bonus workers which makes it harder for your team to hold the all-In send.
+            br
+            h2#bounty Bounty
+            br
+            |                     When you or someone else leaks, bounty will be rewarded to the leaker, the one killing the leaked units and the enemy team. These values are set and scale throughout the whole game.
+            br
+            |                     Gold that the Leaker gets: 40% on Wave 1 → 0% on Wave 21
+            br
+            |                     Gold that the Holder gets for killing: 15%
+            br
+            |                     Gold that the enemy team gets as soon as the creeps are getting killed: 55%* on Wave 1 → 95% on Wave 21 (*distributed to the 4 players in the team)
+            br
+            h2#mercs Mercenaries
+            br
+            |                     The following is a table of which mercs I usually like to prioritize, I only show my top choices and would totally agree that there are a lot of mercs that are very situational and some that have a natural counter-mechanic, this is just to give a small idea.
+            br
+            a(href='http://beta.legiontd2.com/guide/units') http://beta.legiontd2.com/guide/units
+            |  has a table of these mercenaries which shows their stats.
+            br
+            |                     1 – Snail
+            br
+            i There isn't much of a choice?
+            br
+            |                     2 – Fiend
+            br
+            i Fiends deal significant damage, Lizards will stay alive till the end.
+            br
+            |                     3 – Brute, Lizard, Fiend
+            br
+            i
+              | Brute all the way, if you started with a 2nd worker. Especially if your opponent is relying on one fighter, this will hit him hard due to its stun chance, otherwise Fiend is a great damage dealer fighter and might catch some people offguard.
+            br
+            |                     4 - Dino, Brute
+            br
+            i
+              | Flying Chickens deal great damage, get a Tank for them like Dino. Brute doesn't tank as effectively but he helps take down the main fighters. If you straight saved for this I would just send whatever you can before income and add a snail afterwards if possible.
+            br
+            |                     5 - Drake, Dino, Brute, Dragon Turtle
+            br
+            i
+              | Straight saves for 5 are unconventional but may occasionally be effective. Drakes help you burst down the enemy frontline, Dinos adds a lot of tank value to prolong the lives of Scorpions and Brute is again strong to shut down single enemies. The King upgrades on Wave 6 which means you can deal a lot of damage to him here with Scorpion King and Drake leaks.
+            br
+            |                     6 – Dino, Safety Mole, Brute, Drake/Dragon Turtle
+            br
+            i
+              | Rockos like to stun their targets, you‘ll want to assist them, either by adding more stuns (Brute) or a Dino/Safety mole to help them stay alive. Drake/Turtle are the best if the enemy units are vulnerable to magic attacks.
+            br
+            |                     7 – Hermit, Safety Mole, Mimic, Fiends
+            br
+            i
+              | 12 creatures spawn here so Auras are more effective again, Hermit+Safety Mole helps the creatures to stay alive longer, Mimic eats his way through their defense while giving high income, yummy! Dino just annoys them as he brings a lot of defensive value to the fight. Again Drake/Dragon Turtles are a solid choice if the enemy lane is weak to Magic.
+            br
+            |                     8 – Ghost Knight, Dino, Snails
+            br
+            i
+              | It's time for a Ranged Wave, Big Tanks with a high HP pool are what you want here, Bigger = Better: Ghost Knight > 2x Dino > Dino+Snails. Ranged mercs are rarely good here but can work.
+            br
+            |                     9 – Pack Leader, Hermit, Safety Mole, Foueyes
+            br
+            i
+              | A special wave because it reduces damage taken from ranged attacks, Hermits and Safety Moles reinforce this effect. Pack Leaders boost the damage of the creatures by a lot and Foureyes is the foe of every Natural tank and helps you get through those much more quickly.
+            br
+            |                     10 – Mimic, Drake/Lizards, Foureyes
+            br
+            i
+              | The first real Boss, Mimic is a great damage dealer for this Level. Drake/Lizards are ranged DPS and also do their job if needed. Sometimes it makes sense to add a Safety Mole or Fiends if you think the enemy is not able to clear them before the boss arrives.
+            br
+            |                     11 – Kraken, Ghost Knight, Dino, Snails
+            br
+            i
+              | Ranged again, the highest in the game. As always you want tanks. Ghost Knight > Dinos and Snails to round it up. Wave 11 deals extreme amounts of damage if kept alive for too long. The only viable aura here is the Hermit in my opinion.
+            br
+            |                     12 – Centaur, Pack Leader, Hermit, Safety Mole, Four Eyes
+            br
+            i
+              | Auras to support this wave are excellent. Pack Leaders function as supporters and tanks, Hermits and Safety Moles allow the wave creatures to stay alive longer. If you have additional mythium you can even send a Foureyes to shred through their defenses. Centaur is an option to counter mass units here.
+            br
+            |                     13 – Centaur, Four Eyes, Safety Mole, Shaman, Hermit
+            br
+            i
+              | Unlike the preceding waves, this wave spawns only 6 creatures, however, they are significantly stronger to balance out. Foureyes eats through every defense. Hermits and Safety Moles are always useful. Pack Leader is not recommended as he only buffs by a flat +10. Centaur can be useful here as well if the enemy has many small units.
+            br
+            |                     14 - Centaur, Four Eyes, Safety Mole, Hermit, Pack Leader
+            br
+            i
+              | This wave has a 25% spell-resistance which means that Hermit and Safety Mole got a special usage here again. Foureyes is great to deal with big tanks, if there's a lot of arcane armor you can also send a Centaur to get rid of mass units. Pack Leader to round up the damage of the wave.
+            br
+            |                     15 – Kraken/Ghost Knight, Dinos, Snails, Centaur, Hermit
+            br
+            i
+              | Miniboss time, but this wave has some range so keep that in mind. Tanks such as Krakens and Ghost Knights are useful to prolong the survival of the level 15 creatures. Most auras, except for Hermit, die too fast on this wave to be worthwhile. Centaur can work in some cases.
+            br
+            |                     16 – Four Eyes, Pack Leader, Hermit, Safety Mole
+            br
+            i
+              | Wave 16 spawns 18 creatures, this means this is the most efficient wave in the game to send auras on, thusly Pack Leader, Hermit, Safety Mole are crucial. Foureyes is great if you need to deal with a big tank, as always Centaur if you have to deal with mass units, this also applies to Wave 17-19
+            br
+            |                     17 – Four Eyes, Pack Leader, Hermit, Safety Mole
+            br
+            i
+              | Most people build fortified or natural armour tanks here so you want a Foureyes to deal with these. Auras are great as well, mainly Pack Leaders or Safety Moles if you need to counter a certain build.
+            br
+            |                     18 – Kraken, Ghost Knight, Centaur, Dino
+            br
+            i
+              | Another ranged wave so big melee tanks like Krakens, Ghost Knights, Dinos or even Snails are most effective.
+            br
+            |                     19 – Four Eyes, Centaur, Pack Leader, Safety Mole, Kraken, Shaman
+            br
+            i The last mass wave. Foureyes and Auras are what you want to add here.
+            br
+            |                     20 – Shaman, Centaur, Foureyes, Kraken, Drake/Lizards
+            br
+            i
+              | The final boss wave. Shaman is obviously by far the most important send due to its buff. Other than that I recommend pure Dps. Pick whatever damage type you need.
+            br
+            |                     21 - Shaman, Centaur, Foureyes, Kraken
+            br
+            i
+              | The game ending wave. Shamans are useful for the Legion King, Foureyes shreds through enemy tanks, Krakens helps you take down single targets with their stun, Centaur to deal with mass and although Auras may be less effective now they still serve their purpose and are worth sending.
+            br
+            h2#synergy Synergy
+            br
+            |                     Rogue Wave + Fire Elemental
+            br
+            |                     Rogue Waves put a debuff on the enemy creatures and Fire Elementals trigger it for bonus magic damage over time. Build them close to each other and try to make the Rogue Wave hit first.
+            p
+              | Violet + Starcaller
+              br
+              |                     Violets are decent natural tanks who have a great spell that can be spammed if you add a Starcaller to it. Extremely useful in the late game if you don't necessarily need the single target damage.
+            p
+            |                     Firelord/Fenix + Starcaller
+            br
+            |                     Firelord/Fenix uses it's mana to block damage of their enemies. Starcaller fills up their mana pool again and allows them to tank for much longer.
+            p
+            |                     Fenix + Dark Mage + Butcher
+            br
+            |                     Fenixes deal more damage when on low mana, combined with a Dark Mage it's probably the strongest unit against lategame waves. Add a butcher to allow your Fenixes to heal.
+            p
+            |                     Pyro + Zeus
+            br
+            |                     Both these units are upgrades of the Bazooka but are each unique with different strengths. Pyros are a solid AoE damage dealer for early game and a decent tank while Zeus are a long-range single target DPS unit that can be used to increase the clear speed of Pyros.
+            p
+            |                     Zeus + APS/MPS
+            br
+            |                     Zeus regain 2 Mana points with every attack. Combined with APS/MPS auras they will regain it faster and also generally deal more damage both with their attacks and power surge spell.
+            p
+            |                     Fatalizer + Dark Mage
+            br
+            |                     Fatalizer’s are the mech legion‘s Pierce Damage Dealer. It's a good unit if you need pure damage and combined with a Dark Mage it's even stronger.
+            p
+            |                     Millenium/Doomsday + APS/MPS
+            br
+            |                     Mech‘s T6 deals superior damage but it has a slow attack speed. APS/MPS helps them a lot with their damage output.
+            p
+            |                     Millenium/Doomsday + Dark Mage
+            br
+            |                     Even more Attack speed but it has a cost. Dark Mage drains a % of current health which is a hefty cost for these units. Only use this combination if you have another tank for them.
+            p
+            |                     Consort + Wileshroom
+            br
+            |                     What do these two have in common? Nothing at first glance and that's the secret. Together, these two largely counter every single wave until Wave 14.
+            p
+            |                     Whitemane + Antler
+            br
+            |                     Whitemanes are upgraded from Antlers and they give a defensive aura to all other Whitemanes and Antlers nearby. The best scenario is having one Whitemane and many Antlers close to it. Take care of your Whitemane with this combination as if it dies the aura is lost. Foureyes is particularly dangerous as it can kill your whitemane extremely quickly.
+            p
+            |                     Bone Crusher + Butcher
+            br
+            |                     Bone Crusher has very high health regeneration. Adding a Butcher will make it even stronger and lets it outlive the damage of multiple creatures at once in the early game.
+            p
+            |                     Green Devil + Butcher
+            br
+            |                     Green Devil‘s have one big strength, their syngery with lifesteal. As they have 50% damage reduction, every time they lifesteal it is double as effective.
+            p
+            |                     Harbinger/Gateguard + Starcaller
+            br
+            |                     These fighters love to summon additional creatures, combining them with Starcaller allows for a gigantic wall of summoned meat shields.
+            p
+            |                     Doppelganger + Dark Mage + Butcher
+            br
+            |                     Doppelgangers have the highest damage potential in the game, if positioned correctly and supported with Dark Mages and a Butcher, they can carry your whole game.
+            p
+            |                     Lord Of Death + Starcaller
+            br
+            |                     The same principle as Harbinger/Gateguard. More summons = more tank value and more Dps.
+            p
+            h2#counters Counters
+            br
+            |                     Some units need special treatment, they may seem a little stronger from the outside but if you know their weakness, you can overcome it, I will not go into depth with all of them but I want to give some examples.
+            p
+              | Rogue Wave/Fire Elemental – 7,9,10,14 Hermit, Safety Mole
+              br
+              |                     Violet – 7,8,14 Foureyes
+              br
+              |                     Disciple – Early Waves, Kraken, Snails
+              br
+              |                     Firelord/Fenix – Early Waves,11,12,17,18 Lizards
+            p
+              | Zeus – 12,16 Safety Mole
+              br
+              |                     Pyro – 6,10 Safety Mole, Hermit, Dino, Drake
+              br
+              |                     Berserker/Fatalizer – 8,11,18 Foureyes, Kraken
+              br
+              |                     Millenium/Doomsday – 11,12,16 Snails, Foureyes
+            p
+              | Buzz/Consort – 7,14,15 Centaur, Drake, Dragon Turtle
+              br
+              |                     Wileshroom/Canopie – 5,11,16 Ghost Knight, Lizards
+              br
+              |                     Honeyflower/Deathcap – 7,8,10,11,14 Safety Mole, Hermit, Drake, Dragon Turtle
+              br
+              |                     Antler/Whitemane – 8,15,18 Foureyes
+            p
+            |                     Bone Crusher – 8,10+ Brute, Fiend, Lizard
+            br
+            |                     Gargoyle/Green Devil – 9-13 Lizard
+            br
+            |                     Harbinger/Gateguard – 7,8,14,15,20 Centaur, Foureyes, Safety Mole
+            br
+            |                     Butcher/Head Chef – 3,8,15 Drake, Dragon Turtle
+            br
+            |                     Nightmare/Doppelganger – 8,11,15,17+ Kraken, Foureyes
+            br
+            |                     Lord Of Death – 1-14 Kraken, Foureyes, Pack Leader
+            br
+            h2#mindset Mindset
+            br
+            |                     Simply something to think about. What are you trying to achieve when playing the game?
+            br
+            |                     Do you want to be the best overall and climb the ladder?
+            br
+            |                     Then you should probably practice a lot, learn from your mistakes and try out builds that suit you well. Play certain builds to their limit and try to figure out how to win most of your games and improve every single game.
+            br
+            |                     Want to be the person who finds out new strategies?
+            br
+            |                     Then you should try out Mastermind and mix fighters every single time. Try out fighter combinations that nobody ever thought about and maybe you are the reason why the developers have to patch a certain fighter. *cough* Proxy Singed *cough*.
+            br
+            |                     Want to have fun with some friends?
+            br
+            |                     Then play together and enjoy the game, maybe you can even try out some dual build strategies, but keep in mind that LTD2 is intended as a competitive environment so many people will take games seriously. Winning games is more fun than losing them, am I right?
+            br
+            |                     You want to impress a girl? 
+            br
+            |                     I am not sure if I can help you here.
+            br
+            h2#mental Mental Fitness
+            br
+            |                     I believe that this aspect of gameplay is extremely important and have experienced it myself. People play differently when they are in a stressful situation, when they have psychological problems or are simply somewhere else with their thoughts.
+            br
+            |                     You might remember this from the theoretical driving school lesson, the teacher talks about your driving behaviour when you are in a bad mood, they pointed out that you're behaving different when under sadness, depression or anger and may not react with the same attention as usual which makes it a lot more dangerous to drive.
+            br
+            |                     The exact same applies to playing video games. Being in a different mood is, by the way, absolutely natural, little things just as losing a game can have a big impact on us. Not only do they change the way we play and how we deal with potential teammates, they also stress our nerves and cause our concentration to suffer. Concentration is something you need a lot of in Legion TD 2 so try to observe yourself if you're under stress and find out what the reasons are.
+            br
+            |                     What can you do about it? Professional teams do their practicing in blocks for a reason, people need a break to regain their concentration and stamina. As I mentioned it is just natural to have different moods, being exhausted or noticing your mind wandering elsewhere.
+            br
+            |                     You shouldn't try to force yourself into an uncomfortable situation, it's way better to have some kind of outlet, some people just need a small break, standing up and walking a few steps can do wonders. If you need a long-term refreshment I can only recommend doing sports, it helps you clear your mind, increase your stamina and you will find new energy afterwards. It also keeps you healthy by the way! Anyway, try not to mix reallife and your ingame-life too much. They need to stay seperate.
+            br
+            h2#conclusion
+              | Conclusion
+              br
+            |                     The advices given in this guide should be suggestions, they are not how you have to play or what you should definitely do, most of these things should just freshen up your mind a little bit and help you get better at the game. This guide is never finished, I will try to update it for every major game update, but you guys know how hard that can be sometimes so it will likely take some time to be updated.
+            br
+            |                     So you've read up to this point, what now? Play the game! Develop your own playstyle and try to make the best out of every game. Become a master at the legions and units you like and slowly approach new stuff.
+            br
+            |                     And if you ever get tired of your mates or you believe you achieved a lot already, you can always ask a friend to try out the game and become the next mentor. That's what I was always trying. Send this guide to a friend if he struggles and he needs some inspiration ;)
+            br
+            |                     Let's make this game popular together by helping each other and showing each other how fun a strategy game can be.
+            br
+            br
+            br
+            |                     Thanks for your attention,
+            br
+            |                     LForward

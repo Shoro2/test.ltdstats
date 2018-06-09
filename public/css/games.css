@@ -1,0 +1,34 @@
+#myProgress {
+    width: 50%;
+    background-color: red;
+    margin: 25 auto;
+    vertical-align: 0px;
+}
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+    color: white;
+    text-align:center;
+}
+
+.livegame_table
+{
+    table-layout: auto;
+    width: 100%;
+    margin: auto;
+    color: black;
+    font-family: Calibri;
+    font-size: 15pt;
+}
+.livegame_table td
+{
+    height: 50px;
+}
+
+.team
+{
+    background-color: lightgray;
+    border-radius: 10px;
+    padding:15px;
+}

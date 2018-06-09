@@ -1,0 +1,12 @@
+extend layout
+block content
+    .content
+        #builder
+        script.
+            var LegionTD2Builder = {
+                containerId: 'builder',
+                basePath: '/builder',
+                iconsPath: '/img/icons/',
+                gaId: 'UA-111925592-1'
+            };
+        script(src="https://attrib.github.io/main.bundle.js")

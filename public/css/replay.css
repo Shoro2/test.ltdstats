@@ -1,0 +1,158 @@
+.legionspell
+{
+    height: 25px;
+    width: 25px;
+    display:inline;
+}
+
+.main-content
+{
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    position: absolute;
+    background-color: black;
+    top:50px;
+    padding-top:10px;
+}
+
+.slider_container{
+    width: 75%;
+    margin-left: 10%;
+    margin-bottom: 30px;
+}
+
+#slider
+{
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 15px; /* Specified height */
+    background: darkgray; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 10px;
+    
+}
+
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: white; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 50%; 
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: white; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 50%;
+}
+
+.player_name
+{
+    color:white;
+    float: left;
+    width: 20%;
+    margin-right:2%;
+    margin-left:2%;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.label{
+    color:white;
+    float: left;
+    width: 20%;
+    text-align: center;
+    margin-right:2%;
+    margin-left:2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.player
+{
+    background-color:white;
+    box-shadow: 0px 0px 5px white;
+    float: left;
+    width: 20%;
+    margin: 2.4%;
+    margin-top:0px;
+    margin-bottom: 20px;
+    
+}
+
+.player.leaks
+{
+    height:5%;
+    overflow: auto;
+}
+
+.player.sends
+{
+    height:5%;
+    overflow: auto;
+}
+
+.player.build
+{
+    height: 63%;
+}
+
+.leakpic
+{
+    height: 20px;
+    width:20px;
+    margin:5px;
+}
+
+.buildtable tr td
+{
+    border: 1px solid black;
+    margin: 0px;
+    padding: 0px;
+    width:20px;
+    height:20px;
+}
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+.close
+{
+    float: right;
+    top:10px;
+    padding:2px;
+    background-color:darkgray;
+    border-radius:35px;
+    width:35px;
+    height:35px;
+    text-align: center;
+}
+
+.close:hover
+{
+    color:white;
+    box-shadow: 0px 0px 30px white;
+}
+
+.myfooter
+{
+    display: none;
+}
+
+.kleinerCanvas
+{
+    width: 100%; 
+    height: 100%;
+}

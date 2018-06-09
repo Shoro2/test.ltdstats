@@ -1,0 +1,317 @@
+.inline
+{
+    display:inline;
+}
+
+
+#avgbuild
+{
+    height:200px;
+    width: 50%;
+    overflow:auto;
+    padding:20px;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+}
+ 
+#avgbuild::-webkit-scrollbar {
+    width: 10px;  /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+      /*background: transparent; optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+#avgbuild::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin:5px;
+}
+
+.hidediv
+{
+    display:none;
+}
+
+.showdiv
+{
+    display: block;
+}
+
+.mittig
+{
+    text-align: center;
+    align-items: center;
+    margin: auto;
+    width:25%;
+}
+
+.meinbalken_small
+{
+    padding: 10px;
+    opacity: 0.8;
+    margin: 10px;
+    border-radius: 10px;
+    color:white;
+    float: left;
+    width: 180px;
+}
+
+#buildtable
+{
+    border: 1px solid black;
+    margin: auto;
+
+    width:435px;
+    
+}
+
+#buildtable th
+{
+    border: 1px solid black;
+    width: 24px;
+    height: 24px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#buildtable td
+{
+    border: 1px solid black;
+    width: 24px;
+    height: 24px;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+.hidden
+{
+    display:none;
+}
+
+#myChart
+{
+    padding:50px;
+}
+
+#divumtable
+{
+    border-radius: 10px;
+    top:100px;
+    bottom:100px;
+    left: 475px;
+    right: 475px;
+    position: absolute;
+    text-align: center;
+    background-color: black;
+    opacity: 0.9;
+    color: white;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 2px 3px 16px black;
+
+}
+
+.kleinerCanvas
+{
+    width: 100%; 
+    height: 100%;
+}
+
+
+.profile
+{
+    height:30%;
+    
+}
+
+.meinbalken_big
+{
+    border-radius: 10px;
+    height:60%;
+    margin:20px;
+    padding:10px;
+    opacity: 0.9;
+    background-color: lightgray;
+    text-align: center;
+}
+
+.meinbalken_small:hover
+{
+    opacity: 1.0;
+}
+
+.innenSchrift
+{
+    opacity: 1.0;
+}
+
+#general
+{
+    background-color: rgb(138, 138, 138);
+    
+}
+
+#element
+{
+    background-color: rgb(185, 173, 6);
+}
+
+#grove
+{
+    background-color: rgb(17, 116, 17);
+}
+
+#forsaken
+{
+    background-color: rgb(146, 1, 1);
+}
+
+#mech
+{
+    background-color: rgb(33, 33, 158);
+}
+
+#mastermind
+{
+    background-color: rgb(15, 15, 15);
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+  
+
+  .wrap {
+    overflow: hidden;
+    top: 10%;
+    right: 10%;
+    left: 10%;
+    padding: 20px 50px;
+    display: block;
+    border-radius: 4px;
+    transform: translateY(20px);
+    transition: all 0.5s;
+    visibility: hidden;
+  }
+  .wrap .content {
+    opacity: 0;
+  }
+  .wrap:before {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: white;
+    content: "";
+    bottom: 10px;
+    left: 50%;
+    top: 95%;
+    color: #fff;
+    border-radius: 50%;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .wrap.active {
+    display: block;
+    visibility: visible;
+    box-shadow: 2px 3px 16px silver;
+    transition: all 600ms;
+    transform: translateY(0px);
+    transition: all 0.5s;
+  }
+  .wrap.active:before {
+    height: 2000px;
+    width: 2000px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -1000px;
+    margin-top: -1000px;
+    display: block;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .wrap.active .content {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  
+#meinbutton {
+    padding: 11px 11px 13px 13px;
+    outline: none;
+    border-radius: 50%;
+    background: #007fed;
+    color: #fff;
+    font-size: 24px;
+    display: block;
+    position: fixed;
+    left: 50%;
+
+    margin-left: -25px;
+    transition: transform 0.25s;
+  }
+#meinbutton:hover {
+    text-decoration: none;
+    background: #2198ff;
+  }
+
+  .tab_box
+{
+    height: 90% !important;
+}
+
+#gamedetails_table
+{
+    width: 100%;
+    background-color: lightgray;
+    border-radius: 5px;
+    padding:25px;
+}
+
+#gamedetails_table tr:hover
+{
+    background-color: darkgray;
+}
+
+.gamedetails_kasten
+{
+    height:80%;
+    overflow: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width:30%;
+    float: left;
+
+}
+.gamedetails_kasten::-webkit-scrollbar {
+    width: 10px;  /* remove scrollbar space */
+      /*background: transparent; optional: just make scrollbar invisible */
+      background: lightgray;
+      border-radius: 5px;
+}
+/* optional: show position indicator in red */
+.gamedetails_kasten::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin:5px;
+}
+
+.gamedetails_schrift 
+{
+    height:10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width:30%;
+    float: left;
+}

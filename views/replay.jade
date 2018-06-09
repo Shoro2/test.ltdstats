@@ -1,0 +1,49 @@
+extend layout
+block content
+    #alles
+        link(rel='stylesheet', href='/css/replay.css')
+        #wave(style="text-align: center;color:white;") Wave:
+        .close(onclick="close();") x
+        .slider_container
+            input(type="range", min="1", max="21", step="1", value="1",  data-orientation="vertical", oninput="waveAnzeigen();", onchange="waveAnzeigen();")#slider.slider
+        -for(var e=1;e<5;e++)
+            .player_name
+                .name(id="p"+e+"_name" style='display:inline;')
+                .networth(id="networth"+e, title='Net Worth', style='display:inline;')
+                .worker(id="worker"+e, title='Worker', style='display:inline;')
+                .legionspell(id="legionspell"+(e-1))
+        -for(var e=1;e<5;e++)
+                .player.build(id="player"+e)
+                    table.buildtable(id="table_p"+e)
+                        - for(var i=0;i<28;i++)
+                            tr(id=i, onclick="")
+                                td(id="p"+e+"_"+i+".0", class="pictable")
+                                td(id="p"+e+"_"+i+".1", class="pictable")
+                                td(id="p"+e+"_"+i+".2", class="pictable")
+                                td(id="p"+e+"_"+i+".3", class="pictable")
+                                td(id="p"+e+"_"+i+".4", class="pictable")
+                                td(id="p"+e+"_"+i+".5", class="pictable")
+                                td(id="p"+e+"_"+i+".6", class="pictable")
+                                td(id="p"+e+"_"+i+".7", class="pictable")
+                                td(id="p"+e+"_"+i+".8", class="pictable")
+                                td(id="p"+e+"_"+i+".9", class="pictable")
+                                td(id="p"+e+"_"+i+".10", class="pictable")
+                                td(id="p"+e+"_"+i+".11", class="pictable")
+                                td(id="p"+e+"_"+i+".12", class="pictable")
+                                td(id="p"+e+"_"+i+".13", class="pictable")
+                                td(id="p"+e+"_"+i+".14", class="pictable")
+                                td(id="p"+e+"_"+i+".15", class="pictable")
+                                td(id="p"+e+"_"+i+".16", class="pictable")
+                                td(id="p"+e+"_"+i+".17", class="pictable")
+                                td(id="p"+e+"_"+i+".18", class="pictable")
+        -for(var e=1;e<5;e++)
+            .label Sends:
+        -for(var e=1;e<5;e++)
+            .player.sends(id="sends_player"+e, title="Sends")
+        -for(var e=1;e<5;e++)
+            .label Leaks:
+        -for(var e=1;e<5;e++)
+            .player.leaks(id="leaks_player"+e, title="Leaks")
+        script(src="/js/jquery.js")
+        script(src="/js/replay.js")
+    

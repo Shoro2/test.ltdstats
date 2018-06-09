@@ -1,0 +1,21 @@
+extend layout
+block content
+    .content
+        form(action="")
+            label(for="fname") First Name
+            p
+            input(type="text" id="fname" name="firstname" placeholder="Your first name.." style="width:20%;")
+            p
+            label(for="lname") Last Name
+            p
+            input(type="text" id="lname" name="lastname" placeholder="Your last name.." style="width:20%;")
+            p
+            label(for="lname") E-Mail
+            p
+            input(type="text" id="email" name="email" placeholder="Your E-Mail.." style="width:20%;")
+            p
+            label(for="subject") Subject
+            p
+            textarea(id="subject" name="subject" placeholder="Write something.." style="height:170px; width:50%")
+            p
+            input(type="submit" value="Submit")

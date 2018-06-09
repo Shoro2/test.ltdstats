@@ -1,0 +1,218 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/compare.css')
+    .meinebox
+        table.meineTabelle
+            tr
+                th Stats
+                th Player 1
+                th Player 2
+                th Difference
+            tr
+                td Games Played
+                td#player1_gamesplayed
+                td#player2_gamesplayed
+                td#difference_gamesplayed
+            tr
+                td Wins
+                td#player1_wins
+                td#player2_wins
+                td#difference_wins
+            tr
+                td Losses
+                td#player1_losses
+                td#player2_losses
+                td#difference_losses
+            tr
+                td Win Rate
+                td#player1_winrate
+                td#player2_winrate
+                td#difference_winrate
+            tr
+                td Ties
+                td#player1_ties
+                td#player2_ties
+                td#difference_ties
+            tr
+                td Quits
+                td#player1_quits
+                td#player2_quits
+                td#difference_quits
+            tr
+                td Win Streak
+                td#player1_winstreak
+                td#player2_winstreak
+                td#difference_winstreak
+            tr
+                td Playtime
+                td#player1_playtime
+                td#player2_playtime
+                td#difference_playtime
+            tr
+                td XP
+                td#player1_xp
+                td#player2_xp
+                td#difference_xp
+            tr
+                td Overall Peak Elo
+                td#player1_overallpeakelo
+                td#player2_overallpeakelo
+                td#difference_overallpeakelo
+            tr
+                td Overall Elo
+                td#player1_overallelo
+                td#player2_overallelo
+                td#difference_overallelo
+            tr
+                td Element Peak Elo
+                td#player1_elementpeakelo
+                td#player2_elementpeakelo
+                td#difference_elementpeakelo
+            tr
+                td Element Elo
+                td#player1_elementelo
+                td#player2_elementelo
+                td#difference_elementelo
+            tr
+                td Element Games
+                td#player1_elementgames
+                td#player2_elementgames
+                td#difference_elementgames
+            tr
+                td Element Wins
+                td#player1_elementwins
+                td#player2_elementwins
+                td#difference_elementwins
+            tr
+                td Element Losses
+                td#player1_elementlosses
+                td#player2_elementlosses
+                td#difference_elementlosses
+            tr
+                td Element XP
+                td#player1_elementxp
+                td#player2_elementxp
+                td#difference_elementxp
+            tr
+                td Grove Peak Elo
+                td#player1_grovepeakelo
+                td#player2_grovepeakelo
+                td#difference_grovepeakelo
+            tr
+                td Grove Elo
+                td#player1_groveelo
+                td#player2_groveelo
+                td#difference_groveelo
+            tr
+                td Grove Games
+                td#player1_grovegames
+                td#player2_grovegames
+                td#difference_grovegames
+            tr
+                td Grove Wins
+                td#player1_grovewins
+                td#player2_grovewins
+                td#difference_grovewins
+            tr
+                td Grove Losses
+                td#player1_grovelosses
+                td#player2_grovelosses
+                td#difference_grovelosses
+            tr
+                td Grove XP
+                td#player1_grovexp
+                td#player2_grovexp
+                td#difference_grovexp
+            tr
+                td Forsaken Peak Elo
+                td#player1_forsakenpeakelo
+                td#player2_forsakenpeakelo
+                td#difference_forsakenpeakelo
+            tr
+                td Forsaken Elo
+                td#player1_forsakenelo
+                td#player2_forsakenelo
+                td#difference_forsakenelo
+            tr
+                td Forsaken Games
+                td#player1_forsakengames
+                td#player2_forsakengames
+                td#difference_forsakengames
+            tr
+                td Forsaken Wins
+                td#player1_forsakenwins
+                td#player2_forsakenwins
+                td#difference_forsakenwins
+            tr
+                td Forsaken Losses
+                td#player1_forsakenlosses
+                td#player2_forsakenlosses
+                td#difference_forsakenlosses
+            tr
+                td Forsaken XP
+                td#player1_forsakenxp
+                td#player2_forsakenxp
+                td#difference_forsakenxp
+            tr
+                td Mech Peak Elo
+                td#player1_mechpeakelo
+                td#player2_mechpeakelo
+                td#difference_mechpeakelo
+            tr
+                td Mech Elo
+                td#player1_mechelo
+                td#player2_mechelo
+                td#difference_mechelo
+            tr
+                td Mech Games
+                td#player1_mechgames
+                td#player2_mechgames
+                td#difference_mechgames
+            tr
+                td Mech Wins
+                td#player1_mechwins
+                td#player2_mechwins
+                td#difference_mechwins
+            tr
+                td Mech Losses
+                td#player1_mechlosses
+                td#player2_mechlosses
+                td#difference_mechlosses
+            tr
+                td Mech XP
+                td#player1_mechxp
+                td#player2_mechxp
+                td#difference_mechxp
+            tr
+                td Mastermind Peak Elo
+                td#player1_mastermindpeakelo
+                td#player2_mastermindpeakelo
+                td#difference_mastermindpeakelo
+            tr
+                td Mastermind Elo
+                td#player1_mastermindelo
+                td#player2_mastermindelo
+                td#difference_mastermindelo
+            tr
+                td Mastermind Games
+                td#player1_mastermindgames
+                td#player2_mastermindgames
+                td#difference_mastermindgames
+            tr
+                td Mastermind Wins
+                td#player1_mastermindwins
+                td#player2_mastermindwins
+                td#difference_mastermindwins
+            tr
+                td Mastermind Losses
+                td#player1_mastermindlosses
+                td#player2_mastermindlosses
+                td#difference_mastermindlosses
+            tr
+                td Mastermind XP
+                td#player1_mastermindxp
+                td#player2_mastermindxp
+                td#difference_mastermindxp
+       
+    script(src="/js/player_profile_string.js")
+    script(src="/js/compare.js")

@@ -1,0 +1,385 @@
+{
+    "EventName": "game_balance_player_row",
+    "EventNamespace": "title.9092",
+    "EntityType": "title",
+    "Source": "9092",
+    "EventId": "9aa41c178d3e48e59bba28aa3663b75f",
+    "EntityId": "9092",
+    "SourceType": "GameServer",
+    "Timestamp": "2018-04-24T14:50:10.036Z",
+    "History": null,
+    "CustomTags": null,
+    "Reserved": null,
+    "date": "2018.04.24.14:50",
+    "version": "v2.20a1",
+    "game_id": "18144814495749900068",
+    "queue_type": "Casual",
+    "wave": 17,
+    "time": 1611,
+    "player_id": "49211971B1CF44C8",
+    "player_number": 2,
+    "player_name": "kaiN7",
+    "legion": "Forsaken",
+    "fighters": "Bone Warrior,Gargoyle,Gargoyle,Butcher,Bone Warrior,Bone Warrior,Head Chef,Fire Archer,Doppelganger,Hades,Gateguard,Harbinger,Harbinger,Fire Archer,Dark Mage,Green Devil,Fire Archer,Harbinger,Harbinger",
+    "mercenaries": "Dino,Snail,Snail,Snail,Brute,Lizard,Lizard,Snail,Lizard,Hermit,Fiend,Lizard,Lizard,Lizard,Dragon Turtle,Hermit,Lizard,Brute,Hermit,Snail,Dragon Turtle,Pack Leader",
+    "workers": 13,
+    "income": 316,
+    "value": 3700,
+    "cross": 0,
+    "game_result": "won",
+    "stayed_till_end": false,
+    "player_count": 4,
+    "human_count": 4,
+    "overallElo": 1142,
+    "gameElo": 1204,
+    "spell": "Sacrifice",
+    "partySize": 1,
+    "net_worth_per_wave": [
+        428,
+        512,
+        602,
+        710,
+        848,
+        1022,
+        1202,
+        1391,
+        1604,
+        1870,
+        2245,
+        2543,
+        2788,
+        3193,
+        3629,
+        4055
+    ],
+    "workers_per_wave": [
+        3,
+        4,
+        4,
+        4,
+        6,
+        6,
+        8,
+        8,
+        8,
+        8,
+        9,
+        11,
+        12,
+        13,
+        13,
+        13
+    ],
+    "mercenaries_sent_per_wave": [
+        [],
+        [],
+        [],
+        [],
+        [
+            "Dino",
+            "Snail"
+        ],
+        [
+            "Snail"
+        ],
+        [
+            "Snail"
+        ],
+        [
+            "Brute"
+        ],
+        [
+            "Lizard"
+        ],
+        [
+            "Lizard",
+            "Snail"
+        ],
+        [
+            "Lizard",
+            "Fiend"
+        ],
+        [
+            "Hermit",
+            "Lizard"
+        ],
+        [
+            "Lizard",
+            "Lizard"
+        ],
+        [
+            "Hermit",
+            "Dragon Turtle"
+        ],
+        [
+            "Brute",
+            "Hermit"
+        ],
+        [
+            "Lizard",
+            "Snail"
+        ]
+    ],
+    "mercenaries_received_per_wave": [
+        [
+            "Snail"
+        ],
+        [],
+        [],
+        [
+            "Fiend"
+        ],
+        [],
+        [
+            "Dino"
+        ],
+        [
+            "Dragon Turtle"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Centaur"
+        ],
+        [],
+        [],
+        [],
+        [
+            "Brute"
+        ]
+    ],
+    "leaks_per_wave": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Granddaddy"
+        ],
+        [],
+        [
+            "Mantis",
+            "Mantis",
+            "Mantis",
+            "Mantis",
+            "Centaur"
+        ],
+        [
+            "Drill Golem",
+            "Drill Golem"
+        ],
+        [
+            "Killer Slug",
+            "Killer Slug",
+            "Killer Slug"
+        ],
+        [
+            "Quadrapus",
+            "Quadrapus",
+            "Quadrapus"
+        ],
+        [
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal",
+            "Cardinal"
+        ]
+    ],
+    "build_per_wave": [
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "bone_warrior_unit_id:4.5,9.5"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "bone_warrior_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "bone_warrior_unit_id:3.5,9.5",
+            "bone_warrior_unit_id:5.5,9.5"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "bone_warrior_unit_id:3.5,9.5",
+            "bone_warrior_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "bone_warrior_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8"
+        ],
+        [
+            "gateguard_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "gateguard_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "gargoyle_unit_id:3.5,8",
+            "gargoyle_unit_id:5.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7",
+            "nightmare_unit_id:5.5,8"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "gateguard_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7",
+            "doppelganger_unit_id:5.5,8"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "gateguard_unit_id:4.5,8",
+            "harbinger_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7",
+            "doppelganger_unit_id:5.5,8",
+            "fire_archer_unit_id:7.5,9"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "harbinger_unit_id:4.5,8",
+            "harbinger_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7",
+            "doppelganger_unit_id:5.5,8",
+            "fire_archer_unit_id:7.5,9",
+            "butcher_unit_id:4.5,5.5",
+            "bone_warrior_unit_id:4.5,4.5",
+            "bone_warrior_unit_id:3.5,4.5"
+        ],
+        [
+            "harbinger_unit_id:2.5,9.5",
+            "harbinger_unit_id:6.5,9.5",
+            "fire_archer_unit_id:4.5,9.5",
+            "green_devil_unit_id:3.5,8",
+            "dark_mage_unit_id:3.5,9.5",
+            "fire_archer_unit_id:5.5,9.5",
+            "harbinger_unit_id:4.5,8",
+            "harbinger_unit_id:2.5,8",
+            "gateguard_unit_id:6.5,8",
+            "lord_of_death_unit_id:4.5,7",
+            "doppelganger_unit_id:5.5,8",
+            "fire_archer_unit_id:7.5,9",
+            "head_chef_unit_id:4.5,5.5",
+            "bone_warrior_unit_id:4.5,4.5",
+            "bone_warrior_unit_id:3.5,4.5",
+            "butcher_unit_id:5.5,4.5",
+            "gargoyle_unit_id:6.5,4.5"
+        ]
+    ],
+    "leak_value": 613,
+    "leaks_caught_value": 0,
+    "left_at_seconds": 1278.8613252
+}
