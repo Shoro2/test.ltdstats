@@ -19,21 +19,20 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.static(__dirname + '/public'))
 
-/*
+
 
 var con = mysql.createConnection({
-    host: "",
-    user: "",
-    port: "",
-    password: ""
+    host: "144.76.233.45",
+    user: "ltdstats",
+    port: "13306",
+    database: "legion",
+    password: "!KqsRM6r"
 });
 
 con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected to mySQL!");
+    if (err) console.log("connecton to mysql failed: "+err);
+    else console.log("Connected to mySQL!");
 });
-
-*/
 
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));

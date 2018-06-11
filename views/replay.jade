@@ -3,7 +3,6 @@ block content
     #alles
         link(rel='stylesheet', href='/css/replay.css')
         #wave(style="text-align: center;color:white;") Wave:
-        .close(onclick="close();") x
         .slider_container
             input(type="range", min="1", max="21", step="1", value="1",  data-orientation="vertical", oninput="waveAnzeigen();", onchange="waveAnzeigen();")#slider.slider
         -for(var e=1;e<5;e++)

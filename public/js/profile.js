@@ -107,8 +107,8 @@ function loadEloGraph(games) {
                         elo[counter] = myEle.gameDetails[7].overallElo;
                     }
                     date[counter] = myEle.ts.substring(0, myEle.ts.indexOf(","));
-                    console.log(elo[counter]);
-                    console.log(myEle);
+                    //console.log(elo[counter]);
+                    //console.log(myEle);
                 }
                 else {
                     elo[counter] = elo[counter - 1];
@@ -184,18 +184,18 @@ function loadCollection() {
 }
 
 function loadStats(player) {
-    console.log(player);
-
+    //console.log(player);
     player_name = player.playername;
     //player_icon = player.AvatarUrl;
     //general
     player_totalgames = player.statistics.gamesPlayed;
     player_totalwins = player.statistics.wins;
     player_ties = player.statistics.ties;
+    if (typeof player.statistics.ties == 'undefined') player_ties = 0;
     player_quits = player.statistics.quits;
     player_overall_elo = player.statistics.overallElo;
-    console.log(player.statistics.overallPeakElo);
-    if(typeof player.statistics.overallPeakElo== 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason
+    //console.log(player.statistics.overallPeakElo);
+    if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
     else player_overall_peakelo = player.statistics.overallPeakElo;
     player_overall_xp = player.statistics.totalXp
     player_overall_level = getPlayerLevel(player_overall_xp);
@@ -204,6 +204,7 @@ function loadStats(player) {
     //element
     player_element_elo = player.statistics.elementElo;
     player_element_peakelo = player.statistics.elementPeakElo;
+    if (typeof player.statistics.elementPeakElo == 'undefined') player_element_peakelo = player.statistics.elementPeakEloThisSeason;
     player_element_games = player.statistics.elementPlayed;
     player_element_wins = player.statistics.elementWins;
     player_element_losses = player.statistics.elementLosses;
@@ -212,6 +213,7 @@ function loadStats(player) {
     //grove
     player_grove_elo = player.statistics.groveElo;
     player_grove_peakelo = player.statistics.grovePeakElo;
+    if (typeof player.statistics.grovePeakElo == 'undefined') player_grove_peakelo = player.statistics.grovePeakEloThisSeason;
     player_grove_games = player.statistics.grovePlayed;
     player_grove_wins = player.statistics.groveWins;
     player_grove_losses = player.statistics.groveLosses;
@@ -220,6 +222,7 @@ function loadStats(player) {
     //forsaken
     player_forsaken_elo = player.statistics.forsakenElo;
     player_forsaken_peakelo = player.statistics.forsakenPeakElo;
+    if (typeof player.statistics.forsakenPeakElo == 'undefined') player_forsaken_peakelo = player.statistics.forsakenPeakEloThisSeason;
     player_forsaken_games = player.statistics.forsakenPlayed;
     player_forsaken_wins = player.statistics.forsakenWins;
     player_forsaken_losses = player.statistics.forsakenLosses;
@@ -228,6 +231,7 @@ function loadStats(player) {
     //mech
     player_mech_elo = player.statistics.mechElo;
     player_mech_peakelo = player.statistics.mechPeakElo;
+    if (typeof player.statistics.mechPeakElo == 'undefined') player_mech_peakelo = player.statistics.mechPeakEloThisSeason;
     player_mech_games = player.statistics.mechPlayed;
     player_mech_wins = player.statistics.mechWins;
     player_mech_losses = player.statistics.mechLosses;
@@ -236,6 +240,7 @@ function loadStats(player) {
     //mastermind
     player_mastermind_elo = player.statistics.mastermindElo;
     player_mastermind_peakelo = player.statistics.mastermindPeakElo;
+    if (typeof player.statistics.mastermindPeakElo == 'undefined') player_mastermind_peakelo = player.statistics.mastermindPeakEloThisSeason;
     player_mastermind_games = player.statistics.mastermindPlayed;
     player_mastermind_wins = player.statistics.mastermindWins;
     player_mastermind_losses = player.statistics.mastermindLosses;
@@ -264,22 +269,22 @@ function loadStats(player) {
     //badges
     if(player_overall_level<10)
     {
-        document.getElementById("playerbadge_level").innerHTML = "<img src='/img/icons/0" +  player_overall_level + ".png' style='display:inline;float:right;'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/0" +  player_overall_level + ".png'>";
     } 
     else 
     {
         
-        document.getElementById("playerbadge_level").innerHTML = "<img src='/img/icons/" + player_overall_level +".png' style='display:inline;float:right;'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/" + player_overall_level +".png'>";
     }
-    console.log(player_overall_level);
-    if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Bronze.png'>";
-    else if(player_overall_elo>1200 && player_overall_elo <1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Silver.png'>";
-    else if(player_overall_elo>1400 && player_overall_elo <1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Gold.png'>";
-    else if(player_overall_elo>1600 && player_overall_elo <1800) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Platinum.png'>";
-    else if(player_overall_elo>1800 && player_overall_elo <2000) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Diamond.png'>";
-    else if(player_overall_elo>2000 && player_overall_elo <2200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Expert.png'>";
-    else if(player_overall_elo>2200 && player_overall_elo <2400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/SeniorMaster.png'>";
-    else if(player_overall_elo>2400 && player_overall_elo <2600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Gradmaster.png'>";
+    //console.log(player_overall_level);
+    if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:rightwidth:100px;height:100px;' src='/img/icons/Bronze.png'>";
+    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Silver.png'>";
+    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Gold.png'>";
+    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Platinum.png'>";
+    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Diamond.png'>";
+    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Expert.png'>";
+    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/SeniorMaster.png'>";
+    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Gradmaster.png'>";
     // mouseover details
 
     document.getElementById("general").addEventListener("mouseover", function () { createBig(0); });
@@ -529,7 +534,7 @@ function drawPlayerBuilds(gameX) {
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
         if (ele != 0) buildcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
     });
-    console.log(builds);
+    //console.log(builds);
     /*
     console.log("Leaks on "+document.getElementById("setWave2").value+": "+leaks[target_race][document.getElementById("setWave2").value-1]);
     console.log("Games: " + gamesNeu[target_race]);
@@ -565,15 +570,15 @@ function listGames() {
 }
 
 function getGameDetails(pos, games) {
-    console.log(games[pos]);
-    console.log(games);
-    console.log(pos);
+    //console.log(games[pos]);
+    //console.log(games);
+    //console.log(pos);
     meinString = games[pos].gameDetails[0];
     meinString1 = games[pos].gameDetails[1];
     meinString2 = games[pos].gameDetails[2];
     meinString3 = games[pos].gameDetails[3];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
-    console.log(gameEvent);
+    //console.log(gameEvent);
 }
 
 function getPlayerAmount() {
@@ -655,8 +660,8 @@ function getPlayerBuild(player) {
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
     else var wave = parseInt(document.getElementById("setWave").value);
     var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
-    console.log(gameEvent[player].unitsPerWave);
-    console.log(wave);
+    //console.log(gameEvent[player].unitsPerWave);
+    //console.log(wave);
     counter = 0;
     meinBuild.forEach(element => {
         document.getElementById("gamedetails_build").innerHTML += element + "<br>";
@@ -959,7 +964,7 @@ function addPicture(y, x, unit) {
     meinCanvas2.setAttribute("class", "kleinerCanvas");
     var el2 = zielspalte.appendChild(meinCanvas2);
     var zielspalte = document.getElementById(neuesX + "." + (neuesY + 1));
-    console.log(neuesX + ", "+neuesY);
+    //console.log(neuesX + ", "+neuesY);
     zielspalte.style = "border: 0px;";
     meinCanvas3 = document.createElement("canvas");
     meinCanvas3.setAttribute("id", unit_type + " 3");
@@ -1024,7 +1029,7 @@ function showBuild() {
 document.onkeydown = function (event) {
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
         if (event.keyCode == 38 || event.keyCode == 39) {
-            console.log("up");
+            //console.log("up");
             if (document.getElementById("setWave").value < gameEvent[0].wave - 1) {
                 var waveValue = parseInt(document.getElementById("setWave").value) + 1;
                 document.getElementById("setWave").value = waveValue;
@@ -1033,7 +1038,7 @@ document.onkeydown = function (event) {
             else if (document.getElementById("setWave").value == "all") {
                 document.getElementById("setWave").value = "1";
                 drawGameDetails();
-                console.log("all");
+                //console.log("all");
             }
             else if (document.getElementById("setWave").value == (gameEvent[0].wave - 1)) {
                 document.getElementById("setWave").value = "all";

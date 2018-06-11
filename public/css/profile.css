@@ -8,12 +8,11 @@
 }
 
 
-#avgbuild
-{
-    height:200px;
+#avgbuild {
+    height: 200px;
     width: 50%;
-    overflow:auto;
-    padding:20px;
+    overflow: auto;
+    padding: 20px;
     border: solid 1px lightgray;
     border-radius: 5px;
 }
