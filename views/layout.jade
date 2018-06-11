@@ -124,6 +124,10 @@ html
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Player 1', aria-label='Player 1')
                             input#playername2.form-control.mr-sm-2(type='text', placeholder='Player 2', aria-label='Player 2')
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Compare
+                    if(title.includes("Replay"))
+                        .form-inline.my-2.my-lg-0
+                            input#gameid.form-control.mr-sm-2(type='text', placeholder='Game ID', aria-label='Game ID')
+                            button.btn.btn-outline-success.my-2.my-sm-0() Search
                     if(title.includes("Patch"))
                         .form-inline.my-2.my-lg-0
                             select#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search', onchange="getPatch();")

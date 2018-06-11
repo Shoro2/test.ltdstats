@@ -34,6 +34,7 @@ function checkContent() {
             document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
             queryPlayer(playerurl);
             queryPlayerGames(playerurl, 100);
+            queryPlayerOverallGames(playerurl);
         }
         else 
         {
@@ -42,16 +43,14 @@ function checkContent() {
                 document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
                 queryPlayer(playerurl);
                 queryPlayerGames(playerurl, 100);
+                queryPlayerOverallGames(playerurl);
             }
             else
             {
                 document.getElementById("tab_box_1").textContent = "Select a player";
                 openTab(1);
             }
-            
-
         }
-    
 }
 
 function loadEloGraph(games) {
@@ -60,7 +59,7 @@ function loadEloGraph(games) {
     var date = [50];
     games.forEach(function (myEle) {
         if (counter < 50) {
-            console.log(myEle);
+            //console.log(myEle);
             if (myEle.queuetype != "Custom") {
                 if (myEle.gameDetails[0].playername == player_name) {
                     elo[counter] = myEle.gameDetails[0].overallElo;
@@ -80,8 +79,36 @@ function loadEloGraph(games) {
             }
             else {
                 if (counter == 0) {
-                    elo[0] = 1200;
-                    date[0] = "01/01/2018";
+                    if (myEle.gameDetails[0].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[0].overallElo;
+
+                    }
+                    else if (myEle.gameDetails[1].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[1].overallElo;
+                    }
+                    else if (myEle.gameDetails[2].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[2].overallElo;
+                    }
+
+                    else if (myEle.gameDetails[3].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[3].overallElo;
+                    }
+                    else if (myEle.gameDetails[4].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[4].overallElo;
+                    }
+                    else if (myEle.gameDetails[5].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[5].overallElo;
+                    }
+
+                    else if (myEle.gameDetails[6].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[6].overallElo;
+                    }
+                    else if (myEle.gameDetails[7].playername == player_name) {
+                        elo[counter] = myEle.gameDetails[7].overallElo;
+                    }
+                    date[counter] = myEle.ts.substring(0, myEle.ts.indexOf(","));
+                    console.log(elo[counter]);
+                    console.log(myEle);
                 }
                 else {
                     elo[counter] = elo[counter - 1];
@@ -242,8 +269,9 @@ function loadStats(player) {
     else 
     {
         
-        document.getElementById("playerbadge_level").innerHTML = "<img class='badge' src='/img/icons/"+player_overall_level+".png'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img src='/img/icons/" + player_overall_level +".png' style='display:inline;float:right;'>";
     }
+    console.log(player_overall_level);
     if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Bronze.png'>";
     else if(player_overall_elo>1200 && player_overall_elo <1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Silver.png'>";
     else if(player_overall_elo>1400 && player_overall_elo <1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;' src='/img/icons/Gold.png'>";
@@ -302,7 +330,7 @@ function createBig(nummer) {
         //general
         case 0:
             document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(138, 138, 138); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "General:<br>Wins: " + player_totalwins + "<br>Ties: " + player_ties + "<br>Quits: " + player_quits + "<br>Overall Elo: " + player_overall_elo + "<br>Overall Peak Elo: " + player_overall_peakelo + "<br>Level: " + player_overall_level + "<br>Winningstreak: " + player_winningstreak + "<br>Cross Games: "+player_crossgames+"<br>Party Games: "+player_partygames+"<br>Best Friend: "+player_bestfriend+"<br>Archenemy: "+player_archenemy+"<br>Chance to leak 1: "+player_leakon1+"<br>Chance to send 1: "+player_sendon1;
+            document.getElementById("grosserBalken").innerHTML = "General:<br>Wins: " + player_totalwins + "<br>Ties: " + player_ties + "<br>Quits: " + player_quits + "<br>Overall Elo: " + player_overall_elo + "<br>Overall Peak Elo: " + player_overall_peakelo + "<br>Level: " + player_overall_level + "<br>Winningstreak: " + player_winningstreak + "<br>";
             break;
         //element
         case 1:
@@ -350,11 +378,13 @@ function toggleFilters() {
     }
 }
 
-function drawPlayerBuilds() {
+function drawPlayerBuilds(gameX) {
     //player = JSON.parse(jsonResponse);
-    console.log(player);
     player_name = player.playername;
-    console.log(player_name);
+    //console.log("drawPlayerBuilds player name: " + player_name);
+    game = gameX;
+    //console.log("drawPlayerBuilds game:");
+    //console.log(game);
     player_count = 51; //amount of games
     games = [0, 0, 0, 0, 0];
     gamesNeu = [0, 0, 0, 0, 0];
@@ -396,7 +426,7 @@ function drawPlayerBuilds() {
             break;
     }
 
-    for (i = 0; i < player.filteredGamesQuery.games.length; i++) {
+    for (i = 0; i < game.length; i++) {
         /*raceint:
         0=Mastermind
         1=Element
@@ -404,12 +434,12 @@ function drawPlayerBuilds() {
         3=Forsaken
         4=Mech
         */
-        if (player.filteredGamesQuery.games[i].queuetype === "Normal") //ranked only
+        if (game[i].queuetype === "Normal") //ranked only
         {
-            wave = parseInt(player.filteredGamesQuery.games[i].wave);
-            if (wave > 15) console.log(wave);
+            wave = parseInt(game[i].wave);
+            //if (wave > 15) console.log(wave);
             var raceint = 0;
-            switch (player.filteredGamesQuery.games[i].legion) {
+            switch (game[i].legion) {
                 case "Mastermind":
                     raceint = 0;
                     break;
@@ -430,21 +460,21 @@ function drawPlayerBuilds() {
             //total # of ranked games
             games[raceint]++;
             //gamesNeu: games with newer data and leaks 
-            if (player.filteredGamesQuery.games[i].leaksPerWave !== null && wave - 1 > document.getElementById("setWave2").value - 1 && player.filteredGamesQuery.games[i].mercsReceivedPerWave !== null) gamesNeu[raceint]++;
+            if (game[i].leaksPerWave !== null && wave - 1 > document.getElementById("setWave2").value - 1 && game[i].mercsReceivedPerWave !== null) gamesNeu[raceint]++;
             //wins
-            if (player.filteredGamesQuery.games[i].gameresult === "won") wins[raceint]++;
+            if (game[i].gameresult === "won") wins[raceint]++;
             //check leaks for every wave and store them in leaks[][]
             //console.log(player.filteredGamesQuery.games[i].unitsPerWave);
             for (var e = 0; e < wave - 1; e++) {
                 //check for newer data
-                //console.log(player);
-                if (player.filteredGamesQuery.games[i].leaksPerWave !== null && player.filteredGamesQuery.games[i].mercsReceivedPerWave !== null) if (player.filteredGamesQuery.games[i].leaksPerWave.length > 0 && player.filteredGamesQuery.games[i].mercsReceivedPerWave.length > 0) {
-                    if (player.filteredGamesQuery.games[i].leaksPerWave[e].length > 0 && player.filteredGamesQuery.games[i].mercsReceivedPerWave[e].length > 0) {
+                //console.log(game[i]);
+                if (game[i].leaksPerWave !== null && game[i].mercsReceivedPerWave !== null) if (game[i].leaksPerWave.length > 0 && game[i].mercsReceivedPerWave.length > 0) {
+                    if (game[i].leaksPerWave[e].length > 0 && game[i].mercsReceivedPerWave[e].length > 0) {
                         //amount of games where he leaked
                         leaks[raceint][e] = leaks[raceint][e] + 1;
                     }
                 }
-                player.filteredGamesQuery.games[i].unitsPerWave[e].forEach(function (element) {
+                game[i].unitsPerWave[e].forEach(function (element) {
 
                     //e=wave ;x=verschiedene units
                     var anzahl = 0;
@@ -499,6 +529,7 @@ function drawPlayerBuilds() {
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
         if (ele != 0) buildcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
     });
+    console.log(builds);
     /*
     console.log("Leaks on "+document.getElementById("setWave2").value+": "+leaks[target_race][document.getElementById("setWave2").value-1]);
     console.log("Games: " + gamesNeu[target_race]);
@@ -512,7 +543,7 @@ function drawPlayerBuilds() {
 $('#tab_top_3').on('click', function () {
 
     if (document.getElementById("playername").value) {
-        getGameDetails(0);
+        
         drawGameDetails();
         return false;
     }
@@ -520,14 +551,29 @@ $('#tab_top_3').on('click', function () {
 }
 );
 
-function getGameDetails(pos) {
+function listGames() {
+    var selector = document.getElementById("setGame");
+    for (i = 0; i < 100; i++) {
+        var option = document.createElement("option");
+        option.text = games[i].queuetype+": "+games[i].ts + ", " + games[i].gameresult;
+        option.value = i;
+        if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
+        if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
+        selector.add(option);
+        
+    }
+}
+
+function getGameDetails(pos, games) {
+    console.log(games[pos]);
+    console.log(games);
+    console.log(pos);
     meinString = games[pos].gameDetails[0];
     meinString1 = games[pos].gameDetails[1];
     meinString2 = games[pos].gameDetails[2];
     meinString3 = games[pos].gameDetails[3];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
     console.log(gameEvent);
-    savedValue = 0;
 }
 
 function getPlayerAmount() {
@@ -535,7 +581,8 @@ function getPlayerAmount() {
 }
 
 function drawGameDetails() {
-
+    var selectedGame = document.getElementById("setGame").value;
+    getGameDetails(selectedGame, games);
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
     else var wave = parseInt(document.getElementById("setWave").value);
     for (var i = 0; i < 4; i++) {
@@ -546,9 +593,20 @@ function drawGameDetails() {
         document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
         document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
         document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
+        if (gameEvent[i].playername == player_name) var position = i;
 
     }
-    getPlayerBuild(savedValue);
+    getPlayerBuild(0);
+    //Summary:
+    document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
+    document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts;
+    document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
+    document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
+    document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + "min"; 
+   
+    
+
+
 
 }
 
@@ -680,10 +738,46 @@ function addPicture(y, x, unit) {
             var unit_type = "RogueWave";
             break;
         case "windhawk":
-            var url = "/img/icons/WindHawk.png";
-            var unit_type = "WindHawk";
+            var url = "/img/icons/Windhawk.png";
+            var unit_type = "Windhawk";
+            break;
+        case "violet":
+            var url = "/img/icons/Violet.png";
+            var unit_type = "Violet";
+            break;
+        case "mudman":
+            var url = "/img/icons/Mudman.png";
+            var unit_type = "Mudman";
+            break;
+        case "golem":
+            var url = "/img/icons/Golem.png";
+            var unit_type = "Golem";
+            break;
+        case "disciple":
+            var url = "/img/icons/Disciple.png";
+            var unit_type = "Disciple";
+            break;
+        case "starcaller":
+            var url = "/img/icons/Starcaller.png";
+            var unit_type = "Starcaller";
+            break;
+        case "fire_lord":
+            var url = "/img/icons/FireLord.png";
+            var unit_type = "FireLord";
+            break;
+        case "fenix":
+            var url = "/img/icons/Fenix.png";
+            var unit_type = "Fenix";
             break;
         //grove
+        case "buzz":
+            var url = "/img/icons/Buzz.png";
+            var unit_type = "Buzz";
+            break;
+        case "consort":
+            var url = "/img/icons/Consort.png";
+            var unit_type = "Consort";
+            break;
         case "ranger":
             var url = "/img/icons/Ranger.png";
             var unit_type = "Ranger";
@@ -691,6 +785,38 @@ function addPicture(y, x, unit) {
         case "daphne":
             var url = "/img/icons/Daphne.png";
             var unit_type = "Daphne";
+            break;
+        case "whileshroom":
+            var url = "/img/icons/Wileshroom.png";
+            var unit_type = "Wileshroom";
+            break;
+        case "canopie":
+            var url = "/img/icons/Canopie.png";
+            var unit_type = "Canopie";
+            break;
+        case "honeyflower":
+            var url = "/img/icons/Honeyflower.png";
+            var unit_type = "Honeyflower";
+            break;
+        case "deathcap":
+            var url = "/img/icons/Deathcap.png";
+            var unit_type = "Deathcap";
+            break;
+        case "antler":
+            var url = "/img/icons/Antler.png";
+            var unit_type = "Antler";
+            break;
+        case "whitemane":
+            var url = "/img/icons/Whitemane.png";
+            var unit_type = "Whitemane";
+            break;
+        case "banana_bunk":
+            var url = "/img/icons/BananaBunk.png";
+            var unit_type = "BananaBunk";
+            break;
+        case "banana_haven":
+            var url = "/img/icons/BananaHaven.png";
+            var unit_type = "BananaHaven";
             break;
         //forsaken
         case "bone_warrior":
@@ -701,9 +827,29 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/BoneCrusher.png";
             var unit_type = "BoneCrusher";
             break;
+        case "dark_mage":
+            var url = "/img/icons/DarkMage.png";
+            var unit_type = "DarkMage";
+            break;
+        case "fire_archer":
+            var url = "/img/icons/FireArcher.png";
+            var unit_type = "FireArcher";
+            break;
+        case "gargoyle":
+            var url = "/img/icons/Gargoyle.png";
+            var unit_type = "Gargoyle";
+            break;
         case "green_devil":
             var url = "/img/icons/GreenDevil.png";
             var unit_type = "GreenDevil";
+            break;
+        case "gateguard":
+            var url = "/img/icons/Gateguard.png";
+            var unit_type = "Gateguard";
+            break;
+        case "harbinger":
+            var url = "/img/icons/Harbinger.png";
+            var unit_type = "Harbinger";
             break;
         case "butcher":
             var url = "/img/icons/Butcher.png";
@@ -712,6 +858,22 @@ function addPicture(y, x, unit) {
         case "head_chef":
             var url = "/img/icons/HeadChef.png";
             var unit_type = "Headchef";
+            break;
+        case "nightmare":
+            var url = "/img/icons/Nightmare.png";
+            var unit_type = "Nightmare";
+            break;
+        case "doppelganger":
+            var url = "/img/icons/Doppelganger.png";
+            var unit_type = "Doppelganger";
+            break;
+        case "lord_of_death":
+            var url = "/img/icons/LordOfDeath.png";
+            var unit_type = "LordOfDeath";
+            break;
+        case "hades":
+            var url = "/img/icons/Hades.png";
+            var unit_type = "Hades";
             break;
         //mech
         case "peewee":
@@ -722,16 +884,65 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/Veteran.png";
             var unit_type = "Veteran";
             break;
+        case "bazooka":
+            var url = "/img/icons/Bazooka.png";
+            var unit_type = "Bazooka";
+            break;
+        case "zeus":
+            var url = "/img/icons/Zeus.png";
+            var unit_type = "Zeus";
+            break;
+        case "pyro":
+            var url = "/img/icons/Pyro.png";
+            var unit_type = "Pyro";
+            break;
+        case "tempest":
+            var url = "/img/icons/Tempest.png";
+            var unit_type = "Tempest";
+            break;
+        case "leviathan":
+            var url = "/img/icons/Leviathan.png";
+            var unit_type = "Leviathan";
+            break;
+        case "aps":
+            var url = "/img/icons/APS.png";
+            var unit_type = "APS";
+            break;
+        case "mps":
+            var url = "/img/icons/MPS.png";
+            var unit_type = "MPS";
+            break;
         case "berserker":
             var url = "/img/icons/Berserker.png";
             var unit_type = "Berserker";
+            break;
+        case "fatalizer":
+            var url = "/img/icons/Fatalizer.png";
+            var unit_type = "Fatalizer";
+            break;
+        case "millennium":
+            var url = "/img/icons/Millennium.png";
+            var unit_type = "Millennium";
+            break;
+        case "doomsday_machine":
+            var url = "/img/icons/DoomsdayMachine.png";
+            var unit_type = "DoomsdayMachine";
+            break;
+        case "sea_serpent":
+            var url = "/img/icons/SeaSerpent.png";
+            var unit_type = "SeaSerpant";
+            break;
+        case "deepcoiler":
+            var url = "/img/icons/DeepCoiler.png";
+            var unit_type = "DeepCoilwér";
             break;
         default:
             var url = "";
             var unit_type = "empty";
             break;
-
     }
+
+    
 
     //canvas einfügen
     var zielspalte = document.getElementById(neuesX + "." + neuesY);
@@ -748,6 +959,7 @@ function addPicture(y, x, unit) {
     meinCanvas2.setAttribute("class", "kleinerCanvas");
     var el2 = zielspalte.appendChild(meinCanvas2);
     var zielspalte = document.getElementById(neuesX + "." + (neuesY + 1));
+    console.log(neuesX + ", "+neuesY);
     zielspalte.style = "border: 0px;";
     meinCanvas3 = document.createElement("canvas");
     meinCanvas3.setAttribute("id", unit_type + " 3");
@@ -786,7 +998,7 @@ function addPicture(y, x, unit) {
 function clearPictures() {
 
     for (var i = 0; i < 28; i++) {
-        for (var e = 0; e < 18; e++) {
+        for (var e = 1; e < 19; e++) {
             document.getElementById(i + "." + e).innerHTML = "";
             document.getElementById(i + "." + e).style = "border: 1px solid black; background-color: white;";
 
@@ -811,32 +1023,33 @@ function showBuild() {
 
 document.onkeydown = function (event) {
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
-        if (event.keyCode == 107) {
-
+        if (event.keyCode == 38 || event.keyCode == 39) {
+            console.log("up");
             if (document.getElementById("setWave").value < gameEvent[0].wave - 1) {
                 var waveValue = parseInt(document.getElementById("setWave").value) + 1;
                 document.getElementById("setWave").value = waveValue;
                 drawGameDetails();
             }
-            if (document.getElementById("setWave").value == "all") {
+            else if (document.getElementById("setWave").value == "all") {
                 document.getElementById("setWave").value = "1";
                 drawGameDetails();
+                console.log("all");
             }
-            if (document.getElementById("setWave").value == gameEvent[0].wave - 1) {
+            else if (document.getElementById("setWave").value == (gameEvent[0].wave - 1)) {
                 document.getElementById("setWave").value = "all";
             }
 
         }
-        if (event.keyCode == 109) {
+        if (event.keyCode == 37 || event.keyCode == 40) {
             if (document.getElementById("setWave").value > 1) {
                 document.getElementById("setWave").value -= 1;
                 drawGameDetails();
             }
-            if (document.getElementById("setWave").value == "all") {
+            else if (document.getElementById("setWave").value == "all") {
                 document.getElementById("setWave").value = gameEvent[0].wave - 1;
                 drawGameDetails();
             }
-            if (document.getElementById("setWave").value == "1") {
+            else if (document.getElementById("setWave").value == "1") {
                 document.getElementById("setWave").value = "all";
                 drawGameDetails();
             }
@@ -847,7 +1060,8 @@ document.onkeydown = function (event) {
 
 // api
 
-// player by name
+// player stats by name
+//stats
 function apiGetPlayer(callback, playername) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -871,6 +1085,8 @@ function queryPlayer(playername) {
 }
 
 // last x games by player
+// elograph
+// games
 function getPlayerGames(callback, playername, gameamount) {
     var xhttp = new XMLHttpRequest();
 
@@ -880,16 +1096,41 @@ function getPlayerGames(callback, playername, gameamount) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command={player(playername:"' + playername + '"){filteredGamesQuery(limit:' + gameamount + '){games{game_id,ts,wave,time,queuetype,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}}', true);
+    xhttp.open("GET", '/api?command={player(playername:"' + playername + '"){filteredGamesQuery(limit:' + gameamount + '){games{game_id,ts,wave,time,queuetype,gameresult,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}}', true);
     xhttp.send();
 }
 
 function queryPlayerGames(playername, gameamount) {
     getPlayerGames(function (result) {
-        console.log(result.player.filteredGamesQuery.games);
+        //console.log(result.player.filteredGamesQuery.games);
         games = result.player.filteredGamesQuery.games;
         loadEloGraph(games);
+        drawGameDetails();
+        listGames();
         return games;
 
     }, playername, gameamount);
+}
+
+//player overall games
+//builds
+function getPlayerOverallGames(callback, playername) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var player = JSON.parse(xhttp.response);
+            callback(player);
+        }
+    };
+    xhttp.open("GET", '/api?command={player(playername:"'+playername+'"){filteredGamesQuery(limit:2000){count,games{game_id,ts,position,wave,time,queuetype,legion,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}', true);
+    xhttp.send();
+}
+
+function queryPlayerOverallGames(playername, gameamount) {
+    getPlayerOverallGames(function (result) {
+        playerGames = result.player.filteredGamesQuery.games;
+        drawPlayerBuilds(playerGames);
+        return playerGames;
+    }, playername);
 }

@@ -41,15 +41,12 @@ block content
                     .content
                         b Game:
                         select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
-                                option(value="1") Game 1 (Date, ID)
-                                option(value="1") Game 2 (Date, ID)
-                                option(value="1") Game 3 (Date, ID)
-                                option(value="1") Game 4 (Date, ID)
+                            option(value="0") Game
                         <!-- general -->
                         #game_setWave
                             b Wave:
                             select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
-                                option(value="all") All
+                                option(value="all") Game End
                                 option(value="1") 1
                                 option(value="2") 2
                                 option(value="3") 3
@@ -72,6 +69,13 @@ block content
                                 option(value="20") 20
                                 option(value="21") 21
                         <!-- players -->
+                        b Summary:
+                        #game_summary(style="text-align: center;")
+                            .p#game_id Result # ID:
+                            .p#game_date Date:
+                            .p#game_result Result:
+                            .p#game_wave Wave:
+                            .p#game_time Time Elapsed:
                         b Details:
                         table#gamedetails_table(cellspacing="0", cellpadding="0")
                             tr
@@ -80,7 +84,6 @@ block content
                                 th Value
                                 th Worker
                                 th Income
-                                th Kills
                                 th Leaks
                             tr#game_player1(onclick="javascript: getPlayerBuild(0);")
                                 td#name_1
@@ -88,7 +91,6 @@ block content
                                 td#value_1
                                 td#worker_1
                                 td#income_1
-                                td#kills_1
                                 td#leaks_1
                             tr#game_player2(onclick="javascript: getPlayerBuild(1);")
                                 td#name_2
@@ -96,7 +98,6 @@ block content
                                 td#value_2
                                 td#worker_2
                                 td#income_2
-                                td#kills_2
                                 td#leaks_2
                             tr
                                 td(colspan="7" style="height:10px;")
@@ -106,7 +107,6 @@ block content
                                 td#value_3
                                 td#worker_3
                                 td#income_3
-                                td#kills_3
                                 td#leaks_3
                             tr#game_player4(onclick="javascript: getPlayerBuild(3);")
                                 td#name_4
@@ -114,7 +114,6 @@ block content
                                 td#value_4
                                 td#worker_4
                                 td#income_4
-                                td#kills_4
                                 td#leaks_4
                         b.gamedetails_schrift Build:
                         b.gamedetails_schrift  Mercs sent:
@@ -124,11 +123,11 @@ block content
                         #gamedetails_mercs_received.gamedetails_kasten     
         .tab_box#tab_box_4
             .profile
-                h1#player_name4
+                h1 Not supported yet, sorry :(
         .tab_box#tab_box_5
             .profile
                 .mittig#selector Race:
-                    select#setRace2.form-control.mr-sm-2.meinselect(type='text', onchange="drawPlayerBuilds()")
+                    select#setRace2.form-control.mr-sm-2.meinselect(type='text', onchange="drawPlayerBuilds(playerGames)")
                         option(value="Mastermind") Mastermind
                         option(value="Element") Element
                         option(value="Grove") Grove
@@ -136,7 +135,7 @@ block content
                         option(value="Mech") Mech
                     | Wave:
 
-                    select#setWave2.form-control.mr-sm-2.meinselect(onchange="drawPlayerBuilds()")
+                    select#setWave2.form-control.mr-sm-2.meinselect(onchange="drawPlayerBuilds(playerGames)")
                         option(value="1") 1
                         option(value="2") 2
                         option(value="3") 3
@@ -182,7 +181,6 @@ block content
                         table#buildtable(onclick="showBuild();")
                             - for(var i=0;i<28;i++)
                                 tr(id=i, onclick="showBuild();")
-                                    td(id=i+".0", class="pictable")
                                     td(id=i+".1", class="pictable")
                                     td(id=i+".2", class="pictable")
                                     td(id=i+".3", class="pictable")
@@ -200,3 +198,4 @@ block content
                                     td(id=i+".15", class="pictable")
                                     td(id=i+".16", class="pictable")
                                     td(id=i+".17", class="pictable")
+                                    td(id=i+".18", class="pictable")

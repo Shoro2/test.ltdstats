@@ -3,6 +3,10 @@
     display:inline;
 }
 
+.gamelist_ele:hover {
+    background-color: white;
+}
+
 
 #avgbuild
 {
