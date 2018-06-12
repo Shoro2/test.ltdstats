@@ -6,12 +6,12 @@ block content
         .umdieladder
             #filter_display(onclick="expandFilters()") Show filters
             #filter-invis
-                label.filter_label(onclick="getFilters();") Elo
-                    input.filter_input#checkbox0(type="checkbox", name="filter", value="Elo", onclick='saveTick(0);')
                 label.filter_label(onclick="getFilters();") Rank
-                    input.filter_input#checkbox1(type="checkbox", name="filter", value="Rank", onclick='saveTick(1);')
+                    input.filter_input#checkbox0(type="checkbox", name="filter", value="Rank", onclick='saveTick(0);')
                 label.filter_label(onclick="getFilters();") Name
-                    input.filter_input#checkbox2(type="checkbox", name="filter", value="Name", onclick='saveTick(2);')
+                    input.filter_input#checkbox1(type="checkbox", name="filter", value="Name", onclick='saveTick(1);')
+                label.filter_label(onclick="getFilters();") Elo
+                    input.filter_input#checkbox2(type="checkbox", name="filter", value="Elo", onclick='saveTick(2);')
                 label.filter_label(onclick="getFilters();") Games
                     input.filter_input#checkbox3(type="checkbox", name="filter", value="Games", onclick='saveTick(3);')
                 label.filter_label(onclick="getFilters();") Wins
@@ -49,7 +49,7 @@ block content
                 label.filter_label(onclick="getFilters();") Winchance Mastermind
                     input.filter_input#checkbox20(type="checkbox", name="filter", value="Winchance Mastermind", onclick='saveTick(20);')
                 label.filter_label#selectall(onclick="selectNone()") Deselect all
-            table.ladder
+            table.ladder#myladder
                 tr.header
                     th.table_header#th0(onclick="sortTable(0)")
                     th.table_header#th1(onclick="sortTable(1)")
@@ -72,9 +72,10 @@ block content
                     th.table_header#th18(onclick="sortTable(18)")
                     th.table_header#th19(onclick="sortTable(19)")
                     th.table_header#th20(onclick="sortTable(20)")
-            h1 Not supported yet, sorry :(
+            #mitte(style="text-align:center;")
+                img(class="gif", src="/img/loading.gif")
+                .p Requesting API, please wait...
         script(src="/js/ladder_sort.js")
         script(src="/js/ladder.js")
         script(src="/js/cookies.js")
-        script getPlayer();
         script getTicks();

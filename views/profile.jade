@@ -11,6 +11,7 @@ block content
         .tab_box#tab_box_1
             .profile
                 h1#player_name1
+                #rank
                 #playerbadge_level.badge
                 #playerbadge_rank.badge
                 h3#player_elo1
@@ -174,7 +175,7 @@ block content
     script(src="/js/profile.js")
     script(src="/js/Chart.js")
     link(rel='stylesheet', href='/css/tabmenu.css')
-    script init();openTab(1);
+    script checkContent();openTab(1);
     #divumtable.hidden
                     #showhide(onclick="showBuild();") Close
                         table#buildtable(onclick="showBuild();")

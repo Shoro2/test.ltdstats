@@ -3,9 +3,10 @@
 const express = require('express');
 const jquery = require('jquery');
 const tabmenu = require('./public/js/tabmenu');
+require("./public/js/sqlcon")
 const chart = require('chart.js');
 const favicon = require('serve-favicon');
-const mysql = require('mysql');
+
 require('isomorphic-fetch');
 // Constants
 const PORT = 61624;
@@ -18,16 +19,6 @@ const app = express();
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.static(__dirname + '/public'))
-
-
-
-var con = mysql.createConnection({
-    host: "144.76.233.45",
-    user: "ltdstats",
-    port: "13306",
-    database: "legion",
-    password: "!KqsRM6r"
-});
 
 con.connect(function (err) {
     if (err) console.log("connecton to mysql failed: "+err);
@@ -43,11 +34,9 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 //routes
 
 app.get('/profile', (req, res) => {
-    var playerurl = req.query.player;
     res.render('profile', {
         title: 'Profile'
     });
-    res.json(playerurl);
 });
 
 app.get('/index.html', (req, res) => {
@@ -316,6 +305,23 @@ app.get('/sql/defense', (req, res) => {
 app.get('/lihl/getPlayer', (req, res) => {
     var sql = "SELECT * FROM lihl.player order by elo desc";
     con.query(sql, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/sql/ladder', (req, res) => {
+    var limit = req.query.limit;
+    var offset = req.query.offset;
+    con.query("SELECT * FROM legion.player order by elo desc limit "+limit+" offset "+offset+";", function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/sql/rank', (req, res) => {
+    var player = req.query.player;
+    con.query("SELECT (SELECT COUNT(*) FROM legion.player WHERE elo >= (SELECT elo FROM legion.player where name ='"+player+"')) as Rank FROM legion.player LIMIT 1;", function (err, result, fields) {
         if (err) throw err;
         res.json(result);
     });

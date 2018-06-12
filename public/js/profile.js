@@ -1,56 +1,39 @@
-// 1
-function init() {
-
-    getPlayer();
-
-
-    
-    
-}
-
-function getPlayer() {
-    //lese url aus und erhalte spielernamen
-    if(document.getElementById("playername").value.length>1)
-    {
-        var playername = document.getElementById("playername").value;
-        window.location.hash = playername;
-    }
-    else
-    {
-        document.getElementById("playername").value=window.location.hash.substring(1);
-    }
-    checkContent();
-}
-
 function checkContent() {
-    playerurl = window.location.href;
-    playerurl = playerurl.substring(playerurl.lastIndexOf("#") + 1);
-    while (playerurl.includes("+") || playerurl.includes("%20")) {
-        playerurl = playerurl.replace("+", " ");
-        playerurl = playerurl.replace("%20", " ");
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var playerurl = url.searchParams.get("player");
+    console.log("playerurl: " + playerurl);
+    console.log("value: " + document.getElementById("playername").value);
+    if (playerurl != null) {
+        document.getElementById("playername").value = playerurl;
     }
-        if (document.getElementById("playername").value) 
-        {
-            document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
-            queryPlayer(playerurl);
-            queryPlayerGames(playerurl, 100);
-            queryPlayerOverallGames(playerurl);
-        }
-        else 
-        {
-            if(playerurl!="https://test.ltdstats.com/profile" && playerurl!="https://test.ltdstats.com/profile#")
-            {
-                document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
-                queryPlayer(playerurl);
-                queryPlayerGames(playerurl, 100);
-                queryPlayerOverallGames(playerurl);
-            }
-            else
-            {
-                document.getElementById("tab_box_1").textContent = "Select a player";
-                openTab(1);
-            }
-        }
+    if (document.getElementById("playername").value) {
+        console.log("value!");
+        document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><div id='rank'></div><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
+        queryPlayer(playerurl);
+        queryRank(playerurl);
+        queryPlayerGames(playerurl, 100);
+        queryPlayerOverallGames(playerurl);
+    }
+    else {
+        
+            document.getElementById("tab_box_1").textContent = "Select a player";
+            openTab(1);
+        
+    }
+}
+
+function setPlayer() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var playerurl = url.searchParams.get("player");
+    if (playerurl === null) {
+        window.location.href = window.location.href + "?player=" + document.getElementById("playername").value;
+    }
+    else {
+        window.location.href = "https://test.ltdstats.com/profile" + "?player=" + document.getElementById("playername").value;
+    }
+    
 }
 
 function loadEloGraph(games) {
@@ -193,6 +176,7 @@ function loadStats(player) {
     player_ties = player.statistics.ties;
     if (typeof player.statistics.ties == 'undefined') player_ties = 0;
     player_quits = player.statistics.quits;
+    if (typeof player.statistics.quits == 'undefined') player_quits = 0;
     player_overall_elo = player.statistics.overallElo;
     //console.log(player.statistics.overallPeakElo);
     if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
@@ -203,48 +187,78 @@ function loadStats(player) {
     //player_higheststreak = player.Playerstatistics[26].StatisticValue;
     //element
     player_element_elo = player.statistics.elementElo;
+    if (typeof player.statistics.elementElo == 'undefined') player_element_elo = 1000;
     player_element_peakelo = player.statistics.elementPeakElo;
     if (typeof player.statistics.elementPeakElo == 'undefined') player_element_peakelo = player.statistics.elementPeakEloThisSeason;
+    if (typeof player.statistics.elementPeakEloThisSeason == 'undefined') player_element_peakelo = 1000;
     player_element_games = player.statistics.elementPlayed;
+    if (typeof player.statistics.elementPlayed == 'undefined') player_element_games = 0;
     player_element_wins = player.statistics.elementWins;
+    if (typeof player.statistics.elementWins == 'undefined') player_element_wins = 0;
     player_element_losses = player.statistics.elementLosses;
+    if (typeof player.statistics.elementLosses == 'undefined') player_element_losses = 0;
     player_element_xp = player.statistics.elementXp;
+    if (typeof player.statistics.elementXp == 'undefined') player_element_xp = 0;
     player_element_level = getPlayerLevel(player_element_xp);
     //grove
     player_grove_elo = player.statistics.groveElo;
+    if (typeof player.statistics.groveElo == 'undefined') player_grove_elo = 1000;
     player_grove_peakelo = player.statistics.grovePeakElo;
     if (typeof player.statistics.grovePeakElo == 'undefined') player_grove_peakelo = player.statistics.grovePeakEloThisSeason;
+    if (typeof player.statistics.grovePeakEloThisSeason == 'undefined') player_grove_peakelo = 1000;
     player_grove_games = player.statistics.grovePlayed;
+    if (typeof player.statistics.grovePlayed == 'undefined') player_grove_games = 0;
     player_grove_wins = player.statistics.groveWins;
+    if (typeof player.statistics.groveWins == 'undefined') player_grove_wins = 0;
     player_grove_losses = player.statistics.groveLosses;
+    if (typeof player.statistics.groveLosses == 'undefined') player_grove_losses = 0;
     player_grove_xp = player.statistics.groveXp;
+    if (typeof player.statistics.groveXp == 'undefined') player_grove_xp = 0;
     player_grove_level = getPlayerLevel(player_grove_xp);
     //forsaken
     player_forsaken_elo = player.statistics.forsakenElo;
+    if (typeof player.statistics.forsakenElo == 'undefined') player_forsaken_elo = 1000;
     player_forsaken_peakelo = player.statistics.forsakenPeakElo;
     if (typeof player.statistics.forsakenPeakElo == 'undefined') player_forsaken_peakelo = player.statistics.forsakenPeakEloThisSeason;
+    if (typeof player.statistics.forsakenPeakEloThisSeason == 'undefined') player_forsaken_peakelo = 1000;
     player_forsaken_games = player.statistics.forsakenPlayed;
+    if (typeof player.statistics.forsakenPlayed == 'undefined') player_forsaken_games = 0;
     player_forsaken_wins = player.statistics.forsakenWins;
+    if (typeof player.statistics.forsakenWins == 'undefined') player_forsaken_wins = 0;
     player_forsaken_losses = player.statistics.forsakenLosses;
+    if (typeof player.statistics.forsakenLosses == 'undefined') player_forsaken_losses = 0;
     player_forsaken_xp = player.statistics.forsakenXp;
+    if (typeof player.statistics.forsakenXp == 'undefined') player_forsaken_xp = 0;
     player_forsaken_level = getPlayerLevel(player_forsaken_xp);
     //mech
     player_mech_elo = player.statistics.mechElo;
+    if (typeof player.statistics.mechElo == 'undefined') player_mech_elo = 1000;
     player_mech_peakelo = player.statistics.mechPeakElo;
     if (typeof player.statistics.mechPeakElo == 'undefined') player_mech_peakelo = player.statistics.mechPeakEloThisSeason;
+    if (typeof player.statistics.mechPeakEloThisSeason == 'undefined') player_mech_peakelo = 1000;
     player_mech_games = player.statistics.mechPlayed;
+    if (typeof player.statistics.mechPlayed == 'undefined') player_mech_games = 0;
     player_mech_wins = player.statistics.mechWins;
+    if (typeof player.statistics.mechWins == 'undefined') player_mech_wins = 0;
     player_mech_losses = player.statistics.mechLosses;
+    if (typeof player.statistics.mechLosses == 'undefined') player_mech_losses = 0;
     player_mech_xp = player.statistics.mechXp;
+    if (typeof player.statistics.mechXp == 'undefined') player_mech_xp = 0;
     player_mech_level = getPlayerLevel(player_mech_xp);
     //mastermind
     player_mastermind_elo = player.statistics.mastermindElo;
+    if (typeof player.statistics.mastermindElo == 'undefined') player_mastermind_elo = 1000;
     player_mastermind_peakelo = player.statistics.mastermindPeakElo;
     if (typeof player.statistics.mastermindPeakElo == 'undefined') player_mastermind_peakelo = player.statistics.mastermindPeakEloThisSeason;
+    if (typeof player.statistics.mastermindPeakEloThisSeason == 'undefined') player_mastermind_peakelo = 1000;
     player_mastermind_games = player.statistics.mastermindPlayed;
+    if (typeof player.statistics.mastermindPlayed == 'undefined') player_mastermind_games = 0;
     player_mastermind_wins = player.statistics.mastermindWins;
+    if (typeof player.statistics.mastermindWins == 'undefined') player_mastermind_wins = 0;
     player_mastermind_losses = player.statistics.mastermindLosses;
+    if (typeof player.statistics.mastermindLosses == 'undefined') player_mastermind_losses = 0;
     player_mastermind_xp = player.statistics.mastermindXp;
+    if (typeof player.statistics.mastermindXp == 'undefined') player_mastermind_xp = 0;
     player_mastermind_level = getPlayerLevel(player_mastermind_xp);
 
     player_crossgames = "5";
@@ -269,22 +283,22 @@ function loadStats(player) {
     //badges
     if(player_overall_level<10)
     {
-        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/0" +  player_overall_level + ".png'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/0" +  player_overall_level + ".png'>";
     } 
     else 
     {
         
-        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/" + player_overall_level +".png'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/" + player_overall_level +".png'>";
     }
     //console.log(player_overall_level);
     if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:rightwidth:100px;height:100px;' src='/img/icons/Bronze.png'>";
-    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Silver.png'>";
-    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Gold.png'>";
-    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Platinum.png'>";
-    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Diamond.png'>";
-    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Expert.png'>";
-    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/SeniorMaster.png'>";
-    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:100px;height:100px;' src='/img/icons/Gradmaster.png'>";
+    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Silver.png'>";
+    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Gold.png'>";
+    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Platinum.png'>";
+    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Diamond.png'>";
+    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Expert.png'>";
+    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/SeniorMaster.png'>";
+    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Gradmaster.png'>";
     // mouseover details
 
     document.getElementById("general").addEventListener("mouseover", function () { createBig(0); });
@@ -791,7 +805,7 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/Daphne.png";
             var unit_type = "Daphne";
             break;
-        case "whileshroom":
+        case "wileshroom":
             var url = "/img/icons/Wileshroom.png";
             var unit_type = "Wileshroom";
             break;
@@ -1138,4 +1152,31 @@ function queryPlayerOverallGames(playername, gameamount) {
         drawPlayerBuilds(playerGames);
         return playerGames;
     }, playername);
+}
+
+//sql
+//rank
+function sqlGetRank(callback, playername) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var rank = JSON.parse(xhttp.response);
+            callback(rank);
+        }
+    };
+    xhttp.open("GET", '/sql/rank?player=' + playername, true);
+    xhttp.send();
+}
+
+function queryRank(playername) {
+    sqlGetRank(function (result) {
+        rank = result[0].Rank;
+        console.log(rank);
+        parseRank(rank);
+        return rank;
+    }, playername);
+}
+
+function parseRank(rank) {
+    document.getElementById("rank").textContent = "Rank: " + rank;
 }

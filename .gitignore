@@ -330,3 +330,4 @@ ASALocalRun/
 *.stackdump
 .vs/test.ltdstats/v15/.suo
 *.sqlite
+public/js/sqlcon.js
