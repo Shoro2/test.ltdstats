@@ -14,9 +14,8 @@ block content
         -for(var e=1;e<5;e++)
                 .player.build(id="player"+e)
                     table.buildtable(id="table_p"+e)
-                        - for(var i=0;i<28;i++)
+                        - for(var i=1;i<29;i++)
                             tr(id=i, onclick="")
-                                td(id="p"+e+"_"+i+".0", class="pictable")
                                 td(id="p"+e+"_"+i+".1", class="pictable")
                                 td(id="p"+e+"_"+i+".2", class="pictable")
                                 td(id="p"+e+"_"+i+".3", class="pictable")
@@ -35,6 +34,7 @@ block content
                                 td(id="p"+e+"_"+i+".16", class="pictable")
                                 td(id="p"+e+"_"+i+".17", class="pictable")
                                 td(id="p"+e+"_"+i+".18", class="pictable")
+                                td(id="p"+e+"_"+i+".19", class="pictable")
         -for(var e=1;e<5;e++)
             .label Sends:
         -for(var e=1;e<5;e++)
@@ -43,6 +43,9 @@ block content
             .label Leaks:
         -for(var e=1;e<5;e++)
             .player.leaks(id="leaks_player"+e, title="Leaks")
+    #mitte(style="display:none;")
+        img(class="gif", src="/img/loading.gif")
+        .p Requesting API, please wait...
         script(src="/js/jquery.js")
         script(src="/js/replay.js")
     

@@ -4,6 +4,19 @@ html {
     overflow-x: hidden;
 }
 
+#mitte{
+    position:absolute;
+    z-index:2000;
+    left:20%;
+    right:20%;
+    height:40%;
+    width:60%;
+    background-color:white;
+    text-align:center;
+    border-radius:10px;
+    opacity:0.9;
+}
+
 
 html::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */

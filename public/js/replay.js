@@ -4,11 +4,14 @@ var firsttime = false;
 function getGameDetails(games)
 {
     firsttime = true;
-    meinString = games[0].gameDetails[0];
-    meinString1 = games[0].gameDetails[1];
-    meinString2 = games[0].gameDetails[2];
-    meinString3 = games[0].gameDetails[3];
+    meinString = games.gameDetails[0];
+    meinString1 = games.gameDetails[1];
+    meinString2 = games.gameDetails[2];
+    meinString3 = games.gameDetails[3];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
+    fillNames();
+    waveAnzeigen();
+
 }
 
 function addPicture(y, x, unit, player)
@@ -247,7 +250,8 @@ function addPicture(y, x, unit, player)
 
     }
     //canvas einfügen
-    var zielspalte = document.getElementById("p"+player+"_"+neuesX+"."+neuesY);
+    var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
+    console.log("p" + player + "_" + neuesX + "." + neuesY);
     zielspalte.style="border: 0px;";
     meinCanvas1 = document.createElement("canvas");
     meinCanvas1.setAttribute("id", unit_type+" 1");
@@ -283,7 +287,7 @@ function addPicture(y, x, unit, player)
         ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150); 
         //2
         ctx=el2.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150); 
+        ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
         //3
         ctx=el3.getContext('2d');
         ctx.drawImage(meinBild1,32, 0, 32, 32, 0, 0, 300, 150); 
@@ -303,8 +307,8 @@ function fillNames()
     for(var i=1;i<5;i++)
     {
         var wave = parseInt(document.getElementById("slider").value);
-        var worker = gameEvent[i-1].workers_per_wave[wave-1];
-        var networth = gameEvent[i-1].net_worth_per_wave[wave-1];
+        var worker = gameEvent[i-1].workersPerWave[wave-1];
+        var networth = gameEvent[i-1].netWorthPerWave[wave-1];
         document.getElementById("p"+i+"_name").innerText = gameEvent[i-1].player_name;
         document.getElementById("networth"+i).innerText = "("+networth+"/";
         document.getElementById("worker"+i).innerText = worker+")";
@@ -318,12 +322,12 @@ function fillNames()
 function getPlayerBuild(player)
 {
     var wave = parseInt(document.getElementById("slider").value);
-    meinBuild = gameEvent[player-1].build_per_wave[wave-1];
+    meinBuild = gameEvent[player-1].unitsPerWave[wave-1];
     counter = 0;
     meinBuild.forEach(element => {
         counter++;
-        var meinX = element.substring(element.indexOf(":")+1, element.indexOf(","));
-        var meinY = element.substring(element.indexOf(",")+1);
+        var meinX = element.substring(element.indexOf(":")+1, element.indexOf("|"));
+        var meinY = element.substring(element.indexOf("|")+1);
         addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")), player);
         
     });
@@ -332,7 +336,7 @@ function getPlayerBuild(player)
 function getPlayerLeaks(player)
 {
     var wave = parseInt(document.getElementById("slider").value);
-    var meineLeaks = gameEvent[player-1].leaks_per_wave[wave-1];
+    var meineLeaks = gameEvent[player-1].leaksPerWave[wave-1];
     if(meineLeaks.length>0)
     {
         meineLeaks.forEach(element => {
@@ -345,7 +349,7 @@ function getPlayerLeaks(player)
 function getPlayerSends(player)
 {
     var wave = parseInt(document.getElementById("slider").value);
-    var meineSends = gameEvent[player-1].mercenaries_sent_per_wave[wave-1];
+    var meineSends = gameEvent[player-1].mercsSentPerWave[wave-1];
     if(meineSends.length>0)
     {
         meineSends.forEach(element => {
@@ -377,9 +381,9 @@ function clearPictures()
 {
     for(var h=1;h<5;h++)
     {
-        for(var i=0;i<28;i++)
+        for(var i=1;i<29;i++)
         {
-            for(var e=0;e<19;e++)
+            for(var e=1;e<19;e++)
             {
                 document.getElementById("p"+h+"_"+i+"."+e).innerHTML="";
                 document.getElementById("p"+h+"_"+i+"."+e).style="border: 1px solid black; background-color: white;";
@@ -460,14 +464,37 @@ document.getElementById("slider").onchange = function(){
     }
 }
 
-document.body.onload=function(){
-    if(!firsttime)
-    {
-        getGameDetails();
-        fillNames();
-        waveAnzeigen();
+function getPlayer() {
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var playerurl = url.searchParams.get("gameid");
+    if (playerurl === null) {
+        console.log(playerurl);
+        window.location.href = window.location.href + "?gameid=" + document.getElementById("gameid").value;
     }
-        
+    else {
+        window.location.href = "https://test.ltdstats.com/replay" + "?gameid=" + document.getElementById("gameid").value;
+    }
+
+
+
+}
+
+document.body.onload = function () {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var playerurl = url.searchParams.get("gameid");
+    if (playerurl !== "" && playerurl !== null) {
+        document.getElementById("mitte").style.display = "inherit";
+        queryGame(playerurl);
+        console.log(playerurl);
+        console.log("querGame");
+    }
+    else {
+        document.getElementById("wave").textContent = "Enter a valid gameid to select the replay.";
+        console.log("enter a gameid");
+    }
 }
 
 
@@ -491,7 +518,8 @@ function waveAnzeigen()
 
     var welle = document.getElementById("slider").value;
     var maxwave=  gameEvent[0].wave - 1;
-    document.getElementById("wave").textContent = "Wave: "+ welle.toString() +"/"+maxwave; 
+    document.getElementById("wave").textContent = "Wave: " + welle.toString() + "/" + maxwave; 
+    /*
     var icon_legionspell =[];
     if(welle>10)
     {
@@ -513,6 +541,7 @@ function waveAnzeigen()
             document.getElementById("legionspell"+(i)).innerHTML="";
         }
     }
+    */
     clearPictures();
     clearSends();
     for(var i=1;i<5;i++)
@@ -536,14 +565,16 @@ function getGame(callback, gameid) {
             callback(game);
         }
     };
-    xhttp.open("GET", '/api?command={player(playername:"' + playername + '"){filteredGamesQuery(limit:2000){count,games{game_id,ts,position,wave,time,queuetype,legion,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}', true);
+    xhttp.open("GET", '/api?command={endgame(game_id:"'+gameid+'"){ts,wave,time,gameDetails{wave,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
     xhttp.send();
 }
 
 function queryGame(gameid) {
     getGame(function (result) {
-        game = result.player.filteredGamesQuery.games;
+        console.log(result);
+        game = result.endgame;
         getGameDetails(game);
+        document.getElementById("mitte").style.display = "none";
         return game;
     }, gameid);
 }

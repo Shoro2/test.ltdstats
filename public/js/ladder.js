@@ -137,6 +137,7 @@ document.body.onload = function () {
 
 function getLadder(callback, limit, offset) {
     var xhttp = new XMLHttpRequest();
+    document.getElementById("mitte").style = "position:relative;z - index: 2000;top: 50 %;bottom: 30 %;left: 10 %;right: 10 %;height: 40 %;width: 80 %;background - color: white;text - align: center;border - radius: 10px;opacity: 0.9;";
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
@@ -150,7 +151,7 @@ function getLadder(callback, limit, offset) {
 function queryLadder(limit, offset) {
     getLadder(function (result) {
         parsePlayers(result);
-        document.getElementById("mitte").innerHTML = "";
+        document.getElementById("mitte").style = "display:none;";
         parseRanks();
         return result;
     }, limit, offset);

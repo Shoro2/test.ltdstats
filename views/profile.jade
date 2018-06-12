@@ -1,6 +1,9 @@
 extend layout
 block content
     link(rel='stylesheet', href='/css/profile.css')
+    #mitte(style="display:none;")
+        img(class="gif", src="/img/loading.gif")
+        .p Requesting API, please wait...
     .tabmenu
         .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Stats
         .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Elograph
@@ -177,25 +180,25 @@ block content
     link(rel='stylesheet', href='/css/tabmenu.css')
     script checkContent();openTab(1);
     #divumtable.hidden
-                    #showhide(onclick="showBuild();") Close
-                        table#buildtable(onclick="showBuild();")
-                            - for(var i=0;i<28;i++)
-                                tr(id=i, onclick="showBuild();")
-                                    td(id=i+".1", class="pictable")
-                                    td(id=i+".2", class="pictable")
-                                    td(id=i+".3", class="pictable")
-                                    td(id=i+".4", class="pictable")
-                                    td(id=i+".5", class="pictable")
-                                    td(id=i+".6", class="pictable")
-                                    td(id=i+".7", class="pictable")
-                                    td(id=i+".8", class="pictable")
-                                    td(id=i+".9", class="pictable")
-                                    td(id=i+".10", class="pictable")
-                                    td(id=i+".11", class="pictable")
-                                    td(id=i+".12", class="pictable")
-                                    td(id=i+".13", class="pictable")
-                                    td(id=i+".14", class="pictable")
-                                    td(id=i+".15", class="pictable")
-                                    td(id=i+".16", class="pictable")
-                                    td(id=i+".17", class="pictable")
-                                    td(id=i+".18", class="pictable")
+        #showhide(onclick="showBuild();") Close
+            table#buildtable(onclick="showBuild();")
+                - for(var i=1;i<29;i++)
+                    tr(id=i, onclick="showBuild();")
+                        td(id=i+".1", class="pictable")
+                        td(id=i+".2", class="pictable")
+                        td(id=i+".3", class="pictable")
+                        td(id=i+".4", class="pictable")
+                        td(id=i+".5", class="pictable")
+                        td(id=i+".6", class="pictable")
+                        td(id=i+".7", class="pictable")
+                        td(id=i+".8", class="pictable")
+                        td(id=i+".9", class="pictable")
+                        td(id=i+".10", class="pictable")
+                        td(id=i+".11", class="pictable")
+                        td(id=i+".12", class="pictable")
+                        td(id=i+".13", class="pictable")
+                        td(id=i+".14", class="pictable")
+                        td(id=i+".15", class="pictable")
+                        td(id=i+".16", class="pictable")
+                        td(id=i+".17", class="pictable")
+                        td(id=i+".18", class="pictable")

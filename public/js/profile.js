@@ -8,8 +8,11 @@ function checkContent() {
         document.getElementById("playername").value = playerurl;
     }
     if (document.getElementById("playername").value) {
-        console.log("value!");
+        document.getElementById("mitte").style.display = "inherit";
+        console.log(document);
         document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><div id='rank'></div><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
+
+        
         queryPlayer(playerurl);
         queryRank(playerurl);
         queryPlayerGames(playerurl, 100);
@@ -1016,7 +1019,7 @@ function addPicture(y, x, unit) {
 
 function clearPictures() {
 
-    for (var i = 0; i < 28; i++) {
+    for (var i = 1; i < 29; i++) {
         for (var e = 1; e < 19; e++) {
             document.getElementById(i + "." + e).innerHTML = "";
             document.getElementById(i + "." + e).style = "border: 1px solid black; background-color: white;";
@@ -1126,6 +1129,7 @@ function queryPlayerGames(playername, gameamount) {
         loadEloGraph(games);
         drawGameDetails();
         listGames();
+        document.getElementById("mitte").style.display = "none";
         return games;
 
     }, playername, gameamount);
