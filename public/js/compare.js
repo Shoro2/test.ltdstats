@@ -139,7 +139,7 @@ function parseStats(player) {
         document.getElementById("difference_ties").textContent = ties[0] - ties[1];
         document.getElementById("difference_quits").textContent = quits[0] - quits[1];
         document.getElementById("difference_winstreak").textContent = winStreak[0] - winStreak[1];
-        document.getElementById("difference_playtime").textContent = ((secondsPlayed[0] - secondsPlayed[1]) / 60).toFixed(2) + " min";
+        document.getElementById("difference_playtime").textContent = (((secondsPlayed[0] - secondsPlayed[1]) / 60)/60).toFixed(2) + " h";
         document.getElementById("difference_xp").textContent = totalXp[0] - totalXp[1];
         document.getElementById("difference_overallpeakelo").textContent = overallPeakElo[0] - overallPeakElo[1];
         document.getElementById("difference_overallelo").textContent = overallElo[0] - overallElo[1];
