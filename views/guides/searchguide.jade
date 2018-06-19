@@ -1,0 +1,25 @@
+extend ../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .content
+        .select
+                select#race.form-control(type='text')
+                    option(value="1") Select a Race
+                    option(value="1") General
+                    option(value="2") Element
+                    option(value="3") Grove
+                    option(value="4") Forsaken
+                    option(value="5") Mech
+                    option(value="6") Mastermind
+                select#patch.form-control(type='text')
+                    option(value="") Select a Patch
+        .guides(style="vertical-algin:middle;text-align:center;")
+            table#guide_results
+                tr.header
+                    th #
+                    th Creator:
+                    th Type:
+                    th Patch:
+                    th Link:
+    script(src="/js/guides.js")
+            

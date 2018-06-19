@@ -63,7 +63,7 @@
 {
     color:white;
     float: left;
-    width: 20%;
+    width: 21%;
     margin-right:2%;
     margin-left:2%;
     text-align: center;
@@ -107,7 +107,8 @@
 
 .player.build
 {
-    height: 63%;
+    height: 62%;
+    padding: 10px;
 }
 
 .leakpic

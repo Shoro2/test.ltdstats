@@ -182,7 +182,7 @@ block content
     #divumtable.hidden
         #showhide(onclick="showBuild();") Close
             table#buildtable(onclick="showBuild();")
-                - for(var i=1;i<29;i++)
+                - for(var i=28;i>0;i--)
                     tr(id=i, onclick="showBuild();")
                         td(id=i+".1", class="pictable")
                         td(id=i+".2", class="pictable")

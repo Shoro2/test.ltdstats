@@ -967,6 +967,7 @@ function addPicture(y, x, unit) {
     
 
     //canvas einfügen
+    console.log(neuesX + ", " + neuesY);
     var zielspalte = document.getElementById(neuesX + "." + neuesY);
     zielspalte.style = "border: 0px;";
     meinCanvas1 = document.createElement("canvas");
@@ -1000,26 +1001,22 @@ function addPicture(y, x, unit) {
     meinBild1.onload = function () {
         //1
         var ctx = el1.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150);
+        ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
         //2
         ctx = el2.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
+        ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150);
         //3
         ctx = el3.getContext('2d');
-        ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
+        ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150);
         //4
         ctx = el4.getContext('2d');
-        ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150);
+        ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
     }
-
-
-
-
 }
 
 function clearPictures() {
 
-    for (var i = 1; i < 29; i++) {
+    for (var i = 28; i > 0; i--) {
         for (var e = 1; e < 19; e++) {
             document.getElementById(i + "." + e).innerHTML = "";
             document.getElementById(i + "." + e).style = "border: 1px solid black; background-color: white;";

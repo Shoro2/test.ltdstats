@@ -1,6 +1,6 @@
 var fighter = {};
 
-function getPlayer()
+function getUnit()
 {
     var unitname = document.getElementById("playername").value;
     window.location.hash = unitname;
@@ -144,4 +144,28 @@ function draw(myUnit)
             document.getElementById("unit_upgrades").innerHTML += "-"
         }
         document.getElementById("unit_upgrades").innerHTML += "</ul>";
+}
+
+
+// API
+
+function getFighter(callback)
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var fighters = JSON.parse(xhttp.response);
+            callback(fighters);
+        }
+    };
+    xhttp.open("GET", "/api?command=", true);
+    xhttp.send();
+}
+
+function loadFighter() {
+    getFighter(function (result) {
+        console.log(result);
+
+        return result;
+    });
 }

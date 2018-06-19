@@ -119,7 +119,13 @@ app.get('/compare', (req, res) => {
 });
 
 app.get('/guides', (req, res) => {
-    res.render('guides', {
+    res.render('guides/searchguide', {
+        title: 'Guides',
+    })
+});
+
+app.get('/guides/search', (req, res) => {
+    res.render('guides/searchguide', {
         title: 'Guides',
     })
 });
@@ -192,7 +198,7 @@ app.get('/guides/mastermind/zitronenritter', (req, res) => {
 });
 
 app.get('/guides/general', (req, res) => {
-    res.render('guides', {
+    res.render('guides/general', {
         title: 'General Guides'
     })
 });
@@ -322,6 +328,13 @@ app.get('/sql/ladder', (req, res) => {
 app.get('/sql/rank', (req, res) => {
     var player = req.query.player;
     con.query("SELECT (SELECT COUNT(*) FROM legion.player WHERE elo >= (SELECT elo FROM legion.player where name ='"+player+"')) as Rank FROM legion.player LIMIT 1;", function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/sql/getGuides', (req, res) => {
+    con.query("SELECT * FROM ltdstats.guides ORDER BY patch DESC, type ASC", function (err, result, fields) {
         if (err) throw err;
         res.json(result);
     });

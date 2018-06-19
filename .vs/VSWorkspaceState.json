@@ -2,9 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\public",
+    "\\public\\css",
     "\\public\\js",
-    "\\views"
+    "\\views",
+    "\\views\\guides",
+    "\\views\\guides\\grove"
   ],
-  "SelectedNode": "\\server.js",
+  "SelectedNode": "\\views\\ladder.jade",
   "PreviewInSolutionExplorer": false
 }

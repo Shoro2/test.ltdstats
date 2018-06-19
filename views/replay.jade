@@ -14,7 +14,7 @@ block content
         -for(var e=1;e<5;e++)
                 .player.build(id="player"+e)
                     table.buildtable(id="table_p"+e)
-                        - for(var i=1;i<29;i++)
+                        - for(var i=28;i>0;i--)
                             tr(id=i, onclick="")
                                 td(id="p"+e+"_"+i+".1", class="pictable")
                                 td(id="p"+e+"_"+i+".2", class="pictable")
@@ -34,7 +34,7 @@ block content
                                 td(id="p"+e+"_"+i+".16", class="pictable")
                                 td(id="p"+e+"_"+i+".17", class="pictable")
                                 td(id="p"+e+"_"+i+".18", class="pictable")
-                                td(id="p"+e+"_"+i+".19", class="pictable")
+                                
         -for(var e=1;e<5;e++)
             .label Sends:
         -for(var e=1;e<5;e++)

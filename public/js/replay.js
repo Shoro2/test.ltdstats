@@ -280,20 +280,19 @@ function addPicture(y, x, unit, player)
     // bild in canvas (4 teile)
     var meinBild1 = document.createElement("img");
     meinBild1.src=url;
-    meinBild1.onload = function()
-    {
+    meinBild1.onload = function () {
         //1
-        var ctx=el1.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150); 
-        //2
-        ctx=el2.getContext('2d');
+        var ctx = el1.getContext('2d');
         ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
+        //2
+        ctx = el2.getContext('2d');
+        ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150);
         //3
-        ctx=el3.getContext('2d');
-        ctx.drawImage(meinBild1,32, 0, 32, 32, 0, 0, 300, 150); 
+        ctx = el3.getContext('2d');
+        ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150);
         //4
-        ctx=el4.getContext('2d');
-        ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150); 
+        ctx = el4.getContext('2d');
+        ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
     }
             
             
@@ -309,7 +308,7 @@ function fillNames()
         var wave = parseInt(document.getElementById("slider").value);
         var worker = gameEvent[i-1].workersPerWave[wave-1];
         var networth = gameEvent[i-1].netWorthPerWave[wave-1];
-        document.getElementById("p"+i+"_name").innerText = gameEvent[i-1].player_name;
+        document.getElementById("p"+i+"_name").innerText = gameEvent[i-1].playername;
         document.getElementById("networth"+i).innerText = "("+networth+"/";
         document.getElementById("worker"+i).innerText = worker+")";
         //document.getElementById("p"+i+"_name").outerHTML = "<div class='player_name' id='p"+i+"_name'> "+gameEvent[i-1].player_name+" (<div title='Net Worth' style='display:inline;'>"+networth+"</div>/<div title='Worker' style='display:inline;'>"+worker+"</div>)</div>";
@@ -381,7 +380,7 @@ function clearPictures()
 {
     for(var h=1;h<5;h++)
     {
-        for(var i=1;i<29;i++)
+        for (var i = 28; i > 0; i--)
         {
             for(var e=1;e<19;e++)
             {
@@ -565,7 +564,7 @@ function getGame(callback, gameid) {
             callback(game);
         }
     };
-    xhttp.open("GET", '/api?command={endgame(game_id:"'+gameid+'"){ts,wave,time,gameDetails{wave,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
+    xhttp.open("GET", '/api?command={endgame(game_id:"'+gameid+'"){ts,wave,time,gameDetails{playername,wave,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
     xhttp.send();
 }
 
