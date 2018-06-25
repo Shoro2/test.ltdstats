@@ -3,11 +3,14 @@
     "",
     "\\public",
     "\\public\\css",
-    "\\public\\js",
     "\\views",
     "\\views\\guides",
-    "\\views\\guides\\grove"
+    "\\views\\guides\\element",
+    "\\views\\guides\\general",
+    "\\views\\guides\\grove",
+    "\\views\\guides\\mastermind",
+    "\\views\\guides\\mech"
   ],
-  "SelectedNode": "\\views\\ladder.jade",
+  "SelectedNode": "\\public\\css\\replay.css",
   "PreviewInSolutionExplorer": false
 }

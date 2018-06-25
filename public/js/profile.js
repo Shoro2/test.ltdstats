@@ -9,7 +9,6 @@ function checkContent() {
     }
     if (document.getElementById("playername").value) {
         document.getElementById("mitte").style.display = "inherit";
-        console.log(document);
         document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><div id='rank'></div><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
 
         
@@ -590,10 +589,10 @@ function getGameDetails(pos, games) {
     //console.log(games[pos]);
     //console.log(games);
     //console.log(pos);
-    meinString = games[pos].gameDetails[0];
-    meinString1 = games[pos].gameDetails[1];
-    meinString2 = games[pos].gameDetails[2];
-    meinString3 = games[pos].gameDetails[3];
+    meinString = games[pos].gameDetails[3];
+    meinString1 = games[pos].gameDetails[2];
+    meinString2 = games[pos].gameDetails[1];
+    meinString3 = games[pos].gameDetails[0];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
     //console.log(gameEvent);
 }
@@ -618,13 +617,14 @@ function drawGameDetails() {
         if (gameEvent[i].playername == player_name) var position = i;
 
     }
+    // todo: 0->letzte geklickte nummer
     getPlayerBuild(0);
     //Summary:
     document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
     document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts;
     document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
     document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-    document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + "min"; 
+    document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
    
     
 
@@ -661,12 +661,53 @@ function getPlayerIncome(player, level)
                 case "Lizard":
                     income += 12;
                     break;
-
+                case "Brute":
+                    income += 15;
+                    break;
+                case "Dragon Turtle":
+                    income += 18;
+                    break;
+                case "Hermit":
+                    income += 20;
+                    break;
+                case "Dino":
+                    income += 24;
+                    break;
+                case "Safety Mole":
+                    income += 30;
+                    break;
+                case "Drake":
+                    income += 36;
+                    break;
+                case "Pack Leader":
+                    income += 40;
+                    break;
+                case "Mimic":
+                    income += 48;
+                    break;
+                case "Ghost Knight":
+                    income += 60;
+                    break;
+                case "Four Eyes":
+                    income += 60;
+                    break;
+                case "Centaur":
+                    income += 80;
+                    break;
+                case "Shaman":
+                    income += 80;
+                    break;
+                case "Kraken":
+                    income += 100;
+                    break;
+                default:
+                    console.log("merc not found: " + element);
+                    break;
             }
         });
 
     }
-    if (gameEvent[player].legion == "Mastermind") income += 3;
+    if (gameEvent[player].legion == "Mastermind") income += 2;
     return income;
 }
 
@@ -950,6 +991,19 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/DoomsdayMachine.png";
             var unit_type = "DoomsdayMachine";
             break;
+        // Atlantean
+        case "pollywog":
+            var url = "/img/icons/Pollywog";
+            var unit_type = "Pollywog";
+            break
+        case "devilfish":
+            var url = "/img/icons/Devilfish";
+            var unit_type = "Devilfish";
+            break
+        case "seraphin":
+            var url = "/img/icons/Seraphin";
+            var unit_type = "Seraphin";
+            break
         case "sea_serpent":
             var url = "/img/icons/SeaSerpent.png";
             var unit_type = "SeaSerpant";
@@ -958,6 +1012,18 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/DeepCoiler.png";
             var unit_type = "DeepCoilwér";
             break;
+        case "grarl":
+            var url = "/img/icons/Grarl.png";
+            var unit_type = "Grarl";
+            break;
+        case "king_claw":
+            var url = "/img/icons/KingClaw";
+            var unit_type = "King Claw";
+            break
+        case "ocean_templar":
+            var url = "/img/icons/OceanTemplar";
+            var unit_type = "Ocean Templar";
+            break
         default:
             var url = "";
             var unit_type = "empty";

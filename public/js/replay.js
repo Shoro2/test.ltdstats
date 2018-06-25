@@ -4,10 +4,10 @@ var firsttime = false;
 function getGameDetails(games)
 {
     firsttime = true;
-    meinString = games.gameDetails[0];
-    meinString1 = games.gameDetails[1];
-    meinString2 = games.gameDetails[2];
-    meinString3 = games.gameDetails[3];
+    meinString = games.gameDetails[3];
+    meinString1 = games.gameDetails[2];
+    meinString2 = games.gameDetails[1];
+    meinString3 = games.gameDetails[0];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
     fillNames();
     waveAnzeigen();
@@ -234,14 +234,39 @@ function addPicture(y, x, unit, player)
             var url="/img/icons/DoomsdayMachine.png";
             var unit_type="DoomsdayMachine";
             break;
+        // Atlantean
+        case "pollywog":
+            var url = "/img/icons/Pollywog";
+            var unit_type = "Pollywog";
+            break
+        case "devilfish":
+            var url = "/img/icons/Devilfish";
+            var unit_type = "Devilfish";
+            break
+        case "seraphin":
+            var url = "/img/icons/Seraphin";
+            var unit_type = "Seraphin";
+            break
         case "sea_serpent":
-            var url="/img/icons/SeaSerpent.png";
-            var unit_type="SeaSerpant";
+            var url = "/img/icons/SeaSerpent.png";
+            var unit_type = "SeaSerpant";
             break;
         case "deepcoiler":
-            var url="/img/icons/DeepCoiler.png";
-            var unit_type="DeepCoilwér";
+            var url = "/img/icons/DeepCoiler.png";
+            var unit_type = "DeepCoilwér";
             break;
+        case "grarl":
+            var url = "/img/icons/Grarl.png";
+            var unit_type = "Grarl";
+            break;
+        case "king_claw":
+            var url = "/img/icons/KingClaw";
+            var unit_type = "King Claw";
+            break
+        case "ocean_templar":
+            var url = "/img/icons/OceanTemplar";
+            var unit_type = "Ocean Templar";
+            break
         default:
             var url="";
             var unit_type="empty";
