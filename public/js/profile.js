@@ -565,7 +565,7 @@ $('#tab_top_3').on('click', function () {
 
     if (document.getElementById("playername").value) {
         
-        drawGameDetails();
+        drawGameDetails(0);
         return false;
     }
 
@@ -601,7 +601,7 @@ function getPlayerAmount() {
     return gameEvent[0].player_count;
 }
 
-function drawGameDetails() {
+function drawGameDetails(player_position) {
     var selectedGame = document.getElementById("setGame").value;
     getGameDetails(selectedGame, games);
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
@@ -618,10 +618,10 @@ function drawGameDetails() {
 
     }
     // todo: 0->letzte geklickte nummer
-    getPlayerBuild(0);
+    getPlayerBuild(player_position);
     //Summary:
     document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
-    document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts;
+    document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
     document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
     document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
     document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
@@ -1113,11 +1113,11 @@ document.onkeydown = function (event) {
             if (document.getElementById("setWave").value < gameEvent[0].wave - 1) {
                 var waveValue = parseInt(document.getElementById("setWave").value) + 1;
                 document.getElementById("setWave").value = waveValue;
-                drawGameDetails();
+                drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "all") {
                 document.getElementById("setWave").value = "1";
-                drawGameDetails();
+                drawGameDetails(savedValue);
                 //console.log("all");
             }
             else if (document.getElementById("setWave").value == (gameEvent[0].wave - 1)) {
@@ -1128,15 +1128,15 @@ document.onkeydown = function (event) {
         if (event.keyCode == 37 || event.keyCode == 40) {
             if (document.getElementById("setWave").value > 1) {
                 document.getElementById("setWave").value -= 1;
-                drawGameDetails();
+                drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "all") {
                 document.getElementById("setWave").value = gameEvent[0].wave - 1;
-                drawGameDetails();
+                drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "1") {
                 document.getElementById("setWave").value = "all";
-                drawGameDetails();
+                drawGameDetails(savedValue);
             }
         }
     }
@@ -1190,7 +1190,7 @@ function queryPlayerGames(playername, gameamount) {
         //console.log(result.player.filteredGamesQuery.games);
         games = result.player.filteredGamesQuery.games;
         loadEloGraph(games);
-        drawGameDetails();
+        drawGameDetails(0);
         listGames();
         document.getElementById("mitte").style.display = "none";
         return games;
