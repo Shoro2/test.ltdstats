@@ -43,12 +43,12 @@ block content
                 .wrap.active
                     .content
                         b Game:
-                        select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
+                        select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails(0)")
                             option(value="0") Game
                         <!-- general -->
                         #game_setWave
                             b Wave:
-                            select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails()")
+                            select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails(savedValue)")
                                 option(value="all") Game End
                                 option(value="1") 1
                                 option(value="2") 2

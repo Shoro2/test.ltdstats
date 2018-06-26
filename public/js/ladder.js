@@ -175,6 +175,11 @@ function parsePlayers(myPlayers) {
         var winchance_forsaken = ((players[i].wins_forsaken / players[i].games_forsaken) * 100).toFixed(2);
         var winchance_mech = ((players[i].wins_mech / players[i].games_mech) * 100).toFixed(2);
         var winchance_mastermind = ((players[i].wins_mastermind / players[i].games_mastermind) * 100).toFixed(2);
+        if (winchance_element == "NaN") winchance_element = 0;
+        if (winchance_grove == "NaN") winchance_grove = 0;
+        if (winchance_forsaken == "NaN") winchance_forsaken = 0;
+        if (winchance_mech == "NaN") winchance_mech = 0;
+        if (winchance_mastermind == "NaN") winchance_mastermind = 0;
         cell[0].innerHTML = i+1;
         cell[1].innerHTML = players[i].name;
         cell[2].innerHTML = players[i].elo;

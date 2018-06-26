@@ -9,6 +9,11 @@
     margin:30px;
 }
 
+#guide_results{
+    width: 90%;
+    margin: 5%;
+}
+
 #guide_infobox
 {
     float: right;

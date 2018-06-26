@@ -14,8 +14,22 @@ block content
         .wrap#wrap
             .content
                 #unit_details
+                    h1#unit_name
+                    h3#unit_legion
+                    img#unit_icon
+                    #unit_health
+                    #unit_attacktype
+                    #unit_defensetype
+                    #unit_attackspeed
+                    #unit_dps
+                    #unit_range
+                    #unit_goldcost
+                    #unit_totalcost
+                    #unit_abilities
+                    #unit_upgrades
+                    #unit_description
+                    #unit_tooltip
     script(src="/js/popmotion.js")
     script(src="/js/slider.js")
     script(src="/js/units.js")
-    
-    script parseLink(); scanUnits();
+    script scanUnits();checkContent();

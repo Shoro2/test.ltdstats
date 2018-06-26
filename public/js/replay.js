@@ -92,7 +92,7 @@ function addPicture(y, x, unit, player)
             var url="/img/icons/Daphne.png";
             var unit_type="Daphne";
             break;
-        case "whileshroom":
+        case "wileshroom":
             var url="/img/icons/Wileshroom.png";
             var unit_type="Wileshroom";
             break;
@@ -236,15 +236,15 @@ function addPicture(y, x, unit, player)
             break;
         // Atlantean
         case "pollywog":
-            var url = "/img/icons/Pollywog";
+            var url = "/img/icons/Pollywog.png";
             var unit_type = "Pollywog";
             break
         case "devilfish":
-            var url = "/img/icons/Devilfish";
+            var url = "/img/icons/Devilfish.png";
             var unit_type = "Devilfish";
             break
         case "seraphin":
-            var url = "/img/icons/Seraphin";
+            var url = "/img/icons/Seraphin.png";
             var unit_type = "Seraphin";
             break
         case "sea_serpent":
@@ -252,19 +252,19 @@ function addPicture(y, x, unit, player)
             var unit_type = "SeaSerpant";
             break;
         case "deepcoiler":
-            var url = "/img/icons/DeepCoiler.png";
-            var unit_type = "DeepCoilwér";
+            var url = "/img/icons/Deepcoiler.png";
+            var unit_type = "Deepcoiler";
             break;
         case "grarl":
             var url = "/img/icons/Grarl.png";
             var unit_type = "Grarl";
             break;
         case "king_claw":
-            var url = "/img/icons/KingClaw";
+            var url = "/img/icons/KingClaw.png";
             var unit_type = "King Claw";
             break
         case "ocean_templar":
-            var url = "/img/icons/OceanTemplar";
+            var url = "/img/icons/OceanTemplar.png";
             var unit_type = "Ocean Templar";
             break
         default:
@@ -505,15 +505,45 @@ function getPlayer() {
 
 }
 
+function h2d(s) {
+
+    function add(x, y) {
+        var c = 0, r = [];
+        var x = x.split('').map(Number);
+        var y = y.split('').map(Number);
+        while (x.length || y.length) {
+            var s = (x.pop() || 0) + (y.pop() || 0) + c;
+            r.unshift(s < 10 ? s : s - 10);
+            c = s < 10 ? 0 : 1;
+        }
+        if (c) r.unshift(c);
+        return r.join('');
+    }
+
+    var dec = '0';
+    s.split('').forEach(function (chr) {
+        var n = parseInt(chr, 16);
+        for (var t = 8; t; t >>= 1) {
+            dec = add(dec, dec);
+            if (n & t) dec = add(dec, '1');
+        }
+    });
+    return dec;
+}
+
 document.body.onload = function () {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("gameid");
     if (playerurl !== "" && playerurl !== null) {
         document.getElementById("mitte").style.display = "inherit";
+        //hex to dez
+        console.log(playerurl.length)
+        if (playerurl.length == 16) {
+            playerurl = h2d(playerurl);
+        }
         queryGame(playerurl);
         console.log(playerurl);
-        console.log("querGame");
     }
     else {
         document.getElementById("wave").textContent = "Enter a valid gameid to select the replay.";

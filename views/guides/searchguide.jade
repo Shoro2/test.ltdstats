@@ -4,20 +4,21 @@ block content
     .content
         .select
                 select#race.form-control(type='text')
-                    option(value="1") Select a Race
-                    option(value="1") General
-                    option(value="2") Element
-                    option(value="3") Grove
-                    option(value="4") Forsaken
-                    option(value="5") Mech
-                    option(value="6") Mastermind
+                    option(value="All") Select a Race
+                    option(value="General") General
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Mastermind") Mastermind
                 select#patch.form-control(type='text')
-                    option(value="") Select a Patch
+                    option(value="All") Select a Patch
         .guides(style="vertical-algin:middle;text-align:center;")
             table#guide_results
                 tr.header
                     th #
                     th Creator:
+                    th Title:
                     th Type:
                     th Patch:
                     th Link:

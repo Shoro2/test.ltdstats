@@ -574,8 +574,9 @@ $('#tab_top_3').on('click', function () {
 
 function listGames() {
     var selector = document.getElementById("setGame");
-    for (i = 0; i < 100; i++) {
+    for (i = 0; i < games.length; i++) {
         var option = document.createElement("option");
+        console.log(games[i]);
         option.text = games[i].queuetype+": "+games[i].ts + ", " + games[i].gameresult;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
@@ -713,6 +714,7 @@ function getPlayerIncome(player, level)
 
 function getPlayerBuild(player) {
     savedValue = player;
+    console.log(player);
     clearPictures();
     document.getElementById("gamedetails_build").innerHTML = "";
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
@@ -993,15 +995,15 @@ function addPicture(y, x, unit) {
             break;
         // Atlantean
         case "pollywog":
-            var url = "/img/icons/Pollywog";
+            var url = "/img/icons/Pollywog.png";
             var unit_type = "Pollywog";
             break
         case "devilfish":
-            var url = "/img/icons/Devilfish";
+            var url = "/img/icons/Devilfish.png";
             var unit_type = "Devilfish";
             break
         case "seraphin":
-            var url = "/img/icons/Seraphin";
+            var url = "/img/icons/Seraphin.png";
             var unit_type = "Seraphin";
             break
         case "sea_serpent":
@@ -1009,19 +1011,19 @@ function addPicture(y, x, unit) {
             var unit_type = "SeaSerpant";
             break;
         case "deepcoiler":
-            var url = "/img/icons/DeepCoiler.png";
-            var unit_type = "DeepCoilwér";
+            var url = "/img/icons/Deepcoiler.png";
+            var unit_type = "DeepCoiler";
             break;
         case "grarl":
             var url = "/img/icons/Grarl.png";
             var unit_type = "Grarl";
             break;
         case "king_claw":
-            var url = "/img/icons/KingClaw";
+            var url = "/img/icons/KingClaw.png";
             var unit_type = "King Claw";
             break
         case "ocean_templar":
-            var url = "/img/icons/OceanTemplar";
+            var url = "/img/icons/OceanTemplar.png";
             var unit_type = "Ocean Templar";
             break
         default:
@@ -1164,6 +1166,7 @@ function queryPlayer(playername) {
         result.player.statistics = JSON.parse(result.player.statistics);
         player = result.player
         loadStats(player);
+        console.log(player);
         createBig(0);
         return player;
     }, playername);

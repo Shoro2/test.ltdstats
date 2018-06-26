@@ -3,7 +3,6 @@
     "",
     "\\public",
     "\\public\\css",
-    "\\public\\js",
     "\\views",
     "\\views\\guides",
     "\\views\\guides\\element",
@@ -11,6 +10,6 @@
     "\\views\\guides\\grove",
     "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\public\\css\\replay.css",
+  "SelectedNode": "\\views\\profile.jade",
   "PreviewInSolutionExplorer": false
 }

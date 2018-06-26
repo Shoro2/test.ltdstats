@@ -1,5 +1,5 @@
 var selected_patch = "";
-var selected_type = 0;
+var selected_type = "";
 
 function checkSelection()
 {
@@ -8,6 +8,10 @@ function checkSelection()
 }
 
 document.getElementById("patch").onchange = function () {
+    filterGuides();
+}
+
+document.getElementById("race").onchange = function () {
     filterGuides();
 }
 
@@ -21,7 +25,32 @@ function filterGuides() {
     guides_filtered = [];
     var counter = 0;
     for (var i = 0; i < guides.length; i++) {
-        if (guides[i].patch == selected_patch) {
+        if (selected_patch == "All") {
+            if (selected_type == "All") {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+            else if (guides[i].type == selected_type) {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+        }
+        else if (selected_type == "All") {
+            if (selected_patch == "All") {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+            else if (guides[i].patch == selected_patch) {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+        }
+
+
+
+
+
+        if (guides[i].patch == selected_patch && guides[i].type == selected_type) {
             guides_filtered[counter] = guides[i];
             counter++;
         }
@@ -38,15 +67,16 @@ function parseGuides()
     $("#table_of_items tr").remove(); 
     for (var i = 0; i < guides_filtered.length; i++) {
         var row = tabelle.insertRow(i + 1);
-        var cell = [5];
-        for (var e = 0; e < 5; e++) {
+        var cell = [6];
+        for (var e = 0; e < 6; e++) {
             cell[e] = row.insertCell(e);
         }
         cell[0].innerHTML = i + 1;
         cell[1].innerHTML = guides_filtered[i].owner;
-        cell[2].innerHTML = guides_filtered[i].type;
-        cell[3].innerHTML = guides_filtered[i].patch;
-        cell[4].innerHTML = "<a href='https://test.ltdstats.com" + guides_filtered[i].folder+"'>click</a>";
+        cell[2].innerHTML = guides_filtered[i].title;
+        cell[3].innerHTML = guides_filtered[i].type;
+        cell[4].innerHTML = guides_filtered[i].patch;
+        cell[5].innerHTML = "<a href='https://test.ltdstats.com" + guides_filtered[i].folder+"'>click</a>";
     }
         
     
@@ -87,7 +117,7 @@ function parsePatches() {
         var option = document.createElement("option");
         option.text = "v"+patches[i];
         option.value = patches[i];
-        selector.add(option);
+        if(patches[i-1]!=patches[i])selector.add(option);
     }
 }
 
