@@ -3,6 +3,7 @@
     "",
     "\\public",
     "\\public\\css",
+    "\\public\\js",
     "\\views",
     "\\views\\guides",
     "\\views\\guides\\element",
@@ -10,6 +11,6 @@
     "\\views\\guides\\grove",
     "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\views\\profile.jade",
+  "SelectedNode": "\\public\\js\\bootstrap.js",
   "PreviewInSolutionExplorer": false
 }

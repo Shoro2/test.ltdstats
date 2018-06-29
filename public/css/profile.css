@@ -3,6 +3,21 @@
     display:inline;
 }
 
+.badge{
+    float: right;
+    
+}
+
+#img_rank {
+    height: 50px;
+    width: 50px;
+}
+
+#img_level {
+    height: 50px;
+    width: 50px;
+}
+
 .gamelist_ele:hover {
     background-color: white;
 }
@@ -122,63 +137,80 @@
     height: 100%;
 }
 
-
 .profile
 {
-    height:30%;
-    
+    height:100%;
 }
 
-.meinbalken_big
+#stats
 {
     border-radius: 10px;
-    height:60%;
-    margin:20px;
+    height:80%;
     padding:10px;
     opacity: 0.9;
     background-color: lightgray;
-    text-align: center;
+    overflow: auto;
 }
 
-.meinbalken_small:hover
-{
-    opacity: 1.0;
-}
+    #stats::-webkit-scrollbar {
+        width: 10px; /* remove scrollbar space */
+        background: lightgray;
+        border-radius: 5px;
+        /*background: transparent; optional: just make scrollbar invisible */
+    }
+    /* optional: show position indicator in red */
+    #stats::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5px;
+        margin: 5px;
+    }
 
-.innenSchrift
-{
-    opacity: 1.0;
-}
-
-#general
-{
-    background-color: rgb(138, 138, 138);
+.stats_small {
+    float:left;
+    width: 23.3%;
+    height: 36%;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:2%;
+    margin-bottom:2%;
     
 }
 
-#element
-{
-    background-color: rgb(185, 173, 6);
+#general{
+    text-align:center;
+    height:40%;
+    width:90%;
+    margin-left:5%;
 }
 
-#grove
-{
-    background-color: rgb(17, 116, 17);
+#mastermind{
+    background-color:#bfbfbf;
+    padding:10px;
+    border-radius:10px;
 }
 
-#forsaken
-{
-    background-color: rgb(146, 1, 1);
+#element {
+    background-color: #fff79d;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-#mech
-{
-    background-color: rgb(33, 33, 158);
+#grove {
+    background-color: #a8fc9c;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-#mastermind
-{
-    background-color: rgb(15, 15, 15);
+#forsaken {
+    background-color: #8a4747;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#mech {
+    background-color: #90c5ff;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 body {
@@ -224,6 +256,7 @@ body {
     transition: all 600ms;
     transform: translateY(0px);
     transition: all 0.5s;
+    opacity:0.9;
   }
   .wrap.active:before {
     height: 2000px;
@@ -283,7 +316,7 @@ body {
 
 .gamedetails_kasten
 {
-    height:80%;
+    height:20%;
     overflow: auto;
     margin-top: 10px;
     margin-bottom: 10px;

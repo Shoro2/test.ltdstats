@@ -2,16 +2,13 @@ function checkContent() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
-    console.log("playerurl: " + playerurl);
-    console.log("value: " + document.getElementById("playername").value);
+    //console.log("playerurl: " + playerurl);
+    //console.log("value: " + document.getElementById("playername").value);
     if (playerurl != null) {
         document.getElementById("playername").value = playerurl;
     }
     if (document.getElementById("playername").value) {
         document.getElementById("mitte").style.display = "inherit";
-        document.getElementById("tab_box_1").innerHTML = "<div class='profile'><h1 id='player_name1' style='display:inline;'></h1><div id='playerbadge_level' style='display:inline;'></div><div id='playerbadge_rank' style='display:inline;'></div><h3 id='player_elo1'></h3><div id='rank'></div><h4 id='player_performance1'></h4><div id='player_icon1'></div><div id='general' class='meinbalken_small'><div class='p'>General:</div></div><div id='element' class='meinbalken_small'><div class='p'>Element:</div></div><div id='grove' class='meinbalken_small'><div class='p'>Grove:</div></div><div id='forsaken' class='meinbalken_small'><div class='p'>Forsaken:</div></div><div id='mech' class='meinbalken_small'><div class='p'>Mech:</div></div><div id='mastermind' class='meinbalken_small'><div class='p'>Mastermind:</div></div></div><div class='meinbalken_big' id='grosserBalken'></div>";
-
-        
         queryPlayer(playerurl);
         queryRank(playerurl);
         queryPlayerGames(playerurl, 100);
@@ -40,10 +37,10 @@ function setPlayer() {
 
 function loadEloGraph(games) {
     var counter = 0;
-    var elo = [50];
-    var date = [50];
+    var elo = [100];
+    var date = [100];
     games.forEach(function (myEle) {
-        if (counter < 50) {
+        if (counter < 100) {
             //console.log(myEle);
             if (myEle.queuetype != "Custom") {
                 if (myEle.gameDetails[0].playername == player_name) {
@@ -60,7 +57,7 @@ function loadEloGraph(games) {
                 else if (myEle.gameDetails[3].playername == player_name) {
                     elo[counter] = myEle.gameDetails[3].overallElo;
                 }
-                date[counter] = myEle.ts.substring(0, myEle.ts.indexOf(","));
+                date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
             }
             else {
                 if (counter == 0) {
@@ -91,7 +88,7 @@ function loadEloGraph(games) {
                     else if (myEle.gameDetails[7].playername == player_name) {
                         elo[counter] = myEle.gameDetails[7].overallElo;
                     }
-                    date[counter] = myEle.ts.substring(0, myEle.ts.indexOf(","));
+                    date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
                     //console.log(elo[counter]);
                     //console.log(myEle);
                 }
@@ -146,8 +143,9 @@ function loadEloGraph(games) {
         }
     });
 
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 100; i++) {
         addData(myChart, date[i], elo[i]);
+        console.log(date[i]);
     }
 }
 
@@ -175,6 +173,8 @@ function loadStats(player) {
     //general
     player_totalgames = player.statistics.gamesPlayed;
     player_totalwins = player.statistics.wins;
+    player_totalwinchance = ((player_totalwins / player_totalgames) * 100).toFixed(2);
+    if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
     player_ties = player.statistics.ties;
     if (typeof player.statistics.ties == 'undefined') player_ties = 0;
     player_quits = player.statistics.quits;
@@ -197,6 +197,8 @@ function loadStats(player) {
     if (typeof player.statistics.elementPlayed == 'undefined') player_element_games = 0;
     player_element_wins = player.statistics.elementWins;
     if (typeof player.statistics.elementWins == 'undefined') player_element_wins = 0;
+    player_element_winchance = ((player_element_wins / player_element_games) * 100).toFixed(2);
+    if (player_element_winchance == 'NaN') player_element_winchance = 0;
     player_element_losses = player.statistics.elementLosses;
     if (typeof player.statistics.elementLosses == 'undefined') player_element_losses = 0;
     player_element_xp = player.statistics.elementXp;
@@ -212,6 +214,8 @@ function loadStats(player) {
     if (typeof player.statistics.grovePlayed == 'undefined') player_grove_games = 0;
     player_grove_wins = player.statistics.groveWins;
     if (typeof player.statistics.groveWins == 'undefined') player_grove_wins = 0;
+    player_grove_winchance = ((player_grove_wins / player_grove_games) * 100).toFixed(2);
+    if (player_grove_winchance == 'NaN') player_grove_winchance = 0;
     player_grove_losses = player.statistics.groveLosses;
     if (typeof player.statistics.groveLosses == 'undefined') player_grove_losses = 0;
     player_grove_xp = player.statistics.groveXp;
@@ -227,6 +231,8 @@ function loadStats(player) {
     if (typeof player.statistics.forsakenPlayed == 'undefined') player_forsaken_games = 0;
     player_forsaken_wins = player.statistics.forsakenWins;
     if (typeof player.statistics.forsakenWins == 'undefined') player_forsaken_wins = 0;
+    player_forsaken_winchance = ((player_forsaken_wins / player_forsaken_games) * 100).toFixed(2);
+    if (player_forsaken_winchance == 'NaN') player_forsaken_winchance = 0;
     player_forsaken_losses = player.statistics.forsakenLosses;
     if (typeof player.statistics.forsakenLosses == 'undefined') player_forsaken_losses = 0;
     player_forsaken_xp = player.statistics.forsakenXp;
@@ -242,6 +248,8 @@ function loadStats(player) {
     if (typeof player.statistics.mechPlayed == 'undefined') player_mech_games = 0;
     player_mech_wins = player.statistics.mechWins;
     if (typeof player.statistics.mechWins == 'undefined') player_mech_wins = 0;
+    player_mech_winchance = ((player_mech_wins / player_mech_games) * 100).toFixed(2);
+    if (player_mech_winchance == 'NaN') player_mech_winchance = 0;
     player_mech_losses = player.statistics.mechLosses;
     if (typeof player.statistics.mechLosses == 'undefined') player_mech_losses = 0;
     player_mech_xp = player.statistics.mechXp;
@@ -257,6 +265,8 @@ function loadStats(player) {
     if (typeof player.statistics.mastermindPlayed == 'undefined') player_mastermind_games = 0;
     player_mastermind_wins = player.statistics.mastermindWins;
     if (typeof player.statistics.mastermindWins == 'undefined') player_mastermind_wins = 0;
+    player_mastermind_winchance = ((player_mastermind_wins / player_mastermind_games) * 100).toFixed(2);
+    if (player_mastermind_winchance == 'NaN') player_mastermind_winchance = 0;
     player_mastermind_losses = player.statistics.mastermindLosses;
     if (typeof player.statistics.mastermindLosses == 'undefined') player_mastermind_losses = 0;
     player_mastermind_xp = player.statistics.mastermindXp;
@@ -285,34 +295,26 @@ function loadStats(player) {
     //badges
     if(player_overall_level<10)
     {
-        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/0" +  player_overall_level + ".png'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/0" +  player_overall_level + ".png'>";
     } 
     else 
     {
         
-        document.getElementById("playerbadge_level").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/" + player_overall_level +".png'>";
+        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level +".png'>";
     }
     //console.log(player_overall_level);
-    if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:rightwidth:100px;height:100px;' src='/img/icons/Bronze.png'>";
-    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Silver.png'>";
-    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Gold.png'>";
-    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Platinum.png'>";
-    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Diamond.png'>";
-    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Expert.png'>";
-    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/SeniorMaster.png'>";
-    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img style='display:inline;float:right;width:50px;height:50px;' src='/img/icons/Gradmaster.png'>";
+    if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Bronze.png'>";
+    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Silver.png'>";
+    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gold.png'>";
+    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Platinum.png'>";
+    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Diamond.png'>";
+    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Expert.png'>";
+    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
+    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gradmaster.png'>";
     // mouseover details
 
-    document.getElementById("general").addEventListener("mouseover", function () { createBig(0); });
-    document.getElementById("element").addEventListener("mouseover", function () { createBig(1); });
-    document.getElementById("grove").addEventListener("mouseover", function () { createBig(2); });
-    document.getElementById("forsaken").addEventListener("mouseover", function () { createBig(3); });
-    document.getElementById("mech").addEventListener("mouseover", function () { createBig(4); });
-    document.getElementById("mastermind").addEventListener("mouseover", function () { createBig(5); });
-
-
+    parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 488px 488px;opacity:1.0;");
-
     document.title = "LTDStats - " + player_name + "'s Profile";
     
 }
@@ -345,43 +347,44 @@ function getPlayerLevel(totalXp) {
 
 }
 
-function createBig(nummer) {
-    // Ändere Inhalt/Layout der details
-    switch (nummer) {
-        //general
-        case 0:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(138, 138, 138); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "General:<br>Wins: " + player_totalwins + "<br>Ties: " + player_ties + "<br>Quits: " + player_quits + "<br>Overall Elo: " + player_overall_elo + "<br>Overall Peak Elo: " + player_overall_peakelo + "<br>Level: " + player_overall_level + "<br>Winningstreak: " + player_winningstreak + "<br>";
-            break;
-        //element
-        case 1:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(185, 173, 6); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "Element:<br>Elo: " + player_element_elo + "<br>Peak Elo: " + player_element_peakelo + "<br>Games: " + player_element_games + "<br>Wins: " + player_element_wins + "<br>Level: " + player_element_level;
-            break;
-        //grove
-        case 2:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(17, 116, 17); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "Grove:<br>Elo: " + player_grove_elo + "<br>Peak Elo: " + player_grove_peakelo + "<br>Games: " + player_grove_games + "<br>Wins: " + player_grove_wins + "<br>Level: " + player_grove_level;
-            break;
-        //forsaken
-        case 3:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(146, 1, 1); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "Forsaken:<br>Elo: " + player_forsaken_elo + "<br>Peak Elo: " + player_forsaken_peakelo + "<br>Games: " + player_forsaken_games + "<br>Wins: " + player_forsaken_wins + "<br>Level: " + player_forsaken_level;
-            break;
-        //mech
-        case 4:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(33, 33, 158); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "Mech:<br>Elo: " + player_mech_elo + "<br>Peak Elo: " + player_mech_peakelo + "<br>Games: " + player_mech_games + "<br>Wins: " + player_mech_wins + "<br>Level: " + player_mech_level;
-            break;
-        //mastermind
-        case 5:
-            document.getElementById("grosserBalken").setAttribute("style", "box-shadow: 1px 1px 16px rgb(15, 15, 15); heigth: 100px;")
-            document.getElementById("grosserBalken").innerHTML = "Mastermind:<br>Elo: " + player_mastermind_elo + "<br>Peak Elo: " + player_mastermind_peakelo + "<br>Games: " + player_mastermind_games + "<br>Wins: " + player_mastermind_wins + "<br>Level: " + player_mastermind_level;
-            break;
-        default:
-            break;
-    }
+function parseStats() {
+    document.getElementById("general_wins").textContent = "Wins:               \t\t\t" + player_totalwins;
+    document.getElementById("general_ties").textContent = "Ties: \t\t\t" + player_ties;
+    document.getElementById("general_quits").textContent = "Quits: \t\t\t" + player_quits;
+    document.getElementById("general_overallelo").textContent = "Overall Elo: \t\t" + player_overall_elo;
+    document.getElementById("general_overallpeakelo").textContent = "Overall Peak Elo: \t" + player_overall_peakelo;
+    document.getElementById("general_level").textContent = "Level: \t\t\t" + player_overall_level + " (" + player_overall_xp + " XP)";
+    document.getElementById("general_winningstreak").textContent = "Winningstreak: \t" + player_winningstreak;
 
+    document.getElementById("mastermind_elo").textContent = "Elo: " + player_mastermind_elo;
+    document.getElementById("mastermind_peakelo").textContent = "Peak Elo: " + player_mastermind_peakelo;
+    document.getElementById("mastermind_games").textContent = "Games: " + player_mastermind_games;
+    document.getElementById("mastermind_wins").textContent = "Wins: " + player_mastermind_wins + " (" + player_mastermind_winchance + ")";
+    document.getElementById("mastermind_level").textContent = "Level: " + player_mastermind_level + " (" + player_mastermind_xp + " XP)";
+
+    document.getElementById("element_elo").textContent = "Elo: " + player_element_elo;
+    document.getElementById("element_peakelo").textContent = "Peak Elo: " + player_element_peakelo;
+    document.getElementById("element_games").textContent = "Games: " + player_element_games;
+    document.getElementById("element_wins").textContent = "Wins: " + player_element_wins + " (" + player_element_winchance + ")";
+    document.getElementById("element_level").textContent = "Level: " + player_element_level + " (" + player_element_xp + " XP)";
+
+    document.getElementById("grove_elo").textContent = "Elo: " + player_grove_elo;
+    document.getElementById("grove_peakelo").textContent = "Peak Elo: " + player_grove_peakelo;
+    document.getElementById("grove_games").textContent = "Games: " + player_grove_games;
+    document.getElementById("grove_wins").textContent = "Wins: " + player_grove_wins + " (" + player_grove_winchance + ")";
+    document.getElementById("grove_level").textContent = "Level: " + player_grove_level + " (" + player_grove_xp + " XP)";
+
+    document.getElementById("forsaken_elo").textContent = "Elo: " + player_forsaken_elo;
+    document.getElementById("forsaken_peakelo").textContent = "Peak Elo: " + player_forsaken_peakelo;
+    document.getElementById("forsaken_games").textContent = "Games: " + player_forsaken_games;
+    document.getElementById("forsaken_wins").textContent = "Wins: " + player_forsaken_wins + " (" + player_forsaken_winchance + ")";
+    document.getElementById("forsaken_level").textContent = "Level: " + player_forsaken_level + " (" + player_forsaken_xp + " XP)";
+
+    document.getElementById("mech_elo").textContent = "Elo: " + player_mech_elo;
+    document.getElementById("mech_peakelo").textContent = "Peak Elo: " + player_mech_peakelo;
+    document.getElementById("mech_games").textContent = "Games: " + player_mech_games;
+    document.getElementById("mech_wins").textContent = "Wins: " + player_mech_wins + " (" + player_mech_winchance + ")";
+    document.getElementById("mech_level").textContent = "Level: " + player_mech_level + " (" + player_mech_xp + " XP)";
 }
 
 
@@ -576,7 +579,7 @@ function listGames() {
     var selector = document.getElementById("setGame");
     for (i = 0; i < games.length; i++) {
         var option = document.createElement("option");
-        console.log(games[i]);
+        //console.log(games[i]);
         option.text = games[i].queuetype+": "+games[i].ts + ", " + games[i].gameresult;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
@@ -605,27 +608,30 @@ function getPlayerAmount() {
 function drawGameDetails(player_position) {
     var selectedGame = document.getElementById("setGame").value;
     getGameDetails(selectedGame, games);
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
-    else var wave = parseInt(document.getElementById("setWave").value);
-    for (var i = 0; i < 4; i++) {
-        var neuesI = i + 1;
-        document.getElementById("name_" + neuesI).textContent = gameEvent[i].playername;
-        document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
-        document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
-        document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
-        document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
-        document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
-        if (gameEvent[i].playername == player_name) var position = i;
+    if (gameEvent[0]) {
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+        else var wave = parseInt(document.getElementById("setWave").value);
+        for (var i = 0; i < 4; i++) {
+            var neuesI = i + 1;
+            document.getElementById("name_" + neuesI).textContent = gameEvent[i].playername;
+            document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
+            document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
+            document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
+            document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
+            document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
+            if (gameEvent[i].playername == player_name) var position = i;
 
+        }
+        getPlayerBuild(player_position);
+        //Summary:
+        document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
+        document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
+        document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
+        document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
+        document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
     }
-    // todo: 0->letzte geklickte nummer
-    getPlayerBuild(player_position);
-    //Summary:
-    document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
-    document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
-    document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
-    document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-    document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
+
+    
    
     
 
@@ -714,7 +720,7 @@ function getPlayerIncome(player, level)
 
 function getPlayerBuild(player) {
     savedValue = player;
-    console.log(player);
+    //console.log(player);
     clearPictures();
     document.getElementById("gamedetails_build").innerHTML = "";
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
@@ -1035,7 +1041,7 @@ function addPicture(y, x, unit) {
     
 
     //canvas einfügen
-    console.log(neuesX + ", " + neuesY);
+    //console.log(neuesX + ", " + neuesY);
     var zielspalte = document.getElementById(neuesX + "." + neuesY);
     zielspalte.style = "border: 0px;";
     meinCanvas1 = document.createElement("canvas");
@@ -1112,7 +1118,7 @@ document.onkeydown = function (event) {
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
         if (event.keyCode == 38 || event.keyCode == 39) {
             //console.log("up");
-            if (document.getElementById("setWave").value < gameEvent[0].wave - 1) {
+            if (document.getElementById("setWave").value < gameEvent[0].wave) {
                 var waveValue = parseInt(document.getElementById("setWave").value) + 1;
                 document.getElementById("setWave").value = waveValue;
                 drawGameDetails(savedValue);
@@ -1122,7 +1128,7 @@ document.onkeydown = function (event) {
                 drawGameDetails(savedValue);
                 //console.log("all");
             }
-            else if (document.getElementById("setWave").value == (gameEvent[0].wave - 1)) {
+            else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
                 document.getElementById("setWave").value = "all";
             }
 
@@ -1133,7 +1139,7 @@ document.onkeydown = function (event) {
                 drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "all") {
-                document.getElementById("setWave").value = gameEvent[0].wave - 1;
+                document.getElementById("setWave").value = gameEvent[0].wave;
                 drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "1") {
@@ -1166,8 +1172,8 @@ function queryPlayer(playername) {
         result.player.statistics = JSON.parse(result.player.statistics);
         player = result.player
         loadStats(player);
-        console.log(player);
-        createBig(0);
+        //console.log(player);
+        parseStats();
         return player;
     }, playername);
 }
@@ -1241,7 +1247,7 @@ function sqlGetRank(callback, playername) {
 function queryRank(playername) {
     sqlGetRank(function (result) {
         rank = result[0].Rank;
-        console.log(rank);
+        //console.log(rank);
         parseRank(rank);
         return rank;
     }, playername);

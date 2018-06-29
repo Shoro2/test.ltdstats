@@ -276,7 +276,7 @@ function addPicture(y, x, unit, player)
     }
     //canvas einfügen
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
-    console.log("p" + player + "_" + neuesX + "." + neuesY);
+    //console.log("p" + player + "_" + neuesX + "." + neuesY);
     zielspalte.style="border: 0px;";
     meinCanvas1 = document.createElement("canvas");
     meinCanvas1.setAttribute("id", unit_type+" 1");
@@ -422,12 +422,12 @@ function clearPictures()
 document.onkeydown = function(event) {
         if(event.keyCode == 107) 
         {
-            if(document.getElementById("slider").value < gameEvent[0].wave-1)
+            if(document.getElementById("slider").value < gameEvent[0].wave)
             {
                 var waveValue = parseInt(document.getElementById("slider").value)+1;
                 document.getElementById("slider").value = waveValue;
             }
-            else if(document.getElementById("slider").value==gameEvent[0].wave-1)
+            else if(document.getElementById("slider").value==gameEvent[0].wave)
             {
                 document.getElementById("slider").value="1";
             }
@@ -442,7 +442,7 @@ document.onkeydown = function(event) {
 
             else if(document.getElementById("slider").value=="1")
             {
-                document.getElementById("slider").value=gameEvent[0].wave-1;
+                document.getElementById("slider").value=gameEvent[0].wave;
             }
             waveAnzeigen();
         }
@@ -454,12 +454,12 @@ document.onmousewheel = function displaywheel(e){
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
     if(delta>0)
     {
-        if(document.getElementById("slider").value < gameEvent[0].wave-1)
+        if(document.getElementById("slider").value < gameEvent[0].wave)
             {
                 var waveValue = parseInt(document.getElementById("slider").value)+1;
                 document.getElementById("slider").value = waveValue;
             }
-            else if(document.getElementById("slider").value==gameEvent[0].wave-1)
+            else if(document.getElementById("slider").value==gameEvent[0].wave)
             {
                 document.getElementById("slider").value="1";
             }
@@ -474,16 +474,16 @@ document.onmousewheel = function displaywheel(e){
 
             else if(document.getElementById("slider").value=="1")
             {
-                document.getElementById("slider").value=gameEvent[0].wave-1;
+                document.getElementById("slider").value=gameEvent[0].wave;
             }
             waveAnzeigen();
     }
 }
  
 document.getElementById("slider").onchange = function(){
-    if(document.getElementById("slider").value>gameEvent[0].wave-1) 
+    if(document.getElementById("slider").value>gameEvent[0].wave) 
     {
-        document.getElementById("slider").value = gameEvent[0].wave-1;
+        document.getElementById("slider").value = gameEvent[0].wave;
         waveAnzeigen();
     }
 }
@@ -494,7 +494,7 @@ function getPlayer() {
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("gameid");
     if (playerurl === null) {
-        console.log(playerurl);
+        //console.log(playerurl);
         window.location.href = window.location.href + "?gameid=" + document.getElementById("gameid").value;
     }
     else {
@@ -538,12 +538,12 @@ document.body.onload = function () {
     if (playerurl !== "" && playerurl !== null) {
         document.getElementById("mitte").style.display = "inherit";
         //hex to dez
-        console.log(playerurl.length)
+        //console.log(playerurl.length)
         if (playerurl.length == 16) {
             playerurl = h2d(playerurl);
         }
         queryGame(playerurl);
-        console.log(playerurl);
+        //console.log(playerurl);
     }
     else {
         document.getElementById("wave").textContent = "Enter a valid gameid to select the replay.";
@@ -571,7 +571,7 @@ function waveAnzeigen()
 {
 
     var welle = document.getElementById("slider").value;
-    var maxwave=  gameEvent[0].wave - 1;
+    var maxwave=  gameEvent[0].wave;
     document.getElementById("wave").textContent = "Wave: " + welle.toString() + "/" + maxwave; 
     /*
     var icon_legionspell =[];
@@ -625,7 +625,7 @@ function getGame(callback, gameid) {
 
 function queryGame(gameid) {
     getGame(function (result) {
-        console.log(result);
+        //console.log(result);
         game = result.endgame;
         getGameDetails(game);
         document.getElementById("mitte").style.display = "none";

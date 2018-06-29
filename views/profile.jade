@@ -14,25 +14,64 @@ block content
         .tab_box#tab_box_1
             .profile
                 h1#player_name1
-                #rank
                 #playerbadge_level.badge
                 #playerbadge_rank.badge
                 h3#player_elo1
-                h4 badges: (id)
+                #rank
                 #player_icon1
-                #general.meinbalken_small
-                    .p General:
-                #element.meinbalken_small
-                    .p Element:
-                #grove.meinbalken_small
-                    .p Grove:
-                #forsaken.meinbalken_small
-                    .p Forsaken:
-                #mech.meinbalken_small
-                    .p Mech:
-                #mastermind.meinbalken_small
-                    .p Mastermind:
-            .meinbalken_big#grosserBalken
+                #stats
+                    #general
+                        h4 General:
+                        #general_overallelo
+                        #general_overallpeakelo
+                        #general_wins
+                        #general_ties
+                        #general_quits
+                        #general_level
+                        #general_winningstreak
+                    #mastermind.stats_small 
+                        h4 Mastermind:
+                        #mastermind_elo
+                        #mastermind_peakelo
+                        #mastermind_games
+                        #mastermind_wins
+                        #mastermind_level
+                    #element.stats_small 
+                        h4 Element:
+                        #element_elo
+                        #element_peakelo
+                        #element_games
+                        #element_wins
+                        #element_level
+                    #grove.stats_small 
+                        h4 Grove:
+                        #grove_elo
+                        #grove_peakelo
+                        #grove_games
+                        #grove_wins
+                        #grove_level
+                    #forsaken.stats_small 
+                        h4 Forsaken:
+                        #forsaken_elo
+                        #forsaken_peakelo
+                        #forsaken_games
+                        #forsaken_wins
+                        #forsaken_level
+                    #mech.stats_small 
+                        h4 Mech:
+                        #mech_elo
+                        #mech_peakelo
+                        #mech_games
+                        #mech_wins
+                        #mech_level
+                    #atlantean.stats_small
+                        h4 Atlantean (Coming Soon):
+                        #atlantean_elo
+                        #atlantean_peakelo
+                        #atlantean_games
+                        #atlantean_wins
+                        #atlantean_level
+                        
         .tab_box#tab_box_2
             .profile
                 h1#player_name2
@@ -45,7 +84,6 @@ block content
                         b Game:
                         select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails(0)")
                             option(value="0") Game
-                        <!-- general -->
                         #game_setWave
                             b Wave:
                             select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails(savedValue)")
@@ -89,7 +127,7 @@ block content
                                 th Income
                                 th Leaks
                             tr#game_player1(onclick="javascript: getPlayerBuild(0);")
-                                td#name_1
+                            td#name_1
                                 td#elo_1
                                 td#value_1
                                 td#worker_1
