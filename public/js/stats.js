@@ -1,62 +1,48 @@
-function getPlayer()
-{
-    var playername = document.getElementById("playername").value;
-    window.location.hash = playername;
-    getStats();
-}
+var count = 0;
+var skipped = 0;
+var allgames = [];
 
-function getStats()
-{    
-    var playerurl = window.location.href;
-    playerurl = playerurl.substring(playerurl.lastIndexOf("#")+1);
-    while(playerurl.includes("+"))
-    {
-        playerurl = playerurl.replace("+", " ");
-    }
-    if(playerurl=="https://test.ltdstats.com/stats")
-    {
-        document.getElementById("myChart").innerHTML="Select a player";
-    }
-}
-
-
-function createChart()
-{
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+function apiGetGames(callback, type, value) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var games = JSON.parse(xhttp.response);
+            callback(games);
         }
-    }
-});
+    };
+    xhttp.open("GET", "/api?command={" + type + value + "}", true);
+    console.log("/api?command={" + type + value + "}");
+    xhttp.send();
 }
+
+function queryGames(type, value) {
+    apiGetGames(function (result) {
+        console.log(result);
+        if (count == 0) count = result.filteredGames.count
+        console.log(count);
+        result.filteredGames.games.forEach(function (element) {
+            if (element.queuetype == "Normal") {
+                console.log("found ranked");
+                allgames.push(element);
+            }
+            else skipped++;
+        });
+        console.log(allgames.length);
+        
+        
+        if (allgames.length + skipped < count) {
+            limit = count - allgames.length;
+            if (limit > 100) limit = 100;
+            offset = allgames.length + skipped;
+            queryGames('filteredGames(ts:"' + ts + '", limit:' + limit + ', offset: ' + offset + ', orderby: "' + orderby + '", direction: ASC)', '{count, games{ ts }}');
+        }
+        console.log(allgames);
+        return allgames;
+    }, type, value);
+}
+var ts = "2018-07-02";
+var limit = 100;
+var offset = 0;
+var orderby = "ts";
+
+var queriedGames = queryGames('filteredGames(ts:"' + ts + '", limit:' + limit + ', offset: ' + offset + ', orderby: "' + orderby + '", direction: ASC)', '{count,games{game_id,ts,wave,time,queuetype,gameDetails{playername,legion,iscross,overallElo,position,unitsPerWave,leaksPerWave,mercsSentPerWave,mercsReceivedPerWave,workersPerWave,netWorthPerWave}}}');

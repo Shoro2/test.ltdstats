@@ -25,25 +25,60 @@
 
 #avgbuild {
     height: 200px;
-    width: 50%;
+    width: 100%;
     overflow: auto;
     padding: 20px;
     border: solid 1px lightgray;
     border-radius: 5px;
+    
 }
- 
-#avgbuild::-webkit-scrollbar {
-    width: 10px;  /* remove scrollbar space */
-    background: lightgray;
+    #avgbuild::-webkit-scrollbar {
+        width: 10px; /* remove scrollbar space */
+        background: lightgray;
+        border-radius: 5px;
+        /*background: transparent; optional: just make scrollbar invisible */
+    }
+    /* optional: show position indicator in red */
+    #avgbuild::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5px;
+        margin: 5px;
+    }
+
+#lable_build {
+    float: left;
+    height: 200px;
+    width: 49%;
+}
+#lable_send {
+    float:right;
+    height: 200px;
+    width: 49%;
+}
+
+#avgsend {
+    height: 200px;
+    width: 100%;
+    overflow: auto;
+    padding: 20px;
+    border: solid 1px lightgray;
     border-radius: 5px;
-      /*background: transparent; optional: just make scrollbar invisible */
+    
 }
+    #avgsend::-webkit-scrollbar {
+        width: 10px; /* remove scrollbar space */
+        background: lightgray;
+        border-radius: 5px;
+        /*background: transparent; optional: just make scrollbar invisible */
+    }
 /* optional: show position indicator in red */
-#avgbuild::-webkit-scrollbar-thumb {
-    background: darkgray;
-    border-radius: 5px;
-    margin:5px;
-}
+    #avgsend::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5px;
+        margin: 5px;
+    }
+ 
+
 
 .hidediv
 {
@@ -222,15 +257,13 @@ body {
 
   .wrap {
     overflow: hidden;
-    top: 10%;
-    right: 10%;
-    left: 10%;
     padding: 20px 50px;
     display: block;
     border-radius: 4px;
     transform: translateY(20px);
     transition: all 0.5s;
     visibility: hidden;
+    height: 75%;
   }
   .wrap .content {
     opacity: 0;

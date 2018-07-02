@@ -3,14 +3,14 @@
     "",
     "\\public",
     "\\public\\css",
+    "\\public\\img\\icons\\Season1",
     "\\public\\js",
+    "\\public\\js\\quill",
     "\\views",
     "\\views\\guides",
-    "\\views\\guides\\element",
-    "\\views\\guides\\general",
-    "\\views\\guides\\grove",
-    "\\views\\guides\\mastermind"
+    "\\views\\guides\\mech",
+    "\\views\\help"
   ],
-  "SelectedNode": "\\public\\js\\bootstrap.js",
+  "SelectedNode": "\\public\\js\\profile.js",
   "PreviewInSolutionExplorer": false
 }

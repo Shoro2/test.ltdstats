@@ -1,0 +1,22 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Roshkatul's 7 Tips for new players
+        #guide_author 
+            i by 
+                a(href="/profile?player=Roshkatul") Roshkatul
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile?player=Roshkatul") Roshkatul
+            #infobox_version Version: v2.28
+            #infobox_section Section: General Guides
+            #infobox_content Content:
+                ul
+                    - for(var i = 1 ; i < 21; i++){
+                        li 
+                            a(href="#wave"+i)= "Wave"+ i
+                    - }
+        p.
+        #guide_content
+            iframe(width="560", height="315", src="https://www.youtube.com/embed/HwYKVxZBLGM", frameborder="0", allow="autoplay; encrypted-media", allowfullscreen)

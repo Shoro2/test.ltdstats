@@ -419,7 +419,10 @@ function clearPictures()
     
 }
 
-document.onkeydown = function(event) {
+document.onkeydown = function (event) {
+        if (event.keyCode == 13) {
+            if (event.target.id == "playername") setPlayer();
+        }
         if(event.keyCode == 107) 
         {
             if(document.getElementById("slider").value < gameEvent[0].wave)

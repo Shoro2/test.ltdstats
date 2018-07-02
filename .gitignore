@@ -334,3 +334,7 @@ public/js/sqlcon.js
 .vs/test.ltdstats/v15/.suo
 .vs/slnx.sqlite
 .vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+*.sqlite
+.vs/VSWorkspaceState.json
+*.sqlite

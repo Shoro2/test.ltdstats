@@ -155,6 +155,12 @@ app.get('/guides/element/wadi', (req, res) => {
     })
 });
 
+app.get('/guides/element/akitosvideo', (req, res) => {
+    res.render('guides/element/akitoselement', {
+        title: 'Akitos Element Guide'
+    })
+});
+
 app.get('/guides/grove', (req, res) => {
     res.render('guides/grove', {
         title: 'Grove Guides'
@@ -167,9 +173,27 @@ app.get('/guides/grove/theratedr', (req, res) => {
     })
 });
 
+app.get('/guides/grove/isotropvideo', (req, res) => {
+    res.render('guides/grove/isotropvideo', {
+        title: 'Isotrop´s & Weilbockt´s Grove Guide'
+    })
+});
+
 app.get('/guides/forsaken', (req, res) => {
     res.render('guides/forsaken', {
         title: 'Forsaken Guides'
+    })
+});
+
+app.get('/guides/forsaken/akitosvideo', (req, res) => {
+    res.render('guides/forsaken/akitosforsaken', {
+        title: 'Akitos Forsaken Guide'
+    })
+});
+
+app.get('/guides/forsaken/isotropvideo', (req, res) => {
+    res.render('guides/forsaken/isotropforsaken', {
+        title: 'Isotrop´s & Weilbockt´s Forsaken Guide'
     })
 });
 
@@ -185,6 +209,12 @@ app.get('/guides/mech/cornep', (req, res) => {
     })
 });
 
+app.get('/guides/mech/isotropvideo', (req, res) => {
+    res.render('guides/mech/isotropmech', {
+        title: 'Isotrop´s & Weilbockt´s Mech Guide'
+    })
+});
+
 app.get('/guides/mastermind', (req, res) => {
     res.render('guides/mastermind', {
         title: 'Mastermind Guides'
@@ -197,15 +227,41 @@ app.get('/guides/mastermind/zitronenritter', (req, res) => {
     })
 });
 
+app.get('/guides/mastermind/roshkatulroll', (req, res) => {
+    res.render('guides/mastermind/roshkatulmm', {
+        title: 'Roshkatul´s Low Quality Guide: How to pick your mastermind roll'
+    })
+});
+
 app.get('/guides/general', (req, res) => {
     res.render('guides/general', {
         title: 'General Guides'
     })
 });
-
+/*
 app.get('/guides/test', (req, res) => {
     res.render('guides/guide_skele', {
         title: 'Skele Guide'
+    })
+});
+*/
+
+app.get('/guides/general/roshkatultips', (req, res) => {
+    res.render('guides/general/roshkatultips', {
+        title: 'Roshkatul´s 7 Tips for new players'
+    })
+});
+
+app.get('/guides/general/legionspells', (req, res) => {
+    res.render('guides/general/akitosspells', {
+        title: 'Akitos Legion Spells Guide'
+    })
+});
+
+
+app.get('/guides/general/simplestarter', (req, res) => {
+    res.render('guides/general/simplestarter', {
+        title: 'Teirdel´s Simple Starter Guide'
     })
 });
 
@@ -260,6 +316,60 @@ app.get('/cookies', (req, res) => {
 app.get('/faq', (req, res) => {
     res.render('faq', {
         title: 'FAQ'
+    })
+});
+
+app.get('/help', (req, res) => {
+    res.render('help', {
+        title: 'Help'
+    })
+});
+
+app.get('/help/profile', (req, res) => {
+    res.render('help/helpprofile', {
+        title: 'Help - Profile'
+    })
+});
+
+app.get('/help/ladder', (req, res) => {
+    res.render('help/helpladder', {
+        title: 'Help - Ladder'
+    })
+});
+
+app.get('/help/replay', (req, res) => {
+    res.render('help/helpreplay', {
+        title: 'Help - Replay'
+    })
+});
+
+app.get('/help/compare', (req, res) => {
+    res.render('help/helpcompare', {
+        title: 'Help - Compare'
+    })
+});
+
+app.get('/help/builder', (req, res) => {
+    res.render('help/helpbuilder', {
+        title: 'Help - Builder'
+    })
+});
+
+app.get('/help/units', (req, res) => {
+    res.render('help/helpunits', {
+        title: 'Help - Units'
+    })
+});
+
+app.get('/help/guides', (req, res) => {
+    res.render('help/helpguides', {
+        title: 'Help - Guides'
+    })
+});
+
+app.get('/help/statistics', (req, res) => {
+    res.render('help/helpstatistics', {
+        title: 'Help - Statistics'
     })
 });
 

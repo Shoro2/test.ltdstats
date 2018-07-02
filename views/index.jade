@@ -8,63 +8,78 @@ block content
         p.
         .tabmenu
             .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Profile
-            .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Ladder
-            .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Replay
-            .tab_top_active#tab_top_4(onclick="javascript:openTab(4);") Builder
-            .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Units
-            .tab_top_active#tab_top_6(onclick="javascript:openTab(6);") Guides
-            .tab_top_active#tab_top_7(onclick="javascript:openTab(7);") Statistics
+            .tab_top_passive#tab_top_2(onclick="javascript:openTab(2);") Ladder
+            .tab_top_passive#tab_top_3(onclick="javascript:openTab(3);") Replay
+            .tab_top_passive#tab_top_4(onclick="javascript:openTab(4);") Compare
+            .tab_top_passive#tab_top_5(onclick="javascript:openTab(5);") Builder
+            .tab_top_passive#tab_top_6(onclick="javascript:openTab(6);") Units
+            .tab_top_passive#tab_top_7(onclick="javascript:openTab(7);") Guides
+            .tab_top_passive#tab_top_8(onclick="javascript:openTab(8);") Statistics
             .style(style='clear: both;')
             .tab_box#tab_box_1
                 .profile
                     b Profile
-                    p.
-                        Check out stats, collection and the matchhistory for your profile.
+                    p Check out statistics, elograph, the matchhistory, collection and players ingame behaviour. 
+                        a(href="/help/profile")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/profile.png" width="1100px")
+                        img.indexbild(src="/img/profile.png")
             .tab_box#tab_box_2
                 .profile
                     b Ladder
-                    p.
-                        Check out your rank or top 100 in the offical ladder.
+                    p Check out your rank or top 100 in the offical ladder.
+                        a(href="/help/ladder")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/ladder.png" width="1100px")
+                        img.indexbild(src="/img/ladder.png")
             .tab_box#tab_box_3
                 .profile
                     b Replay
-                    p.
-                        Look up your game for detailed information about it.
+                    p Look up your game for detailed information about it.
+                        a(href="/help/replay")
+                                img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/replay.png" width="1100px")
-                   
+                        img.indexbild(src="/img/replay.png")
             .tab_box#tab_box_4
                 .profile
-                    b Builder
-                    p.
-                        Share your perfect build or look up top builds.
+                    b Compare
+                    p Compare two players.
+                        a(href="/help/compare")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/builder.png" width="1100px")
+                        img.indexbild(src="/img/compare.png")       
             .tab_box#tab_box_5
                 .profile
-                    b Units
-                    p.
-                        Look up any fighter, mercanery or wave unit.
+                    b Builder
+                    p Share your perfect build or look up top builds.
+                        a(href="/help/builder")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/units.png" width="1100px")
+                        img.indexbild(src="/img/builder.png" width="1100px")
             .tab_box#tab_box_6
                 .profile
-                    b Guides
-                    p.
-                        Here you can find guides for all races and general hints.
+                    b Units
+                    p Look up any fighter, mercanery or wave unit.
+                        a(href="/help/units")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/guides.png" width="1100px")
+                        img.indexbild(src="/img/units.png" width="1100px")
             .tab_box#tab_box_7
                 .profile
-                    b Statistics
-                    p.
-                        Provides you detailled statistic about specific patches/days/players or overall data.
+                    b Guides
+                    p Here you can find guides for all races and general hints.
+                        a(href="/help/guides")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
                     p
-                        img(src="/img/stats.png" width="1100px")
+                        img.indexbild(src="/img/guides.png" width="1100px")
+            .tab_box#tab_box_8
+                .profile
+                    b Statistics
+                    p Provides you detailled statistic about specific patches/days/players or overall data.
+                        a(href="/help/statistics")
+                            img(src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                    p
+                        img.indexbild(src="/img/stats.png" width="1100px")
     script(src="/js/jquery.js")                    
     script(src="/js/tabmenu.js")
     link(rel='stylesheet', href='/css/tabmenu.css')

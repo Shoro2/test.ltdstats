@@ -1,7 +1,7 @@
 extend layout
 block content
     link(rel='stylesheet', href='/css/profile.css')
-    #mitte(style="display:none;")
+    #mitte(style="display:none; margin-top:15%;")
         img(class="gif", src="/img/loading.gif")
         .p Requesting API, please wait...
     .tabmenu
@@ -209,8 +209,10 @@ block content
                         #chancetosend
                         #whatmadehimleak
                         #chancetowin
-                        #label Average Build:
-                        #avgbuild
+                        #lable_build Average Build:
+                            #avgbuild
+                        #lable_send Average Sends:
+                            #avgsend
     script(src="/js/jquery.js")
     script(src="/js/tabmenu.js")
     script(src="/js/profile.js")

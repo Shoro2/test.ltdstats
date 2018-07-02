@@ -30,7 +30,7 @@ function setPlayer() {
         window.location.href = window.location.href + "?player=" + document.getElementById("playername").value;
     }
     else {
-        window.location.href = "https://test.ltdstats.com/profile" + "?player=" + document.getElementById("playername").value;
+        window.location.href = "/profile" + "?player=" + document.getElementById("playername").value;
     }
     
 }
@@ -145,7 +145,7 @@ function loadEloGraph(games) {
 
     for (var i = 0; i < 100; i++) {
         addData(myChart, date[i], elo[i]);
-        console.log(date[i]);
+        //console.log(date[i]);
     }
 }
 
@@ -416,19 +416,23 @@ function drawPlayerBuilds(gameX) {
     anzahl = 0;
     leaks = new Array(5);
     sends = new Array(5);
+    sendchance = new Array(5)
     builds = new Array(5);
     for (var i = 0; i < leaks.length; i++) {
         leaks[i] = new Array(21);
         sends[i] = new Array(21);
         builds[i] = new Array(21);
+        sendchance[i] = new Array(21);
         for (var e = 0; e < 21; e++) {
             //builds[i][e] = new Array (units.length);
             builds[i][e] = new Array(60);
+            leaks[i][e] = 0;
+            sendchance[i][e] = 0;
+            sends[i][e] = new Array(60);
             for (var p = 0; p < 60; p++) {
                 builds[i][e][p] = 0;
+                sends[i][e][p] = 0;
             }
-            leaks[i][e] = 0;
-            sends[i][e] = 0;
         }
     }
     var target_race = 0;
@@ -492,10 +496,22 @@ function drawPlayerBuilds(gameX) {
             for (var e = 0; e < wave - 1; e++) {
                 //check for newer data
                 //console.log(game[i]);
-                if (game[i].leaksPerWave !== null && game[i].mercsReceivedPerWave !== null) if (game[i].leaksPerWave.length > 0 && game[i].mercsReceivedPerWave.length > 0) {
-                    if (game[i].leaksPerWave[e].length > 0 && game[i].mercsReceivedPerWave[e].length > 0) {
-                        //amount of games where he leaked
-                        leaks[raceint][e] = leaks[raceint][e] + 1;
+                //Chance to leak:
+                if (game[i].leaksPerWave !== null && game[i].mercsReceivedPerWave !== null) {
+                    if (game[i].leaksPerWave.length > 0 && game[i].mercsReceivedPerWave.length > 0) {
+                        if (game[i].leaksPerWave[e].length > 0 && game[i].mercsReceivedPerWave[e].length > 0) {
+                            //amount of games where he leaked
+                            leaks[raceint][e] = leaks[raceint][e] + 1;
+                        }
+                    }
+                }
+                //Chance to send
+                if (game[i].mercsSentPerWave !== null) {
+                    if (game[i].mercsSentPerWave.length > 0) {
+                        if (game[i].mercsSentPerWave[e].length > 0) {
+                            //amount of games where he leaked
+                            sendchance[raceint][e] = sendchance[raceint][e] + 1;
+                        }
                     }
                 }
                 game[i].unitsPerWave[e].forEach(function (element) {
@@ -521,37 +537,77 @@ function drawPlayerBuilds(gameX) {
                         for (var x = 0; x < 60; x++) {
                             if (builds[raceint][e][x] == 0) {
                                 builds[raceint][e][x] = element.substring(0, element.indexOf("_unit")) + ";1";
-                                x = 61;
+                                break;
                             }
                         }
                     }
 
                 });
 
+                game[i].mercsSentPerWave[e].forEach(function (element) {
+                    var anzahl = 0;
+                    for (var x = 0; x < 60; x++) {
+                        if (sends[raceint][e][x] != 0) {
+                            //einheit vorhanden
+                            //console.log(element);
+                            if (sends[raceint][e][x].includes(element)) {
+                                anzahl = parseInt(sends[raceint][e][x].substring(sends[raceint][e][x].indexOf(";") + 1));
+                                //console.log(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
+                                anzahl++;
+                                sends[raceint][e][x] = element + ";" + anzahl;
+
+                            }
+                        }
+
+                    }
+                    //einheit noch nicht vorhanden; f�ge an n�chster freie stelle ein
+                    if (anzahl > 0 == false) {
+                        for (var x = 0; x < 60; x++) {
+                            if (sends[raceint][e][x] == 0) {
+                                sends[raceint][e][x] = element + ";1";
+                                break;
+                            }
+                        }
+                    }
+                });
+                
             }
 
         }
         else {
             player_count++;
         }
-
+        
     }
+    console.log(sends);
     var chancetoleak = (leaks[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
+    var chancetosend = (sendchance[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
     var favunit = []
     meineBuilds = builds[target_race][[document.getElementById("setWave2").value - 1]];
-
+    meineSends = sends[target_race][[document.getElementById("setWave2").value - 1]];
     if (chancetoleak == 'NaN') chancetoleak = "no data";
     else if (chancetoleak == 0) chancetoleak = "0";
+    if (chancetosend == 'NaN') chancetosend = "no data";
+    else if (chancetosend == 0) chancetosend = "0";
     document.getElementById("playername").textContent = player_name;
     document.getElementById("totalgames").textContent = "Games reached wave " + document.getElementById("setWave2").value + ": " + gamesNeu[target_race];
     document.getElementById("chancetoleak").textContent = "Chance to leak wave " + document.getElementById("setWave2").value + " with " + document.getElementById("setRace2").value + ": " + chancetoleak;
+    document.getElementById("chancetosend").textContent = "Chance to send on wave " + document.getElementById("setWave2").value + " with " + document.getElementById("setRace2").value + ": " + chancetosend;
     if (chancetoleak !== "no data") document.getElementById("chancetoleak").textContent = document.getElementById("chancetoleak").textContent += "%";
+    if (chancetosend !== "no data") document.getElementById("chancetosend").textContent = document.getElementById("chancetosend").textContent += "%";
+
     var buildcontainer = document.getElementById("avgbuild");
+    var sendcontainer = document.getElementById("avgsend");
     buildcontainer.innerHTML = "";
+    sendcontainer.innerHTML = "";
     builds[target_race][[document.getElementById("setWave2").value - 1]].sort();
+    sends[target_race][[document.getElementById("setWave2").value - 1]].sort();
     //console.log(builds[target_race]);
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
         if (ele != 0) buildcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+    });
+    sends[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
+        if (ele != 0) sendcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
     });
     //console.log(builds);
     /*
@@ -1115,6 +1171,9 @@ function showBuild() {
 }
 
 document.onkeydown = function (event) {
+    if (event.keyCode == 13) {
+        if (event.target.id == "playername") setPlayer();
+    }
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
         if (event.keyCode == 38 || event.keyCode == 39) {
             //console.log("up");

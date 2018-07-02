@@ -390,6 +390,12 @@ function queryPlayer(playername) {
 }
 
 
+document.onkeydown = function (event) {
+    if (event.keyCode == 13) {
+        if (event.target.id == "playername") setPlayer();
+    }
+}
+
 
 
 

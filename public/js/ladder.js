@@ -181,7 +181,7 @@ function parsePlayers(myPlayers) {
         if (winchance_mech == "NaN") winchance_mech = 0;
         if (winchance_mastermind == "NaN") winchance_mastermind = 0;
         cell[0].innerHTML = i+1;
-        cell[1].innerHTML = players[i].name;
+        cell[1].innerHTML = '<a href="/profile?player=' + players[i].name+'">'+players[i].name+'</a>';
         cell[2].innerHTML = players[i].elo;
         cell[3].innerHTML = totalgames;
         cell[4].innerHTML = totalwins;
@@ -252,4 +252,10 @@ function parseRanks() {
         }
     }
     
+}
+
+document.onkeydown = function (event) {
+    if (event.keyCode == 13) {
+        if (event.target.id == "playername") setPlayer();
+    }
 }
