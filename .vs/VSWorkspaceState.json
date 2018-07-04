@@ -3,14 +3,12 @@
     "",
     "\\public",
     "\\public\\css",
-    "\\public\\img\\icons\\Season1",
     "\\public\\js",
+    "\\public\\js\\db",
     "\\public\\js\\quill",
     "\\views",
     "\\views\\guides",
-    "\\views\\guides\\mech",
-    "\\views\\help"
+    "\\views\\guides\\mech"
   ],
-  "SelectedNode": "\\public\\js\\profile.js",
   "PreviewInSolutionExplorer": false
 }

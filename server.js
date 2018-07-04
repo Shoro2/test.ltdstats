@@ -29,7 +29,14 @@ con.connect(function (err) {
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 
+var MongoClient = require('mongodb').MongoClient;
 
+var dbo = "";
+
+var meineDb = MongoClient.connect("mongodb://144.76.233.45:27017/", function (err, db) {
+    if (err) throw err;
+    dbo = db.db("ltdstats");
+});
 
 //routes
 
@@ -476,6 +483,16 @@ app.get('/api/', (req, res) => {
         ;
 
     
+});
+
+//mongodb
+
+app.get('/mongodb/', (req, res) => {
+    var command = req.query.command;
+    dbo.collection("games").find({ command }, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
 });
 
 app.listen(PORT, HOST);
