@@ -125,17 +125,38 @@ document.body.onload = function () {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
+    if (window.location.href.includes("overall")) {
+        var type = "overallElo";
+        console.log(type);
+    }
+    else if (window.location.href.includes("element")) {
+        var type = "elementElo";
+    }
+    else if (window.location.href.includes("grove")) {
+        var type = "groveElo";
+    }
+    else if (window.location.href.includes("forsaken")) {
+        var type = "forsakenElo";
+    }
+    else if (window.location.href.includes("mech")) {
+        var type = "mechElo";
+    }
+    else if (window.location.href.includes("mastermind")) {
+        var type = "mastermindElo";
+    }
+    console.log(window.location.href);
     if (playerurl !== null) {
-        queryRank(playerurl);
+        queryRank(playerurl, type);
         console.log("getrank");
     }
     else {
-        queryLadder(100, 0);
+        
+        queryLadder(100, 0, type);
         console.log("getladder");
     }
 }
 
-function getLadder(callback, limit, offset) {
+function getLadder(callback, limit, offset, type) {
     var xhttp = new XMLHttpRequest();
     document.getElementById("mitte").style = "position:relative;z - index: 2000;top: 50 %;bottom: 30 %;left: 10 %;right: 10 %;height: 40 %;width: 80 %;background - color: white;text - align: center;border - radius: 10px;opacity: 0.9;";
     xhttp.onreadystatechange = function () {
@@ -144,65 +165,295 @@ function getLadder(callback, limit, offset) {
             callback(player);
         }
     };
-    xhttp.open("GET", "/sql/ladder/?limit="+limit+"&offset="+offset, true);
+    xhttp.open("GET", '/api?command={filteredPlayers(orderby: "'+type+'",limit: '+limit+',direction:DESC,offset:'+offset+'){count,players{playername,statistics}}}', true);
     xhttp.send();
 }
 
-function queryLadder(limit, offset) {
+function queryLadder(limit, offset, type) {
     getLadder(function (result) {
-        parsePlayers(result);
+        parsePlayers(result, type);
         document.getElementById("mitte").style = "display:none;";
         parseRanks();
         return result;
-    }, limit, offset);
+    }, limit, offset, type);
 }
 
-function parsePlayers(myPlayers) {
-    var players = myPlayers;
+function parsePlayers(myPlayers, type) {
+    var players = myPlayers.filteredPlayers.players;
     var tabelle = document.getElementById("myladder");
-    console.log(players);
-    for (var i = 0; i < players.length; i++) {
-        var row = tabelle.insertRow(i+1);
-        var cell = [21];
-        for (var e = 0; e < 21; e++) {
-            cell[e] = row.insertCell(e);
-            cell[e].classList.add("td_" + e);
-        }
-        var totalgames = players[i].games_element + players[i].games_grove + players[i].games_forsaken + players[i].games_mech + players[i].games_mastermind;
-        var totalwins = players[i].wins_element + players[i].wins_grove + players[i].wins_forsaken + players[i].wins_mech + players[i].wins_mastermind;
-        var winchance_element = ((players[i].wins_element / players[i].games_element) * 100).toFixed(2);
-        var winchance_grove = ((players[i].wins_grove / players[i].games_grove) * 100).toFixed(2);
-        var winchance_forsaken = ((players[i].wins_forsaken / players[i].games_forsaken) * 100).toFixed(2);
-        var winchance_mech = ((players[i].wins_mech / players[i].games_mech) * 100).toFixed(2);
-        var winchance_mastermind = ((players[i].wins_mastermind / players[i].games_mastermind) * 100).toFixed(2);
-        if (winchance_element == "NaN") winchance_element = 0;
-        if (winchance_grove == "NaN") winchance_grove = 0;
-        if (winchance_forsaken == "NaN") winchance_forsaken = 0;
-        if (winchance_mech == "NaN") winchance_mech = 0;
-        if (winchance_mastermind == "NaN") winchance_mastermind = 0;
-        cell[0].innerHTML = i+1;
-        cell[1].innerHTML = '<a href="/profile?player=' + players[i].name+'">'+players[i].name+'</a>';
-        cell[2].innerHTML = players[i].elo;
-        cell[3].innerHTML = totalgames;
-        cell[4].innerHTML = totalwins;
-        cell[5].innerHTML = totalgames - totalwins;
-        cell[6].innerHTML = players[i].games_element;
-        cell[7].innerHTML = players[i].wins_element;
-        cell[8].innerHTML = winchance_element+"%";
-        cell[9].innerHTML = players[i].games_grove;
-        cell[10].innerHTML = players[i].wins_grove;
-        cell[11].innerHTML = winchance_grove + "%";
-        cell[12].innerHTML = players[i].games_forsaken;
-        cell[13].innerHTML = players[i].wins_forsaken;
-        cell[14].innerHTML = winchance_forsaken + "%";
-        cell[15].innerHTML = players[i].games_mech;
-        cell[16].innerHTML = players[i].wins_mech;
-        cell[17].innerHTML = winchance_mech + "%";
-        cell[18].innerHTML = players[i].games_mastermind;
-        cell[19].innerHTML = players[i].wins_mastermind;
-        cell[20].innerHTML = winchance_mastermind + "%";
+    console.log(players.length);
+    console.log(type);
+    switch (type)
+    {
+        case "overallElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+                if (players[i].statistics.elementPlayed == null || players[i].statistics.elementWins == null) {
+                    if (players[i].statistics.elementPlayed == null) players[i].statistics.elementPlayed = 0;
+                    players[i].statistics.elementElo = 1000;
+                    players[i].statistics.elementWins = 0;
+                    players[i].statistics.elementLosses = 0;
+                    players[i].statistics.elementPeakElo = 1000;
+                    players[i].statistics.elementPeakEloThisSeason = 1000;
+                }
+                if (players[i].statistics.grovePlayed == null || players[i].statistics.groveWins == null) {
+                    if (players[i].statistics.grovePlayed == null) players[i].statistics.grovePlayed = 0;
+                    players[i].statistics.groveElo = 1000;
+                    players[i].statistics.groveWins = 0;
+                    players[i].statistics.groveLosses = 0;
+                    players[i].statistics.grovePeakElo = 1000;
+                    players[i].statistics.grovePeakEloThisSeason = 1000;
+                }
+                if (players[i].statistics.forsakenPlayed == null || players[i].statistics.forsakenWins == null) {
+                    if (players[i].statistics.forsakenPlayed == null) players[i].statistics.forsakenPlayed = 0;
+                    players[i].statistics.forsakenElo = 1000;
+                    players[i].statistics.forsakenWins = 0;
+                    players[i].statistics.forsakenLosses = 0;
+                    players[i].statistics.forsakenPeakElo = 1000;
+                    players[i].statistics.forsakenPeakEloThisSeason = 1000;
+                }
+                if (players[i].statistics.mechPlayed == null || players[i].statistics.mechWins == null) {
+                    if (players[i].statistics.mechPlayed == null) players[i].statistics.mechPlayed = 0;
+                    players[i].statistics.mechElo = 1000;
+                    players[i].statistics.mechWins = 0;
+                    players[i].statistics.mechLosses = 0;
+                    players[i].statistics.mechPeakElo = 1000;
+                    players[i].statistics.mechPeakEloThisSeason = 1000;
+                }
+                if (players[i].statistics.mastermindPlayed == null || players[i].statistics.mastermindWins == null) {
+                    if (players[i].statistics.mastermindPlayed == null) players[i].statistics.mastermindPlayed = 0;
+                    players[i].statistics.mastermindElo = 1000;
+                    players[i].statistics.mastermindWins = 0;
+                    players[i].statistics.mastermindLosses = 0;
+                    players[i].statistics.mastermindPeakElo = 1000;
+                    players[i].statistics.mastermindPeakEloThisSeason = 1000;
+                }
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_element = ((players[i].statistics.elementWins / players[i].statistics.elementPlayed) * 100).toFixed(2);
+                var winchance_grove = ((players[i].statistics.groveWins / players[i].statistics.grovePlayed) * 100).toFixed(2);
+                var winchance_forsaken = ((players[i].statistics.forsakenWins / players[i].statistics.forsakenPlayed) * 100).toFixed(2);
+                var winchance_mech = ((players[i].statistics.mechWins / players[i].statistics.mechPlayed) * 100).toFixed(2);
+                var winchance_mastermind = ((players[i].statistics.mastermindWins / players[i].statistics.mastermindPlayed) * 100).toFixed(2);
+                if (winchance_element == "NaN") winchance_element = 0;
+                if (winchance_grove == "NaN") winchance_grove = 0;
+                if (winchance_forsaken == "NaN") winchance_forsaken = 0;
+                if (winchance_mech == "NaN") winchance_mech = 0;
+                if (winchance_mastermind == "NaN") winchance_mastermind = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.elementPlayed;
+                cell[7].innerHTML = players[i].statistics.elementWins;
+                cell[8].innerHTML = winchance_element + "%";
+                cell[9].innerHTML = players[i].statistics.grovePlayed;
+                cell[10].innerHTML = players[i].statistics.groveWins;
+                cell[11].innerHTML = winchance_grove + "%";
+                console.log(players[i].statistics.forsakenPlayed);
+                cell[12].textContent = players[i].statistics.forsakenPlayed;
+                cell[13].innerHTML = players[i].statistics.forsakenWins;
+                cell[14].innerHTML = winchance_forsaken + "%";
+                cell[15].innerHTML = players[i].statistics.mechPlayed;
+                cell[16].innerHTML = players[i].statistics.mechWins;;
+                cell[17].innerHTML = winchance_mech + "%";
+                cell[18].innerHTML = players[i].mastermindPlayed;
+                cell[19].innerHTML = players[i].statistics.mastermindWins;;
+                cell[20].innerHTML = winchance_mastermind + "%";
 
+            }
+            break;
+        case "elementElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+                
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.elementPeakElo == null && players[i].statistics.elementPeakEloThisSeason == null) players[i].statistics.elementPeakElo = players[i].statistics.elementElo;
+                if (players[i].statistics.elementPeakElo == null && players[i].statistics.elementPeakEloThisSeason != null) players[i].statistics.elementPeakElo = players[i].statistics.elementPeakEloThisSeason;
+                if (players[i].statistics.elementPeakEloThisSeason == null) players[i].statistics.elementPeakEloThisSeason = players[i].statistics.elementPeakElo;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_element = ((players[i].statistics.elementWins / players[i].statistics.elementPlayed) * 100).toFixed(2);
+                if (winchance_element == "NaN") winchance_element = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.elementPlayed;
+                cell[7].innerHTML = players[i].statistics.elementWins;
+                cell[8].innerHTML = winchance_element + "%";
+                cell[9].innerHTML = players[i].statistics.elementElo;
+                cell[10].innerHTML = players[i].statistics.elementPeakElo;
+                cell[11].innerHTML = players[i].statistics.elementPeakEloThisSeason;
+            }
+            break;
+        case "groveElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.grovePeakElo == null && players[i].statistics.grovePeakEloThisSeason == null) players[i].statistics.grovePeakElo = players[i].statistics.groveElo;
+                if (players[i].statistics.grovePeakElo == null && players[i].statistics.grovePeakEloThisSeason != null) players[i].statistics.grovePeakElo = players[i].statistics.grovePeakEloThisSeason;
+                if (players[i].statistics.grovePeakEloThisSeason == null) players[i].statistics.grovePeakEloThisSeason = players[i].statistics.grovePeakElo;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_grove = ((players[i].statistics.groveWins / players[i].statistics.grovePlayed) * 100).toFixed(2);
+                if (winchance_grove == "NaN") winchance_grove = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.grovePlayed;
+                cell[7].innerHTML = players[i].statistics.groveWins;
+                cell[8].innerHTML = winchance_grove + "%";
+                cell[9].innerHTML = players[i].statistics.groveElo;
+                cell[10].innerHTML = players[i].statistics.grovePeakElo;
+                cell[11].innerHTML = players[i].statistics.grovePeakEloThisSeason;
+            }
+            break;
+        case "forsakenElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.forsakenPeakElo == null && players[i].statistics.forsakenPeakEloThisSeason == null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenElo;
+                if (players[i].statistics.forsakenPeakElo == null && players[i].statistics.forsakenPeakEloThisSeason != null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenPeakEloThisSeason;
+                if (players[i].statistics.forsakenPeakEloThisSeason == null) players[i].statistics.forsakenPeakEloThisSeason = players[i].statistics.forsakenPeakElo;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_forsaken = ((players[i].statistics.forsakenWins / players[i].statistics.forsakenPlayed) * 100).toFixed(2);
+                if (winchance_forsaken == "NaN") winchance_forsaken = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.forsakenPlayed;
+                cell[7].innerHTML = players[i].statistics.forsakenWins;
+                cell[8].innerHTML = winchance_forsaken + "%";
+                cell[9].innerHTML = players[i].statistics.forsakenElo;
+                cell[10].innerHTML = players[i].statistics.forsakenPeakElo;
+                cell[11].innerHTML = players[i].statistics.forsakenPeakEloThisSeason;
+            }
+            break;
+        case "mechElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.mechPeakElo == null && players[i].statistics.mechPeakEloThisSeason == null) players[i].statistics.mechPeakElo = players[i].statistics.mechElo;
+                if (players[i].statistics.mechPeakElo == null && players[i].statistics.mechPeakEloThisSeason != null) players[i].statistics.mechPeakElo = players[i].statistics.mechPeakEloThisSeason;
+                if (players[i].statistics.mechPeakEloThisSeason == null) players[i].statistics.mechPeakEloThisSeason = players[i].statistics.mechPeakElo;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_mech = ((players[i].statistics.mechWins / players[i].statistics.mechPlayed) * 100).toFixed(2);
+                if (winchance_mech == "NaN") winchance_mech = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.mechPlayed;
+                cell[7].innerHTML = players[i].statistics.mechWins;
+                cell[8].innerHTML = winchance_mech + "%";
+                cell[9].innerHTML = players[i].statistics.mechElo;
+                cell[10].innerHTML = players[i].statistics.mechPeakElo;
+                cell[11].innerHTML = players[i].statistics.mechPeakEloThisSeason;
+            }
+            break;
+        case "mastermindElo":
+            for (var i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                var row = tabelle.insertRow(i + 1);
+                var cell = [21];
+                for (var e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.mastermindPeakElo == null && players[i].statistics.mastermindPeakEloThisSeason == null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindElo;
+                if (players[i].statistics.mastermindPeakElo == null && players[i].statistics.mastermindPeakEloThisSeason != null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindPeakEloThisSeason;
+                if (players[i].statistics.mastermindPeakEloThisSeason == null) players[i].statistics.mastermindPeakEloThisSeason = players[i].statistics.mastermindPeakElo;
+                var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                var totalwins = players[i].statistics.wins;
+                var winchance_mastermind = ((players[i].statistics.mastermindWins / players[i].statistics.mastermindPlayed) * 100).toFixed(2);
+                if (winchance_mastermind == "NaN") winchance_mastermind = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.mastermindPlayed;
+                cell[7].innerHTML = players[i].statistics.mastermindWins;
+                cell[8].innerHTML = winchance_mastermind + "%";
+                cell[9].innerHTML = players[i].statistics.mastermindElo;
+                cell[10].innerHTML = players[i].statistics.mastermindPeakElo;
+                cell[11].innerHTML = players[i].statistics.mastermindPeakEloThisSeason;
+            }
+            break;
     }
+    
+
+    
     getFilters();
 }
 
@@ -214,7 +465,7 @@ function getPlayer() {
         window.location.href = window.location.href + "?player=" + document.getElementById("playername").value;
     }
     else {
-        window.location.href = "https://test.ltdstats.com/ladder" + "?player=" + document.getElementById("playername").value;
+        window.location.href = "/ladder/overall" + "?player=" + document.getElementById("playername").value;
     }
 
 }
@@ -231,13 +482,13 @@ function sqlGetRank(callback, playername) {
     xhttp.send();
 }
 
-function queryRank(playername) {
+function queryRank(playername,type) {
     sqlGetRank(function (result) {
         console.log(result);
         rank = parseInt(result[0].Rank);
         newrank = rank - 50;
         if (newrank < 0) newrank = 0;
-        queryLadder(100, newrank);
+        queryLadder(100, newrank, type);
         
         return rank;
     }, playername);

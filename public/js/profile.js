@@ -104,8 +104,10 @@ function loadEloGraph(games) {
     });
     date.reverse();
     elo.reverse();
-    document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>"+player_name+"</h1><div id='chartContainer'><canvas id='myChart'></canvas></div></div>";
+    document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>"+player_name+"</h1><div id='chart-container'><canvas id='myChart'></canvas></div></div>";
     var ctx = document.getElementById("myChart");
+    ctx.height = 500;
+    ctx.width = 1000;
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -133,6 +135,7 @@ function loadEloGraph(games) {
             }]
         },
         options: {
+            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {

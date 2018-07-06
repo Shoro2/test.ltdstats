@@ -34,6 +34,10 @@
 
     .ladder td {
         text-align: right;
+        padding:5px;
+    }
+    .ladder th{
+        padding:5px;
     }
 #td1 {
         text-align: left !important;

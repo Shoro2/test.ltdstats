@@ -12,7 +12,7 @@ html
         script(async src="https://www.googletagmanager.com/gtag/js?id=UA-111925592-1")
     body
         header
-        .container
+        .container-fluid
             nav.navbar.navbar-expand-xl.navbar-dark.fixed-top.bg-dark
                 img(src="https://test.ltdstats.com/img/favicon.ico", width="16px", height="16px")
                 a.navbar-brand(href='https://test.ltdstats.com') LTDStats.com
@@ -33,11 +33,25 @@ html
                             li.nav-item
                                 a.nav-link(href='/profile') Profile
                         if(title.includes("Ladder"))      
-                            li.nav-item.active
-                                a.nav-link(href='/ladder') Ladder
+                            li.nav-item.dropdown.active
+                                a#dropdown01.nav-link.dropdown-toggle(href='/ladder/overall', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/ladder/overall') Overall
+                                    a.dropdown-item(href='/ladder/element') Element
+                                    a.dropdown-item(href='/ladder/forsaken') Forsaken
+                                    a.dropdown-item(href='/ladder/grove') Grove
+                                    a.dropdown-item(href='/ladder/mech') Mech
+                                    a.dropdown-item(href='/ladder/mastermind') Mastermind
                         else
-                            li.nav-item
-                                a.nav-link(href='/ladder') Ladder
+                            li.nav-item.dropdown
+                                a#dropdown01.nav-link.dropdown-toggle(href='/ladder/overall', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/ladder/overall') Overall
+                                    a.dropdown-item(href='/ladder/element') Element
+                                    a.dropdown-item(href='/ladder/forsaken') Forsaken
+                                    a.dropdown-item(href='/ladder/grove') Grove
+                                    a.dropdown-item(href='/ladder/mech') Mech
+                                    a.dropdown-item(href='/ladder/mastermind') Mastermind
                         if(title=="Games")
                             li.nav-item.active
                                 a.nav-link(href='/replay') Replay

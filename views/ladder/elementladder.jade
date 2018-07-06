@@ -1,0 +1,55 @@
+
+extend ../layout
+block content
+    link(rel='stylesheet', href='/css/ladder.css')
+    .content
+        .umdieladder
+            #filter_display(onclick="expandFilters()") Show filters
+            #filter-invis
+                label.filter_label(onclick="getFilters();") Rank
+                    input.filter_input#checkbox0(type="checkbox", name="filter", value="Rank", onclick='saveTick(0);')
+                label.filter_label(onclick="getFilters();") Name
+                    input.filter_input#checkbox1(type="checkbox", name="filter", value="Name", onclick='saveTick(1);')
+                label.filter_label(onclick="getFilters();") Overall Elo
+                    input.filter_input#checkbox2(type="checkbox", name="filter", value="Elo", onclick='saveTick(2);')
+                label.filter_label(onclick="getFilters();") Games
+                    input.filter_input#checkbox3(type="checkbox", name="filter", value="Games", onclick='saveTick(3);')
+                label.filter_label(onclick="getFilters();") Wins
+                    input.filter_input#checkbox4(type="checkbox", name="filter", value="Wins", onclick='saveTick(4);')
+                label.filter_label(onclick="getFilters();") Loses
+                    input.filter_input#checkbox5(type="checkbox", name="filter", value="Loses", onclick='saveTick(5);')
+                label.filter_label(onclick="getFilters();") Games Element
+                    input.filter_input#checkbox6(type="checkbox", name="filter", value="Games Element", onclick='saveTick(6);')
+                label.filter_label(onclick="getFilters();") Wins Element
+                    input.filter_input#checkbox7(type="checkbox", name="filter", value="Wins Element", onclick='saveTick(7);')
+                label.filter_label(onclick="getFilters();") Winchance Element
+                    input.filter_input#checkbox8(type="checkbox", name="filter", value="Winchance Element", onclick='saveTick(8);')
+                label.filter_label(onclick="getFilters();") Elo Element
+                    input.filter_input#checkbox9(type="checkbox", name="filter", value="Elo Element", onclick='saveTick(9);')
+                label.filter_label(onclick="getFilters();") Element Peak Elo
+                    input.filter_input#checkbox10(type="checkbox", name="filter", value="Element Peak Elo", onclick='saveTick(10);')
+                label.filter_label(onclick="getFilters();") Element Peak Elo This Season
+                    input.filter_input#checkbox11(type="checkbox", name="filter", value="Element Peak Elo This Season", onclick='saveTick(11);')
+
+                label.filter_label#selectall(onclick="selectNone()") Unselect all
+            table.ladder#myladder
+                tr.header
+                    th.table_header#th0(onclick="sortTable(0)")
+                    th.table_header#th1(onclick="sortTable(1)")
+                    th.table_header#th2(onclick="sortTable(2)")
+                    th.table_header#th3(onclick="sortTable(3)")
+                    th.table_header#th4(onclick="sortTable(4)")
+                    th.table_header#th5(onclick="sortTable(5)")
+                    th.table_header#th6(onclick="sortTable(6)")
+                    th.table_header#th7(onclick="sortTable(7)")
+                    th.table_header#th8(onclick="sortTable(8)")
+                    th.table_header#th9(onclick="sortTable(9)")
+                    th.table_header#th10(onclick="sortTable(10)")
+                    th.table_header#th11(onclick="sortTable(11)")
+            #mitte(style="display:none; margin-top:5%;")
+                img(class="gif", src="/img/loading.gif")
+                .p Requesting API, please wait...
+        script(src="/js/ladder_sort.js")
+        script(src="/js/ladder.js")
+        script(src="/js/cookies.js")
+        script getTicks();

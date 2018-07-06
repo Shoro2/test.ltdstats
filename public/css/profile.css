@@ -142,9 +142,14 @@
     display:none;
 }
 
-#myChart
-{
-    padding:50px;
+#myChart {
+    padding: 50px;
+}
+
+#chart-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
 }
 
 #divumtable
@@ -263,7 +268,7 @@ body {
     transform: translateY(20px);
     transition: all 0.5s;
     visibility: hidden;
-    height: 75%;
+    height:100%;
   }
   .wrap .content {
     opacity: 0;

@@ -1,5 +1,5 @@
 
-extend layout
+extend ../layout
 block content
     link(rel='stylesheet', href='/css/ladder.css')
     .content
@@ -24,18 +24,18 @@ block content
                     input.filter_input#checkbox7(type="checkbox", name="filter", value="Wins Element", onclick='saveTick(7);')
                 label.filter_label(onclick="getFilters();") Winchance Element
                     input.filter_input#checkbox8(type="checkbox", name="filter", value="Winchance Element", onclick='saveTick(8);')
-                label.filter_label(onclick="getFilters();") Games Forsaken
-                    input.filter_input#checkbox9(type="checkbox", name="filter", value="Games Forsaken", onclick='saveTick(9);')
-                label.filter_label(onclick="getFilters();") Wins Forsaken
-                    input.filter_input#checkbox10(type="checkbox", name="filter", value="Wins Forsaken", onclick='saveTick(10);')
-                label.filter_label(onclick="getFilters();") Winchance Forsaken
-                    input.filter_input#checkbox11(type="checkbox", name="filter", value="Winchance Forsaken", onclick='saveTick(11);')
                 label.filter_label(onclick="getFilters();") Games Grove
-                    input.filter_input#checkbox12(type="checkbox", name="filter", value="Games Grove", onclick='saveTick(12);')
+                    input.filter_input#checkbox9(type="checkbox", name="filter", value="Games Grove", onclick='saveTick(9);')
                 label.filter_label(onclick="getFilters();") Wins Grove
-                    input.filter_input#checkbox13(type="checkbox", name="filter", value="Wins Grove", onclick='saveTick(13);')
+                    input.filter_input#checkbox10(type="checkbox", name="filter", value="Wins Grove", onclick='saveTick(10);')
                 label.filter_label(onclick="getFilters();") Winchance Grove
-                    input.filter_input#checkbox14(type="checkbox", name="filter", value="Winchance Grove", onclick='saveTick(14);')
+                    input.filter_input#checkbox11(type="checkbox", name="filter", value="Winchance Grove", onclick='saveTick(11);')
+                label.filter_label(onclick="getFilters();") Games Forsaken
+                    input.filter_input#checkbox12(type="checkbox", name="filter", value="Games Forsaken", onclick='saveTick(12);')
+                label.filter_label(onclick="getFilters();") Wins Forsaken
+                    input.filter_input#checkbox13(type="checkbox", name="filter", value="Wins Forsaken", onclick='saveTick(13);')
+                label.filter_label(onclick="getFilters();") Winchance Forsaken
+                    input.filter_input#checkbox14(type="checkbox", name="filter", value="Winchance Forsaken", onclick='saveTick(14);')
                 label.filter_label(onclick="getFilters();") Games Mech
                     input.filter_input#checkbox15(type="checkbox", name="filter", value="Games Mech", onclick='saveTick(15);')
                 label.filter_label(onclick="getFilters();") Wins Mech
@@ -48,7 +48,7 @@ block content
                     input.filter_input#checkbox19(type="checkbox", name="filter", value="Wins Mastermind", onclick='saveTick(19);')
                 label.filter_label(onclick="getFilters();") Winchance Mastermind
                     input.filter_input#checkbox20(type="checkbox", name="filter", value="Winchance Mastermind", onclick='saveTick(20);')
-                label.filter_label#selectall(onclick="selectNone()") Deselect all
+                label.filter_label#selectall(onclick="selectNone()") Unselect all
             table.ladder#myladder
                 tr.header
                     th.table_header#th0(onclick="sortTable(0)")

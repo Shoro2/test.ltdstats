@@ -90,7 +90,43 @@ app.get('/stats/patch', (req, res) => {
 
 app.get('/ladder', (req, res) => {
     res.render('ladder', {
-        title: 'Ladder'
+        title: 'Overall Ladder'
+    })
+});
+
+app.get('/ladder/overall', (req, res) => {
+    res.render('ladder/overallladder', {
+        title: 'Overall Ladder'
+    })
+});
+
+app.get('/ladder/element', (req, res) => {
+    res.render('ladder/elementladder', {
+        title: 'Element Ladder'
+    })
+});
+
+app.get('/ladder/grove', (req, res) => {
+    res.render('ladder/groveladder', {
+        title: 'Grove Ladder'
+    })
+});
+
+app.get('/ladder/forsaken', (req, res) => {
+    res.render('ladder/forsakenladder', {
+        title: 'Forsaken Ladder'
+    })
+});
+
+app.get('/ladder/mech', (req, res) => {
+    res.render('ladder/mechladder', {
+        title: 'Mech Ladder'
+    })
+});
+
+app.get('/ladder/mastermind', (req, res) => {
+    res.render('ladder/mastermindladder', {
+        title: 'Mastermind Ladder'
     })
 });
 
@@ -124,6 +160,8 @@ app.get('/compare', (req, res) => {
         title: 'Compare'
     })
 });
+
+//Guides
 
 app.get('/guides', (req, res) => {
     res.render('guides/searchguide', {
@@ -245,13 +283,6 @@ app.get('/guides/general', (req, res) => {
         title: 'General Guides'
     })
 });
-/*
-app.get('/guides/test', (req, res) => {
-    res.render('guides/guide_skele', {
-        title: 'Skele Guide'
-    })
-});
-*/
 
 app.get('/guides/general/roshkatultips', (req, res) => {
     res.render('guides/general/roshkatultips', {
@@ -428,15 +459,6 @@ app.get('/sql/defense', (req, res) => {
 app.get('/lihl/getPlayer', (req, res) => {
     var sql = "SELECT * FROM lihl.player order by elo desc";
     con.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/sql/ladder', (req, res) => {
-    var limit = req.query.limit;
-    var offset = req.query.offset;
-    con.query("SELECT * FROM legion.player order by elo desc limit "+limit+" offset "+offset+";", function (err, result, fields) {
         if (err) throw err;
         res.json(result);
     });
