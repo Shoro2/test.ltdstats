@@ -16,6 +16,12 @@
 
 .indexbild
 {
-    height:97%;
+    height:90%;
     width:100%;
+}
+
+.profile{
+    height:100%;
+    margin-left:20%;
+    margin-right:20%;
 }
