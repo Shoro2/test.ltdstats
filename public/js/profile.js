@@ -170,7 +170,6 @@ function loadCollection() {
 }
 
 function loadStats(player) {
-    //console.log(player);
     player_name = player.playername;
     //player_icon = player.AvatarUrl;
     //general
@@ -529,6 +528,7 @@ function drawPlayerBuilds(gameX) {
                                 anzahl = parseInt(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
                                 //console.log(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
                                 anzahl++;
+                                //console.log(element);
                                 builds[raceint][e][x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
 
                             }
@@ -565,6 +565,7 @@ function drawPlayerBuilds(gameX) {
                     }
                     //einheit noch nicht vorhanden; f�ge an n�chster freie stelle ein
                     if (anzahl > 0 == false) {
+                        
                         for (var x = 0; x < 60; x++) {
                             if (sends[raceint][e][x] == 0) {
                                 sends[raceint][e][x] = element + ";1";
@@ -582,7 +583,8 @@ function drawPlayerBuilds(gameX) {
         }
         
     }
-    console.log(sends);
+    //console.log(sends);
+    
     var chancetoleak = (leaks[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
     var chancetosend = (sendchance[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
     var favunit = []
@@ -603,15 +605,321 @@ function drawPlayerBuilds(gameX) {
     var sendcontainer = document.getElementById("avgsend");
     buildcontainer.innerHTML = "";
     sendcontainer.innerHTML = "";
-    builds[target_race][[document.getElementById("setWave2").value - 1]].sort();
-    sends[target_race][[document.getElementById("setWave2").value - 1]].sort();
+    builds[target_race][[document.getElementById("setWave2").value - 1]].sort(function (a, b) {
+        if (a != 0) {
+            var abstandA = a.indexOf(";") + 1;
+            var lastA = a.substring(abstandA, a.length);
+        }
+        else lastA = 0;
+        if (b != 0) {
+            var abstandB = b.indexOf(";") + 1;
+            var lastB = b.substring(abstandB, b.length);
+        }
+        else lastB = 0;
+        if (parseInt(lastA) < parseInt(lastB)) {
+            return 1;
+        } else if (parseInt(lastA) > parseInt(lastB)) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    sends[target_race][[document.getElementById("setWave2").value - 1]].sort(function (a, b) {
+        if (a != 0) {
+            var abstandA = a.indexOf(";") + 1;
+            var lastA = a.substring(abstandA, a.length);
+        }
+        else lastA = 0;
+        if (b != 0) {
+            var abstandB = b.indexOf(";") + 1;
+            var lastB = b.substring(abstandB, b.length);
+        }
+        else lastB = 0;
+        if (parseInt(lastA) < parseInt(lastB)) {
+            return 1;
+        } else if (parseInt(lastA) > parseInt(lastB)) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
     //console.log(builds[target_race]);
+    
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
-        if (ele != 0) buildcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+        
+        if (ele != 0) {
+            switch (ele.substring(0, ele.indexOf(";"))) {
+                case "proton":
+                    var url = "/img/icons/Proton.png";
+                    var unit_type = "Proton";
+                    break;
+                case "atom":
+                    var url = "/img/icons/Atom.png";
+                    var unit_type = "Atom";
+                    break;
+                case "aqua_spirit":
+                    var url = "/img/icons/AquaSpirit.png";
+                    var unit_type = "Aqua Spirit";
+                    break;
+                case "fire_elemental":
+                    var url = "/img/icons/FireElemental.png";
+                    var unit_type = "Fire Elemental";
+                    break;
+                case "rogue_wave":
+                    var url = "/img/icons/RogueWave.png";
+                    var unit_type = "Rogue Wave";
+                    break;
+                case "windhawk":
+                    var url = "/img/icons/Windhawk.png";
+                    var unit_type = "Windhawk";
+                    break;
+                case "violet":
+                    var url = "/img/icons/Violet.png";
+                    var unit_type = "Violet";
+                    break;
+                case "mudman":
+                    var url = "/img/icons/Mudman.png";
+                    var unit_type = "Mudman";
+                    break;
+                case "golem":
+                    var url = "/img/icons/Golem.png";
+                    var unit_type = "Golem";
+                    break;
+                case "disciple":
+                    var url = "/img/icons/Disciple.png";
+                    var unit_type = "Disciple";
+                    break;
+                case "starcaller":
+                    var url = "/img/icons/Starcaller.png";
+                    var unit_type = "Starcaller";
+                    break;
+                case "fire_lord":
+                    var url = "/img/icons/FireLord.png";
+                    var unit_type = "Fire Lord";
+                    break;
+                case "fenix":
+                    var url = "/img/icons/Fenix.png";
+                    var unit_type = "Fenix";
+                    break;
+                //grove
+                case "buzz":
+                    var url = "/img/icons/Buzz.png";
+                    var unit_type = "Buzz";
+                    break;
+                case "consort":
+                    var url = "/img/icons/Consort.png";
+                    var unit_type = "Consort";
+                    break;
+                case "ranger":
+                    var url = "/img/icons/Ranger.png";
+                    var unit_type = "Ranger";
+                    break;
+                case "daphne":
+                    var url = "/img/icons/Daphne.png";
+                    var unit_type = "Daphne";
+                    break;
+                case "wileshroom":
+                    var url = "/img/icons/Wileshroom.png";
+                    var unit_type = "Wileshroom";
+                    break;
+                case "canopie":
+                    var url = "/img/icons/Canopie.png";
+                    var unit_type = "Canopie";
+                    break;
+                case "honeyflower":
+                    var url = "/img/icons/Honeyflower.png";
+                    var unit_type = "Honeyflower";
+                    break;
+                case "deathcap":
+                    var url = "/img/icons/Deathcap.png";
+                    var unit_type = "Deathcap";
+                    break;
+                case "antler":
+                    var url = "/img/icons/Antler.png";
+                    var unit_type = "Antler";
+                    break;
+                case "whitemane":
+                    var url = "/img/icons/Whitemane.png";
+                    var unit_type = "Whitemane";
+                    break;
+                case "banana_bunk":
+                    var url = "/img/icons/BananaBunk.png";
+                    var unit_type = "Banana Bunk";
+                    break;
+                case "banana_haven":
+                    var url = "/img/icons/BananaHaven.png";
+                    var unit_type = "Banana Haven";
+                    break;
+                //forsaken
+                case "bone_warrior":
+                    var url = "/img/icons/BoneWarrior.png";
+                    var unit_type = "Bone Warrior";
+                    break;
+                case "bone_crusher":
+                    var url = "/img/icons/BoneCrusher.png";
+                    var unit_type = "Bone Crusher";
+                    break;
+                case "dark_mage":
+                    var url = "/img/icons/DarkMage.png";
+                    var unit_type = "Dark Mage";
+                    break;
+                case "fire_archer":
+                    var url = "/img/icons/FireArcher.png";
+                    var unit_type = "Fire Archer";
+                    break;
+                case "gargoyle":
+                    var url = "/img/icons/Gargoyle.png";
+                    var unit_type = "Gargoyle";
+                    break;
+                case "green_devil":
+                    var url = "/img/icons/GreenDevil.png";
+                    var unit_type = "Green Devil";
+                    break;
+                case "gateguard":
+                    var url = "/img/icons/Gateguard.png";
+                    var unit_type = "Gateguard";
+                    break;
+                case "harbinger":
+                    var url = "/img/icons/Harbinger.png";
+                    var unit_type = "Harbinger";
+                    break;
+                case "butcher":
+                    var url = "/img/icons/Butcher.png";
+                    var unit_type = "Butcher";
+                    break;
+                case "head_chef":
+                    var url = "/img/icons/HeadChef.png";
+                    var unit_type = "Head Chef";
+                    break;
+                case "nightmare":
+                    var url = "/img/icons/Nightmare.png";
+                    var unit_type = "Nightmare";
+                    break;
+                case "doppelganger":
+                    var url = "/img/icons/Doppelganger.png";
+                    var unit_type = "Doppelganger";
+                    break;
+                case "lord_of_death":
+                    var url = "/img/icons/LordOfDeath.png";
+                    var unit_type = "Lord Of Death";
+                    break;
+                case "hades":
+                    var url = "/img/icons/Hades.png";
+                    var unit_type = "Hades";
+                    break;
+                //mech
+                case "peewee":
+                    var url = "/img/icons/Peewee.png";
+                    var unit_type = "Peewee";
+                    break;
+                case "veteran":
+                    var url = "/img/icons/Veteran.png";
+                    var unit_type = "Veteran";
+                    break;
+                case "bazooka":
+                    var url = "/img/icons/Bazooka.png";
+                    var unit_type = "Bazooka";
+                    break;
+                case "zeus":
+                    var url = "/img/icons/Zeus.png";
+                    var unit_type = "Zeus";
+                    break;
+                case "pyro":
+                    var url = "/img/icons/Pyro.png";
+                    var unit_type = "Pyro";
+                    break;
+                case "tempest":
+                    var url = "/img/icons/Tempest.png";
+                    var unit_type = "Tempest";
+                    break;
+                case "leviathan":
+                    var url = "/img/icons/Leviathan.png";
+                    var unit_type = "Leviathan";
+                    break;
+                case "aps":
+                    var url = "/img/icons/APS.png";
+                    var unit_type = "APS";
+                    break;
+                case "mps":
+                    var url = "/img/icons/MPS.png";
+                    var unit_type = "MPS";
+                    break;
+                case "berserker":
+                    var url = "/img/icons/Berserker.png";
+                    var unit_type = "Berserker";
+                    break;
+                case "fatalizer":
+                    var url = "/img/icons/Fatalizer.png";
+                    var unit_type = "Fatalizer";
+                    break;
+                case "millennium":
+                    var url = "/img/icons/Millennium.png";
+                    var unit_type = "Millennium";
+                    break;
+                case "doomsday_machine":
+                    var url = "/img/icons/DoomsdayMachine.png";
+                    var unit_type = "Doomsday Machine";
+                    break;
+                // Atlantean
+                case "pollywog":
+                    var url = "/img/icons/Pollywog.png";
+                    var unit_type = "Pollywog";
+                    break
+                case "devilfish":
+                    var url = "/img/icons/Devilfish.png";
+                    var unit_type = "Devilfish";
+                    break
+                case "seraphin":
+                    var url = "/img/icons/Seraphin.png";
+                    var unit_type = "Seraphin";
+                    break
+                case "angler":
+                    var url = "/img/icons/Angler.png";
+                    var unit_type = "Angler";
+                case "bounty_hunter":
+                    var url = "/img/icons/BountyHunter.png";
+                    var unit_type = "Bounty Hunter";
+                case "kingpin":
+                    var url = "/img/icons/Kingpin.png";
+                    var unit_type = "Kingpin";
+                case "sea_serpent":
+                    var url = "/img/icons/SeaSerpent.png";
+                    var unit_type = "Sea Serpent";
+                    break;
+                case "deepcoiler":
+                    var url = "/img/icons/Deepcoiler.png";
+                    var unit_type = "Deepcoiler";
+                    break;
+                case "grarl":
+                    var url = "/img/icons/Grarl.png";
+                    var unit_type = "Grarl";
+                    break;
+                case "king_claw":
+                    var url = "/img/icons/KingClaw.png";
+                    var unit_type = "King Claw";
+                    break
+                case "ocean_templar":
+                    var url = "/img/icons/OceanTemplar.png";
+                    var unit_type = "Ocean Templar";
+                    break
+                default:
+                    var url = "";
+                    var unit_type = "empty";
+                    console.log(ele);
+                    break;
+            }
+            buildcontainer.innerHTML += "<img src='"+url+"' height='20px' width='20px'> "+unit_type + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+        }
     });
+
+    
     sends[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
-        if (ele != 0) sendcontainer.innerHTML += ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+        if (ele != 0) {
+
+            sendcontainer.innerHTML += "<img src='/img/icons/" + ele.substring(0, ele.indexOf(";")).replace(" ","") + ".png' height='20px' width='20px'> " +ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+        }
     });
+    console.log(sends);
     //console.log(builds);
     /*
     console.log("Leaks on "+document.getElementById("setWave2").value+": "+leaks[target_race][document.getElementById("setWave2").value-1]);
@@ -649,7 +957,6 @@ function listGames() {
 }
 
 function getGameDetails(pos, games) {
-    //console.log(games[pos]);
     //console.log(games);
     //console.log(pos);
     meinString = games[pos].gameDetails[3];
@@ -657,7 +964,7 @@ function getGameDetails(pos, games) {
     meinString2 = games[pos].gameDetails[1];
     meinString3 = games[pos].gameDetails[0];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
-    //console.log(gameEvent);
+    console.log(gameEvent);
 }
 
 function getPlayerAmount() {
@@ -1071,6 +1378,15 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/Seraphin.png";
             var unit_type = "Seraphin";
             break
+        case "angler":
+            var url = "/img/icons/Angler.png";
+            var unit_type = "Angler";
+        case "bounty_hunter":
+            var url = "/img/icons/BountyHunter.png";
+            var unit_type = "Bounty Hunter";
+        case "kingpin":
+            var url = "/img/icons/Kingpin.png";
+            var unit_type = "Kingpin";
         case "sea_serpent":
             var url = "/img/icons/SeaSerpent.png";
             var unit_type = "SeaSerpant";
@@ -1177,40 +1493,82 @@ document.onkeydown = function (event) {
     if (event.keyCode == 13) {
         if (event.target.id == "playername") setPlayer();
     }
+
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
-        if (event.keyCode == 38 || event.keyCode == 39) {
+        if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
             //console.log("up");
             if (document.getElementById("setWave").value < gameEvent[0].wave) {
-                var waveValue = parseInt(document.getElementById("setWave").value) + 1;
-                document.getElementById("setWave").value = waveValue;
+                if (event.target.id != "setWave") {
+                    var waveValue = parseInt(document.getElementById("setWave").value) + 1;
+                    document.getElementById("setWave").value = waveValue;
+                }
                 drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "all") {
-                document.getElementById("setWave").value = "1";
+                if (event.target.id != "setWave") {
+                    document.getElementById("setWave").value = "1";
+                }
                 drawGameDetails(savedValue);
                 //console.log("all");
             }
             else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
-                document.getElementById("setWave").value = "all";
+                    document.getElementById("setWave").value = "all";
             }
 
         }
-        if (event.keyCode == 37 || event.keyCode == 40) {
+        if ((event.keyCode == 37 && event.target.id != "setWave") || event.keyCode == 40 || event.keyCode == 109) {
             if (document.getElementById("setWave").value > 1) {
-                document.getElementById("setWave").value -= 1;
+                if (event.target.id != "setWave") {
+                    document.getElementById("setWave").value -= 1;
+                }
                 drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "all") {
-                document.getElementById("setWave").value = gameEvent[0].wave;
+                if (event.target.id != "setWave") {
+                    document.getElementById("setWave").value = gameEvent[0].wave;
+                }
                 drawGameDetails(savedValue);
             }
             else if (document.getElementById("setWave").value == "1") {
-                document.getElementById("setWave").value = "all";
+                if (event.target.id != "setWave") {
+                    document.getElementById("setWave").value = "all";
+                }
                 drawGameDetails(savedValue);
             }
         }
     }
 
+    if (document.getElementById("tab_top_5").className == "tab_top_active") {
+        if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
+            //console.log("up");
+            if (document.getElementById("setWave2").value < 21) {
+                if (event.target.id != "setWave2") {
+                    var waveValue = parseInt(document.getElementById("setWave2").value) + 1;
+                    document.getElementById("setWave2").value = waveValue;
+                }
+                drawPlayerBuilds(playerGames);
+            }
+            else if (document.getElementById("setWave2").value == "21") {
+                document.getElementById("setWave2").value = "1";
+                drawPlayerBuilds(playerGames);
+            }
+
+        }
+        if ((event.keyCode == 37 && event.target.id != "setWave2") || event.keyCode == 40 || event.keyCode == 109) {
+            if (document.getElementById("setWave2").value > 1) {
+                if (event.target.id != "setWave2") {
+                    document.getElementById("setWave2").value -= 1;
+                }
+                drawPlayerBuilds(playerGames);
+            }
+            else if (document.getElementById("setWave2").value == "1") {
+                if (event.target.id != "setWave2") {
+                    document.getElementById("setWave2").value = "21";
+                }
+                drawPlayerBuilds(playerGames);
+            }
+        }
+    }
 }
 
 // api
@@ -1259,6 +1617,7 @@ function getPlayerGames(callback, playername, gameamount) {
 function queryPlayerGames(playername, gameamount) {
     getPlayerGames(function (result) {
         //console.log(result.player.filteredGamesQuery.games);
+        if (!result) console.log("PROBLEMO!");
         games = result.player.filteredGamesQuery.games;
         loadEloGraph(games);
         drawGameDetails(0);

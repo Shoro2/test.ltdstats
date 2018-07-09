@@ -262,14 +262,13 @@ function parsePlayers(myPlayers, type) {
                 cell[9].innerHTML = players[i].statistics.grovePlayed;
                 cell[10].innerHTML = players[i].statistics.groveWins;
                 cell[11].innerHTML = winchance_grove + "%";
-                console.log(players[i].statistics.forsakenPlayed);
                 cell[12].textContent = players[i].statistics.forsakenPlayed;
                 cell[13].innerHTML = players[i].statistics.forsakenWins;
                 cell[14].innerHTML = winchance_forsaken + "%";
                 cell[15].innerHTML = players[i].statistics.mechPlayed;
                 cell[16].innerHTML = players[i].statistics.mechWins;;
                 cell[17].innerHTML = winchance_mech + "%";
-                cell[18].innerHTML = players[i].mastermindPlayed;
+                cell[18].innerHTML = players[i].statistics.mastermindPlayed;
                 cell[19].innerHTML = players[i].statistics.mastermindWins;;
                 cell[20].innerHTML = winchance_mastermind + "%";
 
