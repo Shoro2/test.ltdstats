@@ -76,7 +76,7 @@ function parseGuides()
         cell[2].innerHTML = guides_filtered[i].title;
         cell[3].innerHTML = guides_filtered[i].type;
         cell[4].innerHTML = guides_filtered[i].patch;
-        cell[5].innerHTML = "<a href='https://test.ltdstats.com" + guides_filtered[i].folder+"'>click</a>";
+        cell[5].innerHTML = "<a href='" + guides_filtered[i].folder+"'>click</a>";
     }
         
     
@@ -108,7 +108,7 @@ function parsePatches() {
     for (var i = 0; i < guides.length; i++) {
         if (patches[counter] != guides[i].patch) {
             patches[counter] = guides[i].patch;
-
+            counter++;
         }
         else counter++;
     }

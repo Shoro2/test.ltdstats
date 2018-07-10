@@ -339,6 +339,12 @@ app.get('/guides/general/whattosend', (req, res) => {
     })
 });
 
+app.get('/guides/general/sendingguide', (req, res) => {
+    res.render('guides/general/sendingguide', {
+        title: 'Niklas Guide: Sending in Legion TD2'
+    })
+});
+
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About'
