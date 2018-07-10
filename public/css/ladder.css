@@ -39,6 +39,9 @@
     .ladder th{
         padding:5px;
     }
+    .ladder tr:hover{
+        background-color:lightgray;
+    }
 #td1 {
         text-align: left !important;
     }

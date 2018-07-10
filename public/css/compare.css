@@ -20,3 +20,25 @@
 .meineTabelle {
     width: 100%;
 }
+
+.meineTabelle tr:hover {
+    background-color:lightgray;
+}
+
+.green{
+    background-color:#81fb91;
+    border-radius:5px;
+    text-align:center;
+}
+
+.red {
+    background-color: #ff4646;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.white {
+    background-color: #e6e3e3;
+    border-radius: 5px;
+    text-align: center;
+}

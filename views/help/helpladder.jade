@@ -1,3 +1,30 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            h1 Ladder
+            h4 Content:
+            ul
+                li 
+                    a(href="#overall") Overall/Races
+                li 
+                    a(href="#filters") Filters
+                li 
+                    a(href="#search") Search a player
+            h2#overall Overall/Races
+            img#img_6(src="/img/helpladder1.png", onclick="expandImg(6);" width="10%" style="margin-left:auto; margin-right:auto;")
+            | Top 100 is displayed as default. You can change the ladder to display the best overall, element, grove, forsaken, mech and mastermind players.
+            br
+            h2#filters Filters
+            img.helpimg#img_7(src="/img/helpladder2.png", onclick="expandImg(7);")
+            br
+            img#img_8(src="/img/helpladder3.png", onclick="expandImg(8);" width="10%" style="margin-left:auto; margin-right:auto;")
+            | You can decide what columns are displayed by clicking on the filter. A Cookie is stored to save your selection.
+            br
+            h2#search Search a player
+            img#img_9(src="/img/helpladder4.png", onclick="expandImg(9);" width="10%" style="margin-left:auto; margin-right:auto;")
+            | You can look up a players position by typing in his name in the mask on the top right.
+            br
+    script(src="/js/help.js") 

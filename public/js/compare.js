@@ -1,4 +1,5 @@
 function parseStats(player) {
+    playername[counter] = player.playername;
     gamesPlayed[counter] = player.statistics.gamesPlayed;
     wins[counter] = player.statistics.wins;
     losses[counter] = player.statistics.losses;
@@ -79,10 +80,13 @@ function parseStats(player) {
     mastermindXp[counter] = player.statistics.mastermindXp;
     if (typeof mastermindXp[counter] == 'undefined') mastermindXp[counter] = 0;
     counter++;
+    if (counter == 1) queryPlayer(document.getElementById("playername2").value);
     //compare&parse
     if (counter == 2) {
         for (var i = 0; i < 2; i++) {
             console.log("parsing " + i);
+            document.getElementById("player" + i + "_name").textContent = playername[i];
+            console.log(playername[i]);
             document.getElementById("player" + i + "_gamesplayed").textContent = gamesPlayed[i];
             console.log(gamesPlayed[i]);
             document.getElementById("player" + i + "_wins").textContent = wins[i];
@@ -174,135 +178,177 @@ function parseStats(player) {
         document.getElementById("difference_mastermindlosses").textContent = mastermindLosses[0] - mastermindLosses[1];
         document.getElementById("difference_mastermindxp").textContent = mastermindXp[0] - mastermindXp[1];
         //colorize
-        if (gamesPlayed[0] > gamesPlayed[1]) document.getElementById("difference_gamesplayed").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_gamesplayed").textContent + "</div>";
-        if (gamesPlayed[0] < gamesPlayed[1]) document.getElementById("difference_gamesplayed").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_gamesplayed").textContent + "</div>";
+        if (gamesPlayed[0] > gamesPlayed[1]) document.getElementById("difference_gamesplayed").innerHTML = "<div class='green'>" + document.getElementById("difference_gamesplayed").textContent + "</div>";
+        if (gamesPlayed[0] < gamesPlayed[1]) document.getElementById("difference_gamesplayed").innerHTML = "<div class='red'>" + document.getElementById("difference_gamesplayed").textContent + "</div>";
+        if (gamesPlayed[0] == gamesPlayed[1]) document.getElementById("difference_gamesplayed").innerHTML = "<div class='white'>" + document.getElementById("difference_gamesplayed").textContent + "</div>";
 
-        if (wins[0] > wins[1]) document.getElementById("difference_wins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_wins").textContent + "</div>";
-        if (wins[0] < wins[1]) document.getElementById("difference_wins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_wins").textContent + "</div>";
+        if (wins[0] > wins[1]) document.getElementById("difference_wins").innerHTML = "<div class='green'>" + document.getElementById("difference_wins").textContent + "</div>";
+        if (wins[0] < wins[1]) document.getElementById("difference_wins").innerHTML = "<div class='red'>" + document.getElementById("difference_wins").textContent + "</div>";
+        if (wins[0] == wins[1]) document.getElementById("difference_wins").innerHTML = "<div class='white'>" + document.getElementById("difference_wins").textContent + "</div>";
 
-        if (losses[0] > losses[1]) document.getElementById("difference_losses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_losses").textContent + "</div>";
-        if (losses[0] < losses[1]) document.getElementById("difference_losses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_losses").textContent + "</div>";
+        if (losses[0] > losses[1]) document.getElementById("difference_losses").innerHTML = "<div class='green'>" + document.getElementById("difference_losses").textContent + "</div>";
+        if (losses[0] < losses[1]) document.getElementById("difference_losses").innerHTML = "<div class='red'>" + document.getElementById("difference_losses").textContent + "</div>";
+        if (losses[0] == losses[1]) document.getElementById("difference_losses").innerHTML = "<div class='white'>" + document.getElementById("difference_losses").textContent + "</div>";
 
-        if (winRate[0] > winRate[1]) document.getElementById("difference_winrate").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_winrate").textContent + "</div>";
-        if (winRate[0] < winRate[1]) document.getElementById("difference_winrate").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_winrate").textContent + "</div>";
+        if (winRate[0] > winRate[1]) document.getElementById("difference_winrate").innerHTML = "<div class='green'>" + document.getElementById("difference_winrate").textContent + "</div>";
+        if (winRate[0] < winRate[1]) document.getElementById("difference_winrate").innerHTML = "<div class='red'>" + document.getElementById("difference_winrate").textContent + "</div>";
+        if (winRate[0] == winRate[1]) document.getElementById("difference_winrate").innerHTML = "<div class='white'>" + document.getElementById("difference_winrate").textContent + "</div>";
 
-        if (ties[0] > ties[1]) document.getElementById("difference_ties").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_ties").textContent + "</div>";
-        if (ties[0] < ties[1]) document.getElementById("difference_ties").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_ties").textContent + "</div>";
+        if (ties[0] > ties[1]) document.getElementById("difference_ties").innerHTML = "<div class='green'>" + document.getElementById("difference_ties").textContent + "</div>";
+        if (ties[0] < ties[1]) document.getElementById("difference_ties").innerHTML = "<div class='red'>" + document.getElementById("difference_ties").textContent + "</div>";
+        if (ties[0] == ties[1]) document.getElementById("difference_ties").innerHTML = "<div class='white'>" + document.getElementById("difference_ties").textContent + "</div>";
 
-        if (quits[0] > quits[1]) document.getElementById("difference_quits").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_quits").textContent + "</div>";
-        if (quits[0] < quits[1]) document.getElementById("difference_quits").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] > quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='green'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] < quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='red'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] == quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='white'>" + document.getElementById("difference_quits").textContent + "</div>";
 
-        if (winStreak[0] > winStreak[1]) document.getElementById("difference_winstreak").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_winstreak").textContent + "</div>";
-        if (winStreak[0] < winStreak[1]) document.getElementById("difference_winstreak").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_winstreak").textContent + "</div>";
+        if (winStreak[0] > winStreak[1]) document.getElementById("difference_winstreak").innerHTML = "<div class='green'>" + document.getElementById("difference_winstreak").textContent + "</div>";
+        if (winStreak[0] < winStreak[1]) document.getElementById("difference_winstreak").innerHTML = "<div class='red'>" + document.getElementById("difference_winstreak").textContent + "</div>";
+        if (winStreak[0] == winStreak[1]) document.getElementById("difference_winstreak").innerHTML = "<div class='white'>" + document.getElementById("difference_winstreak").textContent + "</div>";
 
-        if (quits[0] > quits[1]) document.getElementById("difference_quits").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_quits").textContent + "</div>";
-        if (quits[0] < quits[1]) document.getElementById("difference_quits").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] > quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='green'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] < quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='red'>" + document.getElementById("difference_quits").textContent + "</div>";
+        if (quits[0] == quits[1]) document.getElementById("difference_quits").innerHTML = "<div class='white'>" + document.getElementById("difference_quits").textContent + "</div>";
 
-        if (secondsPlayed[0] > secondsPlayed[1]) document.getElementById("difference_playtime").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_playtime").textContent + "</div>";
-        if (secondsPlayed[0] < secondsPlayed[1]) document.getElementById("difference_playtime").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_playtime").textContent + "</div>";
+        if (secondsPlayed[0] > secondsPlayed[1]) document.getElementById("difference_playtime").innerHTML = "<div class='green'>" + document.getElementById("difference_playtime").textContent + "</div>";
+        if (secondsPlayed[0] < secondsPlayed[1]) document.getElementById("difference_playtime").innerHTML = "<div class='red'>" + document.getElementById("difference_playtime").textContent + "</div>";
+        if (secondsPlayed[0] == secondsPlayed[1]) document.getElementById("difference_playtime").innerHTML = "<div class='white'>" + document.getElementById("difference_playtime").textContent + "</div>";
 
-        if (totalXp[0] > totalXp[1]) document.getElementById("difference_xp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_xp").textContent + "</div>";
-        if (totalXp[0] < totalXp[1]) document.getElementById("difference_xp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_xp").textContent + "</div>";
+        if (totalXp[0] > totalXp[1]) document.getElementById("difference_xp").innerHTML = "<div class='green'>" + document.getElementById("difference_xp").textContent + "</div>";
+        if (totalXp[0] < totalXp[1]) document.getElementById("difference_xp").innerHTML = "<div class='red'>" + document.getElementById("difference_xp").textContent + "</div>";
+        if (totalXp[0] == totalXp[1]) document.getElementById("difference_xp").innerHTML = "<div class='white'>" + document.getElementById("difference_xp").textContent + "</div>";
 
-        if (overallPeakElo[0] > overallPeakElo[1]) document.getElementById("difference_overallpeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_overallpeakelo").textContent + "</div>";
-        if (overallPeakElo[0] < overallPeakElo[1]) document.getElementById("difference_overallpeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_overallpeakelo").textContent + "</div>";
+        if (overallPeakElo[0] > overallPeakElo[1]) document.getElementById("difference_overallpeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_overallpeakelo").textContent + "</div>";
+        if (overallPeakElo[0] < overallPeakElo[1]) document.getElementById("difference_overallpeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_overallpeakelo").textContent + "</div>";
+        if (overallPeakElo[0] == overallPeakElo[1]) document.getElementById("difference_overallpeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_overallpeakelo").textContent + "</div>";
 
-        if (overallElo[0] > overallElo[1]) document.getElementById("difference_overallelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_overallelo").textContent + "</div>";
-        if (overallElo[0] < overallElo[1]) document.getElementById("difference_overallelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_overallelo").textContent + "</div>";
+        if (overallElo[0] > overallElo[1]) document.getElementById("difference_overallelo").innerHTML = "<div class='green'>" + document.getElementById("difference_overallelo").textContent + "</div>";
+        if (overallElo[0] < overallElo[1]) document.getElementById("difference_overallelo").innerHTML = "<div class='red'>" + document.getElementById("difference_overallelo").textContent + "</div>";
+        if (overallElo[0] == overallElo[1]) document.getElementById("difference_overallelo").innerHTML = "<div class='white'>" + document.getElementById("difference_overallelo").textContent + "</div>";
 
-        if (elementElo[0] > elementElo[1]) document.getElementById("difference_elementelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementelo").textContent + "</div>";
-        if (elementElo[0] < elementElo[1]) document.getElementById("difference_elementelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementelo").textContent + "</div>";
+        if (elementElo[0] > elementElo[1]) document.getElementById("difference_elementelo").innerHTML = "<div class='green'>" + document.getElementById("difference_elementelo").textContent + "</div>";
+        if (elementElo[0] < elementElo[1]) document.getElementById("difference_elementelo").innerHTML = "<div class='red'>" + document.getElementById("difference_elementelo").textContent + "</div>";
+        if (elementElo[0] == elementElo[1]) document.getElementById("difference_elementelo").innerHTML = "<div class='white'>" + document.getElementById("difference_elementelo").textContent + "</div>";
 
-        if (elementPeakElo[0] > elementPeakElo[1]) document.getElementById("difference_elementpeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementpeakelo").textContent + "</div>";
-        if (elementPeakElo[0] < elementPeakElo[1]) document.getElementById("difference_elementpeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementpeakelo").textContent + "</div>";
+        if (elementPeakElo[0] > elementPeakElo[1]) document.getElementById("difference_elementpeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_elementpeakelo").textContent + "</div>";
+        if (elementPeakElo[0] < elementPeakElo[1]) document.getElementById("difference_elementpeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_elementpeakelo").textContent + "</div>";
+        if (elementPeakElo[0] == elementPeakElo[1]) document.getElementById("difference_elementpeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_elementpeakelo").textContent + "</div>";
 
-        if (elementPlayed[0] > elementPlayed[1]) document.getElementById("difference_elementgames").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementgames").textContent + "</div>";
-        if (elementPlayed[0] < elementPlayed[1]) document.getElementById("difference_elementgames").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementgames").textContent + "</div>"; 
+        if (elementPlayed[0] > elementPlayed[1]) document.getElementById("difference_elementgames").innerHTML = "<div class='green'>" + document.getElementById("difference_elementgames").textContent + "</div>";
+        if (elementPlayed[0] < elementPlayed[1]) document.getElementById("difference_elementgames").innerHTML = "<div class='red'>" + document.getElementById("difference_elementgames").textContent + "</div>"; 
+        if (elementPlayed[0] == elementPlayed[1]) document.getElementById("difference_elementgames").innerHTML = "<div class='white'>" + document.getElementById("difference_elementgames").textContent + "</div>"; 
 
-        if (elementWins[0] > elementWins[1]) document.getElementById("difference_elementwins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementwins").textContent + "</div>";
-        if (elementWins[0] < elementWins[1]) document.getElementById("difference_elementwins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementwins").textContent + "</div>";
+        if (elementWins[0] > elementWins[1]) document.getElementById("difference_elementwins").innerHTML = "<div class='green'>" + document.getElementById("difference_elementwins").textContent + "</div>";
+        if (elementWins[0] < elementWins[1]) document.getElementById("difference_elementwins").innerHTML = "<div class='red'>" + document.getElementById("difference_elementwins").textContent + "</div>";
+        if (elementWins[0] == elementWins[1]) document.getElementById("difference_elementwins").innerHTML = "<div class='white'>" + document.getElementById("difference_elementwins").textContent + "</div>";
 
-        if (elementLosses[0] > elementLosses[1]) document.getElementById("difference_elementlosses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementlosses").textContent + "</div>";
-        if (elementLosses[0] < elementLosses[1]) document.getElementById("difference_elementlosses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementlosses").textContent + "</div>";
+        if (elementLosses[0] > elementLosses[1]) document.getElementById("difference_elementlosses").innerHTML = "<div class='green'>" + document.getElementById("difference_elementlosses").textContent + "</div>";
+        if (elementLosses[0] < elementLosses[1]) document.getElementById("difference_elementlosses").innerHTML = "<div class='red'>" + document.getElementById("difference_elementlosses").textContent + "</div>";
+        if (elementLosses[0] == elementLosses[1]) document.getElementById("difference_elementlosses").innerHTML = "<div class='white'>" + document.getElementById("difference_elementlosses").textContent + "</div>";
 
-        if (elementXp[0] > elementXp[1]) document.getElementById("difference_elementxp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_elementxp").textContent + "</div>";
-        if (elementXp[0] < elementXp[1]) document.getElementById("difference_elementxp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_elementxp").textContent + "</div>";
-
-
-        if (groveElo[0] > groveElo[1]) document.getElementById("difference_groveelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_groveelo").textContent + "</div>";
-        if (groveElo[0] < groveElo[1]) document.getElementById("difference_groveelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_groveelo").textContent + "</div>";
-
-        if (grovePeakElo[0] > grovePeakElo[1]) document.getElementById("difference_grovepeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_grovepeakelo").textContent + "</div>";
-        if (grovePeakElo[0] < grovePeakElo[1]) document.getElementById("difference_grovepeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_grovepeakelo").textContent + "</div>";
-
-        if (grovePlayed[0] > grovePlayed[1]) document.getElementById("difference_grovegames").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_grovegames").textContent + "</div>";
-        if (grovePlayed[0] < grovePlayed[1]) document.getElementById("difference_grovegames").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_grovegames").textContent + "</div>";
-
-        if (groveWins[0] > groveWins[1]) document.getElementById("difference_grovewins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_grovewins").textContent + "</div>";
-        if (groveWins[0] < groveWins[1]) document.getElementById("difference_grovewins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_grovewins").textContent + "</div>";
-
-        if (groveLosses[0] > groveLosses[1]) document.getElementById("difference_grovelosses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_grovelosses").textContent + "</div>";
-        if (groveLosses[0] < groveLosses[1]) document.getElementById("difference_grovelosses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_grovelosses").textContent + "</div>";
-
-        if (groveXp[0] > groveXp[1]) document.getElementById("difference_grovexp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_grovexp").textContent + "</div>";
-        if (groveXp[0] < groveXp[1]) document.getElementById("difference_grovexp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_grovexp").textContent + "</div>";
-
-
-        if (forsakenElo[0] > forsakenElo[1]) document.getElementById("difference_forsakenelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakenelo").textContent + "</div>";
-        if (forsakenElo[0] < forsakenElo[1]) document.getElementById("difference_forsakenelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakenelo").textContent + "</div>";
-
-        if (forsakenPeakElo[0] > forsakenPeakElo[1]) document.getElementById("difference_forsakenpeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakenpeakelo").textContent + "</div>";
-        if (forsakenPeakElo[0] < forsakenPeakElo[1]) document.getElementById("difference_forsakenpeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakenpeakelo").textContent + "</div>";
-
-        if (forsakenPlayed[0] > forsakenPlayed[1]) document.getElementById("difference_forsakengames").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakengames").textContent + "</div>";
-        if (forsakenPlayed[0] < forsakenPlayed[1]) document.getElementById("difference_forsakengames").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakengames").textContent + "</div>";
-
-        if (forsakenWins[0] > forsakenWins[1]) document.getElementById("difference_forsakenwins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakenwins").textContent + "</div>";
-        if (forsakenWins[0] < forsakenWins[1]) document.getElementById("difference_forsakenwins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakenwins").textContent + "</div>";
-
-        if (forsakenLosses[0] > forsakenLosses[1]) document.getElementById("difference_forsakenlosses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakenlosses").textContent + "</div>";
-        if (forsakenLosses[0] < forsakenLosses[1]) document.getElementById("difference_forsakenlosses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakenlosses").textContent + "</div>";
-
-        if (forsakenXp[0] > forsakenXp[1]) document.getElementById("difference_forsakenxp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_forsakenxp").textContent + "</div>";
-        if (forsakenXp[0] < forsakenXp[1]) document.getElementById("difference_forsakenxp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_forsakenxp").textContent + "</div>";
+        if (elementXp[0] > elementXp[1]) document.getElementById("difference_elementxp").innerHTML = "<div class='green'>" + document.getElementById("difference_elementxp").textContent + "</div>";
+        if (elementXp[0] < elementXp[1]) document.getElementById("difference_elementxp").innerHTML = "<div class='red'>" + document.getElementById("difference_elementxp").textContent + "</div>";
+        if (elementXp[0] == elementXp[1]) document.getElementById("difference_elementxp").innerHTML = "<div class='white'>" + document.getElementById("difference_elementxp").textContent + "</div>";
 
 
-        if (mechElo[0] > mechElo[1]) document.getElementById("difference_mechelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechelo").textContent + "</div>";
-        if (mechElo[0] < mechElo[1]) document.getElementById("difference_mechelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechelo").textContent + "</div>";
+        if (groveElo[0] > groveElo[1]) document.getElementById("difference_groveelo").innerHTML = "<div class='green'>" + document.getElementById("difference_groveelo").textContent + "</div>";
+        if (groveElo[0] < groveElo[1]) document.getElementById("difference_groveelo").innerHTML = "<div class='red'>" + document.getElementById("difference_groveelo").textContent + "</div>";
+        if (groveElo[0] == groveElo[1]) document.getElementById("difference_groveelo").innerHTML = "<div class='white'>" + document.getElementById("difference_groveelo").textContent + "</div>";
 
-        if (mechPeakElo[0] > mechPeakElo[1]) document.getElementById("difference_mechpeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechpeakelo").textContent + "</div>";
-        if (mechPeakElo[0] < mechPeakElo[1]) document.getElementById("difference_mechpeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechpeakelo").textContent + "</div>";
+        if (grovePeakElo[0] > grovePeakElo[1]) document.getElementById("difference_grovepeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_grovepeakelo").textContent + "</div>";
+        if (grovePeakElo[0] < grovePeakElo[1]) document.getElementById("difference_grovepeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_grovepeakelo").textContent + "</div>";
+        if (grovePeakElo[0] == grovePeakElo[1]) document.getElementById("difference_grovepeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_grovepeakelo").textContent + "</div>";
 
-        if (mechPlayed[0] > mechPlayed[1]) document.getElementById("difference_mechgames").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechgames").textContent + "</div>";
-        if (mechPlayed[0] < mechPlayed[1]) document.getElementById("difference_mechgames").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechgames").textContent + "</div>";
+        if (grovePlayed[0] > grovePlayed[1]) document.getElementById("difference_grovegames").innerHTML = "<div class='green'>" + document.getElementById("difference_grovegames").textContent + "</div>";
+        if (grovePlayed[0] < grovePlayed[1]) document.getElementById("difference_grovegames").innerHTML = "<div class='red'>" + document.getElementById("difference_grovegames").textContent + "</div>";
+        if (grovePlayed[0] == grovePlayed[1]) document.getElementById("difference_grovegames").innerHTML = "<div class='white'>" + document.getElementById("difference_grovegames").textContent + "</div>";
 
-        if (mechWins[0] > mechWins[1]) document.getElementById("difference_mechwins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechwins").textContent + "</div>";
-        if (mechWins[0] < mechWins[1]) document.getElementById("difference_mechwins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechwins").textContent + "</div>";
+        if (groveWins[0] > groveWins[1]) document.getElementById("difference_grovewins").innerHTML = "<div class='green'>" + document.getElementById("difference_grovewins").textContent + "</div>";
+        if (groveWins[0] < groveWins[1]) document.getElementById("difference_grovewins").innerHTML = "<div class='red'>" + document.getElementById("difference_grovewins").textContent + "</div>";
+        if (groveWins[0] == groveWins[1]) document.getElementById("difference_grovewins").innerHTML = "<div class='white'>" + document.getElementById("difference_grovewins").textContent + "</div>";
 
-        if (mechLosses[0] > mechLosses[1]) document.getElementById("difference_mechlosses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechlosses").textContent + "</div>";
-        if (mechLosses[0] < mechLosses[1]) document.getElementById("difference_mechlosses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechlosses").textContent + "</div>";
+        if (groveLosses[0] > groveLosses[1]) document.getElementById("difference_grovelosses").innerHTML = "<div class='green'>" + document.getElementById("difference_grovelosses").textContent + "</div>";
+        if (groveLosses[0] < groveLosses[1]) document.getElementById("difference_grovelosses").innerHTML = "<div class='red'>" + document.getElementById("difference_grovelosses").textContent + "</div>";
+        if (groveLosses[0] == groveLosses[1]) document.getElementById("difference_grovelosses").innerHTML = "<div class='white'>" + document.getElementById("difference_grovelosses").textContent + "</div>";
 
-        if (mechXp[0] > mechXp[1]) document.getElementById("difference_mechxp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mechxp").textContent + "</div>";
-        if (mechXp[0] < mechXp[1]) document.getElementById("difference_mechxp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mechxp").textContent + "</div>";
+        if (groveXp[0] > groveXp[1]) document.getElementById("difference_grovexp").innerHTML = "<div class='green'>" + document.getElementById("difference_grovexp").textContent + "</div>";
+        if (groveXp[0] < groveXp[1]) document.getElementById("difference_grovexp").innerHTML = "<div class='red'>" + document.getElementById("difference_grovexp").textContent + "</div>";
+        if (groveXp[0] == groveXp[1]) document.getElementById("difference_grovexp").innerHTML = "<div class='white'>" + document.getElementById("difference_grovexp").textContent + "</div>";
+
+
+        if (forsakenElo[0] > forsakenElo[1]) document.getElementById("difference_forsakenelo").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakenelo").textContent + "</div>";
+        if (forsakenElo[0] < forsakenElo[1]) document.getElementById("difference_forsakenelo").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakenelo").textContent + "</div>";
+        if (forsakenElo[0] == forsakenElo[1]) document.getElementById("difference_forsakenelo").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakenelo").textContent + "</div>";
+
+        if (forsakenPeakElo[0] > forsakenPeakElo[1]) document.getElementById("difference_forsakenpeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakenpeakelo").textContent + "</div>";
+        if (forsakenPeakElo[0] < forsakenPeakElo[1]) document.getElementById("difference_forsakenpeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakenpeakelo").textContent + "</div>";
+        if (forsakenPeakElo[0] == forsakenPeakElo[1]) document.getElementById("difference_forsakenpeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakenpeakelo").textContent + "</div>";
+
+        if (forsakenPlayed[0] > forsakenPlayed[1]) document.getElementById("difference_forsakengames").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakengames").textContent + "</div>";
+        if (forsakenPlayed[0] < forsakenPlayed[1]) document.getElementById("difference_forsakengames").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakengames").textContent + "</div>";
+        if (forsakenPlayed[0] == forsakenPlayed[1]) document.getElementById("difference_forsakengames").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakengames").textContent + "</div>";
+
+        if (forsakenWins[0] > forsakenWins[1]) document.getElementById("difference_forsakenwins").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakenwins").textContent + "</div>";
+        if (forsakenWins[0] < forsakenWins[1]) document.getElementById("difference_forsakenwins").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakenwins").textContent + "</div>";
+        if (forsakenWins[0] == forsakenWins[1]) document.getElementById("difference_forsakenwins").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakenwins").textContent + "</div>";
+
+        if (forsakenLosses[0] > forsakenLosses[1]) document.getElementById("difference_forsakenlosses").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakenlosses").textContent + "</div>";
+        if (forsakenLosses[0] < forsakenLosses[1]) document.getElementById("difference_forsakenlosses").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakenlosses").textContent + "</div>";
+        if (forsakenLosses[0] == forsakenLosses[1]) document.getElementById("difference_forsakenlosses").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakenlosses").textContent + "</div>";
+
+        if (forsakenXp[0] > forsakenXp[1]) document.getElementById("difference_forsakenxp").innerHTML = "<div class='green'>" + document.getElementById("difference_forsakenxp").textContent + "</div>";
+        if (forsakenXp[0] < forsakenXp[1]) document.getElementById("difference_forsakenxp").innerHTML = "<div class='red'>" + document.getElementById("difference_forsakenxp").textContent + "</div>";
+        if (forsakenXp[0] == forsakenXp[1]) document.getElementById("difference_forsakenxp").innerHTML = "<div class='white'>" + document.getElementById("difference_forsakenxp").textContent + "</div>";
+
+
+        if (mechElo[0] > mechElo[1]) document.getElementById("difference_mechelo").innerHTML = "<div class='green'>" + document.getElementById("difference_mechelo").textContent + "</div>";
+        if (mechElo[0] < mechElo[1]) document.getElementById("difference_mechelo").innerHTML = "<div class='red'>" + document.getElementById("difference_mechelo").textContent + "</div>";
+        if (mechElo[0] == mechElo[1]) document.getElementById("difference_mechelo").innerHTML = "<div class='white'>" + document.getElementById("difference_mechelo").textContent + "</div>";
+
+        if (mechPeakElo[0] > mechPeakElo[1]) document.getElementById("difference_mechpeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_mechpeakelo").textContent + "</div>";
+        if (mechPeakElo[0] < mechPeakElo[1]) document.getElementById("difference_mechpeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_mechpeakelo").textContent + "</div>";
+        if (mechPeakElo[0] == mechPeakElo[1]) document.getElementById("difference_mechpeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_mechpeakelo").textContent + "</div>";
+
+        if (mechPlayed[0] > mechPlayed[1]) document.getElementById("difference_mechgames").innerHTML = "<div class='green'>" + document.getElementById("difference_mechgames").textContent + "</div>";
+        if (mechPlayed[0] < mechPlayed[1]) document.getElementById("difference_mechgames").innerHTML = "<div class='red'>" + document.getElementById("difference_mechgames").textContent + "</div>";
+        if (mechPlayed[0] == mechPlayed[1]) document.getElementById("difference_mechgames").innerHTML = "<div class='white'>" + document.getElementById("difference_mechgames").textContent + "</div>";
+
+        if (mechWins[0] > mechWins[1]) document.getElementById("difference_mechwins").innerHTML = "<div class='green'>" + document.getElementById("difference_mechwins").textContent + "</div>";
+        if (mechWins[0] < mechWins[1]) document.getElementById("difference_mechwins").innerHTML = "<div class='red'>" + document.getElementById("difference_mechwins").textContent + "</div>";
+        if (mechWins[0] == mechWins[1]) document.getElementById("difference_mechwins").innerHTML = "<div class='white'>" + document.getElementById("difference_mechwins").textContent + "</div>";
+
+        if (mechLosses[0] > mechLosses[1]) document.getElementById("difference_mechlosses").innerHTML = "<div class='green'>" + document.getElementById("difference_mechlosses").textContent + "</div>";
+        if (mechLosses[0] < mechLosses[1]) document.getElementById("difference_mechlosses").innerHTML = "<div class='red'>" + document.getElementById("difference_mechlosses").textContent + "</div>";
+        if (mechLosses[0] == mechLosses[1]) document.getElementById("difference_mechlosses").innerHTML = "<div class='white'>" + document.getElementById("difference_mechlosses").textContent + "</div>";
+
+        if (mechXp[0] > mechXp[1]) document.getElementById("difference_mechxp").innerHTML = "<div class='green'>" + document.getElementById("difference_mechxp").textContent + "</div>";
+        if (mechXp[0] < mechXp[1]) document.getElementById("difference_mechxp").innerHTML = "<div class='red'>" + document.getElementById("difference_mechxp").textContent + "</div>";
+        if (mechXp[0] == mechXp[1]) document.getElementById("difference_mechxp").innerHTML = "<div class='white'>" + document.getElementById("difference_mechxp").textContent + "</div>";
 
        
-        if (mastermindElo[0] > mastermindElo[1]) document.getElementById("difference_mastermindelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindelo").textContent + "</div>";
-        if (mastermindElo[0] < mastermindElo[1]) document.getElementById("difference_mastermindelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindelo").textContent + "</div>";
+        if (mastermindElo[0] > mastermindElo[1]) document.getElementById("difference_mastermindelo").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindelo").textContent + "</div>";
+        if (mastermindElo[0] < mastermindElo[1]) document.getElementById("difference_mastermindelo").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindelo").textContent + "</div>";
+        if (mastermindElo[0] == mastermindElo[1]) document.getElementById("difference_mastermindelo").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindelo").textContent + "</div>";
 
-        if (mastermindPeakElo[0] > mastermindPeakElo[1]) document.getElementById("difference_mastermindpeakelo").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindpeakelo").textContent + "</div>";
-        if (mastermindPeakElo[0] < mastermindPeakElo[1]) document.getElementById("difference_mastermindpeakelo").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindpeakelo").textContent + "</div>";
+        if (mastermindPeakElo[0] > mastermindPeakElo[1]) document.getElementById("difference_mastermindpeakelo").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindpeakelo").textContent + "</div>";
+        if (mastermindPeakElo[0] < mastermindPeakElo[1]) document.getElementById("difference_mastermindpeakelo").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindpeakelo").textContent + "</div>";
+        if (mastermindPeakElo[0] == mastermindPeakElo[1]) document.getElementById("difference_mastermindpeakelo").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindpeakelo").textContent + "</div>";
 
-        if (mastermindPlayed[0] > mastermindPlayed[1]) document.getElementById("difference_mastermindgames").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindgames").textContent + "</div>";
-        if (mastermindPlayed[0] < mastermindPlayed[1]) document.getElementById("difference_mastermindgames").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindgames").textContent + "</div>";
+        if (mastermindPlayed[0] > mastermindPlayed[1]) document.getElementById("difference_mastermindgames").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindgames").textContent + "</div>";
+        if (mastermindPlayed[0] < mastermindPlayed[1]) document.getElementById("difference_mastermindgames").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindgames").textContent + "</div>";
+        if (mastermindPlayed[0] == mastermindPlayed[1]) document.getElementById("difference_mastermindgames").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindgames").textContent + "</div>";
 
-        if (mastermindWins[0] > mastermindWins[1]) document.getElementById("difference_mastermindwins").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindwins").textContent + "</div>";
-        if (mastermindWins[0] < mastermindWins[1]) document.getElementById("difference_mastermindwins").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindwins").textContent + "</div>";
+        if (mastermindWins[0] > mastermindWins[1]) document.getElementById("difference_mastermindwins").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindwins").textContent + "</div>";
+        if (mastermindWins[0] < mastermindWins[1]) document.getElementById("difference_mastermindwins").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindwins").textContent + "</div>";
+        if (mastermindWins[0] == mastermindWins[1]) document.getElementById("difference_mastermindwins").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindwins").textContent + "</div>";
 
-        if (mastermindLosses[0] > mastermindLosses[1]) document.getElementById("difference_mastermindlosses").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindlosses").textContent + "</div>";
-        if (mastermindLosses[0] < mastermindLosses[1]) document.getElementById("difference_mastermindlosses").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindlosses").textContent + "</div>";
+        if (mastermindLosses[0] > mastermindLosses[1]) document.getElementById("difference_mastermindlosses").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindlosses").textContent + "</div>";
+        if (mastermindLosses[0] < mastermindLosses[1]) document.getElementById("difference_mastermindlosses").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindlosses").textContent + "</div>";
+        if (mastermindLosses[0] == mastermindLosses[1]) document.getElementById("difference_mastermindlosses").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindlosses").textContent + "</div>";
 
-        if (mastermindXp[0] > mastermindXp[1]) document.getElementById("difference_mastermindxp").outerHTML = "<div style='background-color:green'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
-        if (mastermindXp[0] < mastermindXp[1]) document.getElementById("difference_mastermindxp").outerHTML = "<div style='background-color:red'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
+        if (mastermindXp[0] > mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
+        if (mastermindXp[0] < mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
+        if (mastermindXp[0] == mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
 
     }
 
@@ -311,6 +357,7 @@ function parseStats(player) {
 function getPlayer() {
     counter = 0;
     anzahlSpieler = 2;
+    playername = [2];
     gamesPlayed = [2];
     wins = [2];
     losses = [2];
@@ -360,11 +407,6 @@ function getPlayer() {
     mastermindXp = [2];
     player = [2];
     queryPlayer(document.getElementById("playername").value);
-    queryPlayer(document.getElementById("playername2").value);
-}
-
-function addPlayer(newPlayer) {
-    parseStats(newPlayer);
 }
 
 
@@ -384,7 +426,7 @@ function queryPlayer(playername) {
     apiGetPlayer(function (result) {
         result.player.statistics = JSON.parse(result.player.statistics);
         player = result.player
-        addPlayer(player);
+        parseStats(player);
         return player;
     }, playername);
 }
@@ -392,7 +434,7 @@ function queryPlayer(playername) {
 
 document.onkeydown = function (event) {
     if (event.keyCode == 13) {
-        if (event.target.id == "playername") setPlayer();
+        if (event.target.id == "playername" || event.target.id == "playername2") setPlayer();
     }
 }
 

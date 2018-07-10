@@ -1,0 +1,43 @@
+.card{
+    margin:50px;
+    padding:50px;
+    overflow:auto;
+}
+
+.card::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+.card::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.helpimg {
+    width: 50%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#bigimg {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    text-align:center;
+}
+#img_big{
+    width:70%;
+    height:auto;
+    margin-top:10%;
+}

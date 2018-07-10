@@ -1,17 +1,29 @@
 extend layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
-        h1 Ltdstats.com - Help?!?
-        h1 This page is still under construction. If you need any help or want to reprt bugs, feel free to contact me (GvR Mr Mister) in discord/forums or per email to info@ltdstats.com
-        h4 Content:
-        ul
-            li Profile
-            li Ladder
-            li Replay
-            li Compare
-            li Builder
-            li Units
-            li Guides
-            li Statistics
-            li LIHL
-            li Livegame
+        .card
+            h1 Ltdstats.com - Help?!?
+            h2 This page is still under construction. If you need any help or want to reprt bugs, feel free to contact me (GvR Mr Mister) in discord/forums or per email to info@ltdstats.com
+            h4 Content:
+            ul
+                li 
+                    a(href="/help/profile") Profile
+                li 
+                    a(href="/help/ladder") Ladder
+                li 
+                    a(href="/help/replay") Replay
+                li 
+                    a(href="/help/compare") Compare
+                li 
+                    a(href="/help/builder") Builder
+                li 
+                    a(href="/help/units") Units
+                li 
+                    a(href="/help/guides") Guides
+                li 
+                    a(href="/help/statistics") Statistics
+                li 
+                    a(href="/help/lihl") LIHL
+                li 
+                    a(href="/help/livegame") Livegame

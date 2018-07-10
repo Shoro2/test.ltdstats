@@ -1,3 +1,67 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            h1 Player Profile
+            h4 Content:
+            ul
+                li 
+                    a(href="#stats") Stats
+                li 
+                    a(href="#elograph") Elograph
+                li 
+                    a(href="#games") Games
+                li 
+                    a(href="#collection") Collection
+                li 
+                    a(href="#builds") Builds
+            h2#stats Stats
+            br
+            img.helpimg#img_1(src="/img/helpprofile1.png", onclick="expandImg(1);") 
+            br 
+            | 1: Name
+            br 
+            | 2: Current Elo
+            br 
+            | 3: Peak Elo
+            br 
+            | 4: Rank
+            br 
+            | 5: Badges
+            br 
+            | 6: General Stats
+            br 
+            | 7: Legion Stats
+            h2#elograph Elograph
+            img.helpimg#img_2(src="/img/helpprofile2.png", onclick="expandImg(2);") 
+            br 
+            | 1: Name
+            br 
+            | 2: Elo
+            br 
+            | 3: Date
+            br 
+            | 4: Graph
+            h2#games Games
+            img.helpimg#img_3(src="/img/helpprofile3.png", onclick="expandImg(3);") 
+            br 
+            | 1: Select Game (4v4 Customs not supported yet)
+            br 
+            | 2: Select Wave
+            br 
+            | 3: Game Details
+            br 
+            | 4: Scoreboard, click on a name to display the build/mercs
+            br 
+            | 5: Build
+            br 
+            | 6: Mercs sent
+            br 
+            | 7: Mercs received
+            h2#collection Collection
+            img.helpimg#img_4(src="/img/helpprofile4.png", onclick="expandImg(4);") 
+            h2#builds Builds
+            img.helpimg#img_5(src="/img/helpprofile5.png", onclick="expandImg(5);") 
+    script(src="/js/help.js") 
