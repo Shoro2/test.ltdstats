@@ -7,9 +7,9 @@
     "\\public\\js\\db",
     "\\public\\js\\quill",
     "\\views",
-    "\\views\\help",
+    "\\views\\guides\\general",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\views\\help\\helpprofile.jade",
+  "SelectedNode": "\\public\\js\\profile.js",
   "PreviewInSolutionExplorer": false
 }

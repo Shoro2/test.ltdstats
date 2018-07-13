@@ -5,8 +5,15 @@ block content
         #wave(style="text-align: center;color:white;") Wave:
         .slider_container
             input(type="range", min="1", max="21", step="1", value="1",  data-orientation="vertical", oninput="waveAnzeigen();", onchange="waveAnzeigen();")#slider.slider
+        #meinflex
+            .progress(title="West King HP")
+                .hpbar#hpwest
+            #text_hp King HP
+            .progress(title="East King HP")
+                .hpbar#hpeast
         -for(var e=1;e<5;e++)
             .player_name
+                .legion(id="legion"+e, title="Legion", style='display:inline;')
                 .name(id="p"+e+"_name" style='display:inline;')
                 .networth(id="networth"+e, title='Net Worth', style='display:inline;')
                 .worker(id="worker"+e, title='Worker', style='display:inline;')
@@ -48,4 +55,15 @@ block content
         .p Requesting API, please wait...
         script(src="/js/jquery.js")
         script(src="/js/replay.js")
+    #findagame(style="display:none;")
+        h2 Find a pro game by Legion
+        p.
+        select(id="legion_selector", onchange="searchPlayers()")
+            option(value="") Select a Legion
+            option(value="mastermind") Mastermind
+            option(value="element") Element
+            option(value="grove") Grove
+            option(value="forsaken") Forsaken
+            option(value="mech") Mech
+        #result
     

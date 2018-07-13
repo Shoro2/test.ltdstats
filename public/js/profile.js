@@ -947,10 +947,13 @@ function listGames() {
     for (i = 0; i < games.length; i++) {
         var option = document.createElement("option");
         //console.log(games[i]);
-        option.text = games[i].queuetype+": "+games[i].ts + ", " + games[i].gameresult;
+        var timestamp = games[i].ts.substring(0, games[i].ts.indexOf(".")).replace("T", " ");
+        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length-3) + ", ID: " + games[i].game_id;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
-        if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
+        else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
+        else option.style = "background-color: #e6e3e3;"
+        //selector.remove(0);
         selector.add(option);
         
     }
@@ -981,6 +984,7 @@ function drawGameDetails(player_position) {
             var neuesI = i + 1;
             document.getElementById("name_" + neuesI).textContent = gameEvent[i].playername;
             document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
+            document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
             document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
             document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
             document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
@@ -1381,12 +1385,15 @@ function addPicture(y, x, unit) {
         case "angler":
             var url = "/img/icons/Angler.png";
             var unit_type = "Angler";
+            break;
         case "bounty_hunter":
             var url = "/img/icons/BountyHunter.png";
             var unit_type = "Bounty Hunter";
+            break;
         case "kingpin":
             var url = "/img/icons/Kingpin.png";
             var unit_type = "Kingpin";
+            break;
         case "sea_serpent":
             var url = "/img/icons/SeaSerpent.png";
             var unit_type = "SeaSerpant";
@@ -1410,6 +1417,7 @@ function addPicture(y, x, unit) {
         default:
             var url = "";
             var unit_type = "empty";
+            console.log("missing unit: " + unit);
             break;
     }
 
@@ -1419,6 +1427,7 @@ function addPicture(y, x, unit) {
     //console.log(neuesX + ", " + neuesY);
     var zielspalte = document.getElementById(neuesX + "." + neuesY);
     zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas1 = document.createElement("canvas");
     meinCanvas1.setAttribute("id", unit_type + " 1");
     meinCanvas1.setAttribute("class", "kleinerCanvas");
@@ -1426,6 +1435,7 @@ function addPicture(y, x, unit) {
     //var el1 = document.getElementById(unit_type+ " 1");
     var zielspalte = document.getElementById((neuesX + 1) + "." + neuesY);
     zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas2 = document.createElement("canvas");
     meinCanvas2.setAttribute("id", unit_type + " 2");
     meinCanvas2.setAttribute("class", "kleinerCanvas");
@@ -1433,12 +1443,14 @@ function addPicture(y, x, unit) {
     var zielspalte = document.getElementById(neuesX + "." + (neuesY + 1));
     //console.log(neuesX + ", "+neuesY);
     zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas3 = document.createElement("canvas");
     meinCanvas3.setAttribute("id", unit_type + " 3");
     meinCanvas3.setAttribute("class", "kleinerCanvas");
     var el3 = zielspalte.appendChild(meinCanvas3);
     var zielspalte = document.getElementById((neuesX + 1) + "." + (neuesY + 1));
     zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas4 = document.createElement("canvas");
     meinCanvas4.setAttribute("id", unit_type + " 4");
     meinCanvas4.setAttribute("class", "kleinerCanvas");

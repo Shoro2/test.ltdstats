@@ -3,6 +3,7 @@ var firsttime = false;
 
 function getGameDetails(games)
 {
+    console.log(games);
     firsttime = true;
     meinString = games.gameDetails[3];
     meinString1 = games.gameDetails[2];
@@ -247,6 +248,18 @@ function addPicture(y, x, unit, player)
             var url = "/img/icons/Seraphin.png";
             var unit_type = "Seraphin";
             break
+        case "angler":
+            var url = "/img/icons/Angler.png";
+            var unit_type = "Angler";
+            break;
+        case "bounty_hunter":
+            var url = "/img/icons/BountyHunter.png";
+            var unit_type = "Bounty Hunter";
+            break;
+        case "kingpin":
+            var url = "/img/icons/Kingpin.png";
+            var unit_type = "Kingpin";
+            break;
         case "sea_serpent":
             var url = "/img/icons/SeaSerpent.png";
             var unit_type = "SeaSerpant";
@@ -270,32 +283,36 @@ function addPicture(y, x, unit, player)
         default:
             var url="";
             var unit_type="empty";
-            console.log(unit);
+            console.log("missing unit: " + unit);
             break;
 
     }
     //canvas einfügen
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
     //console.log("p" + player + "_" + neuesX + "." + neuesY);
-    zielspalte.style="border: 0px;";
+    zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas1 = document.createElement("canvas");
     meinCanvas1.setAttribute("id", unit_type+" 1");
     meinCanvas1.setAttribute("class", "kleinerCanvas");
     var el1 = zielspalte.appendChild(meinCanvas1);
     //var el1 = document.getElementById(unit_type+ " 1");
-    var zielspalte = document.getElementById("p"+player+"_"+(neuesX+1)+"."+neuesY);
+    var zielspalte = document.getElementById("p" + player + "_" + (neuesX + 1) + "." + neuesY);
+    zielspalte.title = unit_type;
     zielspalte.style="border: 0px;";
     meinCanvas2 = document.createElement("canvas");
     meinCanvas2.setAttribute("id", unit_type+" 2");
     meinCanvas2.setAttribute("class", "kleinerCanvas");
     var el2 = zielspalte.appendChild(meinCanvas2);
     var zielspalte = document.getElementById("p"+player+"_"+neuesX+"."+(neuesY+1));
-    zielspalte.style="border: 0px;";
+    zielspalte.style = "border: 0px;";
+    zielspalte.title = unit_type;
     meinCanvas3 = document.createElement("canvas");
     meinCanvas3.setAttribute("id", unit_type+" 3");
     meinCanvas3.setAttribute("class", "kleinerCanvas");
     var el3 = zielspalte.appendChild(meinCanvas3);
-    var zielspalte = document.getElementById("p"+player+"_"+(neuesX+1)+"."+(neuesY+1));
+    var zielspalte = document.getElementById("p" + player + "_" + (neuesX + 1) + "." + (neuesY + 1));
+    zielspalte.title = unit_type;
     zielspalte.style="border: 0px;";
     meinCanvas4 = document.createElement("canvas");
     meinCanvas4.setAttribute("id", unit_type+" 4");
@@ -304,7 +321,7 @@ function addPicture(y, x, unit, player)
 
     // bild in canvas (4 teile)
     var meinBild1 = document.createElement("img");
-    meinBild1.src=url;
+    meinBild1.src = url;
     meinBild1.onload = function () {
         //1
         var ctx = el1.getContext('2d');
@@ -332,15 +349,27 @@ function fillNames()
     {
         var wave = parseInt(document.getElementById("slider").value);
         var worker = gameEvent[i-1].workersPerWave[wave-1];
-        var networth = gameEvent[i-1].netWorthPerWave[wave-1];
+        var networth = gameEvent[i - 1].netWorthPerWave[wave - 1];
+        var player_legion = gameEvent[i - 1].legion;
         document.getElementById("p"+i+"_name").innerText = gameEvent[i-1].playername;
         document.getElementById("networth"+i).innerText = "("+networth+"/";
-        document.getElementById("worker"+i).innerText = worker+")";
+        document.getElementById("worker" + i).innerText = worker + ")";
+        document.getElementById("legion" + i).innerHTML = "<img id='img_legion' src='/img/icons/"+player_legion+".png'>"
         //document.getElementById("p"+i+"_name").outerHTML = "<div class='player_name' id='p"+i+"_name'> "+gameEvent[i-1].player_name+" (<div title='Net Worth' style='display:inline;'>"+networth+"</div>/<div title='Worker' style='display:inline;'>"+worker+"</div>)</div>";
         
         
     }
 
+}
+
+function setKingHp() {
+    var wave = parseInt(document.getElementById("slider").value);
+    var kinghp1 = document.getElementById("hpwest");
+    var kinghp2 = document.getElementById("hpeast");
+    kinghp1.style.width = game.leftkingpercenthp[wave - 1] * 100+"%";
+    kinghp2.style.width = game.rightkingpercenthp[wave - 1] * 100 + "%";
+    kinghp1.textContent = (game.leftkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
+    kinghp2.textContent = (game.rightkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
 }
 
 function getPlayerBuild(player)
@@ -501,7 +530,7 @@ function getPlayer() {
         window.location.href = window.location.href + "?gameid=" + document.getElementById("gameid").value;
     }
     else {
-        window.location.href = "https://test.ltdstats.com/replay" + "?gameid=" + document.getElementById("gameid").value;
+        window.location.href = "/replay?gameid=" + document.getElementById("gameid").value;
     }
 
 
@@ -550,7 +579,6 @@ document.body.onload = function () {
     }
     else {
         document.getElementById("wave").textContent = "Enter a valid gameid to select the replay.";
-        console.log("enter a gameid");
     }
 }
 
@@ -609,7 +637,46 @@ function waveAnzeigen()
         getPlayerSends(i);
     }
     fillNames();
+    setKingHp();
     
+}
+
+function showSelect() {
+    document.getElementById("findagame").style.display = "inherit";
+}
+
+function searchPlayers() {
+    var selected = document.getElementById("legion_selector").value;
+    if (selected != "") {
+        document.getElementById("mitte").style.display = "inherit";
+        queryTopPlayer(selected);
+    }
+}
+
+function parseTopPlayer(players) {
+    console.log(players);
+    var result = document.getElementById("result");
+    result.innerHTML = "";
+    for (var i = 0; i < players.length; i++) {
+        result.innerHTML += "<br> <div id='player_"+i+"' onclick='showGames("+i+")'>" + players[i].playername + " Elo: "+players[i].statistics.overallElo+"</div>";
+        console.log(players[i].playername);
+    }
+    result.innerHTML += "<br>";
+    result.style.display = "inherit";
+}
+
+function showGames(nummer)
+{
+    var result = document.getElementById("result");
+    result.innerHTML = "";
+    for (var i = 0; i < 10; i++) {
+        result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", "+ nummer+")'>" + players[nummer].filteredGamesQuery.games[i].game_id + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
+    }
+    result.innerHTML += "<br>";
+}
+
+function getGameId(nummer, playernum) {
+    window.location.href = "/replay?gameid=" + players[playernum].filteredGamesQuery.games[nummer].game_id;
 }
 
 //API
@@ -622,16 +689,43 @@ function getGame(callback, gameid) {
             callback(game);
         }
     };
-    xhttp.open("GET", '/api?command={endgame(game_id:"'+gameid+'"){ts,wave,time,gameDetails{playername,wave,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
+    xhttp.open("GET", '/api?command={game(gameid:"' + gameid + '"){ts,leftkingpercenthp,rightkingpercenthp,gameDetails{playername,wave,legion,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
     xhttp.send();
 }
 
 function queryGame(gameid) {
     getGame(function (result) {
         //console.log(result);
-        game = result.endgame;
+        game = result.game;
         getGameDetails(game);
         document.getElementById("mitte").style.display = "none";
         return game;
     }, gameid);
+}
+
+function getTopPlayer(callback, legion) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var players = JSON.parse(xhttp.response);
+            callback(players);
+        }
+    };
+    xhttp.open("GET", '/api?command={filteredPlayers(orderby: "'+legion+'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 20) {games{game_id,gameresult}}}}}', true);
+    xhttp.send();
+}
+
+function queryTopPlayer(legion) {
+    getTopPlayer(function (result) {
+        console.log(result);
+        for (var i = 0; i < result.filteredPlayers.players.length; i++) {
+            result.filteredPlayers.players[i].statistics = JSON.parse(result.filteredPlayers.players[i].statistics);
+        }
+        console.log(result);
+        players = result.filteredPlayers.players;
+        parseTopPlayer(players);
+        document.getElementById("mitte").style.display = "none";
+        return players;
+    }, legion);
 }
