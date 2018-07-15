@@ -876,12 +876,15 @@ function drawPlayerBuilds(gameX) {
                 case "angler":
                     var url = "/img/icons/Angler.png";
                     var unit_type = "Angler";
+                    break;
                 case "bounty_hunter":
                     var url = "/img/icons/BountyHunter.png";
                     var unit_type = "Bounty Hunter";
+                    break;
                 case "kingpin":
                     var url = "/img/icons/Kingpin.png";
                     var unit_type = "Kingpin";
+                    break;
                 case "sea_serpent":
                     var url = "/img/icons/SeaSerpent.png";
                     var unit_type = "Sea Serpent";
@@ -919,7 +922,7 @@ function drawPlayerBuilds(gameX) {
             sendcontainer.innerHTML += "<img src='/img/icons/" + ele.substring(0, ele.indexOf(";")).replace(" ","") + ".png' height='20px' width='20px'> " +ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
         }
     });
-    console.log(sends);
+    //console.log(sends);
     //console.log(builds);
     /*
     console.log("Leaks on "+document.getElementById("setWave2").value+": "+leaks[target_race][document.getElementById("setWave2").value-1]);
@@ -967,7 +970,7 @@ function getGameDetails(pos, games) {
     meinString2 = games[pos].gameDetails[1];
     meinString3 = games[pos].gameDetails[0];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
-    console.log(gameEvent);
+    //console.log(gameEvent);
 }
 
 function getPlayerAmount() {
@@ -994,7 +997,7 @@ function drawGameDetails(player_position) {
         }
         getPlayerBuild(player_position);
         //Summary:
-        document.getElementById("game_id").textContent = "Game #" + selectedGame + ", ID: " + games[selectedGame].game_id;
+        document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + games[selectedGame].game_id + "'>" + games[selectedGame].game_id + "</a>";
         document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
         document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
         document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
@@ -1592,6 +1595,7 @@ function apiGetPlayer(callback, playername) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
+            //console.log(xhttp.response);
             callback(player);
         }
     };
@@ -1619,6 +1623,7 @@ function getPlayerGames(callback, playername, gameamount) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
+            //console.log(xhttp.response);
             callback(player);
         }
     };
@@ -1648,6 +1653,7 @@ function getPlayerOverallGames(callback, playername) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
+            //console.log(xhttp.response);
             callback(player);
         }
     };

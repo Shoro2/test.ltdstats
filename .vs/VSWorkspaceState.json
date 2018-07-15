@@ -4,12 +4,13 @@
     "\\public",
     "\\public\\css",
     "\\public\\js",
-    "\\public\\js\\db",
     "\\public\\js\\quill",
     "\\views",
+    "\\views\\guides",
     "\\views\\guides\\general",
-    "\\views\\ladder"
+    "\\views\\guides\\mech",
+    "\\views\\help"
   ],
-  "SelectedNode": "\\public\\js\\profile.js",
+  "SelectedNode": "\\server.js",
   "PreviewInSolutionExplorer": false
 }

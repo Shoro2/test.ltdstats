@@ -11,7 +11,7 @@ require('isomorphic-fetch');
 // Constants
 const PORT = 61624;
 const HOST = '127.0.0.1';
-
+const http = require('http');
 // App
 const app = express();
 
@@ -33,7 +33,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 var dbo = "";
 
-var meineDb = MongoClient.connect("mongodb://144.76.233.45:27017/", function (err, db) {
+var meineDb = MongoClient.connect("mongodb://144.76.233.45:27017/", { useNewUrlParser: true }, function (err, db) {
     if (err) throw err;
     dbo = db.db("ltdstats");
 });
@@ -260,6 +260,12 @@ app.get('/guides/mech/isotropvideo', (req, res) => {
     })
 });
 
+app.get('/guides/mech/roshkatulmech', (req, res) => {
+    res.render('guides/mech/roshkatulsmech', {
+        title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
+    })
+});
+
 app.get('/guides/mastermind', (req, res) => {
     res.render('guides/mastermind', {
         title: 'Mastermind Guides'
@@ -360,6 +366,12 @@ app.get('/cookies', (req, res) => {
 app.get('/faq', (req, res) => {
     res.render('faq', {
         title: 'FAQ'
+    })
+});
+
+app.get('/feedback', (req, res) => {
+    res.render('feedback', {
+        title: 'Feddback & Bug Report'
     })
 });
 
@@ -520,6 +532,25 @@ app.get('/mongodb/', (req, res) => {
     dbo.collection("games").find({ command }, function (err, result) {
         if (err) throw err;
         res.json(result);
+    });
+});
+
+app.get('/mongodb/test', (req, res) => {
+    http.get('http://144.76.233.45:61624', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            console.log(JSON.parse(data).explanation);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
     });
 });
 

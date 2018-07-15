@@ -1,5 +1,5 @@
 function on() {
-    document.getElementById("overlay").style.display = "block";
+    //document.getElementById("overlay").style.display = "block";
 }
 
 function off() {

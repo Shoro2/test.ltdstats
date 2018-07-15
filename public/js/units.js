@@ -30,7 +30,7 @@ function getPlayer() {
 
 function scanUnits()
 {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -258,6 +258,22 @@ function scanUnits()
                 var url = "/img/icons/Seraphin.png";
                 var unit_type = "Seraphin";
                 break
+            case "angler":
+                var url = "/img/icons/Angler.png";
+                var unit_type = "Angler";
+                break;
+            case "bounty_hunter":
+                var url = "/img/icons/BountyHunter.png";
+                var unit_type = "Bounty%20%Hunter";
+                break;
+            case "kingpin":
+                var url = "/img/icons/Kingpin.png";
+                var unit_type = "Kingpin";
+                break;
+            case "kingpi": //WTF?!
+                var url = "/img/icons/Kingpin.png";
+                var unit_type = "Kingpin";
+                break;
             case "sea_serpent":
                 var url = "/img/icons/SeaSerpent.png";
                 var unit_type = "Sea%20Serpent";
@@ -281,6 +297,7 @@ function scanUnits()
             default:
                 var url = "";
                 var unit_type = "empty";
+                console.log(unit);
                 break;
         }
 

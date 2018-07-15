@@ -15,7 +15,7 @@ html
         .container-fluid
             nav.navbar.navbar-expand-xl.navbar-dark.fixed-top.bg-dark
                 img(src="/img/favicon.ico", width="16px", height="16px")
-                a.navbar-brand(href='https://test.ltdstats.com') LTDStats.com
+                a.navbar-brand(href='/') LTDStats.com
                 button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
                 div#navbarsExampleDefault.collapse.navbar-collapse
@@ -77,27 +77,11 @@ html
                             li.nav-item
                                 a.nav-link(href='/units') Units
                         if(title.includes("Guide"))
-                            li.nav-item.dropdown.active
-                                a#dropdown01.nav-link.dropdown-toggle(href='/guides', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Guides
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/guides/search') Search a Guide
-                                    a.dropdown-item(href='/guides/general') General
-                                    a.dropdown-item(href='/guides/element') Element
-                                    a.dropdown-item(href='/guides/forsaken') Forsaken
-                                    a.dropdown-item(href='/guides/grove') Grove
-                                    a.dropdown-item(href='/guides/mech') Mech
-                                    a.dropdown-item(href='/guides/mastermind') Mastermind
+                            li.nav-item.active
+                                a.nav-link(href='/guides') Guides
                         else
-                            li.nav-item.dropdown
-                                a#dropdown01.nav-link.dropdown-toggle(href='/guides', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Guides
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/guides/search') Search a Guide
-                                    a.dropdown-item(href='/guides') General
-                                    a.dropdown-item(href='/guides/element') Element
-                                    a.dropdown-item(href='/guides/forsaken') Forsaken
-                                    a.dropdown-item(href='/guides/grove') Grove
-                                    a.dropdown-item(href='/guides/mech') Mech
-                                    a.dropdown-item(href='/guides/mastermind') Mastermind
+                            li.nav-item
+                                a.nav-link(href='/guides') Guides
                         if(title.includes("Stats"))
                             li.nav-item.dropdown.active
                                 a#dropdown01.nav-link.dropdown-toggle(href='/stats', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Statistics
@@ -116,7 +100,10 @@ html
                                     a.dropdown-item(href='/stats/overall') Overall Statistics
                                     a.dropdown-item(href='/stats/daily') Daily Statistics
                                     a.dropdown-item(href='/stats/patch') Patch Statistics
-                    
+                        li.nav-item
+                            a.nav-link(href="feedback") Feedback & Bugs
+                        li.nav-item
+                            a.nav-link(href='https://test.ltdstats.com', target="_blank") Old Website
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
@@ -136,9 +123,9 @@ html
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Compare
                     if(title.includes("Replay"))
                         .form-inline.my-2.my-lg-0
-                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="showSelect();" style="margin-right:10px;") Search a game
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="showSelect();" style="margin-right:30px;") Search a game
                             input#gameid.form-control.mr-sm-2(type='text', placeholder='Game ID', aria-label='Game ID')
-                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
+                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Show
                     if(title.includes("Patch"))
                         .form-inline.my-2.my-lg-0
                             select#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search', onchange="getPatch();")
@@ -184,7 +171,7 @@ html
                     a.linkfooter(href="/about") About
                     a.linkfooter(href="/cookies") Cookie Policies
                     a.linkfooter(href="/faq") FAQ
-                    a.linkfooter(href="/contact") Give Feedback
+                    a.linkfooter(href="feedback") Give Feedback
                     a.linkfooter(href="/help") Help
                 script(src='https://code.jquery.com/jquery-3.1.1.min.js')
                 script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
