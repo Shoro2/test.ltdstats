@@ -16,9 +16,9 @@ const http = require('http');
 const app = express();
 
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
-app.use(express.static(__dirname + '/public'))
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.static(__dirname + '/public'));
 
 con.connect(function (err) {
     if (err) console.log("connecton to mysql failed: "+err);
@@ -28,15 +28,6 @@ con.connect(function (err) {
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
-
-var MongoClient = require('mongodb').MongoClient;
-
-var dbo = "";
-
-var meineDb = MongoClient.connect("mongodb://144.76.233.45:27017/", { useNewUrlParser: true }, function (err, db) {
-    if (err) throw err;
-    dbo = db.db("ltdstats");
-});
 
 //routes
 
@@ -89,7 +80,7 @@ app.get('/stats/patch', (req, res) => {
 });
 
 app.get('/ladder', (req, res) => {
-    res.render('ladder', {
+    res.render('ladder/overallladder', {
         title: 'Overall Ladder'
     })
 });
@@ -500,12 +491,13 @@ app.get('/sql/getGuides', (req, res) => {
 //api abfragen
 
 
-app.get('/api/', (req, res) => {
-    var command = req.query.command;
+app.get('/api/units', (req, res) => {
+    var unitname = req.query.unitname;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": "HsjQROytsjaA1xoYxpN1B3OK0jdywuFgaiyNMonF" },
-        body: JSON.stringify({ query: command }),
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({
+            query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconpath,abilities{name,tooltip,iconpath},armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health}}' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -519,12 +511,142 @@ app.get('/api/', (req, res) => {
         }).then(function (data) {
             //player object an frontend
             res.json(data.data);
-        })
-        ;
-
-    
+        });
 });
 
+app.get('/api/replay/getGame', (req, res) => {
+    var gameid = req.query.gameid;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '") { ts, leftkingpercenthp, rightkingpercenthp, gameDetails{ playername, wave, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/replay/getTopPlayer', (req, res) => {
+    var legion = req.query.legion;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion +'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 20) {games{game_id,gameresult}}}}}' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/ladder', (req, res) => {
+    var type = req.query.type;
+    var limit = req.query.limit;
+    var offset = req.query.offset;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ filteredPlayers(orderby: "'+type+'", limit: '+limit+', direction: DESC, offset: '+offset+') { count, players{ playername, statistics } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/profile/playerOverallGames', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 500){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave } } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/profile/playerGames', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{player(playername:"' + playername + '"){filteredGamesQuery(limit:200){games{game_id,ts,wave,time,queuetype,gameresult,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}}'}),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/profile/player', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies}}' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
 //mongodb
 
 app.get('/mongodb/', (req, res) => {
@@ -536,7 +658,7 @@ app.get('/mongodb/', (req, res) => {
 });
 
 app.get('/mongodb/test', (req, res) => {
-    http.get('http://144.76.233.45:61624', (resp) => {
+    http.get('http://144.76.233.45:13306', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.

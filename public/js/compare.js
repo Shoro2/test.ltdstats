@@ -418,7 +418,7 @@ function apiGetPlayer(callback, playername) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command=query{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies}}', true);
+    xhttp.open("GET", '/api/profile/getPlayer?playername=' + playername, true);
     xhttp.send();
 }
 

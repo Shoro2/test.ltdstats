@@ -9,16 +9,18 @@ html
         meta(name="page-topic", content="Gaming, Statistics")
         meta(name="keywords", content="legion, legion td, legion td 2, statistics, profile, stats, ladder, guides, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics")
         meta(name="description", content="A community made platform to look up Player profiles, online ladder, guides, statistics and much more!")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
         script(async src="https://www.googletagmanager.com/gtag/js?id=UA-111925592-1")
     body
         header
         .container-fluid
-            nav.navbar.navbar-expand-xl.navbar-dark.fixed-top.bg-dark
-                img(src="/img/favicon.ico", width="16px", height="16px")
+            nav.navbar.navbar-expand-custom.navbar-dark.fixed-top.bg-dark
+                a(href="/")
+                    img(src="/img/favicon.ico", width="16px", height="16px")
                 a.navbar-brand(href='/') LTDStats.com
                 button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
-                div#navbarsExampleDefault.collapse.navbar-collapse
+                #navbarsExampleDefault.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
                         if(title=="Home")
                             li.nav-item.active
@@ -106,8 +108,8 @@ html
                             a.nav-link(href='https://test.ltdstats.com', target="_blank") Old Website
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
-                            input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
-                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="setPlayer();") Search
+                            input#playername.form-control(type='text', placeholder='Search', aria-label='Search')
+                            button.btn.btn-outline-success.my-sm-0(onclick="setPlayer();") Search
                     if(title.includes("Ladder") || title.includes("Player Stats") || title.includes("Livegame") || title.includes("Units"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
@@ -126,35 +128,6 @@ html
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="showSelect();" style="margin-right:30px;") Search a game
                             input#gameid.form-control.mr-sm-2(type='text', placeholder='Game ID', aria-label='Game ID')
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Show
-                    if(title.includes("Patch"))
-                        .form-inline.my-2.my-lg-0
-                            select#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search', onchange="getPatch();")
-                                option(value="") Select
-                                option(value="v1.78a") v1.9
-                                option(value="v1.78a") v1.78a
-                                option(value="v1.78") v1.78
-                                option(value="v1.77a") v1.77a                                
-                                option(value="v1.77") v1.77
-                                option(value="v1.76a") v1.76a
-                                option(value="v1.76") v1.76
-                                option(value="v1.75b") v1.75b
-                                option(value="v1.75") v1.75
-                                option(value="v1.74") v1.74
-                                option(value="v1.73") v1.73
-                                option(value="v1.72") v1.72
-                                option(value="v1.71") v1.71
-                                option(value="v1.70") v1.70
-                                option(value="v1.69a") v1.69a
-                                option(value="v1.69") v1.69
-                                option(value="v1.68") v1.68
-                                option(value="v1.67") v1.67
-                                option(value="v1.66") v1.66
-                                option(value="v1.65") v1.65
-                                option(value="v1.64") v1.64
-                                option(value="v1.63") v1.63
-                                option(value="v1.62") v1.62
-                                option(value="v1.61") v1.61
-                                option(value="v1.60") v1.60    
                 link(rel="stylesheet", type="text/css", href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css")
                 script(src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js")
                 script(src="/js/cookiemessage.js")

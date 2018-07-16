@@ -323,7 +323,11 @@ function draw(myUnit)
     document.getElementById("unit_range").textContent = "Range: "+fighter.range;
     document.getElementById("unit_goldcost").textContent = "Goldcost: "+fighter.goldcost;
     document.getElementById("unit_totalcost").textContent = "Total Value: " + fighter.totalvalue;
-    document.getElementById("unit_abilities").textContent = "Abilities: " + fighter.abilities;
+    document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
+    for (var i = 0; i < fighter.abilities.length; i++) {
+        document.getElementById("unit_abilities").innerHTML += "<li>" + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li>";
+    }
+    document.getElementById("unit_abilities").innerHTML += "<br>";
     document.getElementById("unit_upgrades").textContent = "Upgrades to: " + fighter.upgradesto;
     document.getElementById("unit_description").textContent = "Description: " + fighter.description;
     document.getElementById("unit_tooltip").textContent = "Tooltip: " + fighter.tooltip;
@@ -342,7 +346,7 @@ function getFighter(callback, unitname)
             callback(fighters);
         }
     };
-    xhttp.open("GET", '/api?command={unit(name: "'+unitname+'"){id,name,legion,description,tooltip,iconpath,abilities,armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health}}', true);
+    xhttp.open("GET", '/api/units?unitname='+unitname, true);
     xhttp.send();
 }
 

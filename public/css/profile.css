@@ -107,6 +107,7 @@
     color:white;
     float: left;
     width: 180px;
+    min-height:170px;
 }
 
 #buildtable
@@ -208,7 +209,6 @@
 .stats_small {
     float:left;
     width: 23.3%;
-    height: 36%;
     margin-left:5%;
     margin-right:5%;
     margin-top:2%;
@@ -218,7 +218,6 @@
 
 #general{
     text-align:center;
-    height:40%;
     width:90%;
     margin-left:5%;
 }
@@ -262,13 +261,12 @@ body {
 
   .wrap {
     overflow: hidden;
-    padding: 20px 50px;
+    padding: 30px;
     display: block;
     border-radius: 4px;
     transform: translateY(20px);
     transition: all 0.5s;
     visibility: hidden;
-    height:100%;
   }
   .wrap .content {
     opacity: 0;
@@ -334,10 +332,7 @@ body {
     background: #2198ff;
   }
 
-  .tab_box
-{
-    height: 90% !important;
-}
+
 
 #gamedetails_table
 {
