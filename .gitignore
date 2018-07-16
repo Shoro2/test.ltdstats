@@ -340,3 +340,4 @@ public/js/sqlcon.js
 *.sqlite
 .vs/test.ltdstats/v15/.suo
 *.sqlite
+.vs/slnx.sqlite
