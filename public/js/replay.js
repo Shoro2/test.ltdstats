@@ -481,7 +481,7 @@ document.onkeydown = function (event) {
     
     
   }
-document.onmousewheel = function displaywheel(e){
+/*document.onmousewheel = function displaywheel(e){
     var evt=window.event || e //equalize event object
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
     if(delta>0)
@@ -511,7 +511,7 @@ document.onmousewheel = function displaywheel(e){
             waveAnzeigen();
     }
 }
- 
+ */
 document.getElementById("slider").onchange = function(){
     if(document.getElementById("slider").value>gameEvent[0].wave) 
     {
@@ -689,7 +689,7 @@ function getGame(callback, gameid) {
             callback(game);
         }
     };
-    xhttp.open("GET", '/api?command={game(gameid:"' + gameid + '"){ts,leftkingpercenthp,rightkingpercenthp,gameDetails{playername,wave,legion,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}', true);
+    xhttp.open("GET", '/api/replay/getGame?gameid='+gameid, true);
     xhttp.send();
 }
 
@@ -712,7 +712,7 @@ function getTopPlayer(callback, legion) {
             callback(players);
         }
     };
-    xhttp.open("GET", '/api?command={filteredPlayers(orderby: "'+legion+'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 20) {games{game_id,gameresult}}}}}', true);
+    xhttp.open("GET", '/api/replay/getTopPlayer?legion='+legion, true);
     xhttp.send();
 }
 

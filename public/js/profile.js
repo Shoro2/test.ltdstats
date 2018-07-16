@@ -11,7 +11,7 @@ function checkContent() {
         document.getElementById("mitte").style.display = "inherit";
         queryPlayer(playerurl);
         queryRank(playerurl);
-        queryPlayerGames(playerurl, 100);
+        queryPlayerGames(playerurl);
         queryPlayerOverallGames(playerurl);
     }
     else {
@@ -1599,7 +1599,7 @@ function apiGetPlayer(callback, playername) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command=query{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies}}', true);
+    xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
     xhttp.send();
 }
 
@@ -1617,7 +1617,7 @@ function queryPlayer(playername) {
 // last x games by player
 // elograph
 // games
-function getPlayerGames(callback, playername, gameamount) {
+function getPlayerGames(callback, playername) {
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
@@ -1627,11 +1627,11 @@ function getPlayerGames(callback, playername, gameamount) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command={player(playername:"' + playername + '"){filteredGamesQuery(limit:' + gameamount + '){games{game_id,ts,wave,time,queuetype,gameresult,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}}', true);
+    xhttp.open("GET", '/api/profile/playerGames?playername='+playername, true);
     xhttp.send();
 }
 
-function queryPlayerGames(playername, gameamount) {
+function queryPlayerGames(playername) {
     getPlayerGames(function (result) {
         //console.log(result.player.filteredGamesQuery.games);
         if (!result) console.log("PROBLEMO!");
@@ -1642,7 +1642,7 @@ function queryPlayerGames(playername, gameamount) {
         document.getElementById("mitte").style.display = "none";
         return games;
 
-    }, playername, gameamount);
+    }, playername);
 }
 
 //player overall games
@@ -1657,7 +1657,7 @@ function getPlayerOverallGames(callback, playername) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command={player(playername:"'+playername+'"){filteredGamesQuery(limit:2000){count,games{game_id,ts,position,wave,time,queuetype,legion,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}', true);
+    xhttp.open("GET", '/api/profile/playerOverallGames?playername='+playername, true);
     xhttp.send();
 }
 

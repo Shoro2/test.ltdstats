@@ -127,7 +127,6 @@ document.body.onload = function () {
     var playerurl = url.searchParams.get("player");
     if (window.location.href.includes("overall")) {
         var type = "overallElo";
-        console.log(type);
     }
     else if (window.location.href.includes("element")) {
         var type = "elementElo";
@@ -143,6 +142,9 @@ document.body.onload = function () {
     }
     else if (window.location.href.includes("mastermind")) {
         var type = "mastermindElo";
+    }
+    else {
+        var type = "overallElo";
     }
     console.log(window.location.href);
     if (playerurl !== null) {
@@ -165,7 +167,7 @@ function getLadder(callback, limit, offset, type) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api?command={filteredPlayers(orderby: "'+type+'",limit: '+limit+',direction:DESC,offset:'+offset+'){count,players{playername,statistics}}}', true);
+    xhttp.open("GET", '/api/ladder?type='+type+'&limit='+limit+'&offset='+offset, true);
     xhttp.send();
 }
 
