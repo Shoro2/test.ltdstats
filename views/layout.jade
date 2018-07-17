@@ -85,23 +85,11 @@ html
                             li.nav-item
                                 a.nav-link(href='/guides') Guides
                         if(title.includes("Stats"))
-                            li.nav-item.dropdown.active
-                                a#dropdown01.nav-link.dropdown-toggle(href='/stats', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Statistics
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/stats') Overview
-                                    a.dropdown-item(href='/stats/player') Player Statistics
-                                    a.dropdown-item(href='/stats/overall') Overall Statistics
-                                    a.dropdown-item(href='/stats/daily') Daily Statistics
-                                    a.dropdown-item(href='/stats/patch') Patch Statistics
+                            li.nav-item.active
+                                a.nav-link(href='/stats') Stats
                         else
-                            li.nav-item.dropdown
-                                a#dropdown01.nav-link.dropdown-toggle(href='/stats', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Statistics
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/stats') Overview
-                                    a.dropdown-item(href='/stats/player') Player Statistics
-                                    a.dropdown-item(href='/stats/overall') Overall Statistics
-                                    a.dropdown-item(href='/stats/daily') Daily Statistics
-                                    a.dropdown-item(href='/stats/patch') Patch Statistics
+                            li.nav-item
+                                a.nav-link(href='/stats') Stats
                         li.nav-item
                             a.nav-link(href="feedback") Feedback & Bugs
                         li.nav-item

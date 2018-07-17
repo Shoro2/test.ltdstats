@@ -1,21 +1,18 @@
-function dbGetGames(callback, filter) {
+function getEloDistribution(callback) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            var games = JSON.parse(xhttp.response);
-            callback(games);
+            callback(JSON.parse(xhttp.response));
         }
     };
-    xhttp.open("GET", "/mongodb?command={" + filter + "}", true);
+    xhttp.open("GET", '/api/stats/elo', true);
     xhttp.send();
 }
-
-function queryGames(filter) {
-    dbGetGames(function (result) {
+function queryEloDistribution() {
+    getEloDistribution(function (result) {
         console.log(result);
         return result;
-    }, filter);
+    });
 }
 
-
-var queriedGames = queryGames('version:"v2.28"');
+queryEloDistribution();

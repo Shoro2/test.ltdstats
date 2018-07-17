@@ -951,7 +951,15 @@ function listGames() {
         var option = document.createElement("option");
         //console.log(games[i]);
         var timestamp = games[i].ts.substring(0, games[i].ts.indexOf(".")).replace("T", " ");
-        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length-3) + ", ID: " + games[i].game_id;
+        var legion = ""
+        try {
+            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0]
+            legion = ", Legion: " + gameDetail['legion']
+        } catch (err) {
+            // Catch games that error out with no game detail.
+            console.log(err)
+        }
+        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id +","+ legion;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
         else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
