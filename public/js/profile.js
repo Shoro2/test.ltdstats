@@ -959,7 +959,7 @@ function listGames() {
             // Catch games that error out with no game detail.
             console.log(err)
         }
-        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id +","+ legion;
+        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
         else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
@@ -1103,6 +1103,7 @@ function getPlayerBuild(player) {
     savedValue = player;
     //console.log(player);
     clearPictures();
+    drawSquares();
     document.getElementById("gamedetails_build").innerHTML = "";
     if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
     else var wave = parseInt(document.getElementById("setWave").value);
@@ -1702,4 +1703,27 @@ function queryRank(playername) {
 
 function parseRank(rank) {
     document.getElementById("rank").textContent = "Rank: " + rank;
+}
+
+//adds thik lines to grid
+function drawSquares() {
+    var smalls = document.getElementsByClassName("pictable");
+    Array.prototype.forEach.call(smalls, function (element) {
+        var x = element.id.substring(element.id.indexOf(".") + 1);
+        var y = element.id.substring(0, element.id.indexOf("."));
+        if (x % 2 == 1) {
+            
+            element.style["border-left"] = "2px solid black";
+        }
+        else {
+            
+            element.style["border-right"] = "2px solid black";
+        }
+        if (y % 2 == 1) {
+            element.style["border-bottom"] = "2px solid black";
+        }
+        else {
+            element.style["border-top"] = "2px solid black";
+        }
+    });
 }
