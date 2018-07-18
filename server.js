@@ -852,34 +852,7 @@ app.get('/api/stats/legions/avgnetworthsWave', (req, res) => {
             res.json(data.data);
         });
 });
-//mongodb
 
-app.get('/mongodb/', (req, res) => {
-    var command = req.query.command;
-    dbo.collection("games").find({ command }, function (err, result) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/mongodb/test', (req, res) => {
-    http.get('http://144.76.233.45:13306', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            console.log(JSON.parse(data).explanation);
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-});
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

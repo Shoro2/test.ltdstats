@@ -481,7 +481,7 @@ document.onkeydown = function (event) {
     
     
   }
-/*document.onmousewheel = function displaywheel(e){
+document.onmousewheel = function displaywheel(e){
     var evt=window.event || e //equalize event object
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
     if(delta>0)
@@ -511,7 +511,6 @@ document.onkeydown = function (event) {
             waveAnzeigen();
     }
 }
- */
 document.getElementById("slider").onchange = function(){
     if(document.getElementById("slider").value>gameEvent[0].wave) 
     {

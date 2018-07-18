@@ -418,7 +418,7 @@ function apiGetPlayer(callback, playername) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api/profile/getPlayer?playername=' + playername, true);
+    xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
     xhttp.send();
 }
 
@@ -434,7 +434,7 @@ function queryPlayer(playername) {
 
 document.onkeydown = function (event) {
     if (event.keyCode == 13) {
-        if (event.target.id == "playername" || event.target.id == "playername2") setPlayer();
+        if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
     }
 }
 
