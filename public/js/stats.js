@@ -60,3 +60,67 @@ function queryAvgIncEnd(type, value) {
         return result;
     }, type, value);
 }
+
+
+function getAvgvWorkersEnd(callback, type, value) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/legions/avgworkersEnd?type=' + type + '&value=' + value, true);
+    xhttp.send();
+}
+function queryAvgWorkersEnd(type, value) {
+    getAvgWorkersEnd(function (result) {
+        return result;
+    }, type, value);
+}
+
+function getAvgLeakssEnd(callback, type, value) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/legions/avgleaksEnd?type=' + type + '&value=' + value, true);
+    xhttp.send();
+}
+function queryAvgLeaksEnd(type, value) {
+    getAvgLeaksEnd(function (result) {
+        return result;
+    }, type, value);
+}
+function getAvgWorkersWave(callback, type, value) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/legions/avgworkersWave?type=' + type + '&value=' + value, true);
+    xhttp.send();
+}
+function queryAvgWorkersWave(type, value) {
+    getAvgWorkersWave(function (result) {
+        return result;
+    }, type, value);
+}
+
+function getAvgNetworthWave(callback, type, value) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/legions/avgnetworthsWave?type=' + type + '&value=' + value, true);
+    xhttp.send();
+}
+function queryAvgNetworthWave(type, value) {
+    getAvgNetworthWave(function (result) {
+        return result;
+    }, type, value);
+}
