@@ -14,13 +14,13 @@ html
     body
         header
         .container-fluid
-            nav.navbar.navbar-expand-custom.navbar-dark.fixed-top.bg-dark
+            nav.navbar.navbar-expand-xl.navbar-dark.fixed-top.bg-dark
                 a(href="/")
                     img(src="/img/favicon.ico", width="16px", height="16px")
                 a.navbar-brand(href='/') LTDStats.com
                 button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
-                #navbarsExampleDefault.collapse.navbar-collapse
+                div#navbarsExampleDefault.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
                         if(title=="Home")
                             li.nav-item.active
@@ -90,10 +90,11 @@ html
                         else
                             li.nav-item
                                 a.nav-link(href='/stats') Stats
-                        li.nav-item
-                            a.nav-link(href="feedback") Feedback & Bugs
-                        li.nav-item
-                            a.nav-link(href='https://test.ltdstats.com', target="_blank") Old Website
+                        li.nav-item.dropdown
+                            a#dropdown02.nav-link.dropdown-toggle(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') More
+                            div.dropdown-menu(aria-labelledby='dropdown02')
+                                a.dropdown-item(href="/feedback") Feedback & Bugs
+                                a.dropdown-item(href='https://test.ltdstats.com', target="_blank") Old Website
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control(type='text', placeholder='Search', aria-label='Search')
