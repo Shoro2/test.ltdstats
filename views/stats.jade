@@ -11,26 +11,36 @@ block content
             .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Overall
             .style(style='clear: both;')
             .tab_box#tab_box_1
-                h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-                #chartContainer
-                    canvas#myChart
+                h3(onclick="queryEloDistribution();") Player Elo Distribution
+                h3(onclick="showWinPickrates();") Legion Pick/Winrates
             .tab_box#tab_box_2
                 h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-                #chartContainer
-                    canvas#myChart
             .tab_box#tab_box_3
                 h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-                #chartContainer
-                    canvas#myChart
             .tab_box#tab_box_4
                 h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-                #chartContainer
-                    canvas#myChart
             .tab_box#tab_box_5
                 h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-                #chartContainer
-                    canvas#myChart
     script(src="/js/Chart.js")
     script(src="/js/stats.js")
     script(src="/js/tabmenu.js")
     script document.body.onload = function() {openTab(1)};
+    #mitte(style="display:none;")
+        img(class="gif", src="/img/loading.gif")
+        .p Requesting API, please wait...
+    #stats(style="display:none;")
+        #close(title="Close", onclick="hideStatsPage();") X
+        #help(title="Help", onclick="showHelpPage();") ?
+        #inputs
+            select#typeselector.inline(onchange="saveSelection();")
+                option(value="") Select a filter
+                option(value="playerid") Player
+                option(value="version") Patch
+                option(value="tsgte") > Date
+                option(value="tslt") < Date
+            input#value_textField.inline(type="text", style="display:none;")
+            input#value_dateField.inline(type="date", style="display:none;")
+            button#startButton.inline(onclick="loadWinrates();") Go
+        #chartContainer
+            canvas#myChart
+        
