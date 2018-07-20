@@ -5,12 +5,8 @@
     "\\public\\css",
     "\\public\\js",
     "\\public\\js\\quill",
-    "\\views",
-    "\\views\\guides",
-    "\\views\\guides\\general",
-    "\\views\\guides\\mech",
-    "\\views\\help"
+    "\\views"
   ],
-  "SelectedNode": "\\public\\js\\units.js",
+  "SelectedNode": "\\server.js",
   "PreviewInSolutionExplorer": false
 }

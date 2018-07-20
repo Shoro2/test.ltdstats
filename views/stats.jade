@@ -5,26 +5,11 @@ block content
     .content
         .tabmenu
             .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Overview
-            .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Player
-            .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Patch
-            .tab_top_active#tab_top_4(onclick="javascript:openTab(4);") Daily
-            .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Overall
             .style(style='clear: both;')
             .tab_box#tab_box_1
-                h3(onclick="queryEloDistribution();") Player Elo Distribution
-                h3(onclick="showWinPickrates();") Legion Pick/Winrates
-            .tab_box#tab_box_2
-                h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-            .tab_box#tab_box_3
-                h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-            .tab_box#tab_box_4
-                h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-            .tab_box#tab_box_5
-                h2 Not implemented yet, visit https://test.ltdstats.com/stats for statistics
-    script(src="/js/Chart.js")
-    script(src="/js/stats.js")
-    script(src="/js/tabmenu.js")
-    script document.body.onload = function() {openTab(1)};
+                h4(onclick="queryEloDistribution();") Player Elo Distribution
+                h4(onclick="showWinPickrates();") Legion Pick/Winrates
+                h4(onclick="showWorkersPerWave();") Workers per Wave
     #mitte(style="display:none;")
         img(class="gif", src="/img/loading.gif")
         .p Requesting API, please wait...
@@ -40,7 +25,10 @@ block content
                 option(value="tslt") < Date
             input#value_textField.inline(type="text", style="display:none;")
             input#value_dateField.inline(type="date", style="display:none;")
-            button#startButton.inline(onclick="loadWinrates();") Go
+            button#startButton.inline(onclick="readSelection();") Go
         #chartContainer
             canvas#myChart
-        
+    script(src="/js/Chart.js")
+    script(src="/js/stats.js")
+    script(src="/js/tabmenu.js")
+    script openTab(1);
