@@ -742,7 +742,7 @@ app.get('/api/stats/legions/avgvalueEnd', (req, res) => {
 app.get('/api/stats/player/avgvalueEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
-    var value2 = requ.query.value2;
+    var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },

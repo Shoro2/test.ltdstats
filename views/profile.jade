@@ -224,9 +224,16 @@ block content
             .profile
                 .wrap.active(heigth="100%")
                         .content
+                            h3 General:
                             h4(onclick="showWinPickrates();") Legion Pick/Winrates
+                            h3 Per wave:
                             h4(onclick="showWorkersPerWave();") Workers per Wave
                             h4(onclick="showNetworthPerWave();") Networth per Wave
+                            h3 On Game End:
+                            h4(onclick="showValueOnEnd();") Value on game end
+                            h4(onclick="showWorkersOnEnd();") Workers on game end
+                            h4(onclick="showIncomeOnEnd();") Income on game end
+                            h4(onclick="showLeaksOnEnd();") Leaks on game end
                         #playerstats(style="display:none;")
                                 #close(title="Close", onclick="hideStatsPage();") X
                                 #help(title="Help", onclick="showHelpPage();") ?
