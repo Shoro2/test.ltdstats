@@ -692,6 +692,30 @@ app.get('/api/stats/legions/winrate', (req, res) => {
         });
 });
 
+app.get('/api/stats/player/winrate', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = req.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionPickWinRate(' + type + ':"' + value + '", playerid :"'+value2+'") { legion, gamesPicked, gamesWon } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
 app.get('/api/stats/legions/avgvalueEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
@@ -715,6 +739,31 @@ app.get('/api/stats/legions/avgvalueEnd', (req, res) => {
         });
 });
 
+app.get('/api/stats/player/avgvalueEnd', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = requ.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageValueByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, value } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+
 app.get('/api/stats/legions/avgvincEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
@@ -722,6 +771,30 @@ app.get('/api/stats/legions/avgvincEnd', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
         body: JSON.stringify({ query: '{ stats{ legionAverageIncomeByEndingWave(' + type + ':"' + value + '") { legion, wave, income } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/stats/player/avgvincEnd', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = requ.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageIncomeByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, income } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -762,6 +835,30 @@ app.get('/api/stats/legions/avgworkersEnd', (req, res) => {
         });
 });
 
+app.get('/api/stats/player/avgworkersEnd', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = requ.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageWorkersByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, workers } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
 app.get('/api/stats/legions/avgwleaksEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
@@ -769,6 +866,30 @@ app.get('/api/stats/legions/avgwleaksEnd', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
         body: JSON.stringify({ query: '{ stats{ legionAverageLeaksByEndingWave(' + type + ':"' + value + '") { legion, wave, leakValue } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
+app.get('/api/stats/player/avgwleaksEnd', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = req.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageLeaksByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, leakValue } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -808,6 +929,30 @@ app.get('/api/stats/legions/avgworkersWave', (req, res) => {
         });
 });
 
+app.get('/api/stats/player/avgworkersWave', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = req.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageWorkersPerWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, workers } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
 app.get('/api/stats/legions/avgnetworthsWave', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
@@ -831,6 +976,29 @@ app.get('/api/stats/legions/avgnetworthsWave', (req, res) => {
         });
 });
 
+app.get('/api/stats/player/avgnetworthsWave', (req, res) => {
+    var type = req.query.type;
+    var value = req.query.value;
+    var value2 = req.query.value2;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ stats{ legionAverageNetWorthPerWave(' + type + ':"' + value + '", playerid :"' + value2 +'") { legion, wave, networth } } }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

@@ -1,4 +1,12 @@
 //show container
+
+/* To add stats:
+ * 1. edit function createBarGraph() -> parse data + update chart
+ * 2. create function showX()
+ * 3. edit readSelection()
+ * */
+
+
 function showStatsPage() {
     document.getElementById("stats").style.display = "inherit";
 }
@@ -65,6 +73,7 @@ function createBarGraph(data) {
     hideLoad();
     var graphColor = ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'];
     var legions = ["Element", "Forsaken", "Grove", "Mastermind", "Mech"];
+    // parse data
     switch (abfrage) {
         case "workersperwave":
             data = data.stats.legionAverageWorkersPerWave;
@@ -98,12 +107,11 @@ function createBarGraph(data) {
                         break;
                 }
             }
-            var meinText = "Workers per Wave";
+            var meinText = "Average Workercount per Wave";
             break;
         case "winrates":
             var totalgames = 0;
             data = data.stats.legionPickWinRate;
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 totalgames += data[i].gamesPicked;
             }
@@ -135,10 +143,148 @@ function createBarGraph(data) {
             }
             console.log(totalgames);
             var meinText = "Pick- & Winrates per Legion in % (Total Games: " + totalgames + ")";
+            break;
+        case "networthperwave":
+            data = data.stats.legionAverageNetWorthPerWave;
+            var networthperwave = [];
+            for (var i = 0; i < 5; i++) {
+                networthperwave[i] = new Array(21);
+            }
+            for (var i = 0; i < data.length; i++) {
+                switch (data[i].legion) {
+                    case "Element":
+                        networthperwave[0][data[i].wave - 1] = data[i].networth;
+                        break;
+                    case "Forsaken":
+                        networthperwave[1][data[i].wave - 1] = data[i].networth;
+                        break;
+                    case "Grove":
+                        networthperwave[2][data[i].wave - 1] = data[i].networth;
+                        break;
+                    case "Mastermind":
+                        networthperwave[3][data[i].wave - 1] = data[i].networth;
+                        break;
+                    case "Mech":
+                        networthperwave[4][data[i].wave - 1] = data[i].networth;
+                        break;
+                }
+            }
+            var meinText = "Average Networth per Wave";
+            break;
+        case "valueonend":
+            data = data.stats.legionAverageValueByEndingWave;
+            var valueonend = [];
+            for (var i = 0; i < 5; i++) {
+                valueonend[i] = new Array(21);
+            }
+            for (var i = 0; i < data.length; i++) {
+                switch (data[i].legion) {
+                    case "Element":
+                        valueonend[0][data[i].wave - 1] = data[i].value;
+                        break;
+                    case "Forsaken":
+                        valueonend[1][data[i].wave - 1] = data[i].value;
+                        break;
+                    case "Grove":
+                        valueonend[2][data[i].wave - 1] = data[i].value;
+                        break;
+                    case "Mastermind":
+                        valueonend[3][data[i].wave - 1] = data[i].value;
+                        break;
+                    case "Mech":
+                        valueonend[4][data[i].wave - 1] = data[i].value;
+                        break;
+                }
+            }
+            var meinText = "Average Value on game end";
+            break;
+        case "incomeonend":
+            data = data.stats.legionAverageIncomeByEndingWave;
+            var incomeonend = [];
+            for (var i = 0; i < 5; i++) {
+                incomeonend[i] = new Array(21);
+            }
+            for (var i = 0; i < data.length; i++) {
+                switch (data[i].legion) {
+                    case "Element":
+                        incomeonend[0][data[i].wave - 1] = data[i].income;
+                        break;
+                    case "Forsaken":
+                        incomeonend[1][data[i].wave - 1] = data[i].income;
+                        break;
+                    case "Grove":
+                        incomeonend[2][data[i].wave - 1] = data[i].income;
+                        break;
+                    case "Mastermind":
+                        incomeonend[3][data[i].wave - 1] = data[i].income;
+                        break;
+                    case "Mech":
+                        incomeonend[4][data[i].wave - 1] = data[i].income;
+                        break;
+                }
+            }
+            var meinText = "Average Income on game end";
+            break;
+        case "workersonend":
+            data = data.stats.legionAverageWorkersByEndingWave;
+            var workersonend = [];
+            for (var i = 0; i < 5; i++) {
+                workersonend[i] = new Array(21);
+            }
+            for (var i = 0; i < data.length; i++) {
+                switch (data[i].legion) {
+                    case "Element":
+                        workersonend[0][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Forsaken":
+                        workersonend[1][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Grove":
+                        workersonend[2][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Mastermind":
+                        workersonend[3][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Mech":
+                        workersonend[4][data[i].wave - 1] = data[i].workers;
+                        break;
+                }
+            }
+            console.log(workersonend);
+            var meinText = "Average Workers on game end";
+            break;
+        case "leaksonend":
+            data = data.stats.legionAverageLeaksByEndingWave;
+            var leaksonend = [];
+            for (var i = 0; i < 5; i++) {
+                leaksonend[i] = new Array(21);
+            }
+            for (var i = 0; i < data.length; i++) {
+                switch (data[i].legion) {
+                    case "Element":
+                        leaksonend[0][data[i].wave - 1] = data[i].leaks;
+                        break;
+                    case "Forsaken":
+                        leaksonend[1][data[i].wave - 1] = data[i].leaks;
+                        break;
+                    case "Grove":
+                        leaksonend[2][data[i].wave - 1] = data[i].leaks;
+                        break;
+                    case "Mastermind":
+                        leaksonend[3][data[i].wave - 1] = data[i].leaks;
+                        break;
+                    case "Mech":
+                        leaksonend[4][data[i].wave - 1] = data[i].leaks;
+                        break;
+                }
+            }
+            var meinText = "Average Leaks on game end";
+            break;
     }
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
     ctx.width = 1000;
+    //create chart
     myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -165,7 +311,7 @@ function createBarGraph(data) {
                 }
         }
     });
-    
+    //update chart
     switch (abfrage) {
         case "winrates":
             //calc winrates
@@ -187,7 +333,6 @@ function createBarGraph(data) {
                 myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart.update();
             }
-            console.log(myChart.data.datasets);
             for (var i = 0; i < 21; i++) {
                 myChart.data.datasets[0].data.push(workersperwave[0][i]);
                 myChart.update();
@@ -201,85 +346,105 @@ function createBarGraph(data) {
                 myChart.update();
             }
             break;
+        case "networthperwave":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            for (var i = 0; i < 5; i++) {
+                myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+                myChart.update();
+            }
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(networthperwave[0][i]);
+                myChart.update();
+                myChart.data.datasets[1].data.push(networthperwave[1][i]);
+                myChart.update();
+                myChart.data.datasets[2].data.push(networthperwave[2][i]);
+                myChart.update();
+                myChart.data.datasets[3].data.push(networthperwave[3][i]);
+                myChart.update();
+                myChart.data.datasets[4].data.push(networthperwave[4][i]);
+                myChart.update();
+            }
+            break;
+        case "valueonend":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            for (var i = 0; i < 5; i++) {
+                myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+                myChart.update();
+            }
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(valueonend[0][i]);
+                myChart.update();
+                myChart.data.datasets[1].data.push(valueonend[1][i]);
+                myChart.update();
+                myChart.data.datasets[2].data.push(valueonend[2][i]);
+                myChart.update();
+                myChart.data.datasets[3].data.push(valueonend[3][i]);
+                myChart.update();
+                myChart.data.datasets[4].data.push(valueonend[4][i]);
+                myChart.update();
+            }
+            break;
+        case "incomeonend":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            for (var i = 0; i < 5; i++) {
+                myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+                myChart.update();
+            }
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(incomeonend[0][i]);
+                myChart.update();
+                myChart.data.datasets[1].data.push(incomeonend[1][i]);
+                myChart.update();
+                myChart.data.datasets[2].data.push(incomeonend[2][i]);
+                myChart.update();
+                myChart.data.datasets[3].data.push(incomeonend[3][i]);
+                myChart.update();
+                myChart.data.datasets[4].data.push(incomeonend[4][i]);
+                myChart.update();
+            }
+            break;
+        case "workersonend":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            for (var i = 0; i < 5; i++) {
+                myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+                myChart.update();
+            }
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(workersonend[0][i]);
+                myChart.update();
+                myChart.data.datasets[1].data.push(workersonend[1][i]);
+                myChart.update();
+                myChart.data.datasets[2].data.push(workersonend[2][i]);
+                myChart.update();
+                myChart.data.datasets[3].data.push(workersonend[3][i]);
+                myChart.update();
+                myChart.data.datasets[4].data.push(workersonend[4][i]);
+                myChart.update();
+            }
+            break;
+        case "leaksonend":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            for (var i = 0; i < 5; i++) {
+                myChart.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+                myChart.update();
+            }
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(leaksonend[0][i]);
+                myChart.update();
+                myChart.data.datasets[1].data.push(leaksonend[1][i]);
+                myChart.update();
+                myChart.data.datasets[2].data.push(leaksonend[2][i]);
+                myChart.update();
+                myChart.data.datasets[3].data.push(leaksonend[3][i]);
+                myChart.update();
+                myChart.data.datasets[4].data.push(leaksonend[4][i]);
+                myChart.update();
+            }
+            break;
     }
 
 }
-/*
-function createBarGraph(data) {
-    hideLoad();
-    var ctx = document.getElementById("myChart");
-    console.log(data);
-    ctx.height = 500;
-    ctx.width = 1000;
-    myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: null,
-                data: [],
-                backgroundColor: [
-                    'rgba(255, 255, 0, 0.8)',
-                    'rgba(255, 255, 0, 0.8)',
-                    'rgba(255, 0, 0, 0.8)',
-                    'rgba(255, 0, 0, 0.8)',
-                    'rgba(0, 255, 0, 0.8)',
-                    'rgba(0, 255, 0, 0.8)',
-                    'rgba(0, 0, 0, 0.8)',
-                    'rgba(0, 0, 0, 0.8)',
-                    'rgba(0, 0, 255, 0.8)',
-                    'rgba(0, 0, 255, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)', 'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)',
-                    'rgba(0,0,0,1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            legend:
-                {
-                    display: false
-                },
-            title:
-                {
-                    display: true,
-                    text: "Pick- and Winrates per Legion in %"
-                }
-        }
-    });
-    //calc winrates
-    data = data.stats.legionPickWinRate;
-    var totalgames = 0;
-    var pickchance = [];
-    var winchance = [];
-    for (var i = 0; i < 5; i++) {
-        totalgames += data[i].gamesPicked;
-    }
-    for (var i = 0; i < 5; i++) {
-        pickchance[i] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
-        winchance[i] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
-        addData(myChart, "Pick " + data[i].legion, pickchance[i]);
-        addData(myChart, "Win " + data[i].legion, winchance[i]);
-    }
-}
-*/
+
 function addData(chart, label, data) {
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => {
@@ -318,7 +483,7 @@ function saveSelection() {
             break;
     }
 }
-
+//onclicks
 function showWinPickrates() {
     showInputs();
     showStatsPage();
@@ -329,6 +494,32 @@ function showWorkersPerWave() {
     showStatsPage();
     abfrage = "workersperwave";
 }
+function showNetworthPerWave() {
+    showInputs();
+    showStatsPage();
+    abfrage = "networthperwave";
+}
+function showValueOnEnd() {
+    showInputs();
+    showStatsPage();
+    abfrage = "valueonend";
+}
+function showIncomeOnEnd() {
+    showInputs();
+    showStatsPage();
+    abfrage = "incomeonend";
+}
+function showWorkersOnEnd() {
+    showInputs();
+    showStatsPage();
+    abfrage = "workersonend";
+}
+function showLeaksOnEnd() {
+    showInputs();
+    showStatsPage();
+    abfrage = "leaksonend";
+}
+// call query
 function readSelection() {
     try {
         myChart.destroy();
@@ -342,6 +533,21 @@ function readSelection() {
             break;
         case "workersperwave":
             queryAvgWorkersWave(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "networthperwave":
+            queryAvgNetworthWave(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "valueonend":
+            queryAvgValueEnd(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "incomeonend":
+            queryAvgIncEnd(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "workersonend":
+            queryAvgWorkersEnd(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "leaksonend":
+            queryAvgLeaksEnd(document.getElementById("typeselector").value, meineValue);
             break;
         default:
             console.log("Fehler readselection: " + abfrage);
@@ -421,11 +627,12 @@ function getAvgValueEnd(callback, type, value) {
 }
 function queryAvgValueEnd(type, value) {
     getAvgValueEnd(function (result) {
+        createBarGraph(result);
         return result;
     }, type, value);
 }
 
-function getAvgvIncEnd(callback, type, value) {
+function getAvgIncEnd(callback, type, value) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -437,12 +644,13 @@ function getAvgvIncEnd(callback, type, value) {
 }
 function queryAvgIncEnd(type, value) {
     getAvgIncEnd(function (result) {
+        createBarGraph(result);
         return result;
     }, type, value);
 }
 
 
-function getAvgvWorkersEnd(callback, type, value) {
+function getAvgWorkersEnd(callback, type, value) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -454,11 +662,12 @@ function getAvgvWorkersEnd(callback, type, value) {
 }
 function queryAvgWorkersEnd(type, value) {
     getAvgWorkersEnd(function (result) {
+        createBarGraph(result);
         return result;
     }, type, value);
 }
 
-function getAvgLeakssEnd(callback, type, value) {
+function getAvgLeaksEnd(callback, type, value) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -470,6 +679,7 @@ function getAvgLeakssEnd(callback, type, value) {
 }
 function queryAvgLeaksEnd(type, value) {
     getAvgLeaksEnd(function (result) {
+        createBarGraph(result);
         return result;
     }, type, value);
 }
@@ -502,6 +712,7 @@ function getAvgNetworthWave(callback, type, value) {
 }
 function queryAvgNetworthWave(type, value) {
     getAvgNetworthWave(function (result) {
+        createBarGraph(result);
         return result;
     }, type, value);
 }

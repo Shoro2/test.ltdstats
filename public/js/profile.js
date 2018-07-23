@@ -171,6 +171,7 @@ function loadCollection() {
 
 function loadStats(player) {
     player_name = player.playername;
+    player_id = player.id;
     //player_icon = player.AvatarUrl;
     //general
     player_totalgames = player.statistics.gamesPlayed;
@@ -407,6 +408,7 @@ function toggleFilters() {
 function drawPlayerBuilds(gameX) {
     //player = JSON.parse(jsonResponse);
     player_name = player.playername;
+    player_id = player.id;
     //console.log("drawPlayerBuilds player name: " + player_name);
     game = gameX;
     //console.log("drawPlayerBuilds game:");
