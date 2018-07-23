@@ -1005,21 +1005,30 @@ function drawGameDetails(player_position) {
         }
         getPlayerBuild(player_position);
         //Summary:
-        document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + games[selectedGame].game_id + "'>" + games[selectedGame].game_id + "</a>";
+
+        var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
+        document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
         document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
         document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
         document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
         document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
     }
-
-    
-   
-    
-
-
-
 }
-
+function dec2hex(str) { // .toString(16) only works up to 2^53
+    var dec = str.toString().split(''), sum = [], hex = [], i, s
+    while (dec.length) {
+        s = 1 * dec.shift()
+        for (i = 0; s || i < sum.length; i++) {
+            s += (sum[i] || 0) * 10
+            sum[i] = s % 16
+            s = (s - sum[i]) / 16
+        }
+    }
+    while (sum.length) {
+        hex.push(sum.pop().toString(16))
+    }
+    return hex.join('')
+}
 function getPlayerValue(player, level) {
     var networth = gameEvent[player].netWorthPerWave[level - 1];
     //value = networth - workerval - gold für wave - gold für mercs auf wave
