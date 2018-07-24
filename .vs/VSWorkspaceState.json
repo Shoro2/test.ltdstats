@@ -5,8 +5,9 @@
     "\\public\\css",
     "\\public\\js",
     "\\public\\js\\quill",
-    "\\views"
+    "\\views",
+    "\\views\\help"
   ],
-  "SelectedNode": "\\views\\layout.jade",
+  "SelectedNode": "\\public\\css\\tabmenu.css",
   "PreviewInSolutionExplorer": false
 }
