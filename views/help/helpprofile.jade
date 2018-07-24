@@ -8,7 +8,7 @@ block content
             h4 Content:
             ul
                 li 
-                    a(href="#stats") Stats
+                    a(href="#overview") Overview
                 li 
                     a(href="#elograph") Elograph
                 li 
@@ -17,7 +17,9 @@ block content
                     a(href="#collection") Collection
                 li 
                     a(href="#builds") Builds
-            h2#stats Stats
+                li 
+                    a(href="#stats") Stats
+            h2#overwview Overview
             br
             img.helpimg#img_1(src="/img/helpprofile1.png", onclick="expandImg(1);") 
             br 
@@ -61,7 +63,8 @@ block content
             br 
             | 7: Mercs received
             h2#collection Collection
-            img.helpimg#img_4(src="/img/helpprofile4.png", onclick="expandImg(4);") 
+            br
+            | Not provided by the API yet
             h2#builds Builds
             img.helpimg#img_5(src="/img/helpprofile5.png", onclick="expandImg(5);") 
             br 
@@ -72,4 +75,12 @@ block content
             | 3: Chance to leak/send on this wave
             br 
             | 4: Average build/mercs sent on this wave (percentages above 100% mean that in average there is more than 1 unit)
+            h2#stats Stats
+            img.helpimg#img_6(src="/img/helpprofile6.png", onclick="expandImg(6);") 
+            br 
+            | 1: General statistics that are not filtered
+            br 
+            | 2: Wave specific statistics. Available filters: Patch, > < Date
+            br 
+            | 3: Game End specific statistics. Available filters: Patch, > < Date
     script(src="/js/help.js") 

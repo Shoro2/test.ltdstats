@@ -260,19 +260,19 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.elementPlayed;
                 cell[7].innerHTML = players[i].statistics.elementWins;
-                cell[8].innerHTML = winchance_element + "%";
+                cell[8].innerHTML = winchance_element;
                 cell[9].innerHTML = players[i].statistics.grovePlayed;
                 cell[10].innerHTML = players[i].statistics.groveWins;
-                cell[11].innerHTML = winchance_grove + "%";
+                cell[11].innerHTML = winchance_grove;
                 cell[12].textContent = players[i].statistics.forsakenPlayed;
                 cell[13].innerHTML = players[i].statistics.forsakenWins;
-                cell[14].innerHTML = winchance_forsaken + "%";
+                cell[14].innerHTML = winchance_forsaken;
                 cell[15].innerHTML = players[i].statistics.mechPlayed;
                 cell[16].innerHTML = players[i].statistics.mechWins;;
-                cell[17].innerHTML = winchance_mech + "%";
+                cell[17].innerHTML = winchance_mech;
                 cell[18].innerHTML = players[i].statistics.mastermindPlayed;
                 cell[19].innerHTML = players[i].statistics.mastermindWins;;
-                cell[20].innerHTML = winchance_mastermind + "%";
+                cell[20].innerHTML = winchance_mastermind;
 
             }
             break;
@@ -305,7 +305,7 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.elementPlayed;
                 cell[7].innerHTML = players[i].statistics.elementWins;
-                cell[8].innerHTML = winchance_element + "%";
+                cell[8].innerHTML = winchance_element;
                 cell[9].innerHTML = players[i].statistics.elementElo;
                 cell[10].innerHTML = players[i].statistics.elementPeakElo;
                 cell[11].innerHTML = players[i].statistics.elementPeakEloThisSeason;
@@ -340,7 +340,7 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.grovePlayed;
                 cell[7].innerHTML = players[i].statistics.groveWins;
-                cell[8].innerHTML = winchance_grove + "%";
+                cell[8].innerHTML = winchance_grove;
                 cell[9].innerHTML = players[i].statistics.groveElo;
                 cell[10].innerHTML = players[i].statistics.grovePeakElo;
                 cell[11].innerHTML = players[i].statistics.grovePeakEloThisSeason;
@@ -375,7 +375,7 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.forsakenPlayed;
                 cell[7].innerHTML = players[i].statistics.forsakenWins;
-                cell[8].innerHTML = winchance_forsaken + "%";
+                cell[8].innerHTML = winchance_forsaken;
                 cell[9].innerHTML = players[i].statistics.forsakenElo;
                 cell[10].innerHTML = players[i].statistics.forsakenPeakElo;
                 cell[11].innerHTML = players[i].statistics.forsakenPeakEloThisSeason;
@@ -410,7 +410,7 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.mechPlayed;
                 cell[7].innerHTML = players[i].statistics.mechWins;
-                cell[8].innerHTML = winchance_mech + "%";
+                cell[8].innerHTML = winchance_mech;
                 cell[9].innerHTML = players[i].statistics.mechElo;
                 cell[10].innerHTML = players[i].statistics.mechPeakElo;
                 cell[11].innerHTML = players[i].statistics.mechPeakEloThisSeason;
@@ -445,7 +445,7 @@ function parsePlayers(myPlayers, type) {
                 cell[5].innerHTML = totalgames - totalwins;
                 cell[6].innerHTML = players[i].statistics.mastermindPlayed;
                 cell[7].innerHTML = players[i].statistics.mastermindWins;
-                cell[8].innerHTML = winchance_mastermind + "%";
+                cell[8].innerHTML = winchance_mastermind;
                 cell[9].innerHTML = players[i].statistics.mastermindElo;
                 cell[10].innerHTML = players[i].statistics.mastermindPeakElo;
                 cell[11].innerHTML = players[i].statistics.mastermindPeakEloThisSeason;

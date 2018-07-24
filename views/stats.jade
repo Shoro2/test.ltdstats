@@ -7,17 +7,29 @@ block content
             .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Overview
             .style(style='clear: both;')
             .tab_box#tab_box_1
-                h3 General:
-                h4(onclick="queryEloDistribution();") Player Elo Distribution
-                h4(onclick="showWinPickrates();") Legion Pick/Winrates
-                h3 Per wave:
-                h4(onclick="showWorkersPerWave();") Workers per Wave
-                h4(onclick="showNetworthPerWave();") Networth per Wave
-                h3 On Game End:
-                h4(onclick="showValueOnEnd();") Value on game end
-                h4(onclick="showWorkersOnEnd();") Workers on game end
-                h4(onclick="showIncomeOnEnd();") Income on game end
-                h4(onclick="showLeaksOnEnd();") Leaks on game end
+                #general_stats.divider
+                    h3 General:
+                    h4(onclick="queryEloDistribution();") Player Elo Distribution
+                        img.small_icon(src="/img/icons/world-map.png")
+                    h4(onclick="showWinPickrates();") Legion Pick/Winrates
+                        img.small_icon(src="/img/icons/diagram.png")
+                br
+                #wavestats.divider
+                    h3 Per wave:
+                    h4(onclick="showWorkersPerWave();") Workers per Wave
+                        img.small_icon(src="/img/icons/Worker.png")
+                    h4(onclick="showNetworthPerWave();") Networth per Wave
+                        img.small_icon(src="/img/icons/GoldCoin.png")
+                #gamestats.divider
+                    h3 On Game End:
+                    h4(onclick="showValueOnEnd();") Value on game end
+                        img.small_icon(src="/img/icons/value.png")
+                    h4(onclick="showWorkersOnEnd();") Workers on game end
+                        img.small_icon(src="/img/icons/Worker.png")
+                    h4(onclick="showIncomeOnEnd();") Income on game end
+                        img.small_icon(src="/img/icons/Income.png")
+                    h4(onclick="showLeaksOnEnd();") Leaks on game end
+                        img.small_icon(src="/img/icons/LeakedUnit.png")
     #mitte(style="display:none;")
         img(class="gif", src="/img/loading.gif")
         .p Requesting API, please wait...
@@ -35,6 +47,8 @@ block content
             button#startButton.inline(onclick="readSelection();") Go
         #chartContainer
             canvas#myChart
+    #helpwindow(onclick="hideHelpPage();", style="display:none;")
+        #helpcontent
     script(src="/js/Chart.js")
     script(src="/js/stats.js")
     script(src="/js/tabmenu.js")

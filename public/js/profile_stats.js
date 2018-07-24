@@ -18,7 +18,36 @@ function showInputs() {
 function hideInputs() {
     document.getElementById("inputs").style.display = "none";
 }
-
+function showHelpPage() {
+    document.getElementById("helpwindow").style.display = "";
+    var content_ele = document.getElementById("helpcontent");
+    switch (abfrage) {
+        case "winrates":
+            content_ele.innerHTML = "<h3>Winchance</h3><p>Shows the Pick- and Winrates for all Legions.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br>If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "workersperwave":
+            content_ele.innerHTML = "<h3>Workers per Wave</h3><p>Shows the average worker count per wave and legion.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "networthperwave":
+            content_ele.innerHTML = "<h3>Networth per Wave</h3><p>Shows the average networth per wave and legion.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "valueonend":
+            content_ele.innerHTML = "<h3>Value on Game End/h3><p>Shows the average value per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "incomeonend":
+            content_ele.innerHTML = "<h3>Income on Game End/h3><p>Shows the average income per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "workersonend":
+            content_ele.innerHTML = "<h3>Workers on Game End/h3><p>Shows the average worker count per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "leaksonend":
+            content_ele.innerHTML = "<h3>Leaks on Game End/h3><p>Shows the average leaks per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+    }
+}
+function hideHelpPage() {
+    document.getElementById("helpwindow").style.display = "none";
+}
 
 function createLineGraph(data) {
     var ctx = document.getElementById("myChart2");

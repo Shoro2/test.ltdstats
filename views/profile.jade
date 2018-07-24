@@ -224,16 +224,26 @@ block content
             .profile
                 .wrap.active(heigth="100%")
                         .content
-                            h3 General:
-                            h4(onclick="showWinPickrates();") Legion Pick/Winrates
-                            h3 Per wave:
-                            h4(onclick="showWorkersPerWave();") Workers per Wave
-                            h4(onclick="showNetworthPerWave();") Networth per Wave
-                            h3 On Game End:
-                            h4(onclick="showValueOnEnd();") Value on game end
-                            h4(onclick="showWorkersOnEnd();") Workers on game end
-                            h4(onclick="showIncomeOnEnd();") Income on game end
-                            h4(onclick="showLeaksOnEnd();") Leaks on game end
+                            #general_stats.divider
+                                h3 General:
+                                h4.statlink(onclick="showWinPickrates();") Legion Pick/Winrates
+                                    img.small_icon(src="/img/icons/diagram.png")
+                            #wave_stats.divider
+                                h3 Per wave:
+                                h4.statlink(onclick="showWorkersPerWave();") Workers per Wave
+                                    img.small_icon(src="/img/icons/Worker.png")
+                                h4.statlink(onclick="showNetworthPerWave();") Networth per Wave
+                                    img.small_icon(src="/img/icons/GoldCoin.png")
+                            #game_stats.divider
+                                h3 On Game End:
+                                h4.statlink(onclick="showValueOnEnd();") Value on game end
+                                    img.small_icon(src="/img/icons/value.png")
+                                h4.statlink(onclick="showWorkersOnEnd();") Workers on game end
+                                    img.small_icon(src="/img/icons/Worker.png")
+                                h4.statlink(onclick="showIncomeOnEnd();") Income on game end
+                                    img.small_icon(src="/img/icons/Income.png")
+                                h4.statlink(onclick="showLeaksOnEnd();") Leaks on game end
+                                    img.small_icon(src="/img/icons/LeakedUnit.png")
                         #playerstats(style="display:none;")
                                 #close(title="Close", onclick="hideStatsPage();") X
                                 #help(title="Help", onclick="showHelpPage();") ?
@@ -243,11 +253,13 @@ block content
                                         option(value="version") Patch
                                         option(value="tsgte") > Date
                                         option(value="tslt") < Date
-                                    input#value_textField.inline(type="text", style="display:none;")
+                                    input#value_textField.inline(type="text", style="display:none;", placeholder='v2.32')
                                     input#value_dateField.inline(type="date", style="display:none;")
                                     button#startButton.inline(onclick="readSelection();") Go
                                 #chart-container2
                                     canvas#myChart2
+                        #helpwindow(onclick="hideHelpPage();", style="display:none;")
+                            #helpcontent
     script(src="/js/jquery.js")
     script(src="/js/tabmenu.js")
     script(src="/js/profile.js")

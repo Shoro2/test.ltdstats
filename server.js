@@ -1000,5 +1000,26 @@ app.get('/api/stats/player/avgnetworthsWave', (req, res) => {
         });
 });
 
+app.get('/api/stats/playercount', (req, res) => {
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{filteredPlayers(offset:0){count}}' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

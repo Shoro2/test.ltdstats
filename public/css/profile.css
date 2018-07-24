@@ -467,3 +467,45 @@ body {
     width: 30%;
     margin-right: 3.33333%;
 }
+
+.statlink {
+    background-color: darkgray;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    max-width: 20%;
+    padding: 5px;
+    text-align: center;
+    float: left;
+    margin: 10px;
+    min-width: 290px;
+}
+
+.small_icon {
+    height: 30px;
+    width: 30px;
+    line-height: 5px;
+    margin-left: 5px;
+    border-radius: 10px;
+}
+
+#helpwindow {
+    z-index: 6000;
+    top: 10%;
+    bottom: 10%;
+    left: 20%;
+    right: 20%;
+    padding: 5%;
+    position: absolute;
+    background-color: white;
+    opacity: 1;
+    border: solid 1px black;
+    border-radius: 10px;
+}
+
+.divider {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+}

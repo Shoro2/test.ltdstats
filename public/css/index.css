@@ -17,11 +17,36 @@
 .indexbild
 {
     height:90%;
-    width:100%;
+    width:75%;
 }
 
 .profile{
     height:100%;
     margin-left:20%;
     margin-right:20%;
+}
+
+.contentbox{
+    width:100%;
+    height:100%;
+    overflow:auto;
+    padding:20px;
+}
+
+.news{
+    width:75%;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:darkgray;
+    color:white;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:30px;
+}
+
+.newsbox{
+    width:100%;
+    height:100%;
+    overflow:auto;
+    padding:20px;
 }

@@ -26,7 +26,39 @@ function showInputs() {
 function hideInputs() {
     document.getElementById("inputs").style.display = "none";
 }
-
+function showHelpPage() {
+    document.getElementById("helpwindow").style.display = "";
+    var content_ele = document.getElementById("helpcontent");
+    switch (abfrage) {
+        case "elodistribution":
+            content_ele.innerHTML = "<h3>Elo Distribution</h3><p>A Curve that shows the current Elo Distribution in percentages.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "winrates":
+            content_ele.innerHTML = "<h3>Winchance</h3><p>Shows the Pick- and Winrates for all Legions.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br>If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "workersperwave":
+            content_ele.innerHTML = "<h3>Workers per Wave</h3><p>Shows the average worker count per wave and legion.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "networthperwave":
+            content_ele.innerHTML = "<h3>Networth per Wave</h3><p>Shows the average networth per wave and legion.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "valueonend":
+            content_ele.innerHTML = "<h3>Value on Game End/h3><p>Shows the average value per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "incomeonend":
+            content_ele.innerHTML = "<h3>Income on Game End/h3><p>Shows the average income per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "workersonend":
+            content_ele.innerHTML = "<h3>Workers on Game End/h3><p>Shows the average worker count per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "leaksonend":
+            content_ele.innerHTML = "<h3>Leaks on Game End/h3><p>Shows the average leaks per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+    }
+}
+function hideHelpPage() {
+    document.getElementById("helpwindow").style.display = "none";
+}
 function createLineGraph(data) {
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
@@ -59,14 +91,55 @@ function createLineGraph(data) {
             title:
                 {
                     display: true,
-                    text: "Elo Distribution per Elo in %"
+                    text: "Elo Distribution in %"
                 }
         }
     });
     var eloDistribution = data.stats.eloDistribution;
-    eloDistribution.forEach(function (element) {
-        addData(myChart, element.percentile, element.elo);
-    });
+    var elos = [1600,1500,1400,1300,1250,1200,1150,1100,1050,1000,900,800];
+    var percentages = [0,0,0,0,0,0,0,0,0,0,0,0];
+    for (var i = 0; i < eloDistribution.length;i++) {
+        if (eloDistribution[i].elo >= elos[0]) {
+            percentages[0]++;
+        }
+        else if (eloDistribution[i].elo >= elos[1]) {
+            percentages[1]++;
+        }
+        else if (eloDistribution[i].elo >= elos[2]) {
+            percentages[2]++;
+        }
+        else if (eloDistribution[i].elo >= elos[3]) {
+            percentages[3]++;
+        }
+        else if (eloDistribution[i].elo >= elos[4]) {
+            percentages[4]++;
+        }
+        else if (eloDistribution[i].elo >= elos[5]) {
+            percentages[5]++;
+        }
+        else if (eloDistribution[i].elo >= elos[6]) {
+            percentages[6]++;
+        }
+        else if (eloDistribution[i].elo >= elos[7]) {
+            percentages[7]++;
+        }
+        else if (eloDistribution[i].elo >= elos[8]) {
+            percentages[8]++;
+        }
+        else if (eloDistribution[i].elo >= elos[9]) {
+            percentages[9]++;
+        }
+        else if (eloDistribution[i].elo >= elos[10]) {
+            percentages[10]++;
+        }
+        else if (eloDistribution[i].elo >= elos[11]) {
+            percentages[11]++;
+        }
+    }
+    for (var i = 0; i < elos.length; i++) {
+        if (percentages[i] == 0) percentages[i] = 0.1;
+        addData(myChart, elos[i], percentages[i]);
+    }
 }
 
 function createBarGraph(data) {
@@ -593,6 +666,7 @@ function getEloDistribution(callback) {
 function queryEloDistribution() {
     showLoad();
     getEloDistribution(function (result) {
+        abfrage = "elodistribution";
         showEloDistribution(result);
         return result;
     });
@@ -626,6 +700,7 @@ function getAvgValueEnd(callback, type, value) {
     xhttp.send();
 }
 function queryAvgValueEnd(type, value) {
+    showLoad();
     getAvgValueEnd(function (result) {
         createBarGraph(result);
         return result;
@@ -643,6 +718,7 @@ function getAvgIncEnd(callback, type, value) {
     xhttp.send();
 }
 function queryAvgIncEnd(type, value) {
+    showLoad();
     getAvgIncEnd(function (result) {
         createBarGraph(result);
         return result;
@@ -661,6 +737,7 @@ function getAvgWorkersEnd(callback, type, value) {
     xhttp.send();
 }
 function queryAvgWorkersEnd(type, value) {
+    showLoad();
     getAvgWorkersEnd(function (result) {
         createBarGraph(result);
         return result;
@@ -678,6 +755,7 @@ function getAvgLeaksEnd(callback, type, value) {
     xhttp.send();
 }
 function queryAvgLeaksEnd(type, value) {
+    showLoad();
     getAvgLeaksEnd(function (result) {
         createBarGraph(result);
         return result;
@@ -694,6 +772,7 @@ function getAvgWorkersWave(callback, type, value) {
     xhttp.send();
 }
 function queryAvgWorkersWave(type, value) {
+    showLoad();
     getAvgWorkersWave(function (result) {
         createBarGraph(result);
         return result;
@@ -711,8 +790,28 @@ function getAvgNetworthWave(callback, type, value) {
     xhttp.send();
 }
 function queryAvgNetworthWave(type, value) {
+    showLoad();
     getAvgNetworthWave(function (result) {
         createBarGraph(result);
         return result;
     }, type, value);
+}
+
+function getPlayerCount(callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/playercount', true);
+    xhttp.send();
+}
+function queryPlayerCount() {
+    showLoad();
+    getPlayerCount(function (result) {
+        player_count = result.data.filteredPlayers.count;
+        queryEloDistribution();
+        return result;
+    });
 }
