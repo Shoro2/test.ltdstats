@@ -2,8 +2,6 @@ function checkContent() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("unit");
-    console.log("unit: " + playerurl);
-    console.log("value: " + document.getElementById("playername").value);
     if (playerurl != null) {
         document.getElementById("playername").value = playerurl;
     }
@@ -30,7 +28,7 @@ function getPlayer() {
 
 function scanUnits()
 {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -305,18 +303,14 @@ function scanUnits()
     });
 }
 
-
 function draw(myUnit)
 {
     var fighter = myUnit;
-    //console.log(fighter.name);
     wrapper = document.getElementsByClassName("wrap")[0];
     if (wrapper.classList.contains("active") == false) wrapper.classList.toggle("active");
     document.getElementById("unit_name").textContent = fighter.name;
-    console.log(fighter.legion[0]);
     switch (fighter.legion[0]) {
         case "element_legion_id":
-            console.log("ele");
             fighter.legion = "Element";
             break;
         case "forsaken_legion_id":
@@ -337,6 +331,9 @@ function draw(myUnit)
         case "creature_legion_id":
             fighter.legion = "Creature";
             break;
+        case "aspect_legion_id":
+            fighter.legion = "Other";
+            break;
         default:
             break;
     }
@@ -346,12 +343,15 @@ function draw(myUnit)
     document.getElementById("unit_attackspeed").innerHTML = "<img class='statpic' src='/img/icons/AttackSpeedDecal.png> Attackspeed: " + fighter.attackspeed;
     document.getElementById("unit_attacktype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.attacktype + ".png'> Attack Type: " + fighter.attacktype;
     document.getElementById("unit_defensetype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.armortype + ".png'> Armor Type: " + fighter.armortype;
-    document.getElementById("unit_dps").innerHTML = "<img class='statpic' src='/img/icons/Damage.png> DPS: " + fighter.dps;
-    document.getElementById("unit_range").innerHTML = "<img class='statpic' src='/img/icons/Range.png> Range: " + fighter.range;
+
+    document.getElementById("unit_dps").innerHTML = "<img class='statpic' src='/img/icons/Damage.png'> DPS: " + fighter.dps;
+    document.getElementById("unit_range").innerHTML = "<img class='statpic' src='/img/icons/Range.png'> Range: " + fighter.range;
     //fighter
+    console.log(fighter.legion);
     if (fighter.legion != "Mercenary" && fighter.legion != "Creature") {
-        document.getElementById("unit_goldcost").innerHTML = "<img class='statpic' src='/img/icons/GoldCoin.png> Goldcost: " + fighter.goldcost;
-        document.getElementById("unit_totalcost").innerHTML = "<img class='statpic' src='/img/icons/value.png> Total Value: " + fighter.totalvalue;
+        console.log("gold");
+        document.getElementById("unit_goldcost").innerHTML = "<img class='statpic' src='/img/icons/Gold_Currency.png'> Goldcost: " + fighter.goldcost;
+        document.getElementById("unit_totalcost").innerHTML = "<img class='statpic' src='/img/icons/value.png'> Total Value: " + fighter.totalvalue;
     }
     else {
         //mercs&creatures
@@ -359,8 +359,7 @@ function draw(myUnit)
     document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
     if (fighter.abilities.length > 0) {
         for (var i = 0; i < fighter.abilities.length; i++) {
-            console.log(fighter.abilities[i].name);
-            document.getElementById("unit_abilities").innerHTML += "<li><img class='statpic' src='/img/icons/" + fighter.abilities[i].name.replace(" ", "") + ".png'> " + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li> <br>";
+            document.getElementById("unit_abilities").innerHTML += "<li><img class='statpic' src='/img/icons/" + fighter.abilities[i].name.replace(/ /g, "") + ".png'> " + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li> <br>";
         }
     }
     else {
@@ -378,7 +377,6 @@ function draw(myUnit)
                 }
             }
             document.getElementById("unit_upgrades").innerHTML += "<li><a href='/units?unit=" + upgrade_name + "'><img class='statpic' src='/img/icons/" + upgrade_name.replace(" ","") + ".png'> " + upgrade_name + " </a><br>";
-            console.log(fighter.upgradesto);
         }
     }
     else {
@@ -405,7 +403,6 @@ function getFighter(callback, unitname)
 }
 
 function loadFighter(unitname) {
-    console.log(unitname);
     getFighter(function (result) {
         //console.log(result);
         document.getElementById("playername").value = result.unit.name;
