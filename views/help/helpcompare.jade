@@ -1,3 +1,19 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            h1 Compare
+            img.helpimg#img_1(src="/img/helpcompare.png", onclick="expandImg(1);") 
+            br
+            | 1: Players names you want to Compare
+            br
+            | 2: Stats compared
+            br
+            | 3: Player 1 stats
+            br
+            | 4: Player 2 stats
+            br
+            | 5: Difference in stats for player 1 compared to player 2
+    script(src="/js/help.js") 

@@ -1,3 +1,28 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            h1 Replay
+            img.helpimg#img_1(src="/img/helpreplay1.png", onclick="expandImg(1);") 
+            br
+            | 1: Browse a pro (top 10) game. A popup will open where you can select the prefered race and player for the replay.
+            br
+            | 2: Insert a gameid (hex or dec) to load the replay.
+            br
+            | 3: Game wave
+            br
+            | 4: King HP at wave end
+            br
+            | 5: Player's Legion/Name/Networth/Worker for the selected wave.
+            br
+            | 6: Player's build
+            br
+            | 7: Player's sends
+            br
+            | 8: Player's leaks
+            p
+            h4 Control
+            | You can use the mousewheel or +/- buttons to change the displayed wave.
+    script(src="/js/help.js") 

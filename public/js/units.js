@@ -23,7 +23,7 @@ function getPlayer() {
         window.location.href = window.location.href + "?unit=" + document.getElementById("playername").value;
     }
     else {
-        window.location.href = "https://test.ltdstats.com/units" + "?unit=" + document.getElementById("playername").value;
+        window.location.href = "/units" + "?unit=" + document.getElementById("playername").value;
     }
 
 }
@@ -313,25 +313,79 @@ function draw(myUnit)
     wrapper = document.getElementsByClassName("wrap")[0];
     if (wrapper.classList.contains("active") == false) wrapper.classList.toggle("active");
     document.getElementById("unit_name").textContent = fighter.name;
-    document.getElementById("unit_legion").textContent = fighter.legion;
-    document.getElementById("unit_icon").src = "/img/i" + fighter.iconpath.substring(1);
-    document.getElementById("unit_health").textContent = "Health: "+fighter.health;
-    document.getElementById("unit_attackspeed").textContent = "Attackspeed: "+fighter.attackspeed;
-    document.getElementById("unit_attacktype").textContent = "Attack Type: "+fighter.attacktype;
-    document.getElementById("unit_defensetype").textContent = "Armor Type: "+fighter.armortype;
-    document.getElementById("unit_dps").textContent = "DPS: "+fighter.dps;
-    document.getElementById("unit_range").textContent = "Range: "+fighter.range;
-    document.getElementById("unit_goldcost").textContent = "Goldcost: "+fighter.goldcost;
-    document.getElementById("unit_totalcost").textContent = "Total Value: " + fighter.totalvalue;
-    document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
-    for (var i = 0; i < fighter.abilities.length; i++) {
-        document.getElementById("unit_abilities").innerHTML += "<li>" + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li>";
+    console.log(fighter.legion[0]);
+    switch (fighter.legion[0]) {
+        case "element_legion_id":
+            console.log("ele");
+            fighter.legion = "Element";
+            break;
+        case "forsaken_legion_id":
+            fighter.legion = "Forsaken";
+            break;
+        case "grove_legion_id":
+            fighter.legion = "Grove";
+            break;
+        case "mech_legion_id":
+            fighter.legion = "Mech";
+            break;
+        case "atlantean_legion_id":
+            fighter.legion = "Atlantean";
+            break;
+        case "nether_legion_id":
+            fighter.legion = "Mercenary";
+            break;
+        case "creature_legion_id":
+            fighter.legion = "Creature";
+            break;
+        default:
+            break;
     }
-    document.getElementById("unit_abilities").innerHTML += "<br>";
-    document.getElementById("unit_upgrades").textContent = "Upgrades to: " + fighter.upgradesto;
-    document.getElementById("unit_description").textContent = "Description: " + fighter.description;
-    document.getElementById("unit_tooltip").textContent = "Tooltip: " + fighter.tooltip;
-
+    document.getElementById("unit_legion").innerHTML = "Legion: " + fighter.legion;
+    document.getElementById("unit_icon").src = "/img/i" + fighter.iconpath.substring(1);
+    document.getElementById("unit_health").innerHTML = "<img class='statpic' src='/img/icons/Health.png'> Health: " + fighter.health;
+    document.getElementById("unit_attackspeed").innerHTML = "<img class='statpic' src='/img/icons/AttackSpeedDecal.png> Attackspeed: " + fighter.attackspeed;
+    document.getElementById("unit_attacktype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.attacktype + ".png'> Attack Type: " + fighter.attacktype;
+    document.getElementById("unit_defensetype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.armortype + ".png'> Armor Type: " + fighter.armortype;
+    document.getElementById("unit_dps").innerHTML = "<img class='statpic' src='/img/icons/Damage.png> DPS: " + fighter.dps;
+    document.getElementById("unit_range").innerHTML = "<img class='statpic' src='/img/icons/Range.png> Range: " + fighter.range;
+    //fighter
+    if (fighter.legion != "Mercenary" && fighter.legion != "Creature") {
+        document.getElementById("unit_goldcost").innerHTML = "<img class='statpic' src='/img/icons/GoldCoin.png> Goldcost: " + fighter.goldcost;
+        document.getElementById("unit_totalcost").innerHTML = "<img class='statpic' src='/img/icons/value.png> Total Value: " + fighter.totalvalue;
+    }
+    else {
+        //mercs&creatures
+    }
+    document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
+    if (fighter.abilities.length > 0) {
+        for (var i = 0; i < fighter.abilities.length; i++) {
+            console.log(fighter.abilities[i].name);
+            document.getElementById("unit_abilities").innerHTML += "<li><img class='statpic' src='/img/icons/" + fighter.abilities[i].name.replace(" ", "") + ".png'> " + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li> <br>";
+        }
+    }
+    else {
+        document.getElementById("unit_abilities").innerHTML += "<li> None </li>";
+    }
+    document.getElementById("unit_abilities").innerHTML += "</ul>";
+    document.getElementById("unit_upgrades").innerHTML = "Upgrades to: <ul>"
+    if (fighter.upgradesto.length > 0) {
+        for (var i = 0; i < fighter.upgradesto.length; i++) {
+            var upgrade_name = fighter.upgradesto[i].substring(0, fighter.upgradesto[i].indexOf("_unit")).replace("_", " ");
+            upgrade_name = upgrade_name.charAt(0).toUpperCase() + upgrade_name.substring(1);
+            for (var e = 0; e < upgrade_name.length; e++) {
+                if (upgrade_name.charAt(e) == " ") {
+                    upgrade_name = upgrade_name.substring(0, e) +" "+ upgrade_name.charAt(e + 1).toUpperCase() + upgrade_name.substring(e+2);
+                }
+            }
+            document.getElementById("unit_upgrades").innerHTML += "<li><a href='/units?unit=" + upgrade_name + "'><img class='statpic' src='/img/icons/" + upgrade_name.replace(" ","") + ".png'> " + upgrade_name + " </a><br>";
+            console.log(fighter.upgradesto);
+        }
+    }
+    else {
+        document.getElementById("unit_upgrades").innerHTML += "<li><i> No upgrade</i> </li>";
+    }
+    document.getElementById("unit_upgrades").innerHTML += "</ul><br>";
+    document.getElementById("unit_description").innerHTML = "Description:<br> " + fighter.description;
 }
 
 

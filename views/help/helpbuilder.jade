@@ -1,3 +1,28 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            h1 Compare
+            img.helpimg#img_1(src="/img/helpbuilder.png", onclick="expandImg(1);")
+            br
+            | 1: Select a Legion/reset build/get a permalink/load a replay from file
+            br
+            | 2: Sums up your unit stats
+            br
+            | 3: Sums up your build info
+            br
+            | 4: Select the wave
+            br
+            | 5: Fighter/Merc pattern
+            br
+            | 6: Wave/Buildorder tab; Build order gives you a summary of all waves
+            br
+            | 7: Your build, every fighter is saved in the link
+            p
+            b Credit goes to 
+                a(href="https://github.com/attrib", target="blank") Attrib
+            h4 Controls
+            | Copy & paste the builder link to load/share a build
+    script(src="/js/help.js") 
