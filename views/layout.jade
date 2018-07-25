@@ -15,11 +15,11 @@ html
         header
         .container-fluid
             nav.navbar.navbar-expand-xl.navbar-dark.fixed-top.bg-dark
-                a(href="/")
-                    img(src="/img/favicon.ico", width="16px", height="16px")
-                a.navbar-brand(href='/') LTDStats.com
                 button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
+                a.navbar-brand(href='/')
+                    img(src="/img/favicon.ico", width="16px", height="16px", style="margin-right:5%;margin-bottom:4%;") 
+                    | LTDStats.com
                 div#navbarsExampleDefault.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
                         if(title=="Home")

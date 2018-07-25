@@ -1,6 +1,6 @@
 .tabmenu {
     position: relative;
-    margin: 20px;
+    margin: 1%;
     background-color: lightgray;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -11,7 +11,7 @@
 .tab_top_active
 {
 	float: left;
-    padding: 5px;
+    padding: 0.2%;
     font-weight: bold;
     
 }
@@ -19,7 +19,7 @@
 .tab_top_passive
 {
 	float: left;
-	padding: 5px;
+	padding: 0.2%;
 }
 
 .tab_top_passive:hover
@@ -41,13 +41,12 @@
 {
 	float: left;
 	width: 100%;
-    padding:50px;
+    padding:2%;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     height: 85%;
     border: 1px solid lightgray;
     border-top: 0px solid black;
     box-shadow: 2px 3px 16px silver;
-    min-width:500px;
     overflow-y:auto;
 }

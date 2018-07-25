@@ -5,7 +5,6 @@
 
 .badge{
     float: right;
-    
 }
 
 #img_rank {
@@ -24,10 +23,10 @@
 
 
 #avgbuild {
-    height: 200px;
+    height: 100%;
     width: 100%;
     overflow: auto;
-    padding: 20px;
+    padding: 2%;
     border: solid 1px lightgray;
     border-radius: 5px;
     
@@ -47,20 +46,20 @@
 
 #lable_build {
     float: left;
-    height: 200px;
+    height: 40%;
     width: 49%;
 }
 #lable_send {
     float:right;
-    height: 200px;
+    height: 40%;
     width: 49%;
 }
 
 #avgsend {
-    height: 200px;
+    height: 100%;
     width: 100%;
     overflow: auto;
-    padding: 20px;
+    padding: 2%;
     border: solid 1px lightgray;
     border-radius: 5px;
     
@@ -98,25 +97,12 @@
     width:25%;
 }
 
-.meinbalken_small
-{
-    padding: 10px;
-    opacity: 0.8;
-    margin: 10px;
-    border-radius: 10px;
-    color:white;
-    float: left;
-    width: 180px;
-    min-height:170px;
-}
 
 #buildtable
 {
     border: 1px solid black;
     margin: auto;
-
-    width:435px;
-    
+    width:45%;
 }
 
 #buildtable th
@@ -148,7 +134,7 @@
 }
 
 #myChart {
-    padding: 50px;
+    padding: 2%;
 }
 
 #chart-container {
@@ -160,10 +146,10 @@
 #divumtable
 {
     border-radius: 10px;
-    top:100px;
-    bottom:100px;
-    left: 475px;
-    right: 475px;
+    top:15%;
+    bottom:10%;
+    left: 25%;
+    right: 25%;
     position: absolute;
     text-align: center;
     background-color: black;
@@ -171,9 +157,7 @@
     color: white;
     align-items: center;
     justify-content: center;
-
     box-shadow: 2px 3px 16px black;
-
 }
 
 .kleinerCanvas
@@ -217,7 +201,7 @@
     margin-right:5%;
     margin-top:2%;
     margin-bottom:2%;
-    
+    min-width:150px;
 }
 
 #general{
@@ -228,31 +212,31 @@
 
 #mastermind{
     background-color:#bfbfbf;
-    padding:10px;
+    padding:1%;
     border-radius:10px;
 }
 
 #element {
     background-color: #fff79d;
-    padding: 10px;
+    padding: 1%;
     border-radius: 10px;
 }
 
 #grove {
     background-color: #a8fc9c;
-    padding: 10px;
+    padding: 1%;
     border-radius: 10px;
 }
 
 #forsaken {
     background-color: #8a4747;
-    padding: 10px;
+    padding: 1%;
     border-radius: 10px;
 }
 
 #mech {
     background-color: #90c5ff;
-    padding: 10px;
+    padding: 1%;
     border-radius: 10px;
 }
 
@@ -265,7 +249,7 @@ body {
 
   .wrap {
     overflow: hidden;
-    padding: 30px;
+    padding: 1%;
     display: block;
     border-radius: 4px;
     transform: translateY(20px);
@@ -328,7 +312,6 @@ body {
     display: block;
     position: fixed;
     left: 50%;
-
     margin-left: -25px;
     transition: transform 0.25s;
   }
@@ -344,7 +327,6 @@ body {
     width: 100%;
     background-color: lightgray;
     border-radius: 5px;
-    padding:25px;
 }
 
 #gamedetails_table tr:hover
@@ -356,11 +338,9 @@ body {
 {
     height:20%;
     overflow: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
+    padding: 1%;
     width:30%;
     float: left;
 
@@ -380,12 +360,10 @@ body {
 
 .gamedetails_schrift 
 {
-    height:10%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
+    padding: 1%;
     width:30%;
     float: left;
 }
@@ -507,5 +485,5 @@ body {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    height: 200px;
+    height: 33%;
 }
