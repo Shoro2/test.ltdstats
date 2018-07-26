@@ -943,15 +943,30 @@ function listGames() {
         var option = document.createElement("option");
         //console.log(games[i]);
         var timestamp = games[i].ts.substring(0, games[i].ts.indexOf(".")).replace("T", " ");
-        var legion = ""
+        var legion = "";
+        var currelo = 0;
+        var pastelo = 0;
         try {
-            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0]
-            legion = ", Legion: " + gameDetail['legion']
+            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+            legion = ", Legion: " + gameDetail['legion'];
+            if (i > 0) {
+                var gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                currelo = gameDetail['overallElo'];
+            }
+            else currelo = parseInt(player.statistics.overallElo);
+            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+            pastelo = gameDetail['overallElo'];
+            var elochange = 0;
+            elochange = currelo - pastelo;
+
         } catch (err) {
             // Catch games that error out with no game detail.
-            console.log(err)
+            console.log(err);
         }
-        option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion;
+        
+       
+        if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: +" + elochange;
+        else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: " + elochange;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
         else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"

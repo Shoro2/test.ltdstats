@@ -115,3 +115,20 @@ h4{
     margin-right:auto;
     height:200px;
 }
+
+#myTable{
+    width:100%;
+}
+
+#tablecontainer{
+    width:100%;
+    height:90%;
+    overflow:auto;
+    margin-top:3%;
+}
+
+#slider_container{
+    margin-left:auto;
+    margin-right:auto;
+    width:10%;
+}

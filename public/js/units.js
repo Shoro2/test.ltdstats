@@ -359,7 +359,7 @@ function draw(myUnit)
     document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
     if (fighter.abilities.length > 0) {
         for (var i = 0; i < fighter.abilities.length; i++) {
-            document.getElementById("unit_abilities").innerHTML += "<li><img class='statpic' src='/img/icons/" + fighter.abilities[i].name.replace(/ /g, "") + ".png'> " + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li> <br>";
+            if (fighter.abilities[i]!=null) document.getElementById("unit_abilities").innerHTML += "<li><img class='statpic' src='/img/icons/" + fighter.abilities[i].name.replace(/ /g, "") + ".png'> " + fighter.abilities[i].name + ": <i>" + fighter.abilities[i].tooltip + "</i> </li> <br>";
         }
     }
     else {

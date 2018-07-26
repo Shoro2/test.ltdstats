@@ -13,6 +13,8 @@ block content
                         img.small_icon(src="/img/icons/world-map.png")
                     h4(onclick="showWinPickrates();") Legion Pick/Winrates
                         img.small_icon(src="/img/icons/diagram.png")
+                    h4(onclick="showUnitStatSheet();") Figther Stats Overview
+                        img.small_icon(src="/img/icons/Royalty.png")
                 br
                 #wavestats.divider
                     h3 Per wave:
@@ -45,6 +47,24 @@ block content
             input#value_textField.inline(type="text", style="display:none;", placeholder='v2.32')
             input#value_dateField.inline(type="date", style="display:none;")
             button#startButton.inline(onclick="readSelection();") Go
+        #slider_container(style="display:none")
+            input#waveselector(type="text" oninput="createTable(myData);", onchange="createTable(myData);", placeholder='Select a Wave')
+        #tablecontainer(style="display:none")
+            table.stattable#myTable
+                thead
+                    tr.header
+                        th.table_header#th0(onclick="sortTable(0)") Name
+                        th.table_header#th1(onclick="sortTable(1)") Legion
+                        th.table_header#th2(onclick="sortTable(2)") Gold
+                        th.table_header#th3(onclick="sortTable(3)") Value
+                        th.table_header#th4(onclick="sortTable(4)") Health
+                        th.table_header#th5(onclick="sortTable(5)") DPS
+                        th.table_header#th6(onclick="sortTable(6)") Attack
+                        th.table_header#th7(onclick="sortTable(7)") Armor
+                        th.table_header#th8(onclick="sortTable(8)") Abilities
+                        th.table_header#th9(onclick="sortTable(9)") DPS/Gold
+                        th.table_header#th10(onclick="sortTable(10)") Health/Gold
+                tbody
         #chartContainer
             canvas#myChart
     #helpwindow(onclick="hideHelpPage();", style="display:none;")
@@ -52,4 +72,5 @@ block content
     script(src="/js/Chart.js")
     script(src="/js/stats.js")
     script(src="/js/tabmenu.js")
+    script(src="/js/stats_sort.js")
     script openTab(1);

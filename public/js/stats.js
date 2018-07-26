@@ -4,6 +4,7 @@
  * 1. edit function createBarGraph() -> parse data + update chart
  * 2. create function showX()
  * 3. edit readSelection()
+ * 4. add help
  * */
 
 
@@ -58,6 +59,14 @@ function showHelpPage() {
 }
 function hideHelpPage() {
     document.getElementById("helpwindow").style.display = "none";
+}
+function hideWave() {
+    document.getElementById("slider_container").style.display = "none";
+    document.getElementById("tablecontainer").style.display = "none";
+}
+function showWave() {
+    document.getElementById("slider_container").style.display = "";
+    document.getElementById("tablecontainer").style.display = "";
 }
 function createLineGraph(data) {
     var ctx = document.getElementById("myChart");
@@ -141,7 +150,6 @@ function createLineGraph(data) {
         addData(myChart, elos[i], percentages[i]);
     }
 }
-
 function createBarGraph(data) {
     hideLoad();
     var graphColor = ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'];
@@ -540,10 +548,6 @@ function saveSelection() {
             document.getElementById("value_textField").style.display = "";
             document.getElementById("value_dateField").style.display = "none";
             break;
-        case "playerid":
-            document.getElementById("value_textField").style.display = "";
-            document.getElementById("value_dateField").style.display = "none";
-            break;
         case "tsgte":
             document.getElementById("value_dateField").style.display = "";
             document.getElementById("value_textField").style.display = "none";
@@ -558,39 +562,60 @@ function saveSelection() {
 }
 //onclicks
 function showWinPickrates() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "winrates";
 }
 function showWorkersPerWave() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "workersperwave";
 }
 function showNetworthPerWave() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "networthperwave";
 }
 function showValueOnEnd() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "valueonend";
 }
 function showIncomeOnEnd() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "incomeonend";
 }
 function showWorkersOnEnd() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "workersonend";
 }
 function showLeaksOnEnd() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
     showInputs();
     showStatsPage();
     abfrage = "leaksonend";
+}
+function showUnitStatSheet() {
+    showStatsPage();
+    showWave();
+    hideInputs();
+    abfrage = "unitstatssheet";
+    queryAllFighters();
 }
 // call query
 function readSelection() {
@@ -630,7 +655,262 @@ function readSelection() {
 }
 
 
+function createTable(data) {
+    var myTable = document.getElementById("myTable");
+    var allFighters = [];
+    for (var i = 0; i < data.length; i++) {
+        for (var e = 0; e < data[i].length; e++) {
+            allFighters.push(data[i][e]);
+        }
+    }
+    for (var i = 0; i < allFighters.length; i++) {
+        try { myTable.deleteRow(i + 1); }
+        catch{ }
+        var row = myTable.insertRow(i + 1);
+        var cell = [];
+        var wave = document.getElementById("waveselector").value;
+        var wave_att = "";
+        var wave_def = "";
+        var goldcost = 0;
+        var dps = 0.00;
+        var value = 0.00;
+        var health = 0.00;
+        if (allFighters[i].totalvalue != null) value = allFighters[i].totalvalue;
+        else value = 0;
+        if (allFighters[i].dps != null) dps = allFighters[i].dps;
+        else dps = 0;
+        if (allFighters[i].health != null) health = allFighters[i].health;
+        else health = 0;
+        if (allFighters[i].goldcost != null) goldcost = allFighters[i].goldcost;
+        else goldcost = 0;
+        switch (wave) {
+            case "1":
+                wave_att = "Pierce";
+                wave_def = "Fortified";
+                break;
+            case "2":
+                wave_att = "Impact";
+                wave_def = "Arcane";
+                break;
+            case "3":
+                wave_att = "Magic";
+                wave_def = "Natural";
+                break;
+            case "4":
+                wave_att = "Impact";
+                wave_def = "Swift";
+                break;
+            case "5":
+                wave_att = "Pierce";
+                wave_def = "Natural";
+                break;
+            case "6":
+                wave_att = "Impact";
+                wave_def = "Fortified";
+                break;
+            case "7":
+                wave_att = "Magic";
+                wave_def = "Arcane";
+                break;
+            case "8":
+                wave_att = "Magic";
+                wave_def = "Swift";
+                break;
+            case "9":
+                wave_att = "Pierce";
+                wave_def = "Fortified";
+                break;
+            case "10":
+                wave_att = "Impact";
+                wave_def = "Arcane";
+                break;
+            case "11":
+                wave_att = "Pierce";
+                wave_def = "Natural";
+                break;
+            case "12":
+                wave_att = "Pierce";
+                wave_def = "Swift";
+                break;
+            case "13":
+                wave_att = "Impact";
+                wave_def = "Fortified";
+                break;
+            case "14":
+                wave_att = "Magic";
+                wave_def = "Arcane";
+                break;
+            case "15":
+                wave_att = "Magic";
+                wave_def = "Natural";
+                break;
+            case "16":
+                wave_att = "Impact";
+                wave_def = "Swift";
+                break;
+            case "17":
+                wave_att = "Pierce";
+                wave_def = "Arcane";
+                break;
+            case "18":
+                wave_att = "Magic";
+                wave_def = "Natural";
+                break;
+            case "19":
+                wave_att = "Pierce";
+                wave_def = "Swift";
+                break;
+            case "20":
+                wave_att = "Magic";
+                wave_def = "Fortified";
+                break;
+            case "21":
+                wave_att = "Pure";
+                wave_def = "Immaterial";
+                break;
+            default:
+                break;
+        }
+        // scale dps to wave
+        switch (allFighters[i].attacktype) {
+            case "Pierce":
+                if (wave_def == "Arcane") {
+                    dps = dps * 1.15;
+                }
+                else if (wave_def == "Swift") {
+                    dps = dps * 1.2;
+                }
+                else if (wave_def == "Natural") {
+                    dps = dps * 0.85;
+                }
+                else if (wave_def == "Fortified") {
+                    dps = dps * 0.8;
+                }
+                break;
+            case "Impact":
+                if (wave_def == "Arcane") {
+                    dps = dps * 1.15;
+                }
+                else if (wave_def == "Swift") {
+                    dps = dps * 0.8;
+                }
+                else if (wave_def == "Natural") {
+                    dps = dps * 0.9;
+                }
+                else if (wave_def == "Fortified") {
+                    dps = dps * 1.15;
+                }
+                break;
+            case "Magic":
+                if (wave_def == "Arcane") {
+                    dps = dps * 0.7;
+                }
+                else if (wave_def == "Swift") {
+                    dps = dps;
+                }
+                else if (wave_def == "Natural") {
+                    dps = dps * 1.25;
+                }
+                else if (wave_def == "Fortified") {
+                    dps = dps * 1.05;
+                }
+                break;
+            case "Pure":
+                break;
+        }
+        switch (allFighters[i].armortype) {
+            case "Fortified":
+                if (wave_att == "Pierce") {
+                    health = health * 1.2;
+                }
+                else if (wave_att == "Impact") {
+                    health = health * 0.85;
+                }
+                else if (wave_att == "Magic") {
+                    health = health * 0.95;
+                }
+                break;
+            case "Swift":
+                if (wave_att == "Pierce") {
+                    health = health * 0.8;
+                }
+                else if (wave_att == "Impact") {
+                    health = health * 1.2;
+                }
+                break;
+            case "Natural":
+                if (wave_att == "Pierce") {
+                    health = health * 1.15;
+                }
+                else if (wave_att == "Impact") {
+                    health = health * 1.1;
+                }
+                else if (wave_att == "Magic") {
+                    health = health * 0.75;
+                }
+                break;
+            case "Arcane":
+                if (wave_att == "Pierce") {
+                    health = health * 0.85;
+                }
+                else if (wave_att == "Impact") {
+                    health = health * 0.85;
+                }
+                else if (wave_att == "Magic") {
+                    health = health * 1.3;
+                }
+                break;
+        }
+        var dpspergold = (dps / value).toFixed(2);
+        var healthpergold = (health / value).toFixed(2);
+        var legion = "";
+        console.log(allFighters[i].legion);
+        switch (allFighters[i].legion[0]) {
+            case "element_legion_id":
+                legion = "Element";
+                break;
+            case "grove_legion_id":
+                legion = "Grove";
+                break;
+            case "mech_legion_id":
+                legion = "Mech";
+                break;
+            case "forsaken_legion_id":
+                legion = "Forsaken";
+                break;
+            case "atlantean_legion_id":
+                legion = "Atlantean";
+                break;
 
+
+        }
+        cell[0] = row.insertCell(0);
+        cell[0].innerHTML = allFighters[i].name;
+        cell[1] = row.insertCell(1);
+        cell[1].innerHTML = legion;
+        cell[2] = row.insertCell(2);
+        cell[2].innerHTML = goldcost;
+        cell[3] = row.insertCell(3);
+        cell[3].innerHTML = value.toFixed(2);
+        cell[4] = row.insertCell(4);
+        cell[4].innerHTML = health.toFixed(2);
+        cell[5] = row.insertCell(5);
+        cell[5].innerHTML = dps.toFixed(2);
+        cell[6] = row.insertCell(6);
+        cell[6].innerHTML = allFighters[i].attacktype;
+        cell[7] = row.insertCell(7);
+        cell[7].innerHTML = allFighters[i].armortype;
+        cell[8] = row.insertCell(8);
+        cell[8].innerHTML = allFighters[i].abilities.length;
+        cell[9] = row.insertCell(9);
+        cell[9].innerHTML = dpspergold;
+        cell[10] = row.insertCell(10);
+        cell[10].innerHTML = healthpergold;
+    }
+    sortTable(sortvalue);
+    document.getElementById("tablecontainer").style.display = "";
+
+}
 
 
 
@@ -667,6 +947,8 @@ function queryEloDistribution() {
     showLoad();
     getEloDistribution(function (result) {
         abfrage = "elodistribution";
+        hideWave();
+        document.getElementById("chartContainer").style.display = "";
         showEloDistribution(result);
         return result;
     });
@@ -812,6 +1094,28 @@ function queryPlayerCount() {
     getPlayerCount(function (result) {
         player_count = result.data.filteredPlayers.count;
         queryEloDistribution();
+        return result;
+    });
+}
+
+function getAllFighters(callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/api/stats/fighter', true);
+    xhttp.send();
+}
+function queryAllFighters() {
+    showLoad();
+    getAllFighters(function (result) {
+        myData = result;
+        sortvalue = 0;
+        document.getElementById("chartContainer").style.display = "none";
+        createTable(result);
+        hideLoad();
         return result;
     });
 }

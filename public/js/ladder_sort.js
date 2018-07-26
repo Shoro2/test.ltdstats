@@ -27,7 +27,7 @@ function sortTable(n) {
                 if(!isNaN(x.innerHTML))
                 {
                 
-                    if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) 
+                    if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) 
                     {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch= true;

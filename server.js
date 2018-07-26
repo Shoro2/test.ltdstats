@@ -669,6 +669,101 @@ app.get('/api/stats/elo', (req, res) => {
         });
 });
 
+app.get('/api/stats/fighter', (req, res) => {
+    var allFighters = [];
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{filteredUnits(legion:Mech){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            allFighters.push(data.data.filteredUnits.units);
+            fetch('https://api.legiontd2.com/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                body: JSON.stringify({ query: '{filteredUnits(legion:Grove){units{name, attacktype, armortype, dps, health,totalvalue,goldcost,legion,abilities{name}}}}' }),
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        var error = new Error(response.statusText)
+                        error.response = response
+                        throw error
+                    }
+                }).then(function (data) {
+                    //player object an frontend
+                    allFighters.push(data.data.filteredUnits.units);
+                    fetch('https://api.legiontd2.com/graphql', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                        body: JSON.stringify({ query: '{filteredUnits(legion:Forsaken){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
+                    })
+                        .then(function (response) {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            else {
+                                var error = new Error(response.statusText)
+                                error.response = response
+                                throw error
+                            }
+                        }).then(function (data) {
+                            //player object an frontend
+                            allFighters.push(data.data.filteredUnits.units);
+                            fetch('https://api.legiontd2.com/graphql', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                                body: JSON.stringify({ query: '{filteredUnits(legion:Element){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
+                            })
+                                .then(function (response) {
+                                    if (response.ok) {
+                                        return response.json();
+                                    }
+                                    else {
+                                        var error = new Error(response.statusText)
+                                        error.response = response
+                                        throw error
+                                    }
+                                }).then(function (data) {
+                                    //player object an frontend
+                                    allFighters.push(data.data.filteredUnits.units);
+                                    fetch('https://api.legiontd2.com/graphql', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                                        body: JSON.stringify({ query: '{filteredUnits(legion:Atlantean){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
+                                    })
+                                        .then(function (response) {
+                                            if (response.ok) {
+                                                return response.json();
+                                            }
+                                            else {
+                                                var error = new Error(response.statusText)
+                                                error.response = response
+                                                throw error
+                                            }
+                                        }).then(function (data) {
+                                            //player object an frontend
+                                            allFighters.push(data.data.filteredUnits.units);
+                                            res.json(allFighters);
+                                        });
+                                });
+                        });
+                });
+        });
+});
+
 app.get('/api/stats/legions/winrate', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
