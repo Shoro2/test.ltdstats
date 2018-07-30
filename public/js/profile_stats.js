@@ -621,7 +621,7 @@ function queryWinRates(type, value, playerid) {
     }, type, value, playerid);
 }
 
-function getAvgValueEnd(callback, type, value,playerid) {
+function getAvgValueEnd(callback, type, value, playerid) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -631,11 +631,11 @@ function getAvgValueEnd(callback, type, value,playerid) {
     xhttp.open("GET", '/api/stats/player/avgvalueEnd?type=' + type + '&value=' + value + '&value2=' + playerid, true);
     xhttp.send();
 }
-function queryAvgValueEnd(type, value,playerid) {
+function queryAvgValueEnd(type, value, playerid) {
     getAvgValueEnd(function (result) {
         createBarGraph(result);
         return result;
-    }, type, value,playerid);
+    }, type, value, playerid);
 }
 
 function getAvgIncEnd(callback, type, value, playerid) {
@@ -696,10 +696,10 @@ function getAvgWorkersWave(callback, type, value, playerid) {
             callback(JSON.parse(xhttp.response));
         }
     };
-    xhttp.open("GET", '/api/stats/player/avgworkersWave?type=' + type + '&value=' + value + '&value2='+playerid, true);
+    xhttp.open("GET", '/api/stats/player/avgworkersWave?type=' + type + '&value=' + value + '&value2=' + playerid, true);
     xhttp.send();
 }
-function queryAvgWorkersWave(type, value,playerid) {
+function queryAvgWorkersWave(type, value, playerid) {
     getAvgWorkersWave(function (result) {
         createBarGraph(result);
         return result;

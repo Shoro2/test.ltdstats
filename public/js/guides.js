@@ -1,23 +1,22 @@
 var selected_patch = "";
 var selected_type = "";
 
-function checkSelection()
-{
+function checkSelection() {
     selected_type = document.getElementById("race").value;
     selected_patch = document.getElementById("patch").value;
 }
 
 document.getElementById("patch").onchange = function () {
     filterGuides();
-}
+};
 
 document.getElementById("race").onchange = function () {
     filterGuides();
-}
+};
 
 document.body.onload = function () {
     queryGuides();
-}
+};
 
 function filterGuides() {
     checkSelection();
@@ -25,32 +24,32 @@ function filterGuides() {
     guides_filtered = [];
     var counter = 0;
     for (var i = 0; i < guides.length; i++) {
-        if (selected_patch == "All") {
-            if (selected_type == "All") {
+        if (selected_patch === "All") {
+            if (selected_type === "All") {
                 guides_filtered[counter] = guides[i];
                 counter++;
             }
-            else if (guides[i].type == selected_type) {
-                guides_filtered[counter] = guides[i];
-                counter++;
-            }
-        }
-        else if (selected_type == "All") {
-            if (selected_patch == "All") {
-                guides_filtered[counter] = guides[i];
-                counter++;
-            }
-            else if (guides[i].patch == selected_patch) {
+            else if (guides[i].type === selected_type) {
                 guides_filtered[counter] = guides[i];
                 counter++;
             }
         }
+        else if (selected_type === "All") {
+            if (selected_patch === "All") {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+            else if (guides[i].patch === selected_patch) {
+                guides_filtered[counter] = guides[i];
+                counter++;
+            }
+        }
 
 
 
 
 
-        if (guides[i].patch == selected_patch && guides[i].type == selected_type) {
+        if (guides[i].patch === selected_patch && guides[i].type === selected_type) {
             guides_filtered[counter] = guides[i];
             counter++;
         }
@@ -58,13 +57,12 @@ function filterGuides() {
     parseGuides();
 }
 
-function parseGuides()
-{
+function parseGuides() {
     clearGuides();
     tabelle = document.getElementById("guide_results");
     console.log(guides_filtered);
     var selector = document.getElementById("patch");
-    $("#table_of_items tr").remove(); 
+    $("#table_of_items tr").remove();
     for (var i = 0; i < guides_filtered.length; i++) {
         var row = tabelle.insertRow(i + 1);
         var cell = [6];
@@ -76,10 +74,10 @@ function parseGuides()
         cell[2].innerHTML = guides_filtered[i].title;
         cell[3].innerHTML = guides_filtered[i].type;
         cell[4].innerHTML = guides_filtered[i].patch;
-        cell[5].innerHTML = "<a href='" + guides_filtered[i].folder+"'>click</a>";
+        cell[5].innerHTML = "<a href='" + guides_filtered[i].folder + "'>click</a>";
     }
-        
-    
+
+
 }
 
 function clearGuides() {
@@ -93,7 +91,7 @@ function clearGuides() {
 function sqlGetGuides(callback) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var guides = JSON.parse(xhttp.response);
             callback(guides);
         }
@@ -106,24 +104,24 @@ function parsePatches() {
     patches = [];
     var counter = 0;
     for (var i = 0; i < guides.length; i++) {
-        if (patches[counter] != guides[i].patch) {
+        if (patches[counter] !== guides[i].patch) {
             patches[counter] = guides[i].patch;
             counter++;
         }
         else counter++;
     }
     selector = document.getElementById("patch");
-    for (var i = 0; i < patches.length; i++) {
+    for (i = 0; i < patches.length; i++) {
         var option = document.createElement("option");
-        option.text = "v"+patches[i];
+        option.text = "v" + patches[i];
         option.value = patches[i];
-        if(patches[i-1]!=patches[i])selector.add(option);
+        if (patches[i - 1] !== patches[i]) selector.add(option);
     }
 }
 
 function queryGuides() {
     sqlGetGuides(function (result) {
-        guides = result
+        guides = result;
         filterGuides();
         parsePatches();
         return guides;

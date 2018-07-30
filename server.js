@@ -519,7 +519,7 @@ app.get('/api/replay/getGame', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
-        body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '") { ts, leftkingpercenthp, rightkingpercenthp, gameDetails{ playername, wave, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave } } }' }),
+        body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '") { ts, leftkingpercenthp, rightkingpercenthp, gameDetails{ playername, wave, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave, incomePerWave, legionSpell } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -587,7 +587,7 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
-        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 500){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave } } } }' }),
+        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 500){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -603,7 +603,7 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
             res.json(data.data);
         });
 });
-
+/*
 app.get('/api/profile/playerGames', (req, res) => {
     var playername = req.query.playername;
     fetch('https://api.legiontd2.com/graphql', {
@@ -625,7 +625,7 @@ app.get('/api/profile/playerGames', (req, res) => {
             res.json(data.data);
         });
 });
-
+*/
 app.get('/api/profile/player', (req, res) => {
     var playername = req.query.playername;
     fetch('https://api.legiontd2.com/graphql', {

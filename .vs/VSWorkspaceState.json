@@ -6,8 +6,9 @@
     "\\public\\js",
     "\\public\\js\\quill",
     "\\views",
-    "\\views\\help"
+    "\\views\\help",
+    "\\views\\ladder"
   ],
-  "SelectedNode": "\\server.js",
+  "SelectedNode": "\\public\\js\\lihl.js",
   "PreviewInSolutionExplorer": false
 }

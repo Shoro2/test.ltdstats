@@ -11,7 +11,7 @@ function checkContent() {
         document.getElementById("mitte").style.display = "inherit";
         queryPlayer(playerurl);
         queryRank(playerurl);
-        queryPlayerGames(playerurl);
+        //queryPlayerGames(playerurl);
         queryPlayerOverallGames(playerurl);
     }
     else {
@@ -1048,70 +1048,8 @@ function getPlayerValue(player, level) {
 
 function getPlayerIncome(player, level)
 {
-    var income = 0;
-    for (var i = 0; i < level; i++) {
-        var merc = gameEvent[player].mercsSentPerWave[i];
-        merc.forEach(element => {
-            switch (element) {
-                case "Snail":
-                    income += 6;
-                    break;
-                case "Giant Snail":
-                    income += 6;
-                    break;
-                case "Fiend":
-                    income += 12;
-                    break;
-                case "Lizard":
-                    income += 12;
-                    break;
-                case "Brute":
-                    income += 15;
-                    break;
-                case "Dragon Turtle":
-                    income += 18;
-                    break;
-                case "Hermit":
-                    income += 20;
-                    break;
-                case "Dino":
-                    income += 24;
-                    break;
-                case "Safety Mole":
-                    income += 30;
-                    break;
-                case "Drake":
-                    income += 36;
-                    break;
-                case "Pack Leader":
-                    income += 40;
-                    break;
-                case "Mimic":
-                    income += 48;
-                    break;
-                case "Ghost Knight":
-                    income += 60;
-                    break;
-                case "Four Eyes":
-                    income += 60;
-                    break;
-                case "Centaur":
-                    income += 80;
-                    break;
-                case "Shaman":
-                    income += 80;
-                    break;
-                case "Kraken":
-                    income += 100;
-                    break;
-                default:
-                    console.log("merc not found: " + element);
-                    break;
-            }
-        });
-
-    }
-    if (gameEvent[player].legion == "Mastermind") income += 2;
+    console.log(gameEvent[player]);
+    var income = gameEvent[player].incomePerWave[level - 1];
     return income;
 }
 
@@ -1535,7 +1473,7 @@ document.onkeydown = function (event) {
     }
 
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
-        if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
+        if ((event.keyCode == 38 && event.target.id != "setGame") || (event.keyCode == 39 && event.target.id != "setGame") || event.keyCode == 107) {
             //console.log("up");
             if (document.getElementById("setWave").value < gameEvent[0].wave) {
                 if (event.target.id != "setWave") {
@@ -1556,7 +1494,7 @@ document.onkeydown = function (event) {
             }
 
         }
-        if ((event.keyCode == 37 && event.target.id != "setWave") || event.keyCode == 40 || event.keyCode == 109) {
+        if ((event.keyCode == 37 && event.target.id != "setGame") || (event.keyCode == 40 && event.target.id != "setGame") || event.keyCode == 109) {
             if (document.getElementById("setWave").value > 1) {
                 if (event.target.id != "setWave") {
                     document.getElementById("setWave").value -= 1;
@@ -1642,6 +1580,7 @@ function queryPlayer(playername) {
 // last x games by player
 // elograph
 // games
+/*
 function getPlayerGames(callback, playername) {
     var xhttp = new XMLHttpRequest();
 
@@ -1669,7 +1608,7 @@ function queryPlayerGames(playername) {
 
     }, playername);
 }
-
+*/
 //player overall games
 //builds
 function getPlayerOverallGames(callback, playername) {
@@ -1690,6 +1629,11 @@ function queryPlayerOverallGames(playername, gameamount) {
     getPlayerOverallGames(function (result) {
         playerGames = result.player.filteredGamesQuery.games;
         drawPlayerBuilds(playerGames);
+        games = result.player.filteredGamesQuery.games;
+        loadEloGraph(games);
+        drawGameDetails(0);
+        listGames();
+        document.getElementById("mitte").style.display = "none";
         return playerGames;
     }, playername);
 }

@@ -193,6 +193,7 @@ function createBarGraph(data) {
         case "winrates":
             var totalgames = 0;
             data = data.stats.legionPickWinRate;
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 totalgames += data[i].gamesPicked;
             }
@@ -966,7 +967,9 @@ function getWinRates(callback, type, value) {
 function queryWinRates(type, value) {
     showLoad();
     getWinRates(function (result) {
+        console.log(result);
         createBarGraph(result);
+        
         return result;
     }, type, value);
 }

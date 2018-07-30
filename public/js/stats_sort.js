@@ -13,7 +13,7 @@ function sortTable(n) {
         rows = table.getElementsByTagName("tr");
         /* Loop through all table rows (except the
         first, which contains table headers): */
-        for (i = 1; i < (rows.length - 1); i++) {
+        for (i = 1; i < rows.length - 1; i++) {
             // Start by saying there should be no switching:
             shouldSwitch = false;
             /* Get the two elements you want to compare,
@@ -22,7 +22,7 @@ function sortTable(n) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (dir == "asc") {
+            if (dir === "asc") {
 
                 if (!isNaN(x.innerHTML)) {
 
@@ -41,7 +41,7 @@ function sortTable(n) {
 
                 }
             }
-            else if (dir == "desc") {
+            else if (dir === "desc") {
                 if (!isNaN(x.innerHTML)) {
                     if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
                         // If so, mark as a switch and break the loop:
@@ -69,7 +69,7 @@ function sortTable(n) {
         } else {
             /* If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
+            if (switchcount === 0 && dir === "asc") {
                 dir = "desc";
                 switching = true;
             }
