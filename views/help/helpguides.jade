@@ -1,3 +1,14 @@
 extend ../layout
 block content
+    link(rel='stylesheet', href='/css/help.css')
     .content
+        #bigimg(display="")
+        .card
+            a(href="/help") back
+            h1 Guides
+            img.helpimg#img_1(src="/img/helpguides.png", onclick="expandImg(1);")
+            br
+            | 1: You can filter guides by patch and/or legion
+            br
+            | 2: Guide overview
+    script(src="/js/help.js") 

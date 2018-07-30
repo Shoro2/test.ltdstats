@@ -105,9 +105,9 @@ function createLineGraph(data) {
         }
     });
     var eloDistribution = data.stats.eloDistribution;
-    var elos = [1600,1500,1400,1300,1250,1200,1150,1100,1050,1000,900,800];
-    var percentages = [0,0,0,0,0,0,0,0,0,0,0,0];
-    for (var i = 0; i < eloDistribution.length;i++) {
+    var elos = [1600, 1500, 1400, 1300, 1250, 1200, 1150, 1100, 1050, 1000, 900, 800];
+    var percentages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (var i = 0; i < eloDistribution.length; i++) {
         if (eloDistribution[i].elo >= elos[0]) {
             percentages[0]++;
         }
@@ -397,7 +397,7 @@ function createBarGraph(data) {
     switch (abfrage) {
         case "winrates":
             //calc winrates
-            myChart.data.labels.push("Element", "Forsaken", "Grove", "Mastermind","Mech");
+            myChart.data.labels.push("Element", "Forsaken", "Grove", "Mastermind", "Mech");
             myChart.data.datasets.push({ label: "Pickrate", data: [], backgroundColor: ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
             myChart.update();
             myChart.data.datasets.push({ label: "Winrate", data: [], backgroundColor: ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
@@ -865,7 +865,6 @@ function createTable(data) {
         var dpspergold = (dps / value).toFixed(2);
         var healthpergold = (health / value).toFixed(2);
         var legion = "";
-        console.log(allFighters[i].legion);
         switch (allFighters[i].legion[0]) {
             case "element_legion_id":
                 legion = "Element";
@@ -969,7 +968,7 @@ function queryWinRates(type, value) {
     getWinRates(function (result) {
         console.log(result);
         createBarGraph(result);
-        
+
         return result;
     }, type, value);
 }

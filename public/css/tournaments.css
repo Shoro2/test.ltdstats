@@ -1,0 +1,19 @@
+.linkheader{
+    color:blue;
+    text-decoration:underline;
+    cursor:pointer;
+}
+.card {
+    position: absolute;
+    z-index: 2000;
+    left: 5%;
+    right: 5%;
+    width: 90%;
+    bottom: 5%;
+    top: 7%;
+    background-color: white;
+    border-radius: 10px;
+    opacity: 1;
+    padding: 10px;
+    border: 1px solid black;
+}

@@ -1,0 +1,24 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/tournaments.css')
+    .content
+        .card
+            #tour_list
+                h1 Tournaments
+                h4.linkheader(onclick="showTourInfo();") Masters Cup II
+            #tour_info(style="display:none")
+                div(data-type="countdown" data-id="678699" class="tickcounter" style="width: 650px; height: 162px; margin: 0 auto")
+                    a(href="//www.tickcounter.com/countdown/678699/legion-td-2-masters-cup-ii" title="Legion TD 2: Masters Cup II") Legion TD 2: Masters Cup II
+                    a(href="//www.tickcounter.com/" title="Countdown") Countdown
+                    script (function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
+                h4 Teams:
+                table#teamtable
+                    tr
+                        th Seed
+                        th Team Name
+                        th Name P1
+                        th Name P2
+                        th Peak Rating P1
+                        th Peak Rating P2
+                        th Team Average
+    script(src="/js/tournaments.js")
