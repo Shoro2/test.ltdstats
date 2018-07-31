@@ -17,3 +17,27 @@
     padding: 10px;
     border: 1px solid black;
 }
+.teamladder {
+    width: 100%;
+    border-spacing: 20px;
+}
+
+    .teamladder td {
+        text-align: right;
+        padding: 5px;
+    }
+
+    .teamladder th {
+        padding: 5px;
+        text-align: right;
+    }
+
+    .teamladder tr:hover {
+        background-color: lightgray;
+    }
+
+#tablewrapper{
+    width:100%;
+    overflow:auto;
+    height:75%;
+}

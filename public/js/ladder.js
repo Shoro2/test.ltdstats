@@ -172,51 +172,52 @@ function parsePlayers(myPlayers, type) {
                     cell[e] = row.insertCell(e);
                     cell[e].classList.add("td_" + e);
                 }
-                if (players[i].statistics.elementPlayed === null || players[i].statistics.elementWins === null) {
-                    if (players[i].statistics.elementPlayed === null) players[i].statistics.elementPlayed = 0;
+                if (players[i].statistics.elementPlayed == null || players[i].statistics.elementWins == null) {
+                    if (players[i].statistics.elementPlayed == null) players[i].statistics.elementPlayed = 0;
                     players[i].statistics.elementElo = 1000;
                     players[i].statistics.elementWins = 0;
                     players[i].statistics.elementLosses = 0;
                     players[i].statistics.elementPeakElo = 1000;
                     players[i].statistics.elementPeakEloThisSeason = 1000;
                 }
-                if (players[i].statistics.grovePlayed === null || players[i].statistics.groveWins === null) {
-                    if (players[i].statistics.grovePlayed === null) players[i].statistics.grovePlayed = 0;
+                if (players[i].statistics.grovePlayed == null || players[i].statistics.groveWins == null) {
+                    if (players[i].statistics.grovePlayed == null) players[i].statistics.grovePlayed = 0;
                     players[i].statistics.groveElo = 1000;
                     players[i].statistics.groveWins = 0;
                     players[i].statistics.groveLosses = 0;
                     players[i].statistics.grovePeakElo = 1000;
                     players[i].statistics.grovePeakEloThisSeason = 1000;
                 }
-                if (players[i].statistics.forsakenPlayed === null || players[i].statistics.forsakenWins === null) {
-                    if (players[i].statistics.forsakenPlayed === null) players[i].statistics.forsakenPlayed = 0;
+                if (players[i].statistics.forsakenPlayed == null || players[i].statistics.forsakenWins == null) {
+                    if (players[i].statistics.forsakenPlayed == null) players[i].statistics.forsakenPlayed = 0;
                     players[i].statistics.forsakenElo = 1000;
                     players[i].statistics.forsakenWins = 0;
                     players[i].statistics.forsakenLosses = 0;
                     players[i].statistics.forsakenPeakElo = 1000;
                     players[i].statistics.forsakenPeakEloThisSeason = 1000;
                 }
-                if (players[i].statistics.mechPlayed === null || players[i].statistics.mechWins === null) {
-                    if (players[i].statistics.mechPlayed === null) players[i].statistics.mechPlayed = 0;
+                if (players[i].statistics.mechPlayed == null || players[i].statistics.mechWins == null) {
+                    if (players[i].statistics.mechPlayed == null) players[i].statistics.mechPlayed = 0;
                     players[i].statistics.mechElo = 1000;
                     players[i].statistics.mechWins = 0;
                     players[i].statistics.mechLosses = 0;
                     players[i].statistics.mechPeakElo = 1000;
                     players[i].statistics.mechPeakEloThisSeason = 1000;
                 }
-                if (players[i].statistics.mastermindPlayed === null || players[i].statistics.mastermindWins === null) {
-                    if (players[i].statistics.mastermindPlayed === null) players[i].statistics.mastermindPlayed = 0;
+                if (players[i].statistics.mastermindPlayed == null || players[i].statistics.mastermindWins == null) {
+                    if (players[i].statistics.mastermindPlayed == null) players[i].statistics.mastermindPlayed = 0;
                     players[i].statistics.mastermindElo = 1000;
                     players[i].statistics.mastermindWins = 0;
                     players[i].statistics.mastermindLosses = 0;
                     players[i].statistics.mastermindPeakElo = 1000;
                     players[i].statistics.mastermindPeakEloThisSeason = 1000;
                 }
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
                 var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                console.log(totalgames);
                 var totalwins = players[i].statistics.wins;
                 var winchance_element = (players[i].statistics.elementWins / players[i].statistics.elementPlayed * 100).toFixed(2);
                 var winchance_grove = (players[i].statistics.groveWins / players[i].statistics.grovePlayed * 100).toFixed(2);
@@ -262,13 +263,13 @@ function parsePlayers(myPlayers, type) {
                     cell[e].classList.add("td_" + e);
                 }
 
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
-                if (players[i].statistics.elementPeakElo === null && players[i].statistics.elementPeakEloThisSeason === null) players[i].statistics.elementPeakElo = players[i].statistics.elementElo;
-                if (players[i].statistics.elementPeakElo === null && players[i].statistics.elementPeakEloThisSeason !== null) players[i].statistics.elementPeakElo = players[i].statistics.elementPeakEloThisSeason;
-                if (players[i].statistics.elementPeakEloThisSeason === null) players[i].statistics.elementPeakEloThisSeason = players[i].statistics.elementPeakElo;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.elementPeakElo == null && players[i].statistics.elementPeakEloThisSeason == null) players[i].statistics.elementPeakElo = players[i].statistics.elementElo;
+                if (players[i].statistics.elementPeakElo == null && players[i].statistics.elementPeakEloThisSeason !== null) players[i].statistics.elementPeakElo = players[i].statistics.elementPeakEloThisSeason;
+                if (players[i].statistics.elementPeakEloThisSeason == null) players[i].statistics.elementPeakEloThisSeason = players[i].statistics.elementPeakElo;
                 totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 totalwins = players[i].statistics.wins;
                 winchance_element = (players[i].statistics.elementWins / players[i].statistics.elementPlayed * 100).toFixed(2);
@@ -297,13 +298,13 @@ function parsePlayers(myPlayers, type) {
                     cell[e].classList.add("td_" + e);
                 }
 
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
-                if (players[i].statistics.grovePeakElo === null && players[i].statistics.grovePeakEloThisSeason === null) players[i].statistics.grovePeakElo = players[i].statistics.groveElo;
-                if (players[i].statistics.grovePeakElo === null && players[i].statistics.grovePeakEloThisSeason !== null) players[i].statistics.grovePeakElo = players[i].statistics.grovePeakEloThisSeason;
-                if (players[i].statistics.grovePeakEloThisSeason === null) players[i].statistics.grovePeakEloThisSeason = players[i].statistics.grovePeakElo;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.grovePeakElo == null && players[i].statistics.grovePeakEloThisSeason == null) players[i].statistics.grovePeakElo = players[i].statistics.groveElo;
+                if (players[i].statistics.grovePeakElo == null && players[i].statistics.grovePeakEloThisSeason !== null) players[i].statistics.grovePeakElo = players[i].statistics.grovePeakEloThisSeason;
+                if (players[i].statistics.grovePeakEloThisSeason == null) players[i].statistics.grovePeakEloThisSeason = players[i].statistics.grovePeakElo;
                 totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 totalwins = players[i].statistics.wins;
                 winchance_grove = (players[i].statistics.groveWins / players[i].statistics.grovePlayed * 100).toFixed(2);
@@ -332,13 +333,13 @@ function parsePlayers(myPlayers, type) {
                     cell[e].classList.add("td_" + e);
                 }
 
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
-                if (players[i].statistics.forsakenPeakElo === null && players[i].statistics.forsakenPeakEloThisSeason === null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenElo;
-                if (players[i].statistics.forsakenPeakElo === null && players[i].statistics.forsakenPeakEloThisSeason !== null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenPeakEloThisSeason;
-                if (players[i].statistics.forsakenPeakEloThisSeason === null) players[i].statistics.forsakenPeakEloThisSeason = players[i].statistics.forsakenPeakElo;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.forsakenPeakElo == null && players[i].statistics.forsakenPeakEloThisSeason == null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenElo;
+                if (players[i].statistics.forsakenPeakElo == null && players[i].statistics.forsakenPeakEloThisSeason !== null) players[i].statistics.forsakenPeakElo = players[i].statistics.forsakenPeakEloThisSeason;
+                if (players[i].statistics.forsakenPeakEloThisSeason == null) players[i].statistics.forsakenPeakEloThisSeason = players[i].statistics.forsakenPeakElo;
                 totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 totalwins = players[i].statistics.wins;
                 winchance_forsaken = (players[i].statistics.forsakenWins / players[i].statistics.forsakenPlayed * 100).toFixed(2);
@@ -367,13 +368,13 @@ function parsePlayers(myPlayers, type) {
                     cell[e].classList.add("td_" + e);
                 }
 
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
-                if (players[i].statistics.mechPeakElo === null && players[i].statistics.mechPeakEloThisSeason === null) players[i].statistics.mechPeakElo = players[i].statistics.mechElo;
-                if (players[i].statistics.mechPeakElo === null && players[i].statistics.mechPeakEloThisSeason !== null) players[i].statistics.mechPeakElo = players[i].statistics.mechPeakEloThisSeason;
-                if (players[i].statistics.mechPeakEloThisSeason === null) players[i].statistics.mechPeakEloThisSeason = players[i].statistics.mechPeakElo;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.mechPeakElo == null && players[i].statistics.mechPeakEloThisSeason == null) players[i].statistics.mechPeakElo = players[i].statistics.mechElo;
+                if (players[i].statistics.mechPeakElo == null && players[i].statistics.mechPeakEloThisSeason !== null) players[i].statistics.mechPeakElo = players[i].statistics.mechPeakEloThisSeason;
+                if (players[i].statistics.mechPeakEloThisSeason == null) players[i].statistics.mechPeakEloThisSeason = players[i].statistics.mechPeakElo;
                 totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 totalwins = players[i].statistics.wins;
                 winchance_mech = (players[i].statistics.mechWins / players[i].statistics.mechPlayed * 100).toFixed(2);
@@ -402,13 +403,13 @@ function parsePlayers(myPlayers, type) {
                     cell[e].classList.add("td_" + e);
                 }
 
-                if (players[i].statistics.wins === null) players[i].statistics.wins = 0;
-                if (players[i].statistics.losses === null) players[i].statistics.losses = 0;
-                if (players[i].statistics.quits === null) players[i].statistics.quits = 0;
-                if (players[i].statistics.ties === null) players[i].statistics.ties = 0;
-                if (players[i].statistics.mastermindPeakElo === null && players[i].statistics.mastermindPeakEloThisSeason === null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindElo;
-                if (players[i].statistics.mastermindPeakElo === null && players[i].statistics.mastermindPeakEloThisSeason !== null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindPeakEloThisSeason;
-                if (players[i].statistics.mastermindPeakEloThisSeason === null) players[i].statistics.mastermindPeakEloThisSeason = players[i].statistics.mastermindPeakElo;
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.mastermindPeakElo == null && players[i].statistics.mastermindPeakEloThisSeason == null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindElo;
+                if (players[i].statistics.mastermindPeakElo == null && players[i].statistics.mastermindPeakEloThisSeason !== null) players[i].statistics.mastermindPeakElo = players[i].statistics.mastermindPeakEloThisSeason;
+                if (players[i].statistics.mastermindPeakEloThisSeason == null) players[i].statistics.mastermindPeakEloThisSeason = players[i].statistics.mastermindPeakElo;
                 totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 totalwins = players[i].statistics.wins;
                 winchance_mastermind = (players[i].statistics.mastermindWins / players[i].statistics.mastermindPlayed * 100).toFixed(2);
@@ -438,7 +439,7 @@ function getPlayer() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
-    if (playerurl === null) {
+    if (playerurl == null) {
         window.location.href = window.location.href + "?player=" + document.getElementById("playername").value;
     }
     else {

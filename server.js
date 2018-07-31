@@ -16,6 +16,7 @@ const http = require('http');
 const app = express();
 
 
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
@@ -1115,6 +1116,34 @@ app.get('/api/stats/playercount', (req, res) => {
             //player object an frontend
             res.json(data.data);
         });
+});
+
+
+
+
+
+
+app.get('/api/tour/player', (req, res) => {
+    var pname = req.query.player;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        body: JSON.stringify({ query: '{ player(playername: "'+pname+'"){playername,statistics} }' }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+        
 });
 
 app.listen(PORT, HOST);

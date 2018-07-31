@@ -15,10 +15,10 @@ function checkContent() {
         queryPlayerOverallGames(playerurl);
     }
     else {
-        
-            document.getElementById("tab_box_1").textContent = "Select a player";
-            openTab(1);
-        
+
+        document.getElementById("tab_box_1").textContent = "Select a player";
+        openTab(1);
+
     }
 }
 
@@ -32,7 +32,7 @@ function setPlayer() {
     else {
         window.location.href = "/profile" + "?player=" + document.getElementById("playername").value;
     }
-    
+
 }
 
 function loadEloGraph(games) {
@@ -97,14 +97,14 @@ function loadEloGraph(games) {
                     date[counter] = date[counter - 1];
                 }
             }
-            
-        counter++;
+
+            counter++;
         }
-        
+
     });
     date.reverse();
     elo.reverse();
-    document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>"+player_name+"</h1><div id='chart-container'><canvas id='myChart'></canvas></div></div>";
+    document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>" + player_name + "</h1><div id='chart-container'><canvas id='myChart'></canvas></div></div>";
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
     ctx.width = 1000;
@@ -267,11 +267,11 @@ function loadStats(player) {
     player_mastermind_level = getPlayerLevel(player_mastermind_xp);
 
     player_crossgames = "5";
-    player_partygames ="10";
+    player_partygames = "10";
     player_bestfriend = "YourMoma";
     player_archenemy = "Me"
-    player_leakon1="0.05";
-    player_sendon1="0.15";
+    player_leakon1 = "0.05";
+    player_sendon1 = "0.15";
 
 
 
@@ -286,17 +286,15 @@ function loadStats(player) {
     document.getElementById("player_name1").textContent = player_name;
     document.getElementById("player_elo1").textContent = player_overall_elo + " (" + player_overall_peakelo + ")";
     //badges
-    if(player_overall_level<10)
-    {
-        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/0" +  player_overall_level + ".png'>";
-    } 
-    else 
-    {
-        
-        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level +".png'>";
+    if (player_overall_level < 10) {
+        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/0" + player_overall_level + ".png'>";
+    }
+    else {
+
+        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level + ".png'>";
     }
     //console.log(player_overall_level);
-    if(player_overall_elo>1000 && player_overall_elo <1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Bronze.png'>";
+    if (player_overall_elo > 1000 && player_overall_elo < 1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Bronze.png'>";
     else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Silver.png'>";
     else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gold.png'>";
     else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Platinum.png'>";
@@ -309,7 +307,7 @@ function loadStats(player) {
     parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 488px 488px;opacity:1.0;");
     document.title = "LTDStats - " + player_name + "'s Profile";
-    
+
 }
 
 function getPlayerLevel(totalXp) {
@@ -557,7 +555,7 @@ function drawPlayerBuilds(gameX) {
                     }
                     //einheit noch nicht vorhanden; f�ge an n�chster freie stelle ein
                     if (anzahl > 0 == false) {
-                        
+
                         for (var x = 0; x < 60; x++) {
                             if (sends[raceint][e][x] == 0) {
                                 sends[raceint][e][x] = element + ";1";
@@ -566,17 +564,17 @@ function drawPlayerBuilds(gameX) {
                         }
                     }
                 });
-                
+
             }
 
         }
         else {
             player_count++;
         }
-        
+
     }
     //console.log(sends);
-    
+
     var chancetoleak = (leaks[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
     var chancetosend = (sendchance[target_race][document.getElementById("setWave2").value - 1] / gamesNeu[target_race] * 100).toFixed(2);
     var favunit = []
@@ -636,9 +634,9 @@ function drawPlayerBuilds(gameX) {
         }
     });
     //console.log(builds[target_race]);
-    
+
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
-        
+
         if (ele != 0) {
             switch (ele.substring(0, ele.indexOf(";"))) {
                 case "proton":
@@ -903,15 +901,15 @@ function drawPlayerBuilds(gameX) {
                     console.log(ele);
                     break;
             }
-            buildcontainer.innerHTML += "<img src='"+url+"' height='20px' width='20px'> "+unit_type + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+            buildcontainer.innerHTML += "<img src='" + url + "' height='20px' width='20px'> " + unit_type + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
         }
     });
 
-    
+
     sends[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
         if (ele != 0) {
 
-            sendcontainer.innerHTML += "<img src='/img/icons/" + ele.substring(0, ele.indexOf(";")).replace(" ","") + ".png' height='20px' width='20px'> " +ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
+            sendcontainer.innerHTML += "<img src='/img/icons/" + ele.substring(0, ele.indexOf(";")).replace(" ", "") + ".png' height='20px' width='20px'> " + ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
         }
     });
     //console.log(sends);
@@ -929,7 +927,7 @@ function drawPlayerBuilds(gameX) {
 $('#tab_top_3').on('click', function () {
 
     if (document.getElementById("playername").value) {
-        
+
         drawGameDetails(0);
         return false;
     }
@@ -963,8 +961,8 @@ function listGames() {
             // Catch games that error out with no game detail.
             console.log(err);
         }
-        
-       
+
+
         if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: +" + elochange;
         else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: " + elochange;
         option.value = i;
@@ -973,7 +971,7 @@ function listGames() {
         else option.style = "background-color: #e6e3e3;"
         //selector.remove(0);
         selector.add(option);
-        
+
     }
 }
 
@@ -1000,7 +998,7 @@ function drawGameDetails(player_position) {
         else var wave = parseInt(document.getElementById("setWave").value);
         for (var i = 0; i < 4; i++) {
             var neuesI = i + 1;
-            document.getElementById("name_" + neuesI).textContent = gameEvent[i].playername;
+            document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
             document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
             document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
             document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
@@ -1018,7 +1016,7 @@ function drawGameDetails(player_position) {
         document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
         document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
         document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-        document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min"; 
+        document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
     }
 }
 function dec2hex(str) { // .toString(16) only works up to 2^53
@@ -1046,8 +1044,7 @@ function getPlayerValue(player, level) {
     return value;
 }
 
-function getPlayerIncome(player, level)
-{
+function getPlayerIncome(player, level) {
     console.log(gameEvent[player]);
     var income = gameEvent[player].incomePerWave[level - 1];
     return income;
@@ -1387,7 +1384,7 @@ function addPicture(y, x, unit) {
             break;
     }
 
-    
+
 
     //canvas einfügen
     //console.log(neuesX + ", " + neuesY);
@@ -1490,7 +1487,7 @@ document.onkeydown = function (event) {
                 //console.log("all");
             }
             else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
-                    document.getElementById("setWave").value = "all";
+                document.getElementById("setWave").value = "all";
             }
 
         }
@@ -1621,7 +1618,7 @@ function getPlayerOverallGames(callback, playername) {
             callback(player);
         }
     };
-    xhttp.open("GET", '/api/profile/playerOverallGames?playername='+playername, true);
+    xhttp.open("GET", '/api/profile/playerOverallGames?playername=' + playername, true);
     xhttp.send();
 }
 
@@ -1672,11 +1669,11 @@ function drawSquares() {
         var x = element.id.substring(element.id.indexOf(".") + 1);
         var y = element.id.substring(0, element.id.indexOf("."));
         if (x % 2 == 1) {
-            
+
             element.style["border-left"] = "2px solid black";
         }
         else {
-            
+
             element.style["border-right"] = "2px solid black";
         }
         if (y % 2 == 1) {

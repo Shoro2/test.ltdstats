@@ -4,11 +4,10 @@
     "\\public",
     "\\public\\css",
     "\\public\\js",
-    "\\public\\js\\quill",
     "\\views",
     "\\views\\help",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\public\\js\\lihl.js",
+  "SelectedNode": "\\public\\js\\stats.js",
   "PreviewInSolutionExplorer": false
 }

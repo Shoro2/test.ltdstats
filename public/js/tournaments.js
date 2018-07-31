@@ -2,6 +2,7 @@
 var anzahl_teams = 38;
 var counter = 0;
 var allPlayers = [];
+var allPlayers_cache = [];
 
 teams[0] = { teamname: "Buff Legions", name_p1: "Roshkatul", name_p2: "Rave" };
 teams[1] = { teamname: "Akitos", name_p1: "Kingdanzz", name_p2: "Ashton Butcher" };
@@ -30,54 +31,93 @@ teams[23] = { teamname: "e1", name_p1: "varazsloo", name_p2: "CU3" };
 teams[24] = { teamname: "LTDStats.com", name_p1: "GvR Mr Mister", name_p2: "Fatestaynight" };
 teams[25] = { teamname: "LowEloScrubs", name_p1: "Septimus", name_p2: "Jumperboy01" };
 teams[26] = { teamname: "Blashyrkh", name_p1: "Skitsystem", name_p2: "Astrofaes" };
-teams[26] = { teamname: "KeineAhnung", name_p1: "AsperiNx", name_p2: "Impulz" };
-teams[26] = { teamname: "LotsOfLeak", name_p1: "iTs", name_p2: "WastedTime" };
-teams[26] = { teamname: "We Wuz Kangz", name_p1: "roastie", name_p2: "Nador" };
-teams[26] = { teamname: "Шуб-Ниггурат", name_p1: "Robert Mends", name_p2: "Steelrat" };
-teams[26] = { teamname: "Penispiraten", name_p1: "MagicalMushroom", name_p2: "goimba" };
-teams[26] = { teamname: "TeamKr4mpf", name_p1: "tepppppp", name_p2: "Invino" };
-teams[26] = { teamname: "Nippelkneifer", name_p1: "TSV Fürst", name_p2: "Hajucken" };
-teams[26] = { teamname: "HeadHunterZ", name_p1: "Cael", name_p2: "Reitonic" };
-teams[26] = { teamname: "DNS", name_p1: "Saber", name_p2: "Technorax" };
-teams[26] = { teamname: "Currywurst", name_p1: "Ranziger Roland", name_p2: "DonKanaille" };
-teams[26] = { teamname: "Team Barry", name_p1: "Cryboll", name_p2: "BerryMeister" };
-console.log(teams);
+teams[27] = { teamname: "KeineAhnung", name_p1: "AsperiNx", name_p2: "Impulz" };
+teams[28] = { teamname: "LotsOfLeak", name_p1: "iTs", name_p2: "WastedTime" };
+teams[29] = { teamname: "We Wuz Kangz", name_p1: "roastie", name_p2: "Nador" };
+teams[30] = { teamname: "Шуб-Ниггурат", name_p1: "Robert Mends", name_p2: "Steelrat" };
+teams[31] = { teamname: "Penispiraten", name_p1: "MagicalMushroom", name_p2: "goimba" };
+teams[32] = { teamname: "TeamKr4mpf", name_p1: "tepppppp", name_p2: "Invino" };
+teams[33] = { teamname: "Nippelkneifer", name_p1: "TSV Fürst", name_p2: "Hajucken" };
+teams[34] = { teamname: "HeadHunterZ", name_p1: "Cael", name_p2: "Reitonic" };
+teams[35] = { teamname: "DNS", name_p1: "Saber", name_p2: "Technorax" };
+teams[36] = { teamname: "Currywurst", name_p1: "Ranziger Roland", name_p2: "DonKanaille" };
+teams[37] = { teamname: "Team Barry", name_p1: "Cryboll", name_p2: "BerryMeister" };
 
-getTourPlayers(teams[0].name_p1);
-
+function showLoad() {
+    document.getElementById("mitte").style.display = "inherit";
+}
+function hideLoad() {
+    document.getElementById("mitte").style.display = "none";
+}
 
 function showTourInfo() {
-    console.log(document.getElementById("tour_list").style.display);
     if (document.getElementById("tour_list").style.display === "") {
         document.getElementById("tour_list").style.display = "none";
         document.getElementById("tour_info").style.display = "";
+        requestPlayers();
+
     }
     else {
         document.getElementById("tour_list").style.display = "inherit";
         document.getElementById("tour_info").style.display = "none";
     }
 }
-
-function fillTable(){
-    var myTable = document.getElementById("teamtable");
-    for (var i = 0; i < teams.length; i++) {
-        var row = myTable.insertRow(i + 1);
-        var cell = [];
-        cell[0] = row.insertCell(0);
-        cell[0].innerHTML = i + 1;
-        cell[1] = row.insertCell(1);
-        cell[1].innerHTML = teams[i].teamname;
-        cell[2] = row.insertCell(2);
-        cell[2].innerHTML = teams[i].name_p1;
-        cell[3] = row.insertCell(3);
-        cell[3].innerHTML = teams[i].name_p2;
-        cell[4] = row.insertCell(4);
-        cell[4].innerHTML = peak_player1;
-        cell[5] = row.insertCell(5);
-        cell[5].innerHTML = peak_player2;
-        cell[6] = row.insertCell(6);
-        cell[6].innerHTML = teamavg;
+function requestPlayers() {
+    if (window.localStorage.getItem("cached_players") !== null) {
+        //24h
+        if (Date.now() - JSON.parse(window.localStorage.getItem("last_sync")) > 1440000) {
+            refreshData();
+        }
+        else {
+            allPlayers.push(JSON.parse(window.localStorage.getItem("cached_players")));
+            allPlayers = allPlayers[0];
+            fillTable();
+        }
     }
+    else {
+        refreshData();
+    }
+
+}
+
+function refreshData() {
+    teams.forEach(function (element) {
+        queryTourPlayer(element.name_p1);
+        queryTourPlayer(element.name_p2);
+    });
+}
+
+function fillTable() {
+    var myTable = document.getElementById("myladder");
+    allPlayers.sort(compare);
+    for (var i = 0; i < allPlayers.length; i++) {
+        if (i % 2 === 0) {
+            var row = myTable.insertRow(i / 2 + 1);
+            var cell = [];
+            cell[0] = row.insertCell(0);
+            cell[0].innerHTML = allPlayers[i].teamname;
+            cell[1] = row.insertCell(1);
+            cell[1].innerHTML = "<a href='/profile?player=" + allPlayers[i].playername + "'>" + allPlayers[i].playername + "</a>";
+            cell[2] = row.insertCell(2);
+            cell[2].innerHTML = "<a href='/profile?player=" + allPlayers[i + 1].playername + "'>" + allPlayers[i + 1].playername + "</a>";
+            cell[3] = row.insertCell(3);
+            cell[3].innerHTML = allPlayers[i].statistics.overallElo;
+            cell[4] = row.insertCell(4);
+            cell[4].innerHTML = allPlayers[i + 1].statistics.overallElo;
+            cell[5] = row.insertCell(5);
+            cell[5].innerHTML = (allPlayers[i].statistics.overallElo + allPlayers[i + 1].statistics.overallElo) / 2;
+        }
+    }
+    sortTable(5);
+    sortTable(5);
+}
+
+function compare(a, b) {
+    if (a.teamname < b.teamname)
+        return -1;
+    if (a.teamname > b.teamname)
+        return 1;
+    return 0;
 }
 
 function getTourPlayers(callback, pname) {
@@ -87,33 +127,26 @@ function getTourPlayers(callback, pname) {
             callback(JSON.parse(xhttp.response));
         }
     };
-    xhttp.open("GET", '/api/tour/player?player='+pname, true);
+    xhttp.open("GET", '/api/tour/player?player=' + pname, true);
     xhttp.send();
 }
-function queryTourPlayers(pname) {
+function queryTourPlayer(pname) {
     showLoad();
+
     getTourPlayers(function (result) {
-        if (counter % 2 === 0) {
-            //p1
-            if (counter === anzahl_teams) {
-                hideLoad();
-                return result;
-            }
-            else {
-                queryTourPlayers(teams[counter / 2].name_p2);
-            }
+        result.player.statistics = JSON.parse(result.player.statistics);
+        var pos = 0;
+        for (var i = 0; i < teams.length; i++) {
+            if (teams[i].name_p1 === pname || teams[i].name_p2 === pname) pos = i;
         }
-        else {
-            //p2
-            if (counter === anzahl_teams) {
-                hideLoad();
-                return result;
-            }
-            else {
-                queryTourPlayers(teams[(counter-1) / 2].name_p1);
-            }
+        result.player.teamname = teams[pos].teamname;
+        allPlayers.push(result.player);
+        if (allPlayers.length === teams.length * 2) {
+            hideLoad();
+            window.localStorage.setItem("cached_players", JSON.stringify(allPlayers));
+            window.localStorage.setItem("last_sync", JSON.stringify(Date.now()));
+            fillTable();
         }
-        allPlayers += result.player;
-        console.log(allPlayers);
-    });
+        return result;
+    }, pname);
 }
