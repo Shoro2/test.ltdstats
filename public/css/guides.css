@@ -13,6 +13,9 @@
     width: 90%;
     margin: 5%;
 }
+#guide_results tr:hover{
+    background-color:lightgray;
+}
 
 #guide_infobox
 {
@@ -43,5 +46,11 @@
 .youtube{
     margin-left:auto;
     margin-right:auto;
-    width:560px;
+    width:70%;
+    height:90%;
+}
+
+.ytframe{
+    width:100%;
+    height:100%;
 }

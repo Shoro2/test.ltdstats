@@ -804,7 +804,7 @@ function createTable(data) {
                 break;
             case "Magic":
                 if (wave_def == "Arcane") {
-                    dps = dps * 0.7;
+                    dps = dps * 0.75;
                 }
                 else if (wave_def == "Swift") {
                     dps = dps;
@@ -858,7 +858,7 @@ function createTable(data) {
                     health = health * 0.85;
                 }
                 else if (wave_att == "Magic") {
-                    health = health * 1.3;
+                    health = health * 1.25;
                 }
                 break;
         }
@@ -885,7 +885,7 @@ function createTable(data) {
 
         }
         cell[0] = row.insertCell(0);
-        cell[0].innerHTML = allFighters[i].name;
+        cell[0].innerHTML = "<a href='/units?unit=" + allFighters[i].name + "'> " + allFighters[i].name+"</a>";
         cell[1] = row.insertCell(1);
         cell[1].innerHTML = legion;
         cell[2] = row.insertCell(2);

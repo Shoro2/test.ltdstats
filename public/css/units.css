@@ -69,3 +69,7 @@
 #units_textbox {
     margin: 1%;
 }
+#unit_icon{
+    height:64px;
+    width:64px;
+}
