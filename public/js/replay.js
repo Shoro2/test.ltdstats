@@ -3,13 +3,21 @@ var firsttime = false;
 
 function getGameDetails(games) {
     firsttime = true;
-    meinString = games.gameDetails[3];
-    meinString1 = games.gameDetails[2];
-    meinString2 = games.gameDetails[1];
-    meinString3 = games.gameDetails[0];
-    gameEvent = [meinString, meinString1, meinString2, meinString3];
-    fillNames();
-    waveAnzeigen();
+    try {
+        meinString = games.gameDetails[3];
+        meinString1 = games.gameDetails[2];
+        meinString2 = games.gameDetails[1];
+        meinString3 = games.gameDetails[0];
+        gameEvent = [meinString, meinString1, meinString2, meinString3];
+        fillNames();
+        waveAnzeigen();
+    }
+    catch (error) {
+        console.log(error);
+        document.getElementById("mitte").innerHTML += "<p><h3> Game not found.</h3>";
+        showLoad();
+    }
+    
 
 }
 
@@ -276,6 +284,14 @@ function addPicture(y, x, unit, player) {
             url = "/img/icons/OceanTemplar.png";
             unit_type = "Ocean Templar";
             break;
+        case "eggsack":
+            url = "/img/icons/Eggsack.png";
+            unit_type = "Eggsack";
+            break;
+        case "Hydra":
+            url = "/img/icons/Hydra.png";
+            unit_type = "Hydra";
+            break;
         default:
             url = "";
             unit_type = "empty";
@@ -352,13 +368,19 @@ function fillNames() {
 }
 
 function setKingHp() {
-    var wave = parseInt(document.getElementById("slider").value);
-    var kinghp1 = document.getElementById("hpwest");
-    var kinghp2 = document.getElementById("hpeast");
-    kinghp1.style.width = game.leftkingpercenthp[wave - 1] * 100 + "%";
-    kinghp2.style.width = game.rightkingpercenthp[wave - 1] * 100 + "%";
-    kinghp1.textContent = (game.leftkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
-    kinghp2.textContent = (game.rightkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
+    try {
+        var wave = parseInt(document.getElementById("slider").value);
+        var kinghp1 = document.getElementById("hpwest");
+        var kinghp2 = document.getElementById("hpeast");
+        kinghp1.style.width = game.leftkingpercenthp[wave - 1] * 100 + "%";
+        kinghp2.style.width = game.rightkingpercenthp[wave - 1] * 100 + "%";
+        kinghp1.textContent = (game.leftkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
+        kinghp2.textContent = (game.rightkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
+    }
+    catch(error){
+        console.log(error);
+    }
+    
 }
 
 function getPlayerBuild(player) {

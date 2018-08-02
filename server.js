@@ -631,13 +631,14 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
                             data.data.player.filteredGamesQuery.games.forEach(function (ele) {
                                 meinPlayer.player.filteredGamesQuery.games.push(ele);
                             });
-                            if(offset>=games_count) res.json(meinPlayer);
+                            if (offset >= games_count) res.json(meinPlayer);
                         });
                 }
 
 
 
             }
+            else res.json(meinPlayer);
         });
 });
 /*
