@@ -1,5 +1,5 @@
 function on() {
-    //document.getElementById("overlay").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
 }
 
 function off() {
@@ -20,14 +20,14 @@ function checkAds()
         // adblocker detected, show fallback
         if(Cookies.get("dontshow")=="true")
         {
-            
+            console.log("no ad cookie");
         }
         else on();
         
       }
       else
       {
-
+        console.log("undefined");
       }
 }
 

@@ -2,10 +2,10 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/tournaments.css')
     .content
-        .card
-            #mitte(style="display:none;")
+        #mitte(style="display:none;")
                     img(class="gif", src="/img/loading.gif")
                     .p Requesting API, please wait...
+        .card
             #tour_list
                 h1 Tournaments
                 h4.linkheader(onclick="showTourInfo();") Masters Cup II

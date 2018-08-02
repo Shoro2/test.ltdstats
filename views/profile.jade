@@ -5,6 +5,10 @@ block content
     #mitte(style="display:none; margin-top:15%;")
         img(class="gif", src="/img/loading.gif")
         .p Requesting API, please wait...
+        #apierror(style="display:none") 
+            br
+            | Request timed out, please check the name or
+            h4#reload(onclick="location.reload();", style="color:blue;cursor:pointer;width:10%;margin-left:auto;margin-right:auto;") Try again
     .tabmenu
         .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Overview
         .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Elograph

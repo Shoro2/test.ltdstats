@@ -5,9 +5,11 @@
     "\\public\\css",
     "\\public\\js",
     "\\views",
+    "\\views\\guides",
+    "\\views\\guides\\general",
     "\\views\\help",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\public\\js\\stats.js",
+  "SelectedNode": "\\public\\js\\about.js",
   "PreviewInSolutionExplorer": false
 }

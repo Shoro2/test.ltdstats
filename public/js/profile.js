@@ -1045,7 +1045,7 @@ function getPlayerValue(player, level) {
 }
 
 function getPlayerIncome(player, level) {
-    console.log(gameEvent[player]);
+    //console.log(gameEvent[player]);
     var income = gameEvent[player].incomePerWave[level - 1];
     return income;
 }
@@ -1565,12 +1565,20 @@ function apiGetPlayer(callback, playername) {
 
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
-        result.player.statistics = JSON.parse(result.player.statistics);
-        player = result.player
-        loadStats(player);
-        //console.log(player);
-        parseStats();
-        return player;
+        if (result.player == null) {
+            document.getElementById("apierror").style.display = "";
+        }
+        else {
+            console.log(result);
+            result.player.statistics = JSON.parse(result.player.statistics);
+            player = result.player
+            loadStats(player);
+            //console.log(player);
+            parseStats();
+
+            return player;
+        }
+        
     }, playername);
 }
 
@@ -1624,14 +1632,20 @@ function getPlayerOverallGames(callback, playername) {
 
 function queryPlayerOverallGames(playername, gameamount) {
     getPlayerOverallGames(function (result) {
-        playerGames = result.player.filteredGamesQuery.games;
-        drawPlayerBuilds(playerGames);
-        games = result.player.filteredGamesQuery.games;
-        loadEloGraph(games);
-        drawGameDetails(0);
-        listGames();
-        document.getElementById("mitte").style.display = "none";
-        return playerGames;
+        if (!result) {
+            document.getElementById("apierror").style.display = "";
+        }
+        else {
+            playerGames = result.player.filteredGamesQuery.games;
+            drawPlayerBuilds(playerGames);
+            console.log(result);
+            games = result.player.filteredGamesQuery.games;
+            loadEloGraph(games);
+            drawGameDetails(0);
+            listGames();
+            document.getElementById("mitte").style.display = "none";
+            return playerGames;
+        }
     }, playername);
 }
 
