@@ -170,3 +170,12 @@
         global.Cookies = cookiesExport;
     }
 })(typeof window === 'undefined' ? this : window);
+
+function saveTicks() {
+    if (document.getElementById("analytics_box").checked) {
+        window.localStorage.setItem("analytics",true);
+    }
+    else {
+        window.localStorage.setItem("analytics",false);
+    }
+}

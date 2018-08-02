@@ -1,7 +1,8 @@
 extend layout
 block content
+    link(rel='stylesheet', href='/css/cookies.css')
     .content
-        .wrapper
+        .wrapper(style="padding:2%;")
             h1 Cookies Policy
             p Last updated: August 02, 2018
             p Legion TD 2 Statistics ("us", "we", or "our") uses cookies on the https://ltdstats.com website (the "Service"). By using the Service, you consent to the use of cookies.
@@ -62,10 +63,17 @@ block content
                 a(href="https://www.anwalt.de/vorlage/muster-datenschutzerklaerung.php") Muster-Datenschutzerklärung von anwalt.de
             h2 Disable optional cookies
             p Here you can deceide what cookies ltdstats.com will use:
-            input.tickbox#analytics_box(type="checkbox" checked) Google Analytics cookies
+            input.tickbox#analytics_box(type="checkbox" checked) 
+            | Google Analytics cookies
             br
             | This helps me to see the users behaviour on my website so i can focus/priorize sections that are most visited.
             p.
-            input.tickbox#ads_box(type="checkbox" checked) Ads Cookies (not implemented yet)
+            input.tickbox#ads_box(type="checkbox" checked) 
+            | Ads Cookies (not implemented yet)
             br
             | Allow individual ads by my partners.
+            br
+            button#savebtn(onclick="saveTicks();") Save
+            br
+            i This selection is saved in your browser's local storage
+    script document.body.onload = function () {    if (window.localStorage.getItem("analytics") != 'false') {        document.getElementById("analytics_box").checked = true;    }    else {        document.getElementById("analytics_box").checked = false;    }}
