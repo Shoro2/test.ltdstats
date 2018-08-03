@@ -12,7 +12,7 @@ block content
             .progress(title="East King HP")
                 .hpbar#hpeast
         -for(var e=1;e<5;e++)
-            .player_name
+            .player_name(title="Expand Details", onclick="showDetails("+e+")")
                 .legion(id="legion"+e, title="Legion", style='display:inline;')
                 .name(id="p"+e+"_name" style='display:inline;')
                 .networth(id="networth"+e, title='Net Worth', style='display:inline;')

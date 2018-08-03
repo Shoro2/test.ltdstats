@@ -6,10 +6,12 @@
     "\\public\\js",
     "\\views",
     "\\views\\guides",
+    "\\views\\guides\\forsaken",
     "\\views\\guides\\general",
-    "\\views\\help",
-    "\\views\\ladder"
+    "\\views\\guides\\grove",
+    "\\views\\guides\\mastermind",
+    "\\views\\guides\\mech"
   ],
-  "SelectedNode": "\\public\\js\\about.js",
+  "SelectedNode": "\\views\\guides\\general\\spelldmg.jade",
   "PreviewInSolutionExplorer": false
 }

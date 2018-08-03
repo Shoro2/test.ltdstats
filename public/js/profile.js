@@ -895,6 +895,14 @@ function drawPlayerBuilds(gameX) {
                     var url = "/img/icons/OceanTemplar.png";
                     var unit_type = "Ocean Templar";
                     break
+                case "eggsack":
+                    var url = "/img/icons/Eggsack.png";
+                    var unit_type = "Eggsack";
+                    break
+                case "Hydra":
+                    var url = "/img/icons/Hydra.png";
+                    var unit_type = "Hydra";
+                    break
                 default:
                     var url = "";
                     var unit_type = "empty";
@@ -962,9 +970,9 @@ function listGames() {
             console.log(err);
         }
 
-
-        if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: +" + elochange;
-        else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + ", ID: " + games[i].game_id + legion + ", Elo: " + elochange;
+        var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
+        if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: +" + elochange;
+        else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: " + elochange;
         option.value = i;
         if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
         else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
@@ -978,10 +986,10 @@ function listGames() {
 function getGameDetails(pos, games) {
     //console.log(games);
     //console.log(pos);
-    meinString = games[pos].gameDetails[3];
-    meinString1 = games[pos].gameDetails[2];
-    meinString2 = games[pos].gameDetails[1];
-    meinString3 = games[pos].gameDetails[0];
+    meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
+    meinString1 = games[pos].gameDetails.filter(meinString => meinString.position == 2)[0];
+    meinString2 = games[pos].gameDetails.filter(meinString => meinString.position == 5)[0];
+    meinString3 = games[pos].gameDetails.filter(meinString => meinString.position == 6)[0];
     gameEvent = [meinString, meinString1, meinString2, meinString3];
     //console.log(gameEvent);
 }
@@ -1013,7 +1021,7 @@ function drawGameDetails(player_position) {
 
         var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
         document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
-        document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ");
+        document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ")+" UTC";
         document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
         document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
         document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
@@ -1035,19 +1043,30 @@ function dec2hex(str) { // .toString(16) only works up to 2^53
     return hex.join('')
 }
 function getPlayerValue(player, level) {
-    var networth = gameEvent[player].netWorthPerWave[level - 1];
-    //value = networth - workerval - gold für wave - gold für mercs auf wave
-    var worker_cost = 50;
-    var wave_value = 72;
-    var merc_value = 6;
-    var value = networth - worker_cost * gameEvent[player].workersPerWave[level - 1] - wave_value - merc_value;
-    return value;
+    try {
+        var networth = gameEvent[player].netWorthPerWave[level - 1];
+        //value = networth - workerval - gold für wave - gold für mercs auf wave
+        var worker_cost = 50;
+        var wave_value = 72;
+        var merc_value = 6;
+        var value = networth - worker_cost * gameEvent[player].workersPerWave[level - 1] - wave_value - merc_value;
+        return value;
+    }
+    catch(error){
+        console.log(error);
+        return 0;
+    }
 }
 
 function getPlayerIncome(player, level) {
-    //console.log(gameEvent[player]);
-    var income = gameEvent[player].incomePerWave[level - 1];
-    return income;
+    try {
+        var income = gameEvent[player].incomePerWave[level - 1];
+        return income;
+    }
+    catch (error) {
+        console.log(error);
+    }
+    
 }
 
 function getPlayerBuild(player) {
@@ -1056,11 +1075,9 @@ function getPlayerBuild(player) {
     clearPictures();
     drawSquares();
     document.getElementById("gamedetails_build").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
     else var wave = parseInt(document.getElementById("setWave").value);
     var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
-    //console.log(gameEvent[player].unitsPerWave);
-    //console.log(wave);
     counter = 0;
     meinBuild.forEach(element => {
         document.getElementById("gamedetails_build").innerHTML += element + "<br>";
@@ -1075,7 +1092,7 @@ function getPlayerBuild(player) {
 
 function getPlayerMercsSent(player) {
     document.getElementById("gamedetails_mercs_sent").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
     else var wave = parseInt(document.getElementById("setWave").value);
     var meinBuild = gameEvent[player].mercsSentPerWave[wave - 1];
     meinBuild.forEach(element => {
@@ -1085,7 +1102,7 @@ function getPlayerMercsSent(player) {
 
 function getPlayerMercsReceived(player) {
     document.getElementById("gamedetails_mercs_received").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
     else var wave = parseInt(document.getElementById("setWave").value);
     var meinBuild = gameEvent[player].mercsReceivedPerWave[wave - 1];
     meinBuild.forEach(element => {
@@ -1471,7 +1488,6 @@ document.onkeydown = function (event) {
 
     if (document.getElementById("tab_top_3").className == "tab_top_active") {
         if ((event.keyCode == 38 && event.target.id != "setGame") || (event.keyCode == 39 && event.target.id != "setGame") || event.keyCode == 107) {
-            //console.log("up");
             if (document.getElementById("setWave").value < gameEvent[0].wave) {
                 if (event.target.id != "setWave") {
                     var waveValue = parseInt(document.getElementById("setWave").value) + 1;
@@ -1484,7 +1500,6 @@ document.onkeydown = function (event) {
                     document.getElementById("setWave").value = "1";
                 }
                 drawGameDetails(savedValue);
-                //console.log("all");
             }
             else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
                 document.getElementById("setWave").value = "all";
@@ -1515,7 +1530,6 @@ document.onkeydown = function (event) {
 
     if (document.getElementById("tab_top_5").className == "tab_top_active") {
         if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
-            //console.log("up");
             if (document.getElementById("setWave2").value < 21) {
                 if (event.target.id != "setWave2") {
                     var waveValue = parseInt(document.getElementById("setWave2").value) + 1;
@@ -1555,7 +1569,6 @@ function apiGetPlayer(callback, playername) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
-            //console.log(xhttp.response);
             callback(player);
         }
     };
@@ -1569,11 +1582,9 @@ function queryPlayer(playername) {
             document.getElementById("apierror").style.display = "";
         }
         else {
-            console.log(result);
             result.player.statistics = JSON.parse(result.player.statistics);
             player = result.player
             loadStats(player);
-            //console.log(player);
             parseStats();
 
             return player;
@@ -1581,39 +1592,6 @@ function queryPlayer(playername) {
         
     }, playername);
 }
-
-// last x games by player
-// elograph
-// games
-/*
-function getPlayerGames(callback, playername) {
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var player = JSON.parse(xhttp.response);
-            //console.log(xhttp.response);
-            callback(player);
-        }
-    };
-    xhttp.open("GET", '/api/profile/playerGames?playername='+playername, true);
-    xhttp.send();
-}
-
-function queryPlayerGames(playername) {
-    getPlayerGames(function (result) {
-        //console.log(result.player.filteredGamesQuery.games);
-        if (!result) console.log("PROBLEMO!");
-        games = result.player.filteredGamesQuery.games;
-        loadEloGraph(games);
-        drawGameDetails(0);
-        listGames();
-        document.getElementById("mitte").style.display = "none";
-        return games;
-
-    }, playername);
-}
-*/
 //player overall games
 //builds
 function getPlayerOverallGames(callback, playername) {
@@ -1622,7 +1600,6 @@ function getPlayerOverallGames(callback, playername) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var player = JSON.parse(xhttp.response);
-            //console.log(xhttp.response);
             callback(player);
         }
     };
@@ -1638,7 +1615,6 @@ function queryPlayerOverallGames(playername, gameamount) {
         else {
             playerGames = result.player.filteredGamesQuery.games;
             drawPlayerBuilds(playerGames);
-            console.log(result);
             games = result.player.filteredGamesQuery.games;
             loadEloGraph(games);
             drawGameDetails(0);
@@ -1666,7 +1642,6 @@ function sqlGetRank(callback, playername) {
 function queryRank(playername) {
     sqlGetRank(function (result) {
         rank = result[0].Rank;
-        //console.log(rank);
         parseRank(rank);
         return rank;
     }, playername);

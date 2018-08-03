@@ -4,10 +4,10 @@ var firsttime = false;
 function getGameDetails(games) {
     firsttime = true;
     try {
-        meinString = games.gameDetails[3];
-        meinString1 = games.gameDetails[2];
-        meinString2 = games.gameDetails[1];
-        meinString3 = games.gameDetails[0];
+        meinString = games.gameDetails.filter(meinString => meinString.position == 1)[0];
+        meinString1 = games.gameDetails.filter(meinString => meinString.position == 2)[0];
+        meinString2 = games.gameDetails.filter(meinString => meinString.position == 5)[0];
+        meinString3 = games.gameDetails.filter(meinString => meinString.position == 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
         fillNames();
         waveAnzeigen();
@@ -367,6 +367,10 @@ function fillNames() {
 
 }
 
+function showDetails(nummer) {
+    document.getElementById("player_details").style.display = "";
+}
+
 function setKingHp() {
     try {
         var wave = parseInt(document.getElementById("slider").value);
@@ -597,7 +601,7 @@ function waveAnzeigen() {
                     icon_legionspell[i] = icon_legionspell[i].replace(" ", "");
                     icon_legionspell[i] = icon_legionspell[i].replace("%20", "");
                 }
-                document.getElementById("legionspell" + i).innerHTML = "<img src='/img/icons/" + icon_legionspell[i] + ".png' height='20px' width=20px'>";
+                document.getElementById("legionspell" + i).innerHTML = "<img src='/img/icons/" + icon_legionspell[i] + ".png' height='20px' width=20px' title='" + gameEvent[i].legionSpell+"'>";
             }
             else {
                 console.log(gameEvent[i]);
