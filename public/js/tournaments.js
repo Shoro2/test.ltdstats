@@ -8,7 +8,7 @@ teams[0] = { teamname: "Buff Legions", name_p1: "Roshkatul", name_p2: "Rave" };
 teams[1] = { teamname: "Akitos", name_p1: "Kingdanzz", name_p2: "Ashton Butcher" };
 teams[2] = { teamname: "Crazydaddyducks", name_p1: "DaddyDucky", name_p2: "Crazy" };
 teams[3] = { teamname: "Faith in Rescar", name_p1: "FaithOfHeaven", name_p2: "Rescar" };
-teams[4] = { teamname: "LegitLowElosBetterHalf", name_p1: "Vorfunker", name_p2: "LBackward" };
+teams[4] = { teamname: "JustinTime&Co", name_p1: "Vorfunker", name_p2: "Darktarant" };
 teams[5] = { teamname: "PollywogPOGGERSs", name_p1: "Excite Goku", name_p2: "ichbinleise" };
 teams[6] = { teamname: "Husaria", name_p1: "KaC", name_p2: "koszatek" };
 teams[7] = { teamname: "World Cup Champions", name_p1: "Romawear", name_p2: "Dusty Ki" };
@@ -42,7 +42,9 @@ teams[34] = { teamname: "HeadHunterZ", name_p1: "Cael", name_p2: "Reitonic" };
 teams[35] = { teamname: "DNS", name_p1: "Saber", name_p2: "Technorax" };
 teams[36] = { teamname: "Currywurst", name_p1: "Ranziger Roland", name_p2: "DonKanaille" };
 teams[37] = { teamname: "Team Barry", name_p1: "Cryboll", name_p2: "BerryMeister" };
-
+teams[38] = { teamname: "Politia", name_p1: "Codobelc", name_p2: "Girligator" };
+teams[39] = { teamname: "ChinaNumba1", name_p1: "Big_Daddy_Dark", name_p2: "Prowess" };
+teams[40] = { teamname: "Egg Fakers", name_p1: "MasterMind King", name_p2: "SgtSprinkles" };
 function showLoad() {
     document.getElementById("mitte").style.display = "inherit";
 }

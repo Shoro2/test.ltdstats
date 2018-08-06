@@ -9,9 +9,8 @@
     "\\views\\guides\\forsaken",
     "\\views\\guides\\general",
     "\\views\\guides\\grove",
-    "\\views\\guides\\mastermind",
-    "\\views\\guides\\mech"
+    "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\views\\guides\\general\\spelldmg.jade",
+  "SelectedNode": "\\views\\replay.jade",
   "PreviewInSolutionExplorer": false
 }

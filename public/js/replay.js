@@ -413,7 +413,25 @@ function getPlayerLeaks(player) {
 
 function getPlayerSends(player) {
     var wave = parseInt(document.getElementById("slider").value);
-    var meineSends = gameEvent[player - 1].mercsSentPerWave[wave - 1];
+    switch (gameEvent[player - 1].position) {
+        case 1:
+            var target_player = 3;
+            break;
+        case 2:
+            target_player = 4;
+            break;
+        case 5:
+            target_player = 2;
+            break;
+        case 6:
+            target_player = 1;
+            break;
+        default:
+            console.log("could not get player sends");
+            break;
+
+    }
+    var meineSends = gameEvent[target_player - 1].mercsReceivedPerWave[wave - 1];
     if (meineSends.length > 0) {
         meineSends.forEach(element => {
             addSend(element, player);

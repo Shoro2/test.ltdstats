@@ -2,9 +2,6 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/tournaments.css')
     .content
-        #mitte(style="display:none;")
-                    img(class="gif", src="/img/loading.gif")
-                    .p Requesting API, please wait...
         .card
             #tour_list
                 h1 Tournaments
@@ -24,6 +21,5 @@ block content
                             th(onclick="sortTable(3);") Elo P1
                             th(onclick="sortTable(4);") Elo P2
                             th(onclick="sortTable(5);") Team Average
-                
     script(src="/js/tournaments_sort.js")
     script(src="/js/tournaments.js")

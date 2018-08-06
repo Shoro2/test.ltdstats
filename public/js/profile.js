@@ -40,7 +40,7 @@ function loadEloGraph(games) {
     var elo = [100];
     var date = [100];
     games.forEach(function (myEle) {
-        if (counter < 100) {
+        if (counter < 200) {
             //console.log(myEle);
             if (myEle.queuetype != "Custom") {
                 if (myEle.gameDetails[0].playername == player_name) {
