@@ -80,6 +80,7 @@ html
                                     a.dropdown-item(href='/ladder/grove') Grove
                                     a.dropdown-item(href='/ladder/mech') Mech
                                     a.dropdown-item(href='/ladder/mastermind') Mastermind
+                                    a.dropdown-item(href='/ladder/atlantean') Atlantean
                         else
                             li.nav-item.dropdown
                                 a#dropdown01.nav-link.dropdown-toggle(href='/ladder/overall', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
@@ -90,6 +91,7 @@ html
                                     a.dropdown-item(href='/ladder/grove') Grove
                                     a.dropdown-item(href='/ladder/mech') Mech
                                     a.dropdown-item(href='/ladder/mastermind') Mastermind
+                                    a.dropdown-item(href='/ladder/atlantean') Atlantean
                         if(title=="Games")
                             li.nav-item.active
                                 a.nav-link(href='/replay') Replay
@@ -137,15 +139,11 @@ html
                                 a.dropdown-item(href='https://test.ltdstats.com', target="_blank") Old Website
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
-                            input#playername.form-control(type='text', placeholder='Search', aria-label='Search')
+                            input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
                             button.btn.btn-outline-success.my-sm-0(onclick="setPlayer();") Search
-                    if(title.includes("Ladder") || title.includes("Player Stats") || title.includes("Livegame") || title.includes("Units"))
+                    if(title.includes("Ladder") || title.includes("Livegame") || title.includes("Units"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
-                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
-                    if(title.includes("Daily"))
-                        .form-inline.my-2.my-lg-0
-                            input#playername.form-control.mr-sm-2(type='date', placeholder='Search', aria-label='Search')
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search
                     if(title.includes("Compare"))
                         .form-inline.my-2.my-lg-0

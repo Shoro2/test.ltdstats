@@ -120,18 +120,19 @@ document.body.onload = function () {
     else if (window.location.href.includes("mastermind")) {
         type = "mastermindElo";
     }
+    else if (window.location.href.includes("atlantean")) {
+        type = "atlanteanElo";
+    }
     else {
         type = "overallElo";
     }
     console.log(window.location.href);
     if (playerurl !== null) {
         queryRank(playerurl, type);
-        console.log("getrank");
     }
     else {
 
         queryLadder(100, 0, type);
-        console.log("getladder");
     }
 };
 
@@ -167,8 +168,8 @@ function parsePlayers(myPlayers, type) {
             for (var i = 0; i < players.length; i++) {
                 players[i].statistics = JSON.parse(players[i].statistics);
                 var row = tabelle.insertRow(i + 1);
-                var cell = [21];
-                for (var e = 0; e < 21; e++) {
+                var cell = [24];
+                for (var e = 0; e < 24; e++) {
                     cell[e] = row.insertCell(e);
                     cell[e].classList.add("td_" + e);
                 }
@@ -212,6 +213,14 @@ function parsePlayers(myPlayers, type) {
                     players[i].statistics.mastermindPeakElo = 1000;
                     players[i].statistics.mastermindPeakEloThisSeason = 1000;
                 }
+                if (players[i].statistics.atlanteanPlayed == null || players[i].statistics.atlanteanWins == null) {
+                    if (players[i].statistics.atlanteanPlayed == null) players[i].statistics.atlanteanPlayed = 0;
+                    players[i].statistics.atlanteanElo = 1000;
+                    players[i].statistics.atlanteanWins = 0;
+                    players[i].statistics.atlanteanLosses = 0;
+                    players[i].statistics.atlanteanPeakElo = 1000;
+                    players[i].statistics.atlanteanPeakEloThisSeason = 1000;
+                }
                 if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
                 if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
                 if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
@@ -224,11 +233,13 @@ function parsePlayers(myPlayers, type) {
                 var winchance_forsaken = (players[i].statistics.forsakenWins / players[i].statistics.forsakenPlayed * 100).toFixed(2);
                 var winchance_mech = (players[i].statistics.mechWins / players[i].statistics.mechPlayed * 100).toFixed(2);
                 var winchance_mastermind = (players[i].statistics.mastermindWins / players[i].statistics.mastermindPlayed * 100).toFixed(2);
+                var winchance_atlantean = (players[i].statistics.atlanteanWins / players[i].statistics.atlanteanPlayed * 100).toFixed(2);
                 if (winchance_element === "NaN") winchance_element = 0;
                 if (winchance_grove === "NaN") winchance_grove = 0;
                 if (winchance_forsaken === "NaN") winchance_forsaken = 0;
                 if (winchance_mech === "NaN") winchance_mech = 0;
                 if (winchance_mastermind === "NaN") winchance_mastermind = 0;
+                if (winchance_atlantean === "NaN") winchance_atlantean = 0;
                 cell[0].innerHTML = i + 1;
                 cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
                 cell[2].innerHTML = players[i].statistics.overallElo;
@@ -250,7 +261,9 @@ function parsePlayers(myPlayers, type) {
                 cell[18].innerHTML = players[i].statistics.mastermindPlayed;
                 cell[19].innerHTML = players[i].statistics.mastermindWins;
                 cell[20].innerHTML = winchance_mastermind;
-
+                cell[21].innerHTML = players[i].statistics.atlanteanPlayed;
+                cell[22].innerHTML = players[i].statistics.atlanteanWins;
+                cell[23].innerHTML = winchance_atlantean;
             }
             break;
         case "elementElo":
@@ -426,6 +439,41 @@ function parsePlayers(myPlayers, type) {
                 cell[9].innerHTML = players[i].statistics.mastermindElo;
                 cell[10].innerHTML = players[i].statistics.mastermindPeakElo;
                 cell[11].innerHTML = players[i].statistics.mastermindPeakEloThisSeason;
+            }
+            break;
+        case "atlanteanElo":
+            for (i = 0; i < players.length; i++) {
+                players[i].statistics = JSON.parse(players[i].statistics);
+                row = tabelle.insertRow(i + 1);
+                cell = [21];
+                for (e = 0; e < 21; e++) {
+                    cell[e] = row.insertCell(e);
+                    cell[e].classList.add("td_" + e);
+                }
+
+                if (players[i].statistics.wins == null) players[i].statistics.wins = 0;
+                if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
+                if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
+                if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                if (players[i].statistics.atlanteanPeakElo == null && players[i].statistics.atlanteanPeakEloThisSeason == null) players[i].statistics.atlanteanPeakElo = players[i].statistics.atlanteanElo;
+                if (players[i].statistics.atlanteanPeakElo == null && players[i].statistics.atlanteanPeakEloThisSeason !== null) players[i].statistics.atlanteanPeakElo = players[i].statistics.atlanteanPeakEloThisSeason;
+                if (players[i].statistics.atlanteanPeakEloThisSeason == null) players[i].statistics.atlanteanPeakEloThisSeason = players[i].statistics.atlanteanPeakElo;
+                totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
+                totalwins = players[i].statistics.wins;
+                winchance_atlantean = (players[i].statistics.atlanteanWins / players[i].statistics.atlanteanPlayed * 100).toFixed(2);
+                if (winchance_atlantean === "NaN") winchance_atlantean = 0;
+                cell[0].innerHTML = i + 1;
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[2].innerHTML = players[i].statistics.overallElo;
+                cell[3].innerHTML = totalgames;
+                cell[4].innerHTML = totalwins;
+                cell[5].innerHTML = totalgames - totalwins;
+                cell[6].innerHTML = players[i].statistics.atlanteanPlayed;
+                cell[7].innerHTML = players[i].statistics.atlanteanWins;
+                cell[8].innerHTML = winchance_atlantean;
+                cell[9].innerHTML = players[i].statistics.atlanteanElo;
+                cell[10].innerHTML = players[i].statistics.atlanteanPeakElo;
+                cell[11].innerHTML = players[i].statistics.atlanteanPeakEloThisSeason;
             }
             break;
     }

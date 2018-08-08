@@ -24,7 +24,7 @@ function getPlayer() {
 }
 
 function scanUnits() {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar", "eggsack", "Hydra"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -288,6 +288,14 @@ function scanUnits() {
                 url = "/img/icons/OceanTemplar.png";
                 unit_type = "Ocean%20Templar";
                 break;
+            case "azeria":
+                var url = "/img/icons/Azeria.png";
+                var unit_type = "Azeria";
+                break;
+            case "priestess_of_the_abyss":
+                var url = "/img/icons/PriestessOfTheAbyss.png";
+                var unit_type = "Priestess%20of%20the%20Abyss";
+                break;
             case "eggsack":
                 url = "/img/icons/Eggsack.png";
                 unit_type = "Eggsack";
@@ -415,6 +423,6 @@ function loadFighter(unitname) {
 
 document.onkeydown = function (event) {
     if (event.keyCode === 13) {
-        if (event.target.id === "playername") setPlayer();
+        if (event.target.id === "playername") getPlayer();
     }
 };

@@ -284,11 +284,19 @@ function addPicture(y, x, unit, player) {
             url = "/img/icons/OceanTemplar.png";
             unit_type = "Ocean Templar";
             break;
+        case "azeria":
+            var url = "/img/icons/Azeria.png";
+            var unit_type = "Azeria";
+            break;
+        case "priestess_of_the_abyss":
+            var url = "/img/icons/PriestessOfTheAbyss.png";
+            var unit_type = "Priestess of the Abyss";
+            break;
         case "eggsack":
             url = "/img/icons/Eggsack.png";
             unit_type = "Eggsack";
             break;
-        case "Hydra":
+        case "hydra":
             url = "/img/icons/Hydra.png";
             unit_type = "Hydra";
             break;
@@ -658,23 +666,67 @@ function searchPlayers() {
     }
 }
 
-function parseTopPlayer(players) {
-    console.log(players);
+function parseTopPlayer(players, legion) {
     var result = document.getElementById("result");
     result.innerHTML = "";
+    switch (legion) {
+        case "element":
+            var legion_num = 0;
+            break;
+        case "grove":
+            var legion_num = 1;
+            break;
+        case "forsaken":
+            var legion_num = 2;
+            break;
+        case "mech":
+            var legion_num = 3;
+            break;
+        case "atlantean":
+            var legion_num = 4;
+            break;
+        case "mastermind":
+            var legion_num = 5;
+            break;
+    }
     for (var i = 0; i < players.length; i++) {
-        result.innerHTML += "<br> <div id='player_" + i + "' onclick='showGames(" + i + ")'>" + players[i].playername + " Elo: " + players[i].statistics.overallElo + "</div>";
-        console.log(players[i].playername);
+        result.innerHTML += "<br> <div id='player_" + i + "' onclick='showGames(" + i + ", " + legion_num + ")'>" + players[i].playername + " Elo: " + players[i].statistics.overallElo + "</div>";
     }
     result.innerHTML += "<br>";
     result.style.display = "inherit";
 }
 
-function showGames(nummer) {
+function showGames(nummer, legion) {
     var result = document.getElementById("result");
     result.innerHTML = "";
-    for (var i = 0; i < 10; i++) {
-        result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", " + nummer + ")'>" + players[nummer].filteredGamesQuery.games[i].game_id + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
+    switch (legion) {
+        case 0:
+            legion = "Element";
+            break;
+        case 1:
+            legion = "Grove";
+            break;
+        case 2:
+            legion = "Forsaken";
+            break;
+        case 3:
+            legion = "Mech";
+            break;
+        case 4:
+            legion = "Atlantean";
+            break;
+        case 5:
+            legion = "Mastermind";
+            break;
+    }
+    var games_results = 0;
+    for (var i = 0; i < players[nummer].filteredGamesQuery.games.length; i++) {
+        if (players[nummer].filteredGamesQuery.games[i].legion == legion) {
+            games_results++;
+            result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", " + nummer + ")'>" + players[nummer].filteredGamesQuery.games[i].game_id + " Legion: " + players[nummer].filteredGamesQuery.games[i].legion + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
+            if (games_results == 10) break;
+        }
+        
     }
     result.innerHTML += "<br>";
 }
@@ -728,7 +780,7 @@ function queryTopPlayer(legion) {
         }
         console.log(result);
         players = result.filteredPlayers.players;
-        parseTopPlayer(players);
+        parseTopPlayer(players, legion);
         document.getElementById("mitte").style.display = "none";
         return players;
     }, legion);

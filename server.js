@@ -3,7 +3,7 @@
 const express = require('express');
 const jquery = require('jquery');
 const tabmenu = require('./public/js/tabmenu');
-require("./public/js/sqlcon")
+require("./private/sqlcon.js")
 const chart = require('chart.js');
 const favicon = require('serve-favicon');
 
@@ -119,6 +119,12 @@ app.get('/ladder/mech', (req, res) => {
 app.get('/ladder/mastermind', (req, res) => {
     res.render('ladder/mastermindladder', {
         title: 'Mastermind Ladder'
+    })
+});
+
+app.get('/ladder/atlantean', (req, res) => {
+    res.render('ladder/atlanteanladder', {
+        title: 'Atlantean Ladder'
     })
 });
 
@@ -549,7 +555,7 @@ app.get('/api/replay/getTopPlayer', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
-        body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion + 'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 20) {games{game_id,gameresult}}}}}' }),
+        body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion + 'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 50) {games{game_id,gameresult,legion}}}}}' }),
     })
         .then(function (response) {
             if (response.ok) {

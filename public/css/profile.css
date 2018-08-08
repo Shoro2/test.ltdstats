@@ -229,13 +229,19 @@
 }
 
 #forsaken {
-    background-color: #8a4747;
+    background-color: #ae0606;
     padding: 1%;
     border-radius: 10px;
 }
 
 #mech {
     background-color: #90c5ff;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+#atlantean {
+    background-color: #b10ad1;
     padding: 1%;
     border-radius: 10px;
 }

@@ -47,6 +47,12 @@ block content
                     input.filter_input#checkbox19(type="checkbox", name="filter", value="Wins Mastermind", onclick='saveTick(19);')
                 label.filter_label(onclick="getFilters();") Winchance Mastermind
                     input.filter_input#checkbox20(type="checkbox", name="filter", value="Winchance Mastermind", onclick='saveTick(20);')
+                label.filter_label(onclick="getFilters();") Games Atlantean
+                    input.filter_input#checkbox21(type="checkbox", name="filter", value="Games Mastermind", onclick='saveTick(21);')
+                label.filter_label(onclick="getFilters();") Wins Atlantean
+                    input.filter_input#checkbox22(type="checkbox", name="filter", value="Wins Mastermind", onclick='saveTick(22);')
+                label.filter_label(onclick="getFilters();") Winchance Atlantean
+                    input.filter_input#checkbox23(type="checkbox", name="filter", value="Winchance Mastermind", onclick='saveTick(23);')
                 label.filter_label#selectall(onclick="selectNone()") Unselect all
             table.ladder#myladder
                 tr.header
@@ -71,6 +77,9 @@ block content
                     th.table_header#th18(onclick="sortTable(18)")
                     th.table_header#th19(onclick="sortTable(19)")
                     th.table_header#th20(onclick="sortTable(20)")
+                    th.table_header#th21(onclick="sortTable(21)")
+                    th.table_header#th22(onclick="sortTable(22)")
+                    th.table_header#th23(onclick="sortTable(23)")
         script(src="/js/ladder_sort.js")
         script(src="/js/ladder.js")
         script(src="/js/cookies.js")

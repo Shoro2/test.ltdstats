@@ -50,3 +50,16 @@
     overflow:auto;
     padding:1%;
 }
+
+.newsbox::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+.newsbox::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}

@@ -99,96 +99,104 @@ function createBarGraph(data) {
     switch (abfrage) {
         case "workersperwave":
             data = data.stats.legionAverageWorkersPerWave;
-            var totalgames = 0;
+            var total_picks = 0;
             var workersperwave = [];
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 workersperwave[i] = new Array(21);
             }
-            //0: element
-            //1: forsaken
-            //2: grove
-            //3: mastermind
-            //4: mech
-            //5: atlantean
+            //0: atlantean
+            //1: element
+            //2: forsaken
+            //3: grove
+            //4: mastermind
+            //5: mech
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         workersperwave[0][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         workersperwave[1][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         workersperwave[2][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         workersperwave[3][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         workersperwave[4][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Mech":
+                        workersperwave[5][data[i].wave - 1] = data[i].workers;
                         break;
                 }
             }
             var meinText = "Average Workercount per Wave";
             break;
         case "winrates":
-            var totalgames = 0;
+            var total_picks = 0;
             data = data.stats.legionPickWinRate;
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
-                totalgames += data[i].gamesPicked;
+                total_picks += data[i].gamesPicked;
             }
             var pickchance = [];
             var winchance = [];
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
-                        pickchance[0] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
+                    case "Atlantean":
+                        pickchance[0] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
                         winchance[0] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
                         break;
-                    case "Forsaken":
-                        pickchance[1] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
+                    case "Element":
+                        pickchance[1] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
                         winchance[1] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
                         break;
-                    case "Grove":
-                        pickchance[2] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
+                    case "Forsaken":
+                        pickchance[2] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
                         winchance[2] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
                         break;
-                    case "Mastermind":
-                        pickchance[3] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
+                    case "Grove":
+                        pickchance[3] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
                         winchance[3] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
                         break;
-                    case "Mech":
-                        pickchance[4] = ((data[i].gamesPicked / totalgames) * 100).toFixed(2);
+                    case "Mastermind":
+                        pickchance[4] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
                         winchance[4] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        break;
+                    case "Mech":
+                        pickchance[5] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
+                        winchance[5] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
                         break;
                 }
             }
-            console.log(totalgames);
-            var meinText = "Pick- & Winrates per Legion in % (Total Games: " + totalgames + ")";
+            var meinText = "Pick- & Winrates per Legion in % (Total Games: " + total_picks + ")";
             break;
         case "networthperwave":
             data = data.stats.legionAverageNetWorthPerWave;
             var networthperwave = [];
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 networthperwave[i] = new Array(21);
             }
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         networthperwave[0][data[i].wave - 1] = data[i].networth;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         networthperwave[1][data[i].wave - 1] = data[i].networth;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         networthperwave[2][data[i].wave - 1] = data[i].networth;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         networthperwave[3][data[i].wave - 1] = data[i].networth;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         networthperwave[4][data[i].wave - 1] = data[i].networth;
+                        break;
+                    case "Mech":
+                        networthperwave[5][data[i].wave - 1] = data[i].networth;
                         break;
                 }
             }
@@ -197,25 +205,28 @@ function createBarGraph(data) {
         case "valueonend":
             data = data.stats.legionAverageValueByEndingWave;
             var valueonend = [];
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 valueonend[i] = new Array(21);
             }
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         valueonend[0][data[i].wave - 1] = data[i].value;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         valueonend[1][data[i].wave - 1] = data[i].value;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         valueonend[2][data[i].wave - 1] = data[i].value;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         valueonend[3][data[i].wave - 1] = data[i].value;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         valueonend[4][data[i].wave - 1] = data[i].value;
+                        break;
+                    case "Mech":
+                        valueonend[5][data[i].wave - 1] = data[i].value;
                         break;
                 }
             }
@@ -224,25 +235,28 @@ function createBarGraph(data) {
         case "incomeonend":
             data = data.stats.legionAverageIncomeByEndingWave;
             var incomeonend = [];
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 incomeonend[i] = new Array(21);
             }
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         incomeonend[0][data[i].wave - 1] = data[i].income;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         incomeonend[1][data[i].wave - 1] = data[i].income;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         incomeonend[2][data[i].wave - 1] = data[i].income;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         incomeonend[3][data[i].wave - 1] = data[i].income;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         incomeonend[4][data[i].wave - 1] = data[i].income;
+                        break;
+                    case "Mech":
+                        incomeonend[5][data[i].wave - 1] = data[i].income;
                         break;
                 }
             }
@@ -251,25 +265,28 @@ function createBarGraph(data) {
         case "workersonend":
             data = data.stats.legionAverageWorkersByEndingWave;
             var workersonend = [];
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 workersonend[i] = new Array(21);
             }
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         workersonend[0][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         workersonend[1][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         workersonend[2][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         workersonend[3][data[i].wave - 1] = data[i].workers;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         workersonend[4][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Mech":
+                        workersonend[5][data[i].wave - 1] = data[i].workers;
                         break;
                 }
             }
@@ -284,20 +301,23 @@ function createBarGraph(data) {
             }
             for (var i = 0; i < data.length; i++) {
                 switch (data[i].legion) {
-                    case "Element":
+                    case "Atlantean":
                         leaksonend[0][data[i].wave - 1] = data[i].leaks;
                         break;
-                    case "Forsaken":
+                    case "Element":
                         leaksonend[1][data[i].wave - 1] = data[i].leaks;
                         break;
-                    case "Grove":
+                    case "Forsaken":
                         leaksonend[2][data[i].wave - 1] = data[i].leaks;
                         break;
-                    case "Mastermind":
+                    case "Grove":
                         leaksonend[3][data[i].wave - 1] = data[i].leaks;
                         break;
-                    case "Mech":
+                    case "Mastermind":
                         leaksonend[4][data[i].wave - 1] = data[i].leaks;
+                        break;
+                    case "Mech":
+                        leaksonend[5][data[i].wave - 1] = data[i].leaks;
                         break;
                 }
             }
@@ -338,12 +358,12 @@ function createBarGraph(data) {
     switch (abfrage) {
         case "winrates":
             //calc winrates
-            myChart2.data.labels.push("Element", "Forsaken", "Grove", "Mastermind", "Mech");
-            myChart2.data.datasets.push({ label: "Pickrate", data: [], backgroundColor: ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+            myChart2.data.labels.push("Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech");
+            myChart2.data.datasets.push({ label: "Pickrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
             myChart2.update();
-            myChart2.data.datasets.push({ label: "Winrate", data: [], backgroundColor: ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+            myChart2.data.datasets.push({ label: "Winrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
             myChart2.update();
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets[0].data.push(pickchance[i]);
                 myChart2.update();
                 myChart2.data.datasets[1].data.push(winchance[i]);
@@ -352,7 +372,7 @@ function createBarGraph(data) {
             break;
         case "workersperwave":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -367,11 +387,13 @@ function createBarGraph(data) {
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(workersperwave[4][i]);
                 myChart2.update();
+                myChart2.data.datasets[5].data.push(workersperwave[5][i]);
+                myChart2.update();
             }
             break;
         case "networthperwave":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -386,11 +408,13 @@ function createBarGraph(data) {
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(networthperwave[4][i]);
                 myChart2.update();
+                myChart2.data.datasets[5].data.push(networthperwave[5][i]);
+                myChart2.update();
             }
             break;
         case "valueonend":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -405,11 +429,13 @@ function createBarGraph(data) {
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(valueonend[4][i]);
                 myChart2.update();
+                myChart2.data.datasets[5].data.push(valueonend[5][i]);
+                myChart2.update();
             }
             break;
         case "incomeonend":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -424,11 +450,13 @@ function createBarGraph(data) {
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(incomeonend[4][i]);
                 myChart2.update();
+                myChart2.data.datasets[5].data.push(incomeonend[5][i]);
+                myChart2.update();
             }
             break;
         case "workersonend":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -443,11 +471,13 @@ function createBarGraph(data) {
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(workersonend[4][i]);
                 myChart2.update();
+                myChart2.data.datasets[5].data.push(workersonend[5][i]);
+                myChart2.update();
             }
             break;
         case "leaksonend":
             myChart2.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 6; i++) {
                 myChart2.data.datasets.push({ label: legions[i], data: [], backgroundColor: graphColor[i], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
                 myChart2.update();
             }
@@ -461,6 +491,8 @@ function createBarGraph(data) {
                 myChart2.data.datasets[3].data.push(leaksonend[3][i]);
                 myChart2.update();
                 myChart2.data.datasets[4].data.push(leaksonend[4][i]);
+                myChart2.update();
+                myChart2.data.datasets[5].data.push(leaksonend[5][i]);
                 myChart2.update();
             }
             break;

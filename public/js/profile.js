@@ -266,6 +266,24 @@ function loadStats(player) {
     if (typeof player.statistics.mastermindXp == 'undefined') player_mastermind_xp = 0;
     player_mastermind_level = getPlayerLevel(player_mastermind_xp);
 
+    //atlantean
+    player_atlantean_elo = player.statistics.atlanteanElo;
+    if (typeof player.statistics.atlanteanElo == 'undefined') player_atlantean_elo = 1000;
+    player_atlantean_peakelo = player.statistics.atlanteanPeakElo;
+    if (typeof player.statistics.atlanteanPeakElo == 'undefined') player_atlantean_peakelo = player.statistics.atlanteanPeakEloThisSeason;
+    if (typeof player.statistics.atlanteanPeakEloThisSeason == 'undefined') player_atlantean_peakelo = 1000;
+    player_atlantean_games = player.statistics.atlanteanPlayed;
+    if (typeof player.statistics.atlanteanPlayed == 'undefined') player_atlantean_games = 0;
+    player_atlantean_wins = player.statistics.atlanteanWins;
+    if (typeof player.statistics.atlanteanWins == 'undefined') player_atlantean_wins = 0;
+    player_atlantean_winchance = ((player_atlantean_wins / player_atlantean_games) * 100).toFixed(2);
+    if (player_atlantean_winchance == 'NaN') player_atlantean_winchance = 0;
+    player_atlantean_losses = player.statistics.atlanteanLosses;
+    if (typeof player.statistics.atlanteanLosses == 'undefined') player_atlantean_losses = 0;
+    player_atlantean_xp = player.statistics.atlanteanXp;
+    if (typeof player.statistics.atlanteanXp == 'undefined') player_atlantean_xp = 0;
+    player_atlantean_level = getPlayerLevel(player_atlantean_xp);
+
     player_crossgames = "5";
     player_partygames = "10";
     player_bestfriend = "YourMoma";
@@ -277,11 +295,12 @@ function loadStats(player) {
 
     //icon für race mit meisten wins
     if (player_element_wins > player_forsaken_wins && player_element_wins > player_grove_wins && player_element_wins > player_mech_wins && player_element_wins > player_mastermind_wins) var bgimage = "element_2.png";
-    if (player_grove_wins > player_forsaken_wins && player_grove_wins > player_element_wins && player_grove_wins > player_mech_wins && player_grove_wins > player_mastermind_wins) var bgimage = "grove_2.png";
-    if (player_forsaken_wins > player_element_wins && player_forsaken_wins > player_grove_wins && player_forsaken_wins > player_mech_wins && player_forsaken_wins > player_mastermind_wins) var bgimage = "forsaken_2.png";
-    if (player_mech_wins > player_forsaken_wins && player_mech_wins > player_grove_wins && player_mech_wins > player_element_wins && player_mech_wins > player_mastermind_wins) var bgimage = "mech_2.png";
-    if (player_mastermind_wins > player_forsaken_wins && player_mastermind_wins > player_grove_wins && player_mastermind_wins > player_mech_wins && player_element_wins < player_mastermind_wins) var bgimage = "mastermind_2.png";
-
+    else if (player_grove_wins > player_forsaken_wins && player_grove_wins > player_element_wins && player_grove_wins > player_mech_wins && player_grove_wins > player_mastermind_wins) var bgimage = "grove_2.png";
+    else if (player_forsaken_wins > player_element_wins && player_forsaken_wins > player_grove_wins && player_forsaken_wins > player_mech_wins && player_forsaken_wins > player_mastermind_wins) var bgimage = "forsaken_2.png";
+    else if (player_mech_wins > player_forsaken_wins && player_mech_wins > player_grove_wins && player_mech_wins > player_element_wins && player_mech_wins > player_mastermind_wins) var bgimage = "mech_2.png";
+    else if (player_mastermind_wins > player_forsaken_wins && player_mastermind_wins > player_grove_wins && player_mastermind_wins > player_mech_wins && player_element_wins < player_mastermind_wins) var bgimage = "mastermind_2.png";
+    else if (player_atlantean_wins > player_forsaken_wins && player_atlantean_wins > player_grove_wins && player_atlantean_wins > player_mech_wins && player_element_wins < player_atlantean_wins) var bgimage = "atlantean_2.png";
+    else var bgimage = "mastermind_2.png";
     //parse
     document.getElementById("player_name1").textContent = player_name;
     document.getElementById("player_elo1").textContent = player_overall_elo + " (" + player_overall_peakelo + ")";
@@ -350,32 +369,38 @@ function parseStats() {
     document.getElementById("mastermind_elo").textContent = "Elo: " + player_mastermind_elo;
     document.getElementById("mastermind_peakelo").textContent = "Peak Elo: " + player_mastermind_peakelo;
     document.getElementById("mastermind_games").textContent = "Games: " + player_mastermind_games;
-    document.getElementById("mastermind_wins").textContent = "Wins: " + player_mastermind_wins + " (" + player_mastermind_winchance + ")";
+    document.getElementById("mastermind_wins").textContent = "Wins: " + player_mastermind_wins + " (" + player_mastermind_winchance + "%)";
     document.getElementById("mastermind_level").textContent = "Level: " + player_mastermind_level + " (" + player_mastermind_xp + " XP)";
 
     document.getElementById("element_elo").textContent = "Elo: " + player_element_elo;
     document.getElementById("element_peakelo").textContent = "Peak Elo: " + player_element_peakelo;
     document.getElementById("element_games").textContent = "Games: " + player_element_games;
-    document.getElementById("element_wins").textContent = "Wins: " + player_element_wins + " (" + player_element_winchance + ")";
+    document.getElementById("element_wins").textContent = "Wins: " + player_element_wins + " (" + player_element_winchance + "%)";
     document.getElementById("element_level").textContent = "Level: " + player_element_level + " (" + player_element_xp + " XP)";
 
     document.getElementById("grove_elo").textContent = "Elo: " + player_grove_elo;
     document.getElementById("grove_peakelo").textContent = "Peak Elo: " + player_grove_peakelo;
     document.getElementById("grove_games").textContent = "Games: " + player_grove_games;
-    document.getElementById("grove_wins").textContent = "Wins: " + player_grove_wins + " (" + player_grove_winchance + ")";
+    document.getElementById("grove_wins").textContent = "Wins: " + player_grove_wins + " (" + player_grove_winchance + "%)";
     document.getElementById("grove_level").textContent = "Level: " + player_grove_level + " (" + player_grove_xp + " XP)";
 
     document.getElementById("forsaken_elo").textContent = "Elo: " + player_forsaken_elo;
     document.getElementById("forsaken_peakelo").textContent = "Peak Elo: " + player_forsaken_peakelo;
     document.getElementById("forsaken_games").textContent = "Games: " + player_forsaken_games;
-    document.getElementById("forsaken_wins").textContent = "Wins: " + player_forsaken_wins + " (" + player_forsaken_winchance + ")";
+    document.getElementById("forsaken_wins").textContent = "Wins: " + player_forsaken_wins + " (" + player_forsaken_winchance + "%)";
     document.getElementById("forsaken_level").textContent = "Level: " + player_forsaken_level + " (" + player_forsaken_xp + " XP)";
 
     document.getElementById("mech_elo").textContent = "Elo: " + player_mech_elo;
     document.getElementById("mech_peakelo").textContent = "Peak Elo: " + player_mech_peakelo;
     document.getElementById("mech_games").textContent = "Games: " + player_mech_games;
-    document.getElementById("mech_wins").textContent = "Wins: " + player_mech_wins + " (" + player_mech_winchance + ")";
+    document.getElementById("mech_wins").textContent = "Wins: " + player_mech_wins + " (" + player_mech_winchance + "%)";
     document.getElementById("mech_level").textContent = "Level: " + player_mech_level + " (" + player_mech_xp + " XP)";
+
+    document.getElementById("atlantean_elo").textContent = "Elo: " + player_atlantean_elo;
+    document.getElementById("atlantean_peakelo").textContent = "Peak Elo: " + player_atlantean_peakelo;
+    document.getElementById("atlantean_games").textContent = "Games: " + player_atlantean_games;
+    document.getElementById("atlantean_wins").textContent = "Wins: " + player_atlantean_wins + " (" + player_atlantean_winchance + "%)";
+    document.getElementById("atlantean_level").textContent = "Level: " + player_atlantean_level + " (" + player_atlantean_xp + " XP)";
 }
 
 
@@ -402,14 +427,14 @@ function drawPlayerBuilds(gameX) {
     //console.log("drawPlayerBuilds game:");
     //console.log(game);
     player_count = 51; //amount of games
-    games = [0, 0, 0, 0, 0];
-    gamesNeu = [0, 0, 0, 0, 0];
-    wins = [0, 0, 0, 0, 0];
+    games = [0, 0, 0, 0, 0, 0];
+    gamesNeu = [0, 0, 0, 0, 0, 0];
+    wins = [0, 0, 0, 0, 0, 0];
     anzahl = 0;
-    leaks = new Array(5);
-    sends = new Array(5);
-    sendchance = new Array(5)
-    builds = new Array(5);
+    leaks = new Array(6);
+    sends = new Array(6);
+    sendchance = new Array(6)
+    builds = new Array(6);
     for (var i = 0; i < leaks.length; i++) {
         leaks[i] = new Array(21);
         sends[i] = new Array(21);
@@ -444,6 +469,9 @@ function drawPlayerBuilds(gameX) {
         case "Mech":
             target_race = 4;
             break;
+        case "Atlantean":
+            target_race = 5;
+            break;
     }
 
     for (i = 0; i < game.length; i++) {
@@ -453,6 +481,7 @@ function drawPlayerBuilds(gameX) {
         2=Grove
         3=Forsaken
         4=Mech
+        5=Atlantean
         */
         if (game[i].queuetype === "Normal") //ranked only
         {
@@ -474,6 +503,9 @@ function drawPlayerBuilds(gameX) {
                     break;
                 case "Mech":
                     raceint = 4;
+                    break;
+                case "Atlantean":
+                    raceint = 5;
                     break;
             }
 
@@ -507,25 +539,21 @@ function drawPlayerBuilds(gameX) {
                     }
                 }
                 game[i].unitsPerWave[e].forEach(function (element) {
-
-                    //e=wave ;x=verschiedene units
+                    //e=wave ;x=different units
                     var anzahl = 0;
                     for (var x = 0; x < 60; x++) {
                         if (builds[raceint][e][x] != 0) {
-                            //einheit vorhanden
-                            //console.log(element.substring(0, element.indexOf("_unit")));
+                            //unit matching?
                             if (builds[raceint][e][x].includes(element.substring(0, element.indexOf("_unit")))) {
                                 anzahl = parseInt(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
                                 //console.log(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
                                 anzahl++;
                                 //console.log(element);
                                 builds[raceint][e][x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
-
                             }
                         }
-
                     }
-                    //einheit noch nicht vorhanden; f�ge an n�chster freie stelle ein
+                    //no match, add it
                     if (anzahl > 0 == false) {
                         for (var x = 0; x < 60; x++) {
                             if (builds[raceint][e][x] == 0) {
@@ -534,26 +562,22 @@ function drawPlayerBuilds(gameX) {
                             }
                         }
                     }
-
                 });
-
                 game[i].mercsSentPerWave[e].forEach(function (element) {
                     var anzahl = 0;
                     for (var x = 0; x < 60; x++) {
                         if (sends[raceint][e][x] != 0) {
-                            //einheit vorhanden
+                            //match
                             //console.log(element);
                             if (sends[raceint][e][x].includes(element)) {
                                 anzahl = parseInt(sends[raceint][e][x].substring(sends[raceint][e][x].indexOf(";") + 1));
                                 //console.log(builds[raceint][e][x].substring(builds[raceint][e][x].indexOf(";") + 1));
                                 anzahl++;
                                 sends[raceint][e][x] = element + ";" + anzahl;
-
                             }
                         }
-
                     }
-                    //einheit noch nicht vorhanden; f�ge an n�chster freie stelle ein
+                    //no match, add it
                     if (anzahl > 0 == false) {
 
                         for (var x = 0; x < 60; x++) {
@@ -564,14 +588,8 @@ function drawPlayerBuilds(gameX) {
                         }
                     }
                 });
-
             }
-
         }
-        else {
-            player_count++;
-        }
-
     }
     //console.log(sends);
 
@@ -890,19 +908,27 @@ function drawPlayerBuilds(gameX) {
                 case "king_claw":
                     var url = "/img/icons/KingClaw.png";
                     var unit_type = "King Claw";
-                    break
+                    break;
                 case "ocean_templar":
                     var url = "/img/icons/OceanTemplar.png";
                     var unit_type = "Ocean Templar";
-                    break
+                    break;
+                case "azeria":
+                    var url = "/img/icons/Azeria.png";
+                    var unit_type = "Azeria";
+                    break;
+                case "priestess_of_the_abyss":
+                    var url = "/img/icons/PriestessOfTheAbyss.png";
+                    var unit_type = "Priestess of the Abyss";
+                    break;
                 case "eggsack":
                     var url = "/img/icons/Eggsack.png";
                     var unit_type = "Eggsack";
-                    break
-                case "Hydra":
+                    break;
+                case "hydra":
                     var url = "/img/icons/Hydra.png";
                     var unit_type = "Hydra";
-                    break
+                    break;
                 default:
                     var url = "";
                     var unit_type = "empty";
@@ -984,7 +1010,7 @@ function listGames() {
 }
 
 function getGameDetails(pos, games) {
-    //console.log(games);
+    console.log(games[pos]);
     //console.log(pos);
     meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
     meinString1 = games[pos].gameDetails.filter(meinString => meinString.position == 2)[0];
@@ -1394,6 +1420,22 @@ function addPicture(y, x, unit) {
             var url = "/img/icons/OceanTemplar.png";
             var unit_type = "Ocean Templar";
             break
+        case "azeria":
+            var url = "/img/icons/Azeria.png";
+            var unit_type = "Azeria";
+            break;
+        case "priestess_of_the_abyss":
+            var url = "/img/icons/PriestessOfTheAbyss.png";
+            var unit_type = "Priestess of the Abyss";
+            break;
+        case "eggsack":
+            var url = "/img/icons/Eggsack.png";
+            var unit_type = "Eggsack";
+            break;
+        case "hydra":
+            var url = "/img/icons/Hydra.png";
+            var unit_type = "Hydra";
+            break;
         default:
             var url = "";
             var unit_type = "empty";
