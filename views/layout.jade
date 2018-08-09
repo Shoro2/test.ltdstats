@@ -46,6 +46,10 @@ html
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Tournaments")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, tournaments, tournament, competition, tourney, teams, team list, player list, best teams, masters cup, masters cup I, masters cup II")
             meta(name="description", content="Offical hosted Legion TD 2 tournaments.")
+        if(title.includes("Streams"))
+            meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Streams, Youtube, Twitch, Streamer")
+            meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, video, stream, streamer, youtube, twitch, good players, top players")
+            meta(name="description", content="Offical hosted Legion TD 2 tournaments.")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
     body
         header
@@ -132,6 +136,7 @@ html
                             a#dropdown02.nav-link.dropdown-toggle(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') More
                             div.dropdown-menu(aria-labelledby='dropdown02')
                                 a.dropdown-item(href='/tournaments') Tournaments
+                                a.dropdown-item(href='/streams') Featured Streams
                                 a.dropdown-item(href='/help') Help
                                 a.dropdown-item(href="/feedback") Feedback & Bugs
                                 a.dropdown-item(href='/cookies') Cookie Policy

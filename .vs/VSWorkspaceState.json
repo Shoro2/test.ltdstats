@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\public\\css",
-    "\\views",
-    "\\views\\guides",
-    "\\views\\guides\\forsaken",
-    "\\views\\guides\\general",
-    "\\views\\guides\\grove",
-    "\\views\\guides\\mastermind",
-    "\\views\\ladder"
+    "\\public\\css"
   ],
-  "SelectedNode": "\\public\\css\\ladder.css",
   "PreviewInSolutionExplorer": false
 }

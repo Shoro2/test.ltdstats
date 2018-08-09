@@ -162,197 +162,140 @@ app.get('/compare', (req, res) => {
 //Guides
 
 app.get('/guides', (req, res) => {
-    res.render('guides/searchguide', {
-        title: 'Guides',
-    })
-});
-
-app.get('/guides/search', (req, res) => {
-    res.render('guides/searchguide', {
-        title: 'Guides',
-    })
-});
-
-app.get('/guides/create', (req, res) => {
-    res.render('guides/createguide', {
-        title: 'Create Guide',
-        data: con
-    })
-});
-
-app.get('/guides/element', (req, res) => {
-    res.render('guides/element', {
-        title: 'Element Guides'
-    })
-});
-
-app.get('/guides/element/basics', (req, res) => {
-    res.render('guides/element/basics', {
-        title: 'Element Basics Guide'
-    })
-});
-
-app.get('/guides/element/wadi', (req, res) => {
-    res.render('guides/element/wadi', {
-        title: 'Wadi\'s Element Guide'
-    })
-});
-
-app.get('/guides/element/akitosvideo', (req, res) => {
-    res.render('guides/element/akitoselement', {
-        title: 'Akitos Element Guide'
-    })
-});
-
-app.get('/guides/grove', (req, res) => {
-    res.render('guides/grove', {
-        title: 'Grove Guides'
-    })
-});
-
-app.get('/guides/grove/theratedr', (req, res) => {
-    res.render('guides/grove/theratedr', {
-        title: 'TheRatedR´s Grove Guide'
-    })
-});
-
-app.get('/guides/grove/isotropvideo', (req, res) => {
-    res.render('guides/grove/isotropvideo', {
-        title: 'Isotrop´s & Weilbockt´s Grove Guide'
-    })
-});
-
-app.get('/guides/forsaken', (req, res) => {
-    res.render('guides/forsaken', {
-        title: 'Forsaken Guides'
-    })
-});
-
-app.get('/guides/forsaken/akitosvideo', (req, res) => {
-    res.render('guides/forsaken/akitosforsaken', {
-        title: 'Akitos Forsaken Guide'
-    })
-});
-
-app.get('/guides/forsaken/isotropvideo', (req, res) => {
-    res.render('guides/forsaken/isotropforsaken', {
-        title: 'Isotrop´s & Weilbockt´s Forsaken Guide'
-    })
-});
-
-app.get('/guides/mech', (req, res) => {
-    res.render('guides/mech', {
-        title: 'Mech Guides'
-    })
-});
-
-app.get('/guides/mech/cornep', (req, res) => {
-    res.render('guides/mech/cornep', {
-        title: 'Cornep´s Mech Guide'
-    })
-});
-
-app.get('/guides/mech/isotropvideo', (req, res) => {
-    res.render('guides/mech/isotropmech', {
-        title: 'Isotrop´s & Weilbockt´s Mech Guide'
-    })
-});
-
-app.get('/guides/mech/roshkatulmech', (req, res) => {
-    res.render('guides/mech/roshkatulsmech', {
-        title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
-    })
-});
-
-app.get('/guides/mastermind', (req, res) => {
-    res.render('guides/mastermind', {
-        title: 'Mastermind Guides'
-    })
-});
-
-app.get('/guides/mastermind/zitronenritter', (req, res) => {
-    res.render('guides/mastermind/zitronenritter', {
-        title: 'Zitronenritter´s Mastermind Guide'
-    })
-});
-
-app.get('/guides/mastermind/roshkatulroll', (req, res) => {
-    res.render('guides/mastermind/roshkatulmm', {
-        title: 'Roshkatul´s Low Quality Guide: How to pick your mastermind roll'
-    })
-});
-
-app.get('/guides/general', (req, res) => {
-    res.render('guides/general', {
-        title: 'General Guides'
-    })
-});
-
-app.get('/guides/general/spelldmg', (req, res) => {
-    res.render('guides/general/spelldmg', {
-        title: 'Legion TD2 mechanics: Spell Damage'
-    })
-});
-
-app.get('/guides/general/roshkatultips', (req, res) => {
-    res.render('guides/general/roshkatultips', {
-        title: 'Roshkatul´s 7 Tips for new players'
-    })
-});
-
-app.get('/guides/general/legionspells', (req, res) => {
-    res.render('guides/general/akitosspells', {
-        title: 'Akitos Legion Spells Guide'
-    })
-});
-
-
-app.get('/guides/general/simplestarter', (req, res) => {
-    res.render('guides/general/simplestarter', {
-        title: 'Teirdel´s Simple Starter Guide'
-    })
-});
-
-app.get('/guides/general/2v2', (req, res) => {
-    res.render('guides/general/2v2', {
-        title: 'Cornep´s Guides: 2v2 Guide'
-    })
-});
-
-app.get('/guides/general/improve', (req, res) => {
-    res.render('guides/general/improve', {
-        title: 'How to improve as a new Player'
-    })
-});
-
-app.get('/guides/general/kraken', (req, res) => {
-    res.render('guides/general/kraken', {
-        title: 'Cornep´s Guides: The Kraken'
-    })
-});
-
-app.get('/guides/general/lfgameguide', (req, res) => {
-    res.render('guides/general/lfgameguide', {
-        title: 'LForward´s Gameguide'
-    })
-});
-
-app.get('/guides/general/tilt', (req, res) => {
-    res.render('guides/general/tilt', {
-        title: 'Cornep´s Guides: Taming the Tilt'
-    })
-});
-
-app.get('/guides/general/whattosend', (req, res) => {
-    res.render('guides/general/whattosend', {
-        title: 'Cornep´s Guides: What to send'
-    })
-});
-
-app.get('/guides/general/sendingguide', (req, res) => {
-    res.render('guides/general/sendingguide', {
-        title: 'Niklas Guide: Sending in Legion TD2'
-    })
+    var guide = req.query.guide;
+    switch (guide) {
+        //element
+        case "elementbasics":
+            res.render('guides/element/basics', {
+                title: 'Element Basics Guide'
+            });
+            break;
+        case "wadiselement":
+            res.render('guides/element/wadi', {
+                title: 'Wadi\'s Element Guide'
+            });
+            break;
+        case "akitoselement":
+            res.render('guides/element/akitoselement', {
+                title: 'Akitos Element Guide'
+            });
+            break;
+        //grove
+        case "theratedrsgrove":
+            res.render('guides/grove/theratedr', {
+                title: 'TheRatedR´s Grove Guide'
+            });
+            break;
+        case "isotropsgrove":
+            res.render('guides/grove/isotropvideo', {
+                title: 'Isotrop´s & Weilbockt´s Grove Guide'
+            });
+            break;
+        //forsaken
+        case "akitosforsaken":
+            res.render('guides/forsaken/akitosforsaken', {
+                title: 'Akitos Forsaken Guide'
+            });
+            break;
+        case "isotropsforsaken":
+            res.render('guides/forsaken/isotropforsaken', {
+                title: 'Isotrop´s & Weilbockt´s Forsaken Guide'
+            });
+            break;
+        //mech
+        case "cornepsmech":
+            res.render('guides/mech/cornep', {
+                title: 'Cornep´s Mech Guide'
+            });
+            break;
+        case "isotropsmech":
+            res.render('guides/mech/isotropmech', {
+                title: 'Isotrop´s & Weilbockt´s Mech Guide'
+            });
+            break;
+        case "roshkatulsmech":
+            res.render('guides/mech/roshkatulsmech', {
+                title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
+            });
+            break;
+        //mastermind
+        case "zitronenrittersmm":
+            res.render('guides/mastermind/zitronenritter', {
+                title: 'Zitronenritter´s Mastermind Guide'
+            });
+            break;
+        case "roshkatulsmm":
+            res.render('guides/mastermind/roshkatulmm', {
+                title: 'Roshkatul´s Low Quality Guide: How to pick your mastermind roll'
+            });
+            break;
+        //general
+        case "spelldmg":
+            res.render('guides/general/spelldmg', {
+                title: 'Legion TD2 mechanics: Spell Damage'
+            });
+            break;
+        case "roshkatulstips":
+            res.render('guides/general/roshkatultips', {
+                title: 'Roshkatul´s 7 Tips for new players'
+            });
+            break;
+        case "legionspells":
+            res.render('guides/general/akitosspells', {
+                title: 'Akitos Legion Spells Guide'
+            });
+            break;
+        case "simplestarter":
+            res.render('guides/general/simplestarter', {
+                title: 'Teirdel´s Simple Starter Guide'
+            });
+            break;
+        case "2v2":
+            res.render('guides/general/2v2', {
+                title: 'Cornep´s Guides: 2v2 Guide'
+            });
+            break;
+        case "howtoimprove":
+            res.render('guides/general/improve', {
+                title: 'How to improve as a new Player'
+            });
+            break;
+        case "thekraken":
+            res.render('guides/general/kraken', {
+                title: 'Cornep´s Guides: The Kraken'
+            });
+            break;
+        case "lfsgameguide":
+            res.render('guides/general/lfgameguide', {
+                title: 'LForward´s Gameguide'
+            });
+            break;
+        case "tilt":
+            res.render('guides/general/tilt', {
+                title: 'Cornep´s Guides: Taming the Tilt'
+            });
+            break;
+        case "whattosend":
+            res.render('guides/general/whattosend', {
+                title: 'Cornep´s Guides: What to send'
+            });
+            break;
+        case "sendingguide":
+            res.render('guides/general/sendingguide', {
+                title: 'Niklas Guide: Sending in Legion TD2'
+            });
+            break;
+        case "sendvssave":
+            res.render('guides/general/sendvssave', {
+                title: 'Income sending vs Saving'
+            });
+            break;
+        default:
+            res.render('guides/searchguide', {
+                title: 'Guides',
+            });
+            break;
+    }
 });
 
 app.get('/about', (req, res) => {
@@ -445,38 +388,17 @@ app.get('/lihl', (req, res) => {
     })
 });
 
+app.get('/streams', (req, res) => {
+    res.render('streams', {
+        title: 'Featured Streams'
+    })
+});
+
 
 
 
 //sql abfragen
 
-app.get('/sql/fighter', (req, res) => {
-    con.query("SELECT * FROM ltdstats.fighter;", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/sql/legion', (req, res) => {
-    con.query("SELECT * FROM ltdstats.legion;", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/sql/attack', (req, res) => {
-    con.query("SELECT * FROM ltdstats.attack_types;", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/sql/defense', (req, res) => {
-    con.query("SELECT * FROM ltdstats.defense_types;", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
 
 app.get('/lihl/getPlayer', (req, res) => {
     var sql = "SELECT * FROM lihl.player order by elo desc";
@@ -495,10 +417,23 @@ app.get('/sql/rank', (req, res) => {
 });
 
 app.get('/sql/getGuides', (req, res) => {
-    con.query("SELECT * FROM ltdstats.guides ORDER BY patch DESC, type ASC", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
+    http.get('http://159.69.83.17:3000/guides?action=list', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            res.json(data);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
     });
+
 });
 
 //api abfragen

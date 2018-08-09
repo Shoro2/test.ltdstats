@@ -93,8 +93,8 @@ function createLineGraph(data) {
 
 function createBarGraph(data) {
     hideLoad();
-    var graphColor = ['rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'];
-    var legions = ["Element", "Forsaken", "Grove", "Mastermind", "Mech"];
+    var graphColor = ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'];
+    var legions = ["Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech"];
     // parse data
     switch (abfrage) {
         case "workersperwave":

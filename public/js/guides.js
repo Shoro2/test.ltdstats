@@ -60,7 +60,6 @@ function filterGuides() {
 function parseGuides() {
     clearGuides();
     tabelle = document.getElementById("guide_results");
-    console.log(guides_filtered);
     var selector = document.getElementById("patch");
     $("#table_of_items tr").remove();
     for (var i = 0; i < guides_filtered.length; i++) {
@@ -70,11 +69,11 @@ function parseGuides() {
             cell[e] = row.insertCell(e);
         }
         cell[0].innerHTML = i + 1;
-        cell[1].innerHTML = guides_filtered[i].owner;
+        cell[1].innerHTML = guides_filtered[i].creator;
         cell[2].innerHTML = guides_filtered[i].title;
         cell[3].innerHTML = guides_filtered[i].type;
-        cell[4].innerHTML = guides_filtered[i].patch;
-        cell[5].innerHTML = "<a href='" + guides_filtered[i].folder + "'>click</a>";
+        cell[4].innerHTML = guides_filtered[i].patch.replace("v","");
+        cell[5].innerHTML = "<a href='" + guides_filtered[i].url + "'>click</a>";
     }
 
 
@@ -121,7 +120,8 @@ function parsePatches() {
 
 function queryGuides() {
     sqlGetGuides(function (result) {
-        guides = result;
+        guides = JSON.parse(result);
+        console.log(guides);
         filterGuides();
         parsePatches();
         return guides;
