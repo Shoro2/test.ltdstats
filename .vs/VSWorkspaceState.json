@@ -1,7 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public\\css"
+    "\\private",
+    "\\public",
+    "\\public\\css",
+    "\\public\\js",
+    "\\views",
+    "\\views\\guides",
+    "\\views\\guides\\general",
+    "\\views\\guides\\mastermind"
   ],
+  "SelectedNode": "\\public\\js\\profile_stats.js",
   "PreviewInSolutionExplorer": false
 }
