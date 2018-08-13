@@ -177,31 +177,32 @@ function compareTeams() {
 }
 
 function calcStats() {
-    count_casual = new Array(4);
-    count_normal = new Array(4);
-    wins_casual = new Array(4);
-    wins_normal = new Array(4);
-    count_mm_picks = new Array(4);
-    count_mm_wins = new Array(4);
-    count_element_picks = new Array(4);
-    count_element_wins = new Array(4);
-    count_mech_picks = new Array(4);
-    count_mech_wins = new Array(4);
-    count_grove_picks = new Array(4);
-    count_grove_wins = new Array(4);
-    count_forsaken_picks = new Array(4);
-    count_forsaken_wins = new Array(4);
-    count_atlantean_picks = new Array(4);
-    count_atlantean_wins = new Array(4);
-
-    var builds = new Array(6);
-    for (var i = 0; i < builds.length; i++) {
-        builds[i] = new Array(60);
-        for (var a = 0; a < 60; a++) {
-            builds[i][a] = "";
-        }
-    }
+    
     for (var i = 0; i < 4; i++) {
+        count_casual = new Array(4);
+        count_normal = new Array(4);
+        wins_casual = new Array(4);
+        wins_normal = new Array(4);
+        count_mm_picks = new Array(4);
+        count_mm_wins = new Array(4);
+        count_element_picks = new Array(4);
+        count_element_wins = new Array(4);
+        count_mech_picks = new Array(4);
+        count_mech_wins = new Array(4);
+        count_grove_picks = new Array(4);
+        count_grove_wins = new Array(4);
+        count_forsaken_picks = new Array(4);
+        count_forsaken_wins = new Array(4);
+        count_atlantean_picks = new Array(4);
+        count_atlantean_wins = new Array(4);
+
+        var builds = new Array(6);
+        for (var e = 0; e < builds.length; e++) {
+            builds[e] = new Array(60);
+            for (var a = 0; a < 60; a++) {
+                builds[e][a] = "";
+            }
+        }
         console.log(player[i]);
 
         player[i].allGames.forEach(function (ele) {
@@ -275,6 +276,34 @@ function calcStats() {
             }
 
         });
+        console.log(builds);
+        for (var e = 0; e < 6; e++) {
+            try {
+                builds[i][e].sort(function (a, b) {
+                    if (a != 0) {
+                        var abstandA = a.indexOf(";") + 1;
+                        var lastA = a.substring(abstandA, a.length);
+                    }
+                    else lastA = 0;
+                    if (b != 0) {
+                        var abstandB = b.indexOf(";") + 1;
+                        var lastB = b.substring(abstandB, b.length);
+                    }
+                    else lastB = 0;
+                    if (parseInt(lastA) < parseInt(lastB)) {
+                        return 1;
+                    } else if (parseInt(lastA) > parseInt(lastB)) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+            }
+            catch{}
+        }
+            
+        
+        
         console.log(builds);
     }
 }

@@ -587,7 +587,7 @@ document.body.onload = function () {
         document.getElementById("mitte").style.display = "inherit";
         //hex to dez
         //console.log(playerurl.length)
-        if (playerurl.length === 16 || playerurl.length === 15) {
+        if (playerurl.length <= 16) {
             playerurl = h2d(playerurl);
         }
         queryGame(playerurl);

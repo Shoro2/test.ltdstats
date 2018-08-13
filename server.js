@@ -16,7 +16,6 @@ const http = require('http');
 const app = express();
 
 
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
@@ -443,7 +442,7 @@ app.get('/api/units', (req, res) => {
     var unitname = req.query.unitname;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
             query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconpath,abilities{name,tooltip,iconpath},armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health}}'
         }),
@@ -467,7 +466,7 @@ app.get('/api/replay/getGame', (req, res) => {
     var gameid = req.query.gameid;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '") { ts, leftkingpercenthp, rightkingpercenthp, gameDetails{ playername,position, wave, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave, incomePerWave, legionSpell } } }' }),
     })
         .then(function (response) {
@@ -489,7 +488,7 @@ app.get('/api/replay/getTopPlayer', (req, res) => {
     var legion = req.query.legion;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion + 'Elo", direction: DESC, limit: 10){players{playername,statistics,filteredGamesQuery(limit: 50) {games{game_id,gameresult,legion}}}}}' }),
     })
         .then(function (response) {
@@ -513,7 +512,7 @@ app.get('/api/ladder', (req, res) => {
     var offset = req.query.offset;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ filteredPlayers(orderby: "' + type + '", limit: ' + limit + ', direction: DESC, offset: ' + offset + ') { count, players{ playername, statistics } } }' }),
     })
         .then(function (response) {
@@ -537,7 +536,7 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
     var meinPlayer;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 100){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
     })
         .then(function (response) {
@@ -557,7 +556,7 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
                 for (var offset = 100; offset < games_count; offset = offset + 100) {
                     fetch('https://api.legiontd2.com/graphql', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
                         body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 100, offset: ' + offset + '){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
                     })
                         .then(function (response) {
@@ -590,7 +589,7 @@ app.get('/api/profile/playerGames', (req, res) => {
     var playername = req.query.playername;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{player(playername:"' + playername + '"){filteredGamesQuery(limit:200){games{game_id,ts,wave,time,queuetype,gameresult,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave}}}}}'}),
     })
         .then(function (response) {
@@ -612,7 +611,7 @@ app.get('/api/profile/player', (req, res) => {
     var playername = req.query.playername;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies}}' }),
     })
         .then(function (response) {
@@ -633,7 +632,7 @@ app.get('/api/profile/player', (req, res) => {
 app.get('/api/stats/elo', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{stats{eloDistribution{elo,percentile}}}' }),
     })
         .then(function (response) {
@@ -655,7 +654,7 @@ app.get('/api/stats/fighter', (req, res) => {
     var allFighters = [];
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{filteredUnits(legion:Mech){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
     })
         .then(function (response) {
@@ -672,7 +671,7 @@ app.get('/api/stats/fighter', (req, res) => {
             allFighters.push(data.data.filteredUnits.units);
             fetch('https://api.legiontd2.com/graphql', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
                 body: JSON.stringify({ query: '{filteredUnits(legion:Grove){units{name, attacktype, armortype, dps, health,totalvalue,goldcost,legion,abilities{name}}}}' }),
             })
                 .then(function (response) {
@@ -689,7 +688,7 @@ app.get('/api/stats/fighter', (req, res) => {
                     allFighters.push(data.data.filteredUnits.units);
                     fetch('https://api.legiontd2.com/graphql', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
                         body: JSON.stringify({ query: '{filteredUnits(legion:Forsaken){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
                     })
                         .then(function (response) {
@@ -706,7 +705,7 @@ app.get('/api/stats/fighter', (req, res) => {
                             allFighters.push(data.data.filteredUnits.units);
                             fetch('https://api.legiontd2.com/graphql', {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
                                 body: JSON.stringify({ query: '{filteredUnits(legion:Element){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
                             })
                                 .then(function (response) {
@@ -723,7 +722,7 @@ app.get('/api/stats/fighter', (req, res) => {
                                     allFighters.push(data.data.filteredUnits.units);
                                     fetch('https://api.legiontd2.com/graphql', {
                                         method: 'POST',
-                                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+                                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
                                         body: JSON.stringify({ query: '{filteredUnits(legion:Atlantean){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' }),
                                     })
                                         .then(function (response) {
@@ -751,7 +750,7 @@ app.get('/api/stats/legions/winrate', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionPickWinRate(' + type + ':"' + value + '") { legion, gamesPicked, gamesWon } } }' }),
     })
         .then(function (response) {
@@ -775,7 +774,7 @@ app.get('/api/stats/player/winrate', (req, res) => {
     var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionPickWinRate(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, gamesPicked, gamesWon } } }' }),
     })
         .then(function (response) {
@@ -798,7 +797,7 @@ app.get('/api/stats/legions/avgvalueEnd', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageValueByEndingWave(' + type + ':"' + value + '") { legion, wave, value } } }' }),
     })
         .then(function (response) {
@@ -822,7 +821,7 @@ app.get('/api/stats/player/avgvalueEnd', (req, res) => {
     var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageValueByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, value } } }' }),
     })
         .then(function (response) {
@@ -846,7 +845,7 @@ app.get('/api/stats/legions/avgvincEnd', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageIncomeByEndingWave(' + type + ':"' + value + '") { legion, wave, income } } }' }),
     })
         .then(function (response) {
@@ -870,7 +869,7 @@ app.get('/api/stats/player/avgvincEnd', (req, res) => {
     var value2 = requ.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageIncomeByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, income } } }' }),
     })
         .then(function (response) {
@@ -894,7 +893,7 @@ app.get('/api/stats/legions/avgworkersEnd', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageWorkersByEndingWave(' + type + ':"' + value + '") { legion, wave, workers } } }' }),
     })
         .then(function (response) {
@@ -918,7 +917,7 @@ app.get('/api/stats/player/avgworkersEnd', (req, res) => {
     var value2 = requ.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageWorkersByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, workers } } }' }),
     })
         .then(function (response) {
@@ -941,7 +940,7 @@ app.get('/api/stats/legions/avgwleaksEnd', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageLeaksByEndingWave(' + type + ':"' + value + '") { legion, wave, leakValue } } }' }),
     })
         .then(function (response) {
@@ -965,7 +964,7 @@ app.get('/api/stats/player/avgwleaksEnd', (req, res) => {
     var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageLeaksByEndingWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, leakValue } } }' }),
     })
         .then(function (response) {
@@ -988,7 +987,7 @@ app.get('/api/stats/legions/avgworkersWave', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageWorkersPerWave(' + type + ':"' + value + '") { legion, wave, workers } } }' }),
     })
         .then(function (response) {
@@ -1012,7 +1011,7 @@ app.get('/api/stats/player/avgworkersWave', (req, res) => {
     var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageWorkersPerWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, workers } } }' }),
     })
         .then(function (response) {
@@ -1035,7 +1034,7 @@ app.get('/api/stats/legions/avgnetworthsWave', (req, res) => {
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageNetWorthPerWave(' + type + ':"' + value + '") { legion, wave, networth } } }' }),
     })
         .then(function (response) {
@@ -1059,7 +1058,7 @@ app.get('/api/stats/player/avgnetworthsWave', (req, res) => {
     var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ stats{ legionAverageNetWorthPerWave(' + type + ':"' + value + '", playerid :"' + value2 + '") { legion, wave, networth } } }' }),
     })
         .then(function (response) {
@@ -1080,7 +1079,7 @@ app.get('/api/stats/player/avgnetworthsWave', (req, res) => {
 app.get('/api/stats/playercount', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{filteredPlayers(offset:0){count}}' }),
     })
         .then(function (response) {
@@ -1107,7 +1106,7 @@ app.get('/api/tour/player', (req, res) => {
     var pname = req.query.player;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey },
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({ query: '{ player(playername: "' + pname + '"){playername,statistics} }' }),
     })
         .then(function (response) {
