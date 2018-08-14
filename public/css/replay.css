@@ -1,14 +1,17 @@
-#player1{
+#player1 {
     background-color: #e45959
 }
-#player2{
-    background-color:#7b9eef;
+
+#player2 {
+    background-color: #7b9eef;
 }
-#player3{
-    background-color:#f1ea70;
+
+#player3 {
+    background-color: #f1ea70;
 }
-#player4{
-    background-color:#00a8bf;
+
+#player4 {
+    background-color: #00a8bf;
 }
 
 
@@ -18,34 +21,79 @@
     display: inline;
 }
 
-.legionspell
-{
+.legionspell {
     height: 25px;
     width: 25px;
-    display:inline;
+    display: inline;
 }
 
-.main-content
-{
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    position: absolute;
-    background-color: black;
-    top:50px;
-    padding-top:10px;
-    overflow:hidden;
+@media (min-height:1px) {
+    .main-content {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        position: absolute;
+        background-color: black;
+        top: 50px;
+        padding-top: 10px;
+        overflow: no-content;
+        height:93%;
+    }
 }
 
-.slider_container{
+@media (min-height:900px) {
+    .main-content {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        position: absolute;
+        background-color: black;
+        top: 50px;
+        padding-top: 10px;
+        overflow: no-content;
+    }
+}
+.main-content::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+.main-content::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}
+.sends::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+.sends::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}
+.leaks::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}
+.leaks::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+.slider_container {
     width: 75%;
     margin-left: 10%;
     margin-bottom: 20px;
 }
 
-#slider
-{
-    -webkit-appearance: none;  /* Override default CSS styles */
+#slider {
+    -webkit-appearance: none; /* Override default CSS styles */
     appearance: none;
     width: 100%; /* Full-width */
     height: 15px; /* Specified height */
@@ -55,31 +103,30 @@
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
     border-radius: 10px;
-    
 }
 
 
-.player_name
-{
-    color:white;
+.player_name {
+    color: white;
     float: left;
     width: 21%;
-    margin-right:2%;
-    margin-left:2%;
+    margin-right: 2%;
+    margin-left: 2%;
     text-align: center;
     margin-bottom: 0px;
 }
 
-.label{
-    color:white;
+.label {
+    color: white;
     float: left;
     width: 20%;
     text-align: center;
-    margin-right:2%;
-    margin-left:2%;
+    margin-right: 2%;
+    margin-left: 2%;
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
 @media (min-height:1px) {
     .player {
         background-color: white;
@@ -91,6 +138,7 @@
         margin-bottom: 10px;
         max-height: 587px;
     }
+
     html, body {
         overflow: auto;
     }
@@ -107,49 +155,64 @@
         margin-bottom: 10px;
         max-height: 587px;
     }
-    html, body{
-        overflow:hidden;
+
+    html, body {
+        overflow: hidden;
     }
 }
-@media (min-height:1000px)
-    {
-        .player {
-            background-color: white;
-            box-shadow: 0px 0px 5px white;
-            float: left;
-            width: 20%;
-            margin: 2.4%;
-            margin-top: 0px;
-            margin-bottom: 10px;
-            max-height: 587px;
-        }
+
+@media (min-height:1000px) {
+    .player {
+        background-color: white;
+        box-shadow: 0px 0px 5px white;
+        float: left;
+        width: 20%;
+        margin: 2.4%;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        max-height: 587px;
+    }
 }
 
 
-.player.leaks
-{
-    height:5%;
-    overflow: auto;
+@media (min-height: 1px) {
+    .player.leaks {
+        height: 4%;
+        overflow: auto;
+        min-height: 30px;
+    }
+
+    .player.sends {
+        height: 4%;
+        overflow: auto;
+        min-height: 30px;
+    }
 }
 
-.player.sends
-{
-    height:5%;
-    overflow: auto;
+@media (min-height: 900px) {
+    .player.leaks {
+        height: 5%;
+        overflow: auto;
+        min-height: 30px;
+    }
+
+    .player.sends {
+        height: 5%;
+        overflow: auto;
+        min-height: 30px;
+    }
 }
 
-.player.build
-{
-    height: 62%;
-    padding: 10px;
+.player.build {
+    padding: 1%;
 }
 
-.leakpic
-{
+.leakpic {
     height: 20px;
-    width:20px;
-    margin:5px;
+    width: 20px;
+    margin: 5px;
 }
+
 @media (min-width: 500px) {
     .buildtable tr td {
         border: 1px solid black;
@@ -159,6 +222,7 @@
         height: 10px;
     }
 }
+
 @media (min-width: 900px) {
     .buildtable tr td {
         border: 1px solid black;
@@ -168,6 +232,7 @@
         height: 15px;
     }
 }
+
 @media (min-width: 1490px) {
     .buildtable tr td {
         border: 1px solid black;
@@ -180,34 +245,34 @@
 
 
 
-html, body {margin: 0; height: 100%;width:100%;}
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
 
-.close
-{
+.close {
     float: right;
-    top:10px;
-    padding:2px;
-    background-color:darkgray;
-    border-radius:35px;
-    width:35px;
-    height:35px;
+    top: 10px;
+    padding: 2px;
+    background-color: darkgray;
+    border-radius: 35px;
+    width: 35px;
+    height: 35px;
     text-align: center;
 }
 
-.close:hover
-{
-    color:white;
-    box-shadow: 0px 0px 30px white;
-}
+    .close:hover {
+        color: white;
+        box-shadow: 0px 0px 30px white;
+    }
 
-.myfooter
-{
+.myfooter {
     display: none;
 }
 
-.kleinerCanvas
-{
-    width: 100%; 
+.kleinerCanvas {
+    width: 100%;
     height: 100%;
 }
 
@@ -240,9 +305,10 @@ html, body {margin: 0; height: 100%;width:100%;}
     width: 33%;
     background-color: grey;
     align-self: center;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 .hpbar {
     width: 0.33%;
     height: 30px;
@@ -255,17 +321,17 @@ html, body {margin: 0; height: 100%;width:100%;}
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-bottom:15px;
+    margin-bottom: 15px;
 }
 
 #text_hp {
     align-self: center;
     margin-left: auto;
     margin-right: auto;
-    color:white;
-    font-size:small;
+    color: white;
+    font-size: small;
 }
 
-#result{
-    overflow:auto;
+#result {
+    overflow: auto;
 }

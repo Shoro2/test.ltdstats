@@ -505,28 +505,33 @@ document.onkeydown = function (event) {
 
 
 };
-document.onmousewheel = function displaywheel(e) {
-    var evt = window.event || e; //equalize event object
-    var delta = evt.detail ? evt.detail * -120 : evt.wheelDelta; //check for detail first so Opera uses that instead of wheelDelta
-    if (delta > 0) {
-        if (document.getElementById("slider").value < gameEvent[0].wave) {
-            var waveValue = parseInt(document.getElementById("slider").value) + 1;
-            document.getElementById("slider").value = waveValue;
-        }
-        else if (document.getElementById("slider").value === gameEvent[0].wave) {
-            document.getElementById("slider").value = "1";
-        }
-        waveAnzeigen();
-    }
-    else {
-        if (document.getElementById("slider").value > 1) {
-            document.getElementById("slider").value -= 1;
-        }
 
-        else if (document.getElementById("slider").value === "1") {
-            document.getElementById("slider").value = gameEvent[0].wave;
+
+
+document.onmousewheel = function displaywheel(e) {
+    if ($(window).height() >= 770) {
+        var evt = window.event || e; //equalize event object
+        var delta = evt.detail ? evt.detail * -120 : evt.wheelDelta; //check for detail first so Opera uses that instead of wheelDelta
+        if (delta > 0) {
+            if (document.getElementById("slider").value < gameEvent[0].wave) {
+                var waveValue = parseInt(document.getElementById("slider").value) + 1;
+                document.getElementById("slider").value = waveValue;
+            }
+            else if (document.getElementById("slider").value === gameEvent[0].wave) {
+                document.getElementById("slider").value = "1";
+            }
+            waveAnzeigen();
         }
-        waveAnzeigen();
+        else {
+            if (document.getElementById("slider").value > 1) {
+                document.getElementById("slider").value -= 1;
+            }
+
+            else if (document.getElementById("slider").value === "1") {
+                document.getElementById("slider").value = gameEvent[0].wave;
+            }
+            waveAnzeigen();
+        }
     }
 };
 document.getElementById("slider").onchange = function () {
