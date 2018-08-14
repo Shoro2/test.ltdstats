@@ -117,49 +117,50 @@ block content
                             .p#game_wave Wave:
                             .p#game_time Time Elapsed:
                         b Details:
-                        table#gamedetails_table(cellspacing="0", cellpadding="0")
-                            tr
-                                th Name
-                                th Elo
-                                th Legion
-                                th Value
-                                th Worker
-                                th Income
-                                th Leaks
-                            tr#game_player1(onclick="javascript: getPlayerBuild(0);")
-                                td#name_1
-                                td#elo_1
-                                td#legion_1
-                                td#value_1
-                                td#worker_1
-                                td#income_1
-                                td#leaks_1
-                            tr#game_player2(onclick="javascript: getPlayerBuild(1);")
-                                td#name_2
-                                td#elo_2
-                                td#legion_2
-                                td#value_2
-                                td#worker_2
-                                td#income_2
-                                td#leaks_2
-                            tr
-                                td(colspan="7" style="height:10px;")
-                            tr#game_player3(onclick="javascript: getPlayerBuild(2);")
-                                td#name_3
-                                td#elo_3
-                                td#legion_3
-                                td#value_3
-                                td#worker_3
-                                td#income_3
-                                td#leaks_3
-                            tr#game_player4(onclick="javascript: getPlayerBuild(3);")
-                                td#name_4
-                                td#elo_4
-                                td#legion_4
-                                td#value_4
-                                td#worker_4
-                                td#income_4
-                                td#leaks_4
+                        #tablewrapper
+                            table#gamedetails_table(cellspacing="0", cellpadding="0")
+                                tr
+                                    th Name
+                                    th Elo
+                                    th Legion
+                                    th Value
+                                    th Worker
+                                    th Income
+                                    th Leaks
+                                tr#game_player1(onclick="javascript: getPlayerBuild(0);")
+                                    td#name_1
+                                    td#elo_1
+                                    td#legion_1
+                                    td#value_1
+                                    td#worker_1
+                                    td#income_1
+                                    td#leaks_1
+                                tr#game_player2(onclick="javascript: getPlayerBuild(1);")
+                                    td#name_2
+                                    td#elo_2
+                                    td#legion_2
+                                    td#value_2
+                                    td#worker_2
+                                    td#income_2
+                                    td#leaks_2
+                                tr
+                                    td(colspan="7" style="height:10px;")
+                                tr#game_player3(onclick="javascript: getPlayerBuild(2);")
+                                    td#name_3
+                                    td#elo_3
+                                    td#legion_3
+                                    td#value_3
+                                    td#worker_3
+                                    td#income_3
+                                    td#leaks_3
+                                tr#game_player4(onclick="javascript: getPlayerBuild(3);")
+                                    td#name_4
+                                    td#elo_4
+                                    td#legion_4
+                                    td#value_4
+                                    td#worker_4
+                                    td#income_4
+                                    td#leaks_4
                         b.gamedetails_schrift Build:
                         b.gamedetails_schrift  Mercs sent:
                         b.gamedetails_schrift  Mercs received:

@@ -1,9 +1,8 @@
-.inline
-{
-    display:inline;
+.inline {
+    display: inline;
 }
 
-.badge{
+.badge {
     float: right;
 }
 
@@ -29,8 +28,8 @@
     padding: 2%;
     border: solid 1px lightgray;
     border-radius: 5px;
-    
 }
+
     #avgbuild::-webkit-scrollbar {
         width: 10px; /* remove scrollbar space */
         background: lightgray;
@@ -49,8 +48,9 @@
     height: 40%;
     width: 49%;
 }
+
 #lable_send {
-    float:right;
+    float: right;
     height: 40%;
     width: 49%;
 }
@@ -62,75 +62,68 @@
     padding: 2%;
     border: solid 1px lightgray;
     border-radius: 5px;
-    
 }
+
     #avgsend::-webkit-scrollbar {
         width: 10px; /* remove scrollbar space */
         background: lightgray;
         border-radius: 5px;
         /*background: transparent; optional: just make scrollbar invisible */
     }
-/* optional: show position indicator in red */
+    /* optional: show position indicator in red */
     #avgsend::-webkit-scrollbar-thumb {
         background: darkgray;
         border-radius: 5px;
         margin: 5px;
     }
- 
 
 
-.hidediv
-{
-    display:none;
+
+.hidediv {
+    display: none;
 }
 
-.showdiv
-{
+.showdiv {
     display: block;
 }
 
-.mittig
-{
+.mittig {
     text-align: center;
     align-items: center;
     margin: auto;
-    width:25%;
+    width: 25%;
+    max-width:280px;
 }
 
 
-#buildtable
-{
+#buildtable {
     border: 1px solid black;
     margin: auto;
-    width:45%;
+    width: 45%;
 }
 
-#buildtable th
-{
-    border: 1px solid black;
-    width: 24px;
-    height: 24px;
-    margin: 0px;
-    padding: 0px;
+    #buildtable th {
+        border: 1px solid black;
+        width: 24px;
+        height: 24px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #buildtable td {
+        border: 1px solid black;
+        width: 24px;
+        height: 24px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+.pictable {
+    background-color: white;
 }
 
-#buildtable td
-{
-    border: 1px solid black;
-    width: 24px;
-    height: 24px;
-    margin: 0px;
-    padding: 0px;
-    
-}
-
-.pictable{
-    background-color:white;
-}
-
-.hidden
-{
-    display:none;
+.hidden {
+    display: none;
 }
 
 #myChart {
@@ -143,11 +136,10 @@
     position: relative;
 }
 
-#divumtable
-{
+#divumtable {
     border-radius: 10px;
-    top:15%;
-    bottom:10%;
+    top: 15%;
+    bottom: 10%;
     left: 25%;
     right: 25%;
     position: absolute;
@@ -160,22 +152,19 @@
     box-shadow: 2px 3px 16px black;
 }
 
-.kleinerCanvas
-{
-    width: 100%; 
+.kleinerCanvas {
+    width: 100%;
     height: 100%;
 }
 
-.profile
-{
-    height:100%;
+.profile {
+    height: 100%;
 }
 
-#stats
-{
+#stats {
     border-radius: 10px;
-    height:80%;
-    padding:10px;
+    height: 80%;
+    padding: 10px;
     opacity: 0.9;
     background-color: lightgray;
     overflow: auto;
@@ -195,25 +184,25 @@
     }
 
 .stats_small {
-    float:left;
+    float: left;
     width: 23.3%;
-    margin-left:5%;
-    margin-right:5%;
-    margin-top:2%;
-    margin-bottom:2%;
-    min-width:150px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    min-width: 150px;
 }
 
-#general{
-    text-align:center;
-    width:90%;
-    margin-left:5%;
+#general {
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
 }
 
-#mastermind{
-    background-color:#bfbfbf;
-    padding:1%;
-    border-radius:10px;
+#mastermind {
+    background-color: #bfbfbf;
+    padding: 1%;
+    border-radius: 10px;
 }
 
 #element {
@@ -250,10 +239,10 @@ body {
     width: 100%;
     height: 100vh;
     position: relative;
-  }
-  
+}
 
-  .wrap {
+
+.wrap {
     overflow: hidden;
     padding: 1%;
     display: block;
@@ -261,53 +250,57 @@ body {
     transform: translateY(20px);
     transition: all 0.5s;
     visibility: hidden;
-  }
-  .wrap .content {
-    opacity: 0;
-  }
-  .wrap:before {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    background: white;
-    content: "";
-    bottom: 10px;
-    left: 50%;
-    top: 95%;
-    color: #fff;
-    border-radius: 50%;
-    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  .wrap.active {
-    display: block;
-    visibility: visible;
-    box-shadow: 2px 3px 16px silver;
-    transition: all 600ms;
-    transform: translateY(0px);
-    transition: all 0.5s;
-    opacity:0.9;
-    height:100%;
-  }
-  .wrap.active:before {
-    height: 2000px;
-    width: 2000px;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    margin-left: -1000px;
-    margin-top: -1000px;
-    display: block;
-    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  .wrap.active .content {
-    position: relative;
-    z-index: 1;
-    opacity: 1;
-    transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  }
-  
+}
+
+    .wrap .content {
+        opacity: 0;
+    }
+
+    .wrap:before {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: white;
+        content: "";
+        bottom: 10px;
+        left: 50%;
+        top: 95%;
+        color: #fff;
+        border-radius: 50%;
+        -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .wrap.active {
+        display: block;
+        visibility: visible;
+        box-shadow: 2px 3px 16px silver;
+        transition: all 600ms;
+        transform: translateY(0px);
+        transition: all 0.5s;
+        opacity: 0.9;
+    }
+
+        .wrap.active:before {
+            height: 2000px;
+            width: 2000px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin-left: -1000px;
+            margin-top: -1000px;
+            display: block;
+            -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+            transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .wrap.active .content {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+
 #meinbutton {
     padding: 11px 11px 13px 13px;
     outline: none;
@@ -320,57 +313,56 @@ body {
     left: 50%;
     margin-left: -25px;
     transition: transform 0.25s;
-  }
-#meinbutton:hover {
-    text-decoration: none;
-    background: #2198ff;
-  }
+}
 
+    #meinbutton:hover {
+        text-decoration: none;
+        background: #2198ff;
+    }
 
+#tablewrapper {
+    overflow-x: auto;
+}
 
-#gamedetails_table
-{
+#gamedetails_table {
     width: 100%;
     background-color: lightgray;
     border-radius: 5px;
 }
 
-#gamedetails_table tr:hover
-{
-    background-color: darkgray;
-}
+    #gamedetails_table tr:hover {
+        background-color: darkgray;
+    }
 
-.gamedetails_kasten
-{
-    height:20%;
+.gamedetails_kasten {
+    height: 20%;
     overflow: auto;
     margin-left: auto;
     margin-right: auto;
     padding: 1%;
-    width:30%;
+    width: 30%;
     float: left;
-
-}
-.gamedetails_kasten::-webkit-scrollbar {
-    width: 10px;  /* remove scrollbar space */
-      /*background: transparent; optional: just make scrollbar invisible */
-      background: lightgray;
-      border-radius: 5px;
-}
-/* optional: show position indicator in red */
-.gamedetails_kasten::-webkit-scrollbar-thumb {
-    background: darkgray;
-    border-radius: 5px;
-    margin:5px;
 }
 
-.gamedetails_schrift 
-{
+    .gamedetails_kasten::-webkit-scrollbar {
+        width: 10px; /* remove scrollbar space */
+        /*background: transparent; optional: just make scrollbar invisible */
+        background: lightgray;
+        border-radius: 5px;
+    }
+    /* optional: show position indicator in red */
+    .gamedetails_kasten::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5px;
+        margin: 5px;
+    }
+
+.gamedetails_schrift {
     margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
     padding: 1%;
-    width:30%;
+    width: 30%;
     float: left;
 }
 
@@ -381,7 +373,7 @@ body {
     width: 100%;
     height: 90%;
     margin-top: 5%;
-    margin-bottom:5%;
+    margin-bottom: 5%;
 }
 
 #playerstats {
@@ -397,7 +389,7 @@ body {
     opacity: 1;
     padding: 10px;
     border: 1px solid black;
-    height:90%;
+    height: 90%;
 }
 
 #close {

@@ -5,7 +5,7 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: 2px 3px 16px silver;
-    min-width: 500px;
+
 }
 
 .tab_top_active
@@ -37,16 +37,46 @@
 }
 
 
-.tab_box
-{
-	float: left;
-	width: 100%;
-    padding:2%;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    height: 85%;
-    border: 1px solid lightgray;
-    border-top: 0px solid black;
-    box-shadow: 2px 3px 16px silver;
-    overflow-y:auto;
+
+@media (min-height:1px) {
+    .tab_box {
+        float: left;
+        width: 100%;
+        padding: 2%;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 50%;
+        border: 1px solid lightgray;
+        border-top: 0px solid black;
+        box-shadow: 2px 3px 16px silver;
+        overflow-y: auto;
+    }
+}
+@media (min-height:500px) {
+    .tab_box {
+        float: left;
+        width: 100%;
+        padding: 2%;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 75%;
+        border: 1px solid lightgray;
+        border-top: 0px solid black;
+        box-shadow: 2px 3px 16px silver;
+        overflow-y: auto;
+    }
+}
+@media (min-height:900px) {
+    .tab_box {
+        float: left;
+        width: 100%;
+        padding: 2%;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 85%;
+        border: 1px solid lightgray;
+        border-top: 0px solid black;
+        box-shadow: 2px 3px 16px silver;
+        overflow-y: auto;
+    }
 }
