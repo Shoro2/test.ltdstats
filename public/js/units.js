@@ -310,7 +310,6 @@ function scanUnits() {
                 console.log(unit);
                 break;
         }
-
         document.getElementById("carousel").innerHTML += "<div class='item'><img src='" + url + "' onclick=loadFighter('" + unit_type + "');></img></div>";
     });
 }

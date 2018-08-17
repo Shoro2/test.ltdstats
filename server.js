@@ -612,7 +612,8 @@ app.get('/api/profile/player', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies}}' }),
+        body: JSON.stringify({
+            query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies,bestFriends(limit: 3){player{playername},gameCount}}}' }),
     })
         .then(function (response) {
             if (response.ok) {

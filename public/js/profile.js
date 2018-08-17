@@ -2,16 +2,13 @@ function checkContent() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
-    //console.log("playerurl: " + playerurl);
-    //console.log("value: " + document.getElementById("playername").value);
     if (playerurl != null) {
         document.getElementById("playername").value = playerurl;
     }
     if (document.getElementById("playername").value) {
         document.getElementById("mitte").style.display = "inherit";
         queryPlayer(playerurl);
-        queryRank(playerurl);
-        //queryPlayerGames(playerurl);
+        //queryRank(playerurl);
         queryPlayerOverallGames(playerurl);
     }
     else {
@@ -155,10 +152,6 @@ function loadGames() {
     getGameDetails();
 }
 
-function loadCollection() {
-
-}
-
 function loadStats(player) {
     player_name = player.playername;
     player_id = player.id;
@@ -179,6 +172,16 @@ function loadStats(player) {
     player_overall_xp = player.statistics.totalXp
     player_overall_level = getPlayerLevel(player_overall_xp);
     player_winningstreak = player.statistics.winStreak;
+    if (player.bestFriends != null) {
+        player_bestfriends = "";
+        player_bestfriends += player.bestFriends[0].player.playername + "(" + player.bestFriends[0].gameCount + ")";
+        if (player.bestFriends[1] != null) {
+            player_bestfriends += ", " + player.bestFriends[1].player.playername + "(" + player.bestFriends[1].gameCount + ")";
+            if (player.bestFriends[2] != null) {
+                player_bestfriends += ", " + player.bestFriends[2].player.playername + "(" + player.bestFriends[2].gameCount + ")";
+            }
+        }
+    }
     //player_higheststreak = player.Playerstatistics[26].StatisticValue;
     //element
     player_element_elo = player.statistics.elementElo;
@@ -265,7 +268,6 @@ function loadStats(player) {
     player_mastermind_xp = player.statistics.mastermindXp;
     if (typeof player.statistics.mastermindXp == 'undefined') player_mastermind_xp = 0;
     player_mastermind_level = getPlayerLevel(player_mastermind_xp);
-
     //atlantean
     player_atlantean_elo = player.statistics.atlanteanElo;
     if (typeof player.statistics.atlanteanElo == 'undefined') player_atlantean_elo = 1000;
@@ -283,16 +285,6 @@ function loadStats(player) {
     player_atlantean_xp = player.statistics.atlanteanXp;
     if (typeof player.statistics.atlanteanXp == 'undefined') player_atlantean_xp = 0;
     player_atlantean_level = getPlayerLevel(player_atlantean_xp);
-
-    player_crossgames = "5";
-    player_partygames = "10";
-    player_bestfriend = "YourMoma";
-    player_archenemy = "Me"
-    player_leakon1 = "0.05";
-    player_sendon1 = "0.15";
-
-
-
     //icon für race mit meisten wins
     if (player_element_wins > player_forsaken_wins && player_element_wins > player_grove_wins && player_element_wins > player_mech_wins && player_element_wins > player_mastermind_wins) var bgimage = "element_2.png";
     else if (player_grove_wins > player_forsaken_wins && player_grove_wins > player_element_wins && player_grove_wins > player_mech_wins && player_grove_wins > player_mastermind_wins) var bgimage = "grove_2.png";
@@ -322,15 +314,12 @@ function loadStats(player) {
     else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
     else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gradmaster.png'>";
     // mouseover details
-
     parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 30% 40%;opacity:1.0;");
     document.title = "LTDStats - " + player_name + "'s Profile";
-
 }
 
 function getPlayerLevel(totalXp) {
-
     if (totalXp < 1) return 1
     if (totalXp < 1001) return 2
     if (totalXp < 3001) return 3
@@ -358,13 +347,11 @@ function getPlayerLevel(totalXp) {
 }
 
 function parseStats() {
-    document.getElementById("general_wins").textContent = "Wins:               \t\t\t" + player_totalwins;
-    document.getElementById("general_ties").textContent = "Ties: \t\t\t" + player_ties;
-    document.getElementById("general_quits").textContent = "Quits: \t\t\t" + player_quits;
-    document.getElementById("general_overallelo").textContent = "Overall Elo: \t\t" + player_overall_elo;
-    document.getElementById("general_overallpeakelo").textContent = "Overall Peak Elo: \t" + player_overall_peakelo;
-    document.getElementById("general_level").textContent = "Level: \t\t\t" + player_overall_level + " (" + player_overall_xp + " XP)";
-    document.getElementById("general_winningstreak").textContent = "Winningstreak: \t" + player_winningstreak;
+    document.getElementById("general_games").textContent = "Games: " + player_totalgames;
+    document.getElementById("general_wins").textContent = "Wins: " + player_totalwins;
+    document.getElementById("general_level").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
+    document.getElementById("general_winningstreak").textContent = "Winningstreak: " + player_winningstreak;
+    document.getElementById("general_bestfriends").innerHTML = "Best Friends: " + player_bestfriends;
 
     document.getElementById("mastermind_elo").textContent = "Elo: " + player_mastermind_elo;
     document.getElementById("mastermind_peakelo").textContent = "Peak Elo: " + player_mastermind_peakelo;
@@ -519,7 +506,6 @@ function drawPlayerBuilds(gameX) {
             //console.log(player.filteredGamesQuery.games[i].unitsPerWave);
             for (var e = 0; e < wave - 1; e++) {
                 //check for newer data
-                //console.log(game[i]);
                 //Chance to leak:
                 if (game[i].leaksPerWave !== null && game[i].mercsReceivedPerWave !== null) {
                     if (game[i].leaksPerWave.length > 0 && game[i].mercsReceivedPerWave.length > 0) {
@@ -656,285 +642,16 @@ function drawPlayerBuilds(gameX) {
     builds[target_race][[document.getElementById("setWave2").value - 1]].forEach(function (ele) {
 
         if (ele != 0) {
-            switch (ele.substring(0, ele.indexOf(";"))) {
-                case "proton":
-                    var url = "/img/icons/Proton.png";
-                    var unit_type = "Proton";
-                    break;
-                case "atom":
-                    var url = "/img/icons/Atom.png";
-                    var unit_type = "Atom";
-                    break;
-                case "aqua_spirit":
-                    var url = "/img/icons/AquaSpirit.png";
-                    var unit_type = "Aqua Spirit";
-                    break;
-                case "fire_elemental":
-                    var url = "/img/icons/FireElemental.png";
-                    var unit_type = "Fire Elemental";
-                    break;
-                case "rogue_wave":
-                    var url = "/img/icons/RogueWave.png";
-                    var unit_type = "Rogue Wave";
-                    break;
-                case "windhawk":
-                    var url = "/img/icons/Windhawk.png";
-                    var unit_type = "Windhawk";
-                    break;
-                case "violet":
-                    var url = "/img/icons/Violet.png";
-                    var unit_type = "Violet";
-                    break;
-                case "mudman":
-                    var url = "/img/icons/Mudman.png";
-                    var unit_type = "Mudman";
-                    break;
-                case "golem":
-                    var url = "/img/icons/Golem.png";
-                    var unit_type = "Golem";
-                    break;
-                case "disciple":
-                    var url = "/img/icons/Disciple.png";
-                    var unit_type = "Disciple";
-                    break;
-                case "starcaller":
-                    var url = "/img/icons/Starcaller.png";
-                    var unit_type = "Starcaller";
-                    break;
-                case "fire_lord":
-                    var url = "/img/icons/FireLord.png";
-                    var unit_type = "Fire Lord";
-                    break;
-                case "fenix":
-                    var url = "/img/icons/Fenix.png";
-                    var unit_type = "Fenix";
-                    break;
-                //grove
-                case "buzz":
-                    var url = "/img/icons/Buzz.png";
-                    var unit_type = "Buzz";
-                    break;
-                case "consort":
-                    var url = "/img/icons/Consort.png";
-                    var unit_type = "Consort";
-                    break;
-                case "ranger":
-                    var url = "/img/icons/Ranger.png";
-                    var unit_type = "Ranger";
-                    break;
-                case "daphne":
-                    var url = "/img/icons/Daphne.png";
-                    var unit_type = "Daphne";
-                    break;
-                case "wileshroom":
-                    var url = "/img/icons/Wileshroom.png";
-                    var unit_type = "Wileshroom";
-                    break;
-                case "canopie":
-                    var url = "/img/icons/Canopie.png";
-                    var unit_type = "Canopie";
-                    break;
-                case "honeyflower":
-                    var url = "/img/icons/Honeyflower.png";
-                    var unit_type = "Honeyflower";
-                    break;
-                case "deathcap":
-                    var url = "/img/icons/Deathcap.png";
-                    var unit_type = "Deathcap";
-                    break;
-                case "antler":
-                    var url = "/img/icons/Antler.png";
-                    var unit_type = "Antler";
-                    break;
-                case "whitemane":
-                    var url = "/img/icons/Whitemane.png";
-                    var unit_type = "Whitemane";
-                    break;
-                case "banana_bunk":
-                    var url = "/img/icons/BananaBunk.png";
-                    var unit_type = "Banana Bunk";
-                    break;
-                case "banana_haven":
-                    var url = "/img/icons/BananaHaven.png";
-                    var unit_type = "Banana Haven";
-                    break;
-                //forsaken
-                case "bone_warrior":
-                    var url = "/img/icons/BoneWarrior.png";
-                    var unit_type = "Bone Warrior";
-                    break;
-                case "bone_crusher":
-                    var url = "/img/icons/BoneCrusher.png";
-                    var unit_type = "Bone Crusher";
-                    break;
-                case "dark_mage":
-                    var url = "/img/icons/DarkMage.png";
-                    var unit_type = "Dark Mage";
-                    break;
-                case "fire_archer":
-                    var url = "/img/icons/FireArcher.png";
-                    var unit_type = "Fire Archer";
-                    break;
-                case "gargoyle":
-                    var url = "/img/icons/Gargoyle.png";
-                    var unit_type = "Gargoyle";
-                    break;
-                case "green_devil":
-                    var url = "/img/icons/GreenDevil.png";
-                    var unit_type = "Green Devil";
-                    break;
-                case "gateguard":
-                    var url = "/img/icons/Gateguard.png";
-                    var unit_type = "Gateguard";
-                    break;
-                case "harbinger":
-                    var url = "/img/icons/Harbinger.png";
-                    var unit_type = "Harbinger";
-                    break;
-                case "butcher":
-                    var url = "/img/icons/Butcher.png";
-                    var unit_type = "Butcher";
-                    break;
-                case "head_chef":
-                    var url = "/img/icons/HeadChef.png";
-                    var unit_type = "Head Chef";
-                    break;
-                case "nightmare":
-                    var url = "/img/icons/Nightmare.png";
-                    var unit_type = "Nightmare";
-                    break;
-                case "doppelganger":
-                    var url = "/img/icons/Doppelganger.png";
-                    var unit_type = "Doppelganger";
-                    break;
-                case "lord_of_death":
-                    var url = "/img/icons/LordOfDeath.png";
-                    var unit_type = "Lord Of Death";
-                    break;
-                case "hades":
-                    var url = "/img/icons/Hades.png";
-                    var unit_type = "Hades";
-                    break;
-                //mech
-                case "peewee":
-                    var url = "/img/icons/Peewee.png";
-                    var unit_type = "Peewee";
-                    break;
-                case "veteran":
-                    var url = "/img/icons/Veteran.png";
-                    var unit_type = "Veteran";
-                    break;
-                case "bazooka":
-                    var url = "/img/icons/Bazooka.png";
-                    var unit_type = "Bazooka";
-                    break;
-                case "zeus":
-                    var url = "/img/icons/Zeus.png";
-                    var unit_type = "Zeus";
-                    break;
-                case "pyro":
-                    var url = "/img/icons/Pyro.png";
-                    var unit_type = "Pyro";
-                    break;
-                case "tempest":
-                    var url = "/img/icons/Tempest.png";
-                    var unit_type = "Tempest";
-                    break;
-                case "leviathan":
-                    var url = "/img/icons/Leviathan.png";
-                    var unit_type = "Leviathan";
-                    break;
-                case "aps":
-                    var url = "/img/icons/APS.png";
-                    var unit_type = "APS";
-                    break;
-                case "mps":
-                    var url = "/img/icons/MPS.png";
-                    var unit_type = "MPS";
-                    break;
-                case "berserker":
-                    var url = "/img/icons/Berserker.png";
-                    var unit_type = "Berserker";
-                    break;
-                case "fatalizer":
-                    var url = "/img/icons/Fatalizer.png";
-                    var unit_type = "Fatalizer";
-                    break;
-                case "millennium":
-                    var url = "/img/icons/Millennium.png";
-                    var unit_type = "Millennium";
-                    break;
-                case "doomsday_machine":
-                    var url = "/img/icons/DoomsdayMachine.png";
-                    var unit_type = "Doomsday Machine";
-                    break;
-                // Atlantean
-                case "pollywog":
-                    var url = "/img/icons/Pollywog.png";
-                    var unit_type = "Pollywog";
-                    break
-                case "devilfish":
-                    var url = "/img/icons/Devilfish.png";
-                    var unit_type = "Devilfish";
-                    break
-                case "seraphin":
-                    var url = "/img/icons/Seraphin.png";
-                    var unit_type = "Seraphin";
-                    break
-                case "angler":
-                    var url = "/img/icons/Angler.png";
-                    var unit_type = "Angler";
-                    break;
-                case "bounty_hunter":
-                    var url = "/img/icons/BountyHunter.png";
-                    var unit_type = "Bounty Hunter";
-                    break;
-                case "kingpin":
-                    var url = "/img/icons/Kingpin.png";
-                    var unit_type = "Kingpin";
-                    break;
-                case "sea_serpent":
-                    var url = "/img/icons/SeaSerpent.png";
-                    var unit_type = "Sea Serpent";
-                    break;
-                case "deepcoiler":
-                    var url = "/img/icons/Deepcoiler.png";
-                    var unit_type = "Deepcoiler";
-                    break;
-                case "grarl":
-                    var url = "/img/icons/Grarl.png";
-                    var unit_type = "Grarl";
-                    break;
-                case "king_claw":
-                    var url = "/img/icons/KingClaw.png";
-                    var unit_type = "King Claw";
-                    break;
-                case "ocean_templar":
-                    var url = "/img/icons/OceanTemplar.png";
-                    var unit_type = "Ocean Templar";
-                    break;
-                case "azeria":
-                    var url = "/img/icons/Azeria.png";
-                    var unit_type = "Azeria";
-                    break;
-                case "priestess_of_the_abyss":
-                    var url = "/img/icons/PriestessOfTheAbyss.png";
-                    var unit_type = "Priestess of the Abyss";
-                    break;
-                case "eggsack":
-                    var url = "/img/icons/Eggsack.png";
-                    var unit_type = "Eggsack";
-                    break;
-                case "hydra":
-                    var url = "/img/icons/Hydra.png";
-                    var unit_type = "Hydra";
-                    break;
-                default:
-                    var url = "";
-                    var unit_type = "empty";
-                    console.log(ele);
-                    break;
+            var url = "";
+            url = "/img/icons/" + ele.substring(0, ele.indexOf(";")).charAt(0).toUpperCase() + ele.substring(0, ele.indexOf(";")).substring(1);
+            while (url.includes("_")) {
+                var index = url.indexOf("_");
+                url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
+                url.replace("_", "%20");
             }
+            var unit_type = url.substring(url.lastIndexOf("/") + 1);
+            url += ".png";
+
             buildcontainer.innerHTML += "<img src='" + url + "' height='20px' width='20px'> " + unit_type + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
         }
     });
@@ -946,772 +663,457 @@ function drawPlayerBuilds(gameX) {
             sendcontainer.innerHTML += "<img src='/img/icons/" + ele.substring(0, ele.indexOf(";")).replace(" ", "") + ".png' height='20px' width='20px'> " + ele.substring(0, ele.indexOf(";")) + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";
         }
     });
-    //console.log(sends);
-    //console.log(builds);
-    /*
-    console.log("Leaks on "+document.getElementById("setWave2").value+": "+leaks[target_race][document.getElementById("setWave2").value-1]);
-    console.log("Games: " + gamesNeu[target_race]);
-    for (var i = 0; i < builds[target_race][[document.getElementById("setWave2").value - 1]].length; i++)
-    {
-        if (builds[target_race][[document.getElementById("setWave2").value - 1]][i] != 0) console.log(builds[target_race][[document.getElementById("setWave2").value - 1]][i]);
-    }
-    */
+    //gamedetails
+    $('#tab_top_3').on('click', function () {
+        if (document.getElementById("playername").value) {
+            drawGameDetails(0);
+            return false;
+        }
+    });
 }
-//gamedetails
-$('#tab_top_3').on('click', function () {
 
-    if (document.getElementById("playername").value) {
+    function listGames() {
+        var selector = document.getElementById("setGame");
+        for (i = 0; i < games.length; i++) {
+            var option = document.createElement("option");
+            //console.log(games[i]);
+            var timestamp = games[i].ts.substring(0, games[i].ts.indexOf(".")).replace("T", " ");
+            var legion = "";
+            var currelo = 0;
+            var pastelo = 0;
+            try {
+                var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                legion = ", Legion: " + gameDetail['legion'];
+                if (i > 0) {
+                    var gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                    currelo = gameDetail['overallElo'];
+                }
+                else currelo = parseInt(player.statistics.overallElo);
+                var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                pastelo = gameDetail['overallElo'];
+                var elochange = 0;
+                elochange = currelo - pastelo;
 
-        drawGameDetails(0);
-        return false;
+            } catch (err) {
+                // Catch games that error out with no game detail.
+                console.log(err);
+            }
+
+            var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
+            if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: +" + elochange;
+            else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: " + elochange;
+            option.value = i;
+            if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
+            else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
+            else option.style = "background-color: #e6e3e3;"
+            //selector.remove(0);
+            selector.add(option);
+
+        }
     }
 
-}
-);
+    function getGameDetails(pos, games) {
+        console.log(games[pos]);
+        //console.log(pos);
+        meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
+        meinString1 = games[pos].gameDetails.filter(meinString => meinString.position == 2)[0];
+        meinString2 = games[pos].gameDetails.filter(meinString => meinString.position == 5)[0];
+        meinString3 = games[pos].gameDetails.filter(meinString => meinString.position == 6)[0];
+        gameEvent = [meinString, meinString1, meinString2, meinString3];
+        //console.log(gameEvent);
+    }
 
-function listGames() {
-    var selector = document.getElementById("setGame");
-    for (i = 0; i < games.length; i++) {
-        var option = document.createElement("option");
-        //console.log(games[i]);
-        var timestamp = games[i].ts.substring(0, games[i].ts.indexOf(".")).replace("T", " ");
-        var legion = "";
-        var currelo = 0;
-        var pastelo = 0;
+    function getPlayerAmount() {
+        return gameEvent[0].player_count;
+    }
+
+    function drawGameDetails(player_position) {
+        var selectedGame = document.getElementById("setGame").value;
+        getGameDetails(selectedGame, games);
+        if (gameEvent[0]) {
+            if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+            else var wave = parseInt(document.getElementById("setWave").value);
+            for (var i = 0; i < 4; i++) {
+                var neuesI = i + 1;
+                try {
+                    document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
+                    document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
+                    document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
+                    document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
+                    document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
+                    document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
+                    document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
+                    if (gameEvent[i].playername == player_name) var position = i;
+                }
+                catch{
+
+                }
+
+
+
+            }
+            getPlayerBuild(player_position);
+            //Summary:
+
+            var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
+            document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
+            document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ") + " UTC";
+            document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
+            document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
+            document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
+        }
+    }
+    function dec2hex(str) { // .toString(16) only works up to 2^53
+        var dec = str.toString().split(''), sum = [], hex = [], i, s
+        while (dec.length) {
+            s = 1 * dec.shift()
+            for (i = 0; s || i < sum.length; i++) {
+                s += (sum[i] || 0) * 10
+                sum[i] = s % 16
+                s = (s - sum[i]) / 16
+            }
+        }
+        while (sum.length) {
+            hex.push(sum.pop().toString(16))
+        }
+        return hex.join('')
+    }
+    function getPlayerValue(player, level) {
         try {
-            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
-            legion = ", Legion: " + gameDetail['legion'];
-            if (i > 0) {
-                var gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
-                currelo = gameDetail['overallElo'];
-            }
-            else currelo = parseInt(player.statistics.overallElo);
-            var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
-            pastelo = gameDetail['overallElo'];
-            var elochange = 0;
-            elochange = currelo - pastelo;
+            var networth = gameEvent[player].netWorthPerWave[level - 1];
+            //value = networth - workerval - gold für wave - gold für mercs auf wave
+            var worker_cost = 50;
+            var wave_value = 72;
+            var merc_value = 6;
+            var value = networth - worker_cost * gameEvent[player].workersPerWave[level - 1] - wave_value - merc_value;
+            return value;
+        }
+        catch (error) {
+            console.log(error);
+            return 0;
+        }
+    }
 
-        } catch (err) {
-            // Catch games that error out with no game detail.
-            console.log(err);
+    function getPlayerIncome(player, level) {
+        try {
+            var income = gameEvent[player].incomePerWave[level - 1];
+            return income;
+        }
+        catch (error) {
+            console.log(error);
         }
 
-        var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
-        if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: +" + elochange;
-        else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: " + elochange;
-        option.value = i;
-        if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
-        else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
-        else option.style = "background-color: #e6e3e3;"
-        //selector.remove(0);
-        selector.add(option);
-
     }
-}
 
-function getGameDetails(pos, games) {
-    console.log(games[pos]);
-    //console.log(pos);
-    meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
-    meinString1 = games[pos].gameDetails.filter(meinString => meinString.position == 2)[0];
-    meinString2 = games[pos].gameDetails.filter(meinString => meinString.position == 5)[0];
-    meinString3 = games[pos].gameDetails.filter(meinString => meinString.position == 6)[0];
-    gameEvent = [meinString, meinString1, meinString2, meinString3];
-    //console.log(gameEvent);
-}
-
-function getPlayerAmount() {
-    return gameEvent[0].player_count;
-}
-
-function drawGameDetails(player_position) {
-    var selectedGame = document.getElementById("setGame").value;
-    getGameDetails(selectedGame, games);
-    if (gameEvent[0]) {
-        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+    function getPlayerBuild(player) {
+        savedValue = player;
+        //console.log(player);
+        clearPictures();
+        drawSquares();
+        document.getElementById("gamedetails_build").innerHTML = "";
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
         else var wave = parseInt(document.getElementById("setWave").value);
-        for (var i = 0; i < 4; i++) {
-            var neuesI = i + 1;
-            document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
-            document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
-            document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
-            document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
-            document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
-            document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
-            document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
-            if (gameEvent[i].playername == player_name) var position = i;
+        var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
+        counter = 0;
+        meinBuild.forEach(element => {
 
-        }
-        getPlayerBuild(player_position);
-        //Summary:
+            var meinX = element.substring(element.indexOf(":") + 1, element.indexOf("|"));
+            var meinY = element.substring(element.indexOf("|") + 1);
+            document.getElementById("gamedetails_build").innerHTML += element.substring(0, element.indexOf("_unit")) + " (" + meinX + ", " + meinY + ")" + "<br>";
+            addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")));
 
-        var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
-        document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
-        document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ")+" UTC";
-        document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
-        document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-        document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
-    }
-}
-function dec2hex(str) { // .toString(16) only works up to 2^53
-    var dec = str.toString().split(''), sum = [], hex = [], i, s
-    while (dec.length) {
-        s = 1 * dec.shift()
-        for (i = 0; s || i < sum.length; i++) {
-            s += (sum[i] || 0) * 10
-            sum[i] = s % 16
-            s = (s - sum[i]) / 16
-        }
-    }
-    while (sum.length) {
-        hex.push(sum.pop().toString(16))
-    }
-    return hex.join('')
-}
-function getPlayerValue(player, level) {
-    try {
-        var networth = gameEvent[player].netWorthPerWave[level - 1];
-        //value = networth - workerval - gold für wave - gold für mercs auf wave
-        var worker_cost = 50;
-        var wave_value = 72;
-        var merc_value = 6;
-        var value = networth - worker_cost * gameEvent[player].workersPerWave[level - 1] - wave_value - merc_value;
-        return value;
-    }
-    catch(error){
-        console.log(error);
-        return 0;
-    }
-}
-
-function getPlayerIncome(player, level) {
-    try {
-        var income = gameEvent[player].incomePerWave[level - 1];
-        return income;
-    }
-    catch (error) {
-        console.log(error);
-    }
-    
-}
-
-function getPlayerBuild(player) {
-    savedValue = player;
-    //console.log(player);
-    clearPictures();
-    drawSquares();
-    document.getElementById("gamedetails_build").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
-    else var wave = parseInt(document.getElementById("setWave").value);
-    var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
-    counter = 0;
-    meinBuild.forEach(element => {
-        document.getElementById("gamedetails_build").innerHTML += element + "<br>";
-        var meinX = element.substring(element.indexOf(":") + 1, element.indexOf("|"));
-        var meinY = element.substring(element.indexOf("|") + 1);
-        addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")));
-
-    });
-    getPlayerMercsSent(player);
-    getPlayerMercsReceived(player);
-}
-
-function getPlayerMercsSent(player) {
-    document.getElementById("gamedetails_mercs_sent").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
-    else var wave = parseInt(document.getElementById("setWave").value);
-    var meinBuild = gameEvent[player].mercsSentPerWave[wave - 1];
-    meinBuild.forEach(element => {
-        document.getElementById("gamedetails_mercs_sent").innerHTML += element + "<br>";
-    });
-}
-
-function getPlayerMercsReceived(player) {
-    document.getElementById("gamedetails_mercs_received").innerHTML = "";
-    if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
-    else var wave = parseInt(document.getElementById("setWave").value);
-    var meinBuild = gameEvent[player].mercsReceivedPerWave[wave - 1];
-    meinBuild.forEach(element => {
-        document.getElementById("gamedetails_mercs_received").innerHTML += element + "<br>";
-    });
-}
-
-function getPlayerLeaks(player) {
-    var player_leaks = 0;
-    if (document.getElementById("setWave").value == "all") {
-
-        for (var i = 0; i < gameEvent[0].wave; i++) {
-            if (gameEvent[player].leaksPerWave[i]) {
-                player_leaks += gameEvent[player].leaksPerWave[i].length;
-            }
-        }
-
-        return player_leaks;
-
-    }
-    else {
-        var wave = parseInt(document.getElementById("setWave").value);
-        if (gameEvent[player].leaksPerWave[wave + 1]) player_leaks = gameEvent[player].leaksPerWave[wave + 1].length;
-        return player_leaks;
+        });
+        getPlayerMercsSent(player);
+        getPlayerMercsReceived(player);
     }
 
-}
-
-function addPicture(y, x, unit) {
-    //überprüfe welche unit auf feld ist
-    var neuesX = x * 2;
-    var neuesY = y * 2;
-    //icons
-    switch (unit) {
-        //element
-        case "proton":
-            var url = "/img/icons/Proton.png";
-            var unit_type = "Proton";
-            break;
-        case "atom":
-            var url = "/img/icons/Atom.png";
-            var unit_type = "Atom";
-            break;
-        case "aqua_spirit":
-            var url = "/img/icons/AquaSpirit.png";
-            var unit_type = "AquaSpirit";
-            break;
-        case "fire_elemental":
-            var url = "/img/icons/FireElemental.png";
-            var unit_type = "FireElemental";
-            break;
-        case "rogue_wave":
-            var url = "/img/icons/RogueWave.png";
-            var unit_type = "RogueWave";
-            break;
-        case "windhawk":
-            var url = "/img/icons/Windhawk.png";
-            var unit_type = "Windhawk";
-            break;
-        case "violet":
-            var url = "/img/icons/Violet.png";
-            var unit_type = "Violet";
-            break;
-        case "mudman":
-            var url = "/img/icons/Mudman.png";
-            var unit_type = "Mudman";
-            break;
-        case "golem":
-            var url = "/img/icons/Golem.png";
-            var unit_type = "Golem";
-            break;
-        case "disciple":
-            var url = "/img/icons/Disciple.png";
-            var unit_type = "Disciple";
-            break;
-        case "starcaller":
-            var url = "/img/icons/Starcaller.png";
-            var unit_type = "Starcaller";
-            break;
-        case "fire_lord":
-            var url = "/img/icons/FireLord.png";
-            var unit_type = "FireLord";
-            break;
-        case "fenix":
-            var url = "/img/icons/Fenix.png";
-            var unit_type = "Fenix";
-            break;
-        //grove
-        case "buzz":
-            var url = "/img/icons/Buzz.png";
-            var unit_type = "Buzz";
-            break;
-        case "consort":
-            var url = "/img/icons/Consort.png";
-            var unit_type = "Consort";
-            break;
-        case "ranger":
-            var url = "/img/icons/Ranger.png";
-            var unit_type = "Ranger";
-            break;
-        case "daphne":
-            var url = "/img/icons/Daphne.png";
-            var unit_type = "Daphne";
-            break;
-        case "wileshroom":
-            var url = "/img/icons/Wileshroom.png";
-            var unit_type = "Wileshroom";
-            break;
-        case "canopie":
-            var url = "/img/icons/Canopie.png";
-            var unit_type = "Canopie";
-            break;
-        case "honeyflower":
-            var url = "/img/icons/Honeyflower.png";
-            var unit_type = "Honeyflower";
-            break;
-        case "deathcap":
-            var url = "/img/icons/Deathcap.png";
-            var unit_type = "Deathcap";
-            break;
-        case "antler":
-            var url = "/img/icons/Antler.png";
-            var unit_type = "Antler";
-            break;
-        case "whitemane":
-            var url = "/img/icons/Whitemane.png";
-            var unit_type = "Whitemane";
-            break;
-        case "banana_bunk":
-            var url = "/img/icons/BananaBunk.png";
-            var unit_type = "BananaBunk";
-            break;
-        case "banana_haven":
-            var url = "/img/icons/BananaHaven.png";
-            var unit_type = "BananaHaven";
-            break;
-        //forsaken
-        case "bone_warrior":
-            var url = "/img/icons/BoneWarrior.png";
-            var unit_type = "BoneWarriror";
-            break;
-        case "bone_crusher":
-            var url = "/img/icons/BoneCrusher.png";
-            var unit_type = "BoneCrusher";
-            break;
-        case "dark_mage":
-            var url = "/img/icons/DarkMage.png";
-            var unit_type = "DarkMage";
-            break;
-        case "fire_archer":
-            var url = "/img/icons/FireArcher.png";
-            var unit_type = "FireArcher";
-            break;
-        case "gargoyle":
-            var url = "/img/icons/Gargoyle.png";
-            var unit_type = "Gargoyle";
-            break;
-        case "green_devil":
-            var url = "/img/icons/GreenDevil.png";
-            var unit_type = "GreenDevil";
-            break;
-        case "gateguard":
-            var url = "/img/icons/Gateguard.png";
-            var unit_type = "Gateguard";
-            break;
-        case "harbinger":
-            var url = "/img/icons/Harbinger.png";
-            var unit_type = "Harbinger";
-            break;
-        case "butcher":
-            var url = "/img/icons/Butcher.png";
-            var unit_type = "Butcher";
-            break;
-        case "head_chef":
-            var url = "/img/icons/HeadChef.png";
-            var unit_type = "Headchef";
-            break;
-        case "nightmare":
-            var url = "/img/icons/Nightmare.png";
-            var unit_type = "Nightmare";
-            break;
-        case "doppelganger":
-            var url = "/img/icons/Doppelganger.png";
-            var unit_type = "Doppelganger";
-            break;
-        case "lord_of_death":
-            var url = "/img/icons/LordOfDeath.png";
-            var unit_type = "LordOfDeath";
-            break;
-        case "hades":
-            var url = "/img/icons/Hades.png";
-            var unit_type = "Hades";
-            break;
-        //mech
-        case "peewee":
-            var url = "/img/icons/Peewee.png";
-            var unit_type = "Peewee";
-            break;
-        case "veteran":
-            var url = "/img/icons/Veteran.png";
-            var unit_type = "Veteran";
-            break;
-        case "bazooka":
-            var url = "/img/icons/Bazooka.png";
-            var unit_type = "Bazooka";
-            break;
-        case "zeus":
-            var url = "/img/icons/Zeus.png";
-            var unit_type = "Zeus";
-            break;
-        case "pyro":
-            var url = "/img/icons/Pyro.png";
-            var unit_type = "Pyro";
-            break;
-        case "tempest":
-            var url = "/img/icons/Tempest.png";
-            var unit_type = "Tempest";
-            break;
-        case "leviathan":
-            var url = "/img/icons/Leviathan.png";
-            var unit_type = "Leviathan";
-            break;
-        case "aps":
-            var url = "/img/icons/APS.png";
-            var unit_type = "APS";
-            break;
-        case "mps":
-            var url = "/img/icons/MPS.png";
-            var unit_type = "MPS";
-            break;
-        case "berserker":
-            var url = "/img/icons/Berserker.png";
-            var unit_type = "Berserker";
-            break;
-        case "fatalizer":
-            var url = "/img/icons/Fatalizer.png";
-            var unit_type = "Fatalizer";
-            break;
-        case "millennium":
-            var url = "/img/icons/Millennium.png";
-            var unit_type = "Millennium";
-            break;
-        case "doomsday_machine":
-            var url = "/img/icons/DoomsdayMachine.png";
-            var unit_type = "DoomsdayMachine";
-            break;
-        // Atlantean
-        case "pollywog":
-            var url = "/img/icons/Pollywog.png";
-            var unit_type = "Pollywog";
-            break
-        case "devilfish":
-            var url = "/img/icons/Devilfish.png";
-            var unit_type = "Devilfish";
-            break
-        case "seraphin":
-            var url = "/img/icons/Seraphin.png";
-            var unit_type = "Seraphin";
-            break
-        case "angler":
-            var url = "/img/icons/Angler.png";
-            var unit_type = "Angler";
-            break;
-        case "bounty_hunter":
-            var url = "/img/icons/BountyHunter.png";
-            var unit_type = "Bounty Hunter";
-            break;
-        case "kingpin":
-            var url = "/img/icons/Kingpin.png";
-            var unit_type = "Kingpin";
-            break;
-        case "sea_serpent":
-            var url = "/img/icons/SeaSerpent.png";
-            var unit_type = "SeaSerpant";
-            break;
-        case "deepcoiler":
-            var url = "/img/icons/Deepcoiler.png";
-            var unit_type = "DeepCoiler";
-            break;
-        case "grarl":
-            var url = "/img/icons/Grarl.png";
-            var unit_type = "Grarl";
-            break;
-        case "king_claw":
-            var url = "/img/icons/KingClaw.png";
-            var unit_type = "King Claw";
-            break
-        case "ocean_templar":
-            var url = "/img/icons/OceanTemplar.png";
-            var unit_type = "Ocean Templar";
-            break
-        case "azeria":
-            var url = "/img/icons/Azeria.png";
-            var unit_type = "Azeria";
-            break;
-        case "priestess_of_the_abyss":
-            var url = "/img/icons/PriestessOfTheAbyss.png";
-            var unit_type = "Priestess of the Abyss";
-            break;
-        case "eggsack":
-            var url = "/img/icons/Eggsack.png";
-            var unit_type = "Eggsack";
-            break;
-        case "hydra":
-            var url = "/img/icons/Hydra.png";
-            var unit_type = "Hydra";
-            break;
-        default:
-            var url = "";
-            var unit_type = "empty";
-            console.log("missing unit: " + unit);
-            break;
+    function getPlayerMercsSent(player) {
+        document.getElementById("gamedetails_mercs_sent").innerHTML = "";
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
+        else var wave = parseInt(document.getElementById("setWave").value);
+        var meinBuild = gameEvent[player].mercsSentPerWave[wave - 1];
+        meinBuild.forEach(element => {
+            document.getElementById("gamedetails_mercs_sent").innerHTML += element + "<br>";
+        });
     }
 
-
-
-    //canvas einfügen
-    //console.log(neuesX + ", " + neuesY);
-    var zielspalte = document.getElementById(neuesX + "." + neuesY);
-    zielspalte.style = "border: 0px;";
-    zielspalte.title = unit_type;
-    meinCanvas1 = document.createElement("canvas");
-    meinCanvas1.setAttribute("id", unit_type + " 1");
-    meinCanvas1.setAttribute("class", "kleinerCanvas");
-    var el1 = zielspalte.appendChild(meinCanvas1);
-    //var el1 = document.getElementById(unit_type+ " 1");
-    var zielspalte = document.getElementById((neuesX + 1) + "." + neuesY);
-    zielspalte.style = "border: 0px;";
-    zielspalte.title = unit_type;
-    meinCanvas2 = document.createElement("canvas");
-    meinCanvas2.setAttribute("id", unit_type + " 2");
-    meinCanvas2.setAttribute("class", "kleinerCanvas");
-    var el2 = zielspalte.appendChild(meinCanvas2);
-    var zielspalte = document.getElementById(neuesX + "." + (neuesY + 1));
-    //console.log(neuesX + ", "+neuesY);
-    zielspalte.style = "border: 0px;";
-    zielspalte.title = unit_type;
-    meinCanvas3 = document.createElement("canvas");
-    meinCanvas3.setAttribute("id", unit_type + " 3");
-    meinCanvas3.setAttribute("class", "kleinerCanvas");
-    var el3 = zielspalte.appendChild(meinCanvas3);
-    var zielspalte = document.getElementById((neuesX + 1) + "." + (neuesY + 1));
-    zielspalte.style = "border: 0px;";
-    zielspalte.title = unit_type;
-    meinCanvas4 = document.createElement("canvas");
-    meinCanvas4.setAttribute("id", unit_type + " 4");
-    meinCanvas4.setAttribute("class", "kleinerCanvas");
-    var el4 = zielspalte.appendChild(meinCanvas4);
-
-    // bild in canvas (4 teile)
-    var meinBild1 = document.createElement("img");
-    meinBild1.src = url;
-    meinBild1.onload = function () {
-        //1
-        var ctx = el1.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
-        //2
-        ctx = el2.getContext('2d');
-        ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150);
-        //3
-        ctx = el3.getContext('2d');
-        ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150);
-        //4
-        ctx = el4.getContext('2d');
-        ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
-    }
-}
-
-function clearPictures() {
-
-    for (var i = 28; i > 0; i--) {
-        for (var e = 1; e < 19; e++) {
-            document.getElementById(i + "." + e).innerHTML = "";
-            document.getElementById(i + "." + e).style = "border: 1px solid black; background-color: white;";
-
-        }
-
-    }
-}
-
-function getIcon(unit) {
-
-}
-
-function showBuild() {
-
-    if (document.getElementsByClassName("hidden").length == 0) {
-        document.getElementById("divumtable").setAttribute("class", "hidden");
-    }
-    else {
-        document.getElementById("divumtable").setAttribute("class", "");
-    }
-}
-
-document.onkeydown = function (event) {
-    if (event.keyCode == 13) {
-        if (event.target.id == "playername") setPlayer();
+    function getPlayerMercsReceived(player) {
+        document.getElementById("gamedetails_mercs_received").innerHTML = "";
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
+        else var wave = parseInt(document.getElementById("setWave").value);
+        var meinBuild = gameEvent[player].mercsReceivedPerWave[wave - 1];
+        meinBuild.forEach(element => {
+            document.getElementById("gamedetails_mercs_received").innerHTML += element + "<br>";
+        });
     }
 
-    if (document.getElementById("tab_top_3").className == "tab_top_active") {
-        if ((event.keyCode == 38 && event.target.id != "setGame") || (event.keyCode == 39 && event.target.id != "setGame") || event.keyCode == 107) {
-            if (document.getElementById("setWave").value < gameEvent[0].wave) {
-                if (event.target.id != "setWave") {
-                    var waveValue = parseInt(document.getElementById("setWave").value) + 1;
-                    document.getElementById("setWave").value = waveValue;
+    function getPlayerLeaks(player) {
+        var player_leaks = 0;
+        if (document.getElementById("setWave").value == "all") {
+
+            for (var i = 0; i < gameEvent[0].wave; i++) {
+                if (gameEvent[player].leaksPerWave[i]) {
+                    player_leaks += gameEvent[player].leaksPerWave[i].length;
                 }
-                drawGameDetails(savedValue);
-            }
-            else if (document.getElementById("setWave").value == "all") {
-                if (event.target.id != "setWave") {
-                    document.getElementById("setWave").value = "1";
-                }
-                drawGameDetails(savedValue);
-            }
-            else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
-                document.getElementById("setWave").value = "all";
             }
 
+            return player_leaks;
+
         }
-        if ((event.keyCode == 37 && event.target.id != "setGame") || (event.keyCode == 40 && event.target.id != "setGame") || event.keyCode == 109) {
-            if (document.getElementById("setWave").value > 1) {
-                if (event.target.id != "setWave") {
-                    document.getElementById("setWave").value -= 1;
-                }
-                drawGameDetails(savedValue);
+        else {
+            var wave = parseInt(document.getElementById("setWave").value);
+            if (gameEvent[player].leaksPerWave[wave + 1]) player_leaks = gameEvent[player].leaksPerWave[wave + 1].length;
+            return player_leaks;
+        }
+
+    }
+
+    function addPicture(y, x, unit) {
+        //überprüfe welche unit auf feld ist
+        var neuesX = x * 2;
+        var neuesY = y * 2;
+        //icons
+        var url = "";
+        url = "/img/icons/" + unit.charAt(0).toUpperCase() + unit.substring(1);
+        while (url.includes("_")) {
+            var index = url.indexOf("_");
+            url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
+            url.replace("_", "");
+        }
+        var unit_type = url.substring(url.lastIndexOf("/") + 1);
+        url += ".png";
+        //canvas einfügen
+        //console.log(neuesX + ", " + neuesY);
+        var zielspalte = document.getElementById(neuesX + "." + neuesY);
+        zielspalte.style = "border: 0px;";
+        zielspalte.title = unit_type;
+        meinCanvas1 = document.createElement("canvas");
+        meinCanvas1.setAttribute("id", unit_type + " 1");
+        meinCanvas1.setAttribute("class", "kleinerCanvas");
+        var el1 = zielspalte.appendChild(meinCanvas1);
+        //var el1 = document.getElementById(unit_type+ " 1");
+        var zielspalte = document.getElementById((neuesX + 1) + "." + neuesY);
+        zielspalte.style = "border: 0px;";
+        zielspalte.title = unit_type;
+        meinCanvas2 = document.createElement("canvas");
+        meinCanvas2.setAttribute("id", unit_type + " 2");
+        meinCanvas2.setAttribute("class", "kleinerCanvas");
+        var el2 = zielspalte.appendChild(meinCanvas2);
+        var zielspalte = document.getElementById(neuesX + "." + (neuesY + 1));
+        //console.log(neuesX + ", "+neuesY);
+        zielspalte.style = "border: 0px;";
+        zielspalte.title = unit_type;
+        meinCanvas3 = document.createElement("canvas");
+        meinCanvas3.setAttribute("id", unit_type + " 3");
+        meinCanvas3.setAttribute("class", "kleinerCanvas");
+        var el3 = zielspalte.appendChild(meinCanvas3);
+        var zielspalte = document.getElementById((neuesX + 1) + "." + (neuesY + 1));
+        zielspalte.style = "border: 0px;";
+        zielspalte.title = unit_type;
+        meinCanvas4 = document.createElement("canvas");
+        meinCanvas4.setAttribute("id", unit_type + " 4");
+        meinCanvas4.setAttribute("class", "kleinerCanvas");
+        var el4 = zielspalte.appendChild(meinCanvas4);
+
+        // bild in canvas (4 teile)
+        var meinBild1 = document.createElement("img");
+        meinBild1.src = url;
+        meinBild1.onload = function () {
+            //1
+            var ctx = el1.getContext('2d');
+            ctx.drawImage(meinBild1, 0, 32, 32, 32, 0, 0, 300, 150);
+            //2
+            ctx = el2.getContext('2d');
+            ctx.drawImage(meinBild1, 0, 0, 32, 32, 0, 0, 300, 150);
+            //3
+            ctx = el3.getContext('2d');
+            ctx.drawImage(meinBild1, 32, 32, 32, 32, 0, 0, 300, 150);
+            //4
+            ctx = el4.getContext('2d');
+            ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
+        }
+    }
+
+    function clearPictures() {
+        for (var i = 28; i > 0; i--) {
+            for (var e = 1; e < 19; e++) {
+                document.getElementById(i + "." + e).innerHTML = "";
+                document.getElementById(i + "." + e).style = "border: 1px solid black; background-color: white;";
             }
-            else if (document.getElementById("setWave").value == "all") {
-                if (event.target.id != "setWave") {
-                    document.getElementById("setWave").value = gameEvent[0].wave;
+        }
+    }
+
+    function showBuild() {
+        if (document.getElementsByClassName("hidden").length == 0) {
+            document.getElementById("divumtable").setAttribute("class", "hidden");
+        }
+        else {
+            document.getElementById("divumtable").setAttribute("class", "");
+        }
+    }
+
+    document.onkeydown = function (event) {
+        if (event.keyCode == 13) {
+            if (event.target.id == "playername") setPlayer();
+        }
+        if (document.getElementById("tab_top_3").className == "tab_top_active") {
+            if ((event.keyCode == 38 && event.target.id != "setGame") || (event.keyCode == 39 && event.target.id != "setGame") || event.keyCode == 107) {
+                if (document.getElementById("setWave").value < gameEvent[0].wave) {
+                    if (event.target.id != "setWave") {
+                        var waveValue = parseInt(document.getElementById("setWave").value) + 1;
+                        document.getElementById("setWave").value = waveValue;
+                    }
+                    drawGameDetails(savedValue);
                 }
-                drawGameDetails(savedValue);
-            }
-            else if (document.getElementById("setWave").value == "1") {
-                if (event.target.id != "setWave") {
+                else if (document.getElementById("setWave").value == "all") {
+                    if (event.target.id != "setWave") {
+                        document.getElementById("setWave").value = "1";
+                    }
+                    drawGameDetails(savedValue);
+                }
+                else if (document.getElementById("setWave").value == (gameEvent[0].wave)) {
                     document.getElementById("setWave").value = "all";
                 }
-                drawGameDetails(savedValue);
+
+            }
+            if ((event.keyCode == 37 && event.target.id != "setGame") || (event.keyCode == 40 && event.target.id != "setGame") || event.keyCode == 109) {
+                if (document.getElementById("setWave").value > 1) {
+                    if (event.target.id != "setWave") {
+                        document.getElementById("setWave").value -= 1;
+                    }
+                    drawGameDetails(savedValue);
+                }
+                else if (document.getElementById("setWave").value == "all") {
+                    if (event.target.id != "setWave") {
+                        document.getElementById("setWave").value = gameEvent[0].wave;
+                    }
+                    drawGameDetails(savedValue);
+                }
+                else if (document.getElementById("setWave").value == "1") {
+                    if (event.target.id != "setWave") {
+                        document.getElementById("setWave").value = "all";
+                    }
+                    drawGameDetails(savedValue);
+                }
+            }
+        }
+
+        if (document.getElementById("tab_top_5").className == "tab_top_active") {
+            if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
+                if (document.getElementById("setWave2").value < 21) {
+                    if (event.target.id != "setWave2") {
+                        var waveValue = parseInt(document.getElementById("setWave2").value) + 1;
+                        document.getElementById("setWave2").value = waveValue;
+                    }
+                    drawPlayerBuilds(playerGames);
+                }
+                else if (document.getElementById("setWave2").value == "21") {
+                    document.getElementById("setWave2").value = "1";
+                    drawPlayerBuilds(playerGames);
+                }
+
+            }
+            if ((event.keyCode == 37 && event.target.id != "setWave2") || event.keyCode == 40 || event.keyCode == 109) {
+                if (document.getElementById("setWave2").value > 1) {
+                    if (event.target.id != "setWave2") {
+                        document.getElementById("setWave2").value -= 1;
+                    }
+                    drawPlayerBuilds(playerGames);
+                }
+                else if (document.getElementById("setWave2").value == "1") {
+                    if (event.target.id != "setWave2") {
+                        document.getElementById("setWave2").value = "21";
+                    }
+                    drawPlayerBuilds(playerGames);
+                }
             }
         }
     }
 
-    if (document.getElementById("tab_top_5").className == "tab_top_active") {
-        if (event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 107) {
-            if (document.getElementById("setWave2").value < 21) {
-                if (event.target.id != "setWave2") {
-                    var waveValue = parseInt(document.getElementById("setWave2").value) + 1;
-                    document.getElementById("setWave2").value = waveValue;
-                }
-                drawPlayerBuilds(playerGames);
-            }
-            else if (document.getElementById("setWave2").value == "21") {
-                document.getElementById("setWave2").value = "1";
-                drawPlayerBuilds(playerGames);
-            }
+    // api
 
-        }
-        if ((event.keyCode == 37 && event.target.id != "setWave2") || event.keyCode == 40 || event.keyCode == 109) {
-            if (document.getElementById("setWave2").value > 1) {
-                if (event.target.id != "setWave2") {
-                    document.getElementById("setWave2").value -= 1;
-                }
-                drawPlayerBuilds(playerGames);
+    // player stats by name
+    //stats
+    function apiGetPlayer(callback, playername) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var player = JSON.parse(xhttp.response);
+                callback(player);
             }
-            else if (document.getElementById("setWave2").value == "1") {
-                if (event.target.id != "setWave2") {
-                    document.getElementById("setWave2").value = "21";
-                }
-                drawPlayerBuilds(playerGames);
-            }
-        }
+        };
+        xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
+        xhttp.send();
     }
-}
 
-// api
+    function queryPlayer(playername) {
+        apiGetPlayer(function (result) {
+            if (result.player == null) {
+                document.getElementById("apierror").style.display = "";
+            }
+            else {
+                result.player.statistics = JSON.parse(result.player.statistics);
+                player = result.player
+                loadStats(player);
+                parseStats();
 
-// player stats by name
-//stats
-function apiGetPlayer(callback, playername) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var player = JSON.parse(xhttp.response);
-            callback(player);
-        }
-    };
-    xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
-    xhttp.send();
-}
+                return player;
+            }
 
-function queryPlayer(playername) {
-    apiGetPlayer(function (result) {
-        if (result.player == null) {
-            document.getElementById("apierror").style.display = "";
-        }
-        else {
-            result.player.statistics = JSON.parse(result.player.statistics);
-            player = result.player
-            loadStats(player);
-            parseStats();
+        }, playername);
+    }
+    //player overall games
+    //builds
+    function getPlayerOverallGames(callback, playername) {
+        var xhttp = new XMLHttpRequest();
 
-            return player;
-        }
-        
-    }, playername);
-}
-//player overall games
-//builds
-function getPlayerOverallGames(callback, playername) {
-    var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var player = JSON.parse(xhttp.response);
+                callback(player);
+            }
+        };
+        xhttp.open("GET", '/api/profile/playerOverallGames?playername=' + playername, true);
+        xhttp.send();
+    }
 
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var player = JSON.parse(xhttp.response);
-            callback(player);
-        }
-    };
-    xhttp.open("GET", '/api/profile/playerOverallGames?playername=' + playername, true);
-    xhttp.send();
-}
+    function queryPlayerOverallGames(playername, gameamount) {
+        getPlayerOverallGames(function (result) {
+            if (!result) {
+                document.getElementById("apierror").style.display = "";
+            }
+            else {
+                playerGames = result.player.filteredGamesQuery.games;
+                drawPlayerBuilds(playerGames);
+                games = result.player.filteredGamesQuery.games;
+                loadEloGraph(games);
+                drawGameDetails(0);
+                listGames();
+                document.getElementById("mitte").style.display = "none";
+                return playerGames;
+            }
+        }, playername);
+    }
 
-function queryPlayerOverallGames(playername, gameamount) {
-    getPlayerOverallGames(function (result) {
-        if (!result) {
-            document.getElementById("apierror").style.display = "";
-        }
-        else {
-            playerGames = result.player.filteredGamesQuery.games;
-            drawPlayerBuilds(playerGames);
-            games = result.player.filteredGamesQuery.games;
-            loadEloGraph(games);
-            drawGameDetails(0);
-            listGames();
-            document.getElementById("mitte").style.display = "none";
-            return playerGames;
-        }
-    }, playername);
-}
+    //adds thik lines to grid
+    function drawSquares() {
+        var smalls = document.getElementsByClassName("pictable");
+        Array.prototype.forEach.call(smalls, function (element) {
+            var x = element.id.substring(element.id.indexOf(".") + 1);
+            var y = element.id.substring(0, element.id.indexOf("."));
+            if (x % 2 == 1) {
 
-//sql
-//rank
-function sqlGetRank(callback, playername) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var rank = JSON.parse(xhttp.response);
-            callback(rank);
-        }
-    };
-    xhttp.open("GET", '/sql/rank?player=' + playername, true);
-    xhttp.send();
-}
+                element.style["border-left"] = "2px solid black";
+            }
+            else {
 
-function queryRank(playername) {
-    sqlGetRank(function (result) {
-        rank = result[0].Rank;
-        parseRank(rank);
-        return rank;
-    }, playername);
-}
-
-function parseRank(rank) {
-    document.getElementById("rank").textContent = "Rank: " + rank;
-}
-
-//adds thik lines to grid
-function drawSquares() {
-    var smalls = document.getElementsByClassName("pictable");
-    Array.prototype.forEach.call(smalls, function (element) {
-        var x = element.id.substring(element.id.indexOf(".") + 1);
-        var y = element.id.substring(0, element.id.indexOf("."));
-        if (x % 2 == 1) {
-
-            element.style["border-left"] = "2px solid black";
-        }
-        else {
-
-            element.style["border-right"] = "2px solid black";
-        }
-        if (y % 2 == 1) {
-            element.style["border-bottom"] = "2px solid black";
-        }
-        else {
-            element.style["border-top"] = "2px solid black";
-        }
-    });
-}
+                element.style["border-right"] = "2px solid black";
+            }
+            if (y % 2 == 1) {
+                element.style["border-bottom"] = "2px solid black";
+            }
+            else {
+                element.style["border-top"] = "2px solid black";
+            }
+        });
+    }

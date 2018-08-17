@@ -9,8 +9,10 @@ function getGameDetails(games) {
         meinString2 = games.gameDetails.filter(meinString => meinString.position == 5)[0];
         meinString3 = games.gameDetails.filter(meinString => meinString.position == 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
+        
         fillNames();
         waveAnzeigen();
+        
     }
     catch (error) {
         console.log(error);
@@ -26,287 +28,15 @@ function addPicture(y, x, unit, player) {
     var neuesX = x * 2;
     var neuesY = y * 2;
     //icons
-    switch (unit) {
-        //element
-        case "proton":
-            url = "/img/icons/Proton.png";
-            unit_type = "Proton";
-            break;
-        case "atom":
-            url = "/img/icons/Atom.png";
-            unit_type = "Atom";
-            break;
-        case "aqua_spirit":
-            url = "/img/icons/AquaSpirit.png";
-            unit_type = "AquaSpirit";
-            break;
-        case "fire_elemental":
-            url = "/img/icons/FireElemental.png";
-            unit_type = "FireElemental";
-            break;
-        case "rogue_wave":
-            url = "/img/icons/RogueWave.png";
-            unit_type = "RogueWave";
-            break;
-        case "windhawk":
-            url = "/img/icons/Windhawk.png";
-            unit_type = "Windhawk";
-            break;
-        case "violet":
-            url = "/img/icons/Violet.png";
-            unit_type = "Violet";
-            break;
-        case "mudman":
-            url = "/img/icons/Mudman.png";
-            unit_type = "Mudman";
-            break;
-        case "golem":
-            url = "/img/icons/Golem.png";
-            unit_type = "Golem";
-            break;
-        case "disciple":
-            url = "/img/icons/Disciple.png";
-            unit_type = "Disciple";
-            break;
-        case "starcaller":
-            url = "/img/icons/Starcaller.png";
-            unit_type = "Starcaller";
-            break;
-        case "fire_lord":
-            url = "/img/icons/FireLord.png";
-            unit_type = "FireLord";
-            break;
-        case "fenix":
-            url = "/img/icons/Fenix.png";
-            unit_type = "Fenix";
-            break;
-        //grove
-        case "buzz":
-            url = "/img/icons/Buzz.png";
-            unit_type = "Buzz";
-            break;
-        case "consort":
-            url = "/img/icons/Consort.png";
-            unit_type = "Consort";
-            break;
-        case "ranger":
-            url = "/img/icons/Ranger.png";
-            unit_type = "Ranger";
-            break;
-        case "daphne":
-            url = "/img/icons/Daphne.png";
-            unit_type = "Daphne";
-            break;
-        case "wileshroom":
-            url = "/img/icons/Wileshroom.png";
-            unit_type = "Wileshroom";
-            break;
-        case "canopie":
-            url = "/img/icons/Canopie.png";
-            unit_type = "Canopie";
-            break;
-        case "honeyflower":
-            url = "/img/icons/Honeyflower.png";
-            unit_type = "Honeyflower";
-            break;
-        case "deathcap":
-            url = "/img/icons/Deathcap.png";
-            unit_type = "Deathcap";
-            break;
-        case "antler":
-            url = "/img/icons/Antler.png";
-            unit_type = "Antler";
-            break;
-        case "whitemane":
-            url = "/img/icons/Whitemane.png";
-            unit_type = "Whitemane";
-            break;
-        case "banana_bunk":
-            url = "/img/icons/BananaBunk.png";
-            unit_type = "BananaBunk";
-            break;
-        case "banana_haven":
-            url = "/img/icons/BananaHaven.png";
-            unit_type = "BananaHaven";
-            break;
-        //forsaken
-        case "bone_warrior":
-            url = "/img/icons/BoneWarrior.png";
-            unit_type = "BoneWarriror";
-            break;
-        case "bone_crusher":
-            url = "/img/icons/BoneCrusher.png";
-            unit_type = "BoneCrusher";
-            break;
-        case "dark_mage":
-            url = "/img/icons/DarkMage.png";
-            unit_type = "DarkMage";
-            break;
-        case "fire_archer":
-            url = "/img/icons/FireArcher.png";
-            unit_type = "FireArcher";
-            break;
-        case "gargoyle":
-            url = "/img/icons/Gargoyle.png";
-            unit_type = "Gargoyle";
-            break;
-        case "green_devil":
-            url = "/img/icons/GreenDevil.png";
-            unit_type = "GreenDevil";
-            break;
-        case "gateguard":
-            url = "/img/icons/Gateguard.png";
-            unit_type = "Gateguard";
-            break;
-        case "harbinger":
-            url = "/img/icons/Harbinger.png";
-            unit_type = "Harbinger";
-            break;
-        case "butcher":
-            url = "/img/icons/Butcher.png";
-            unit_type = "Butcher";
-            break;
-        case "head_chef":
-            url = "/img/icons/HeadChef.png";
-            unit_type = "Headchef";
-            break;
-        case "nightmare":
-            url = "/img/icons/Nightmare.png";
-            unit_type = "Nightmare";
-            break;
-        case "doppelganger":
-            url = "/img/icons/Doppelganger.png";
-            unit_type = "Doppelganger";
-            break;
-        case "lord_of_death":
-            url = "/img/icons/LordOfDeath.png";
-            unit_type = "LordOfDeath";
-            break;
-        case "hades":
-            url = "/img/icons/Hades.png";
-            unit_type = "Hades";
-            break;
-        //mech
-        case "peewee":
-            url = "/img/icons/Peewee.png";
-            unit_type = "Peewee";
-            break;
-        case "veteran":
-            url = "/img/icons/Veteran.png";
-            unit_type = "Veteran";
-            break;
-        case "bazooka":
-            url = "/img/icons/Bazooka.png";
-            unit_type = "Bazooka";
-            break;
-        case "zeus":
-            url = "/img/icons/Zeus.png";
-            unit_type = "Zeus";
-            break;
-        case "pyro":
-            url = "/img/icons/Pyro.png";
-            unit_type = "Pyro";
-            break;
-        case "tempest":
-            url = "/img/icons/Tempest.png";
-            unit_type = "Tempest";
-            break;
-        case "leviathan":
-            url = "/img/icons/Leviathan.png";
-            unit_type = "Leviathan";
-            break;
-        case "aps":
-            url = "/img/icons/APS.png";
-            unit_type = "APS";
-            break;
-        case "mps":
-            url = "/img/icons/MPS.png";
-            unit_type = "MPS";
-            break;
-        case "berserker":
-            url = "/img/icons/Berserker.png";
-            unit_type = "Berserker";
-            break;
-        case "fatalizer":
-            url = "/img/icons/Fatalizer.png";
-            unit_type = "Fatalizer";
-            break;
-        case "millennium":
-            url = "/img/icons/Millennium.png";
-            unit_type = "Millennium";
-            break;
-        case "doomsday_machine":
-            url = "/img/icons/DoomsdayMachine.png";
-            unit_type = "DoomsdayMachine";
-            break;
-        // Atlantean
-        case "pollywog":
-            url = "/img/icons/Pollywog.png";
-            unit_type = "Pollywog";
-            break;
-        case "devilfish":
-            url = "/img/icons/Devilfish.png";
-            unit_type = "Devilfish";
-            break;
-        case "seraphin":
-            url = "/img/icons/Seraphin.png";
-            unit_type = "Seraphin";
-            break;
-        case "angler":
-            url = "/img/icons/Angler.png";
-            unit_type = "Angler";
-            break;
-        case "bounty_hunter":
-            url = "/img/icons/BountyHunter.png";
-            unit_type = "Bounty Hunter";
-            break;
-        case "kingpin":
-            url = "/img/icons/Kingpin.png";
-            unit_type = "Kingpin";
-            break;
-        case "sea_serpent":
-            url = "/img/icons/SeaSerpent.png";
-            unit_type = "SeaSerpant";
-            break;
-        case "deepcoiler":
-            url = "/img/icons/Deepcoiler.png";
-            unit_type = "Deepcoiler";
-            break;
-        case "grarl":
-            url = "/img/icons/Grarl.png";
-            unit_type = "Grarl";
-            break;
-        case "king_claw":
-            url = "/img/icons/KingClaw.png";
-            unit_type = "King Claw";
-            break;
-        case "ocean_templar":
-            url = "/img/icons/OceanTemplar.png";
-            unit_type = "Ocean Templar";
-            break;
-        case "azeria":
-            var url = "/img/icons/Azeria.png";
-            var unit_type = "Azeria";
-            break;
-        case "priestess_of_the_abyss":
-            var url = "/img/icons/PriestessOfTheAbyss.png";
-            var unit_type = "Priestess of the Abyss";
-            break;
-        case "eggsack":
-            url = "/img/icons/Eggsack.png";
-            unit_type = "Eggsack";
-            break;
-        case "hydra":
-            url = "/img/icons/Hydra.png";
-            unit_type = "Hydra";
-            break;
-        default:
-            url = "";
-            unit_type = "empty";
-            console.log("missing unit: " + unit);
-            break;
-
+    var url = "";
+    url = "/img/icons/" + unit.charAt(0).toUpperCase() + unit.substring(1);
+    while (url.includes("_")) {
+        var index = url.indexOf("_");
+        url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
+        url.replace("_", "");
     }
+    var unit_type = url.substring(url.lastIndexOf("/") + 1);
+    url += ".png";
     //canvas einfügen
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
     //console.log("p" + player + "_" + neuesX + "." + neuesY);
@@ -648,6 +378,7 @@ function waveAnzeigen() {
 
     clearPictures();
     clearSends();
+    drawSquares();
     for (i = 1; i < 5; i++) {
         clearLeaks(i);
         getPlayerBuild(i);
@@ -656,7 +387,7 @@ function waveAnzeigen() {
     }
     fillNames();
     setKingHp();
-
+    
 }
 
 function showSelect() {
@@ -739,6 +470,45 @@ function showGames(nummer, legion) {
 function getGameId(nummer, playernum) {
     window.location.href = "/replay?gameid=" + players[playernum].filteredGamesQuery.games[nummer].game_id;
 }
+
+
+
+
+
+//adds thik lines to grid
+function drawSquares() {
+    var smalls = document.getElementsByClassName("pictable");
+    Array.prototype.forEach.call(smalls, function (element) {
+        var x = element.id.substring(element.id.indexOf(".") + 1);
+        var y = element.id.substring(element.id.indexOf("_")+1, element.id.indexOf("."));
+        if (x % 2 == 1) {
+
+            element.style["border-left"] = "2px solid black";
+        }
+        else {
+
+            element.style["border-right"] = "2px solid black";
+        }
+        if (y % 2 == 1) {
+            element.style["border-bottom"] = "2px solid black";
+        }
+        else {
+            element.style["border-top"] = "2px solid black";
+            
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
 
 //API
 function getGame(callback, gameid) {
