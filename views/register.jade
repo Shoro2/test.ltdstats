@@ -1,0 +1,12 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/help.css')
+    .content
+        .card
+            | Name:
+            input#name(type="text") 
+            | Password:
+            input#pw1(type="password") 
+            | Retype:
+            input#pw2(type="password") 
+            button Register

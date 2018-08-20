@@ -12,6 +12,7 @@ require('isomorphic-fetch');
 const PORT = 61624;
 const HOST = '127.0.0.1';
 const http = require('http');
+
 // App
 const app = express();
 
@@ -19,11 +20,6 @@ const app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
-
-con.connect(function (err) {
-    if (err) console.log("connecton to mysql failed: " + err);
-    else console.log("Connected to mySQL!");
-});
 
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
@@ -392,12 +388,31 @@ app.get('/streams', (req, res) => {
         title: 'Featured Streams'
     })
 });
+/*
+app.get('/login', (req, res) => {
+    res.render('login', {
+        title: 'Login'
+    })
+});
 
-
-
+app.get('/register', (req, res) => {
+    res.render('register', {
+        title: 'Register',
+        mongoCon: mongoConnection
+    })
+});
 
 //sql abfragen
+app.get('/users/checkname', (req, res) => {
+    
+        dbo.collection("users").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            res.json(result);
+            db.close();
+        });
+});
 
+*/
 
 app.get('/lihl/getPlayer', (req, res) => {
     var sql = "SELECT * FROM lihl.player order by elo desc";
@@ -436,6 +451,34 @@ app.get('/sql/getGuides', (req, res) => {
 });
 
 //api abfragen
+
+app.get('/api/playerElo', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+        body: JSON.stringify({
+            query: '{player(playername:"'+playername+'"){statistics}}'
+        }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            data.data.player.statistics = JSON.parse(data.data.player.statistics);
+            res.render("elo", {
+                meineElo: data.data.player.statistics.overallElo,
+                title: "Elo"
+            });
+        });
+});
 
 
 app.get('/api/units', (req, res) => {
@@ -1125,6 +1168,5 @@ app.get('/api/tour/player', (req, res) => {
         });
 
 });
-
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
