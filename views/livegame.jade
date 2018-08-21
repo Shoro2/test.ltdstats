@@ -1,0 +1,33 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/livegame.css')
+    .content
+        .teamcard#west
+            .player#player1
+                #name1
+                #elo1 Elo:
+                #best_legion1
+                #latest_legion1
+                #favstart1
+            .player#player2
+                #name2
+                #elo2 Elo:
+                #best_legion2
+                #latest_legion2
+                #favstart2
+            .winchance#winchance_west
+        .teamcard#east
+            .player#player3
+                #name3
+                #elo3 Elo:
+                #best_legion3
+                #latest_legion3
+                #favstart3
+            .player#player4
+                #name4
+                #elo4 Elo:
+                #best_legion4
+                #latest_legion4
+                #favstart4
+            .winchance#winchance_east
+    script(src="/js/livegame.js")

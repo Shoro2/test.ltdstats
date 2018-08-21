@@ -50,6 +50,10 @@ html
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Streams, Youtube, Twitch, Streamer")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, video, stream, streamer, youtube, twitch, good players, top players")
             meta(name="description", content="Offical hosted Legion TD 2 tournaments.")
+        if(title.includes("Livegame"))
+            meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Livegame")
+            meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, livegame, winchance")
+            meta(name="description", content="Look up your current game.")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
     body
         header
@@ -146,7 +150,7 @@ html
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
                             button.btn.btn-outline-success.my-sm-0(onclick="setPlayer();") Search
-                    if(title.includes("Ladder") || title.includes("Livegame") || title.includes("Units"))
+                    if(title.includes("Livegame") || title.includes("Units"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Search

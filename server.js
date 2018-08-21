@@ -388,6 +388,12 @@ app.get('/streams', (req, res) => {
         title: 'Featured Streams'
     })
 });
+
+app.get('/livegame', (req, res) => {
+    res.render('livegame', {
+        title: 'Livegame'
+    })
+});
 /*
 app.get('/login', (req, res) => {
     res.render('login', {
@@ -649,7 +655,33 @@ app.get('/api/profile/playerGames', (req, res) => {
             res.json(data.data);
         });
 });
+
 */
+// player with 100 last games
+app.get('/api/profile/player100', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+        body: JSON.stringify({
+            query: '{player(playername: "' + playername +'") { statistics,filteredGamesQuery(queuetype: normal, limit: 100) {count,games{game_id,partyMembers{playername},gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave}}}}}'
+        }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        }).then(function (data) {
+            //player object an frontend
+            res.json(data.data);
+        });
+});
+
 app.get('/api/profile/player', (req, res) => {
     var playername = req.query.playername;
     fetch('https://api.legiontd2.com/graphql', {
