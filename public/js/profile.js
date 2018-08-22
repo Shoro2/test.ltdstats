@@ -90,11 +90,12 @@ function loadEloGraph(games) {
                     //console.log(myEle);
                 }
                 else {
+                    console.log("else");
                     elo[counter] = elo[counter - 1];
                     date[counter] = date[counter - 1];
                 }
             }
-
+            console.log(myEle);
             counter++;
         }
 

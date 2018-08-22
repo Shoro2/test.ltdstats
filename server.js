@@ -456,6 +456,27 @@ app.get('/sql/getGuides', (req, res) => {
 
 });
 
+app.get('/sql/getLivegame', (req, res) => {
+    var pname = req.query.playername;
+    http.get('http://159.69.83.17:3000/db/livegames?myobj='+pname, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            res.json(data);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
 //api abfragen
 
 app.get('/api/playerElo', (req, res) => {
@@ -579,6 +600,8 @@ app.get('/api/ladder', (req, res) => {
         });
 });
 
+
+//todo: check games order
 app.get('/api/profile/playerOverallGames', (req, res) => {
     var playername = req.query.playername.replace("%20", " ");
     console.log(playername);
@@ -664,7 +687,7 @@ app.get('/api/profile/player100', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername: "' + playername +'") { statistics,filteredGamesQuery(queuetype: normal, limit: 100) {count,games{game_id,partyMembers{playername},gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave}}}}}'
+            query: '{player(playername: "' + playername +'") { statistics,games(queuetype: normal, limit: 100) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
         }),
     })
         .then(function (response) {

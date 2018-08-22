@@ -96,12 +96,6 @@ function selectNone() {
 }
 
 document.body.onload = function () {
-
-
-    console.log(document.getElementById("playername").value);
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var playerurl = url.searchParams.get("player");
     if (window.location.href.includes("overall")) {
         var type = "overallElo";
     }
@@ -126,14 +120,8 @@ document.body.onload = function () {
     else {
         type = "overallElo";
     }
-    console.log(window.location.href);
-    if (playerurl !== null) {
-        queryRank(playerurl, type);
-    }
-    else {
-
-        queryLadder(100, 0, type);
-    }
+    queryLadder(100, 0, type);
+    
 };
 
 function getLadder(callback, limit, offset, type) {
