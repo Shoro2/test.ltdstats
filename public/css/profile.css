@@ -161,6 +161,25 @@
     height: 100%;
 }
 
+/*MARKIERUNG*/
+.flex-col {
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.flex-row {
+    flex-wrap: wrap;
+    flex-direction: row;
+
+}
+
+.flex-row .stats-small {
+    margin: 0;
+    max-width: 380px;
+}
+
 #stats {
     border-radius: 10px;
     height: 80%;

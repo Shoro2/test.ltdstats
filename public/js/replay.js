@@ -16,8 +16,9 @@ function getGameDetails(games) {
     }
     catch (error) {
         console.log(error);
+        console.log(games);
         document.getElementById("mitte").innerHTML += "<p><h3> Game not found.</h3>";
-        showLoad();
+        //showLoad();
     }
     
 
@@ -517,6 +518,7 @@ function getGame(callback, gameid) {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var game = JSON.parse(xhttp.response);
+            console.log(game);
             callback(game);
         }
     };
@@ -528,6 +530,7 @@ function queryGame(gameid) {
     getGame(function (result) {
         //console.log(result);
         game = result.game;
+        
         getGameDetails(game);
         document.getElementById("mitte").style.display = "none";
         return game;
