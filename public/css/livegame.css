@@ -9,4 +9,36 @@
 #indermitte{
     margin-left:auto;
     margin-right:auto;
+    width:20%;
+    text-align:center;
+}
+.favunit_div {
+    display: inline-block;
+}
+
+.unitimg{
+    height:24px;
+    width:24px;
+}
+
+.btn-outline-success2{
+    color:black;
+    background-color:transparent;
+}
+
+.btn-outline-success2:hover {
+    color: black;
+    background-color: lightblue;
+}
+
+.form-control2 {
+    border-color: lightblue;
+    background-color: transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: inline-block;
 }

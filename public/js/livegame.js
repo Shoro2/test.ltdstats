@@ -13,13 +13,19 @@ function apiGetPlayer(callback, playername) {
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
         if (result.player == null) {
+            console.log(playername);
+            console.log(result);
             document.getElementById("apierror").style.display = "";
         }
         else {
             result.player.statistics = JSON.parse(result.player.statistics);
             player = result.player
             allPlayers.push(player);
-            if (allPlayers.length == 4) parsePlayers();
+            document.getElementById("loadingstring").innerHTML = "Requesting players.... " + allPlayers.length + "/4";
+            if (allPlayers.length == 4) {
+                parsePlayers();
+                document.getElementById("loadingstring").innerHTML = "";
+            }
             return player;
         }
 
@@ -40,6 +46,7 @@ function sqlGetLivegame(callback, playername) {
 }
 
 function queryLivegame(playername) {
+    document.getElementById("loadingstring").innerHTML = "Requesting Livegame...."
     sqlGetLivegame(function (result) {
         livegame = JSON.parse(result);
         console.log(livegame);
@@ -56,22 +63,27 @@ function getPlayer() {
     var requested_players = 0;
     allPlayers = [];
     document.getElementById("mitte").style.display = "";
+    
+    if (document.getElementById("playername").value.length > 0) {
+        queryLivegame(document.getElementById("playername").value);
+    }
+    else {
+        queryLivegame(document.getElementById("playername2").value);
+    }
     document.getElementById("indermitte").textContent = "";
-    queryLivegame(document.getElementById("playername").value);
 }
 
 function parsePlayers() {
     
     document.getElementById("mitte").style.display = "none";
-    var parsedPlayer = [];
+    parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
     }
     delete allPlayers;
-    console.log(parsedPlayer);
     for (var i = 0; i < 4; i++) {
-        document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
-        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo;
+        document.getElementById("name" + (i + 1)).innerHTML = "<b>" + parsedPlayer[i].playername + "</b>";
+        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason+")";
         document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
@@ -228,37 +240,39 @@ function parsePlayers() {
                     games_count++;
                     var currunit = "";
                     var lastunit = "";
-
-                    gameDetail.unitsPerWave[0].forEach(function (element) {
-                        //e=wave ;x=different units
-                        currunit = element.substring(0, element.indexOf("_unit"));
-                        if (currunit != lastunit) {
-                            var anzahl = 0;
-                            for (var x = 0; x < 60; x++) {
-                                if (favunit[x] != 0) {
-                                    //unit matching?
-                                    if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
-                                        anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                        //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                        anzahl++;
-                                        //console.log(element);
-                                        favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
-                                    }
-                                }
-                            }
-                            //no match, add it
-                            if (anzahl > 0 == false) {
+                    if (gameDetail.unitsPerWave.length>0) {
+                        gameDetail.unitsPerWave[0].forEach(function (element) {
+                            //e=wave ;x=different units
+                            currunit = element.substring(0, element.indexOf("_unit"));
+                            if (currunit != lastunit) {
+                                var anzahl = 0;
                                 for (var x = 0; x < 60; x++) {
-                                    if (favunit[x] == 0) {
-                                        favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
-                                        break;
+                                    if (favunit[x] != 0) {
+                                        //unit matching?
+                                        if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
+                                            anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                            //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                            anzahl++;
+                                            //console.log(element);
+                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
+                                        }
+                                    }
+                                }
+                                //no match, add it
+                                if (anzahl > 0 == false) {
+                                    for (var x = 0; x < 60; x++) {
+                                        if (favunit[x] == 0) {
+                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        lastunit = currunit;
-                    });
+                            lastunit = currunit;
+                        });
+                    }
+                    
                 }
             }
             
@@ -324,8 +338,6 @@ function parsePlayers() {
             }
             
         });
-        console.log(gamesWithFav_count);
-        console.log(games_count);
         document.getElementById("leaks" + (i + 1)).innerHTML = "Leaks on: ";
         for (var x = 0; x < leaks.length; x++) {
             if (leaks[x] > 0) {
@@ -335,22 +347,30 @@ function parsePlayers() {
 
             }
         }
-        document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 1);
+        document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
         document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
-        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:<ul>";
+        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
         for (var x = 0; x < 3; x++) {
             try {
                 var unit = favunit[x].substring(0, favunit[x].indexOf(";"));
                 var count = favunit[x].substring(favunit[x].indexOf(";") + 1);
                 var chance = ((count / games_count) * 100).toFixed(2);
+                var url = "";
+                url = "/img/icons/" + unit.charAt(0).toUpperCase() + unit.substring(1);
+                while (url.includes("_")) {
+                    var index = url.indexOf("_");
+                    url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
+                    url.replace("_", "");
+                }
+                var unit_type = url.substring(url.lastIndexOf("/") + 1);
+                url += ".png";
                 //console.log(unit, count);
-                document.getElementById("favstart" + (i + 1)).innerHTML += "<li>" + unit + "(" + chance + "%) ";
+                document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername+"')><img class='unitimg' src="+url+">" + unit_type + "(" + chance + "%)</div>";
             }
             catch (error) {
                 console.log(error);
             }
         }
-        document.getElementById("favstart" + (i + 1)).innerHTML += "</ul>";
         //console.log(favunit);
     }
 
@@ -381,4 +401,81 @@ function getPlayerLevel(totalXp) {
     if (totalXp < 417001) return 22
     if (totalXp < 461001) return 23
 
+}
+
+
+function getFighterGames(fightername, playername) {
+    var leaks = [];
+    for (var i = 0; i < 22; i++) {
+        leaks[i] = 0;
+    }
+    var fightercount_pick = 0;
+    console.log(parsedPlayer);
+    var selectedPlayer = parsedPlayer.filter(filterGames => filterGames.playername == playername)[0];
+    var selectedGames = selectedPlayer.games.games;
+    selectedGames.forEach(function (ele) {
+        
+        gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == playername)[0];
+        console.log(gameDetail.unitsPerWave[0]);
+        if (gameDetail.unitsPerWave[0].length > 1) {
+            for (var i = 0; i < gameDetail.unitsPerWave[0].length; i++) {
+                if (gameDetail.unitsPerWave[0][i].includes(fightername)) {
+                    fightercount_pick++;
+                    if (gameDetail.leaksPerWave.length > 0) {
+                        for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
+                            if (gameDetail.leaksPerWave[i].length > 0) {
+                                leaks[i]++;
+                            }
+                        }
+                    }
+                    break;
+                }
+
+            }
+            
+        }
+        else {
+            console.log(gameDetail.unitsPerWave[0]);
+            if (gameDetail.unitsPerWave[0].length > 0) {
+                if (gameDetail.unitsPerWave[0][0].includes(fightername)) {
+                    fightercount_pick++;
+                    if (gameDetail.leaksPerWave.length > 0) {
+                        for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
+                            if (gameDetail.leaksPerWave[i].length > 0) {
+                                leaks[i]++;
+                            }
+                        }
+                    }
+                }
+            }
+            
+
+        }
+        
+        
+    });
+    console.log(leaks);
+    console.log(fightercount_pick);
+    var spot = 0;
+    for (var i = 0; i < 4; i++) {
+        if (parsedPlayer[i].playername == playername) {
+            spot = i+1;
+        }
+    }
+    console.log(spot);
+    document.getElementById("leaks" + spot).innerHTML = fightername + "'s chance to leak: ";
+    for (var i = 0; i < leaks.length; i++) {
+        if (leaks[i] > 0) {
+            var chance = ((leaks[i] / fightercount_pick) * 100).toFixed(2);
+            if (chance > 15) {
+                console.log("wave: " + i+1);
+                console.log("leaks: "+leaks[i]);
+                console.log("picks: "+fightercount_pick);
+                console.log(" ");
+                document.getElementById("leaks" + spot).innerHTML += i+1 + "(" + ((leaks[i] / fightercount_pick) * 100).toFixed(2) + "%), ";
+            }
+        }
+        
+    }
+    document.getElementById("leaks" + spot).innerHTML = document.getElementById("leaks" + spot).innerHTML.substring(0, document.getElementById("leaks" + spot).innerHTML.length - 2);
 }

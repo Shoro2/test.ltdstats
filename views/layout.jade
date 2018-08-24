@@ -112,12 +112,12 @@ html
                         else
                             li.nav-item
                                 a.nav-link(href='/compare') Compare
-                        if(title=="Builder")
+                        if(title=="Livegame")
                             li.nav-item.active
-                                a.nav-link(href='/builder') Builder
+                                a.nav-link(href='/livegame') Livegame
                         else
                             li.nav-item
-                                a.nav-link(href='/builder') Builder
+                                a.nav-link(href='/builder') Livegame
                         if(title=="Units")
                             li.nav-item.active
                                 a.nav-link(href='/units') Units
@@ -140,6 +140,7 @@ html
                             a#dropdown02.nav-link.dropdown-toggle(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') More
                             div.dropdown-menu(aria-labelledby='dropdown02')
                                 a.dropdown-item(href='/tournaments') Tournaments
+                                a.dropdown-item(href='/builder') Builder
                                 a.dropdown-item(href='/streams') Featured Streams
                                 a.dropdown-item(href='/help') Help
                                 a.dropdown-item(href="/feedback") Feedback & Bugs
@@ -177,6 +178,7 @@ html
                 #SC_TBlock_550580.SC_TBlock
                 img(class="gif", src="/img/loading.gif")
                 .p Requesting API, please wait...
+                #loadingstring
                 #apierror(style="display:none") 
                     br
                     | Request timed out, please check the name or
