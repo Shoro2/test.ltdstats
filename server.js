@@ -186,6 +186,11 @@ app.get('/guides', (req, res) => {
                 title: 'Isotrop´s & Weilbockt´s Grove Guide'
             });
             break;
+        case "hazetechgrove":
+            res.render('guides/grove/hazetechgrove', {
+                title: 'Haze_Tech: How to be a Grove Main'
+            });
+            break;
         //forsaken
         case "akitosforsaken":
             res.render('guides/forsaken/akitosforsaken', {
@@ -603,13 +608,14 @@ app.get('/api/ladder', (req, res) => {
 
 //todo: check games order
 app.get('/api/profile/playerOverallGames', (req, res) => {
+    var date1 = new Date();
     var playername = req.query.playername.replace("%20", " ");
     console.log(playername);
     var meinPlayer;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 100){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
+        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 200){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
@@ -623,37 +629,8 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
         }).then(function (data) {
             //player object an frontend
             meinPlayer = data.data;
-            var games_count = parseInt(data.data.player.filteredGamesQuery.count);
-            if (games_count > 100) {
-                for (var offset = 100; offset < games_count; offset = offset + 100) {
-                    fetch('https://api.legiontd2.com/graphql', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-                        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 100, offset: ' + offset + '){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
-                    })
-                        .then(function (response) {
-                            if (response.ok) {
-                                return response.json();
-                            }
-                            else {
-                                var error = new Error(response.statusText)
-                                error.response = response
-                                console.log(error);
-                            }
-                        }).then(function (data) {
-                            data.data.player.filteredGamesQuery.games.forEach(function (ele) {
-                                meinPlayer.player.filteredGamesQuery.games.push(ele);
-                            });
-                            console.log("offset: " + offset);
-                            console.log("games count: " + games_count);
-                            if (offset >= games_count) res.json(meinPlayer);
-                        });
-                }
-
-
-
-            }
-            else res.json(meinPlayer);
+            res.json(meinPlayer);
+            console.log(new Date() - date1);
         });
 });
 /*

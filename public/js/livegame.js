@@ -50,9 +50,14 @@ function queryLivegame(playername) {
     sqlGetLivegame(function (result) {
         livegame = JSON.parse(result);
         console.log(livegame);
-        livegame.players.forEach(function (ele) {
-            queryPlayer(ele);
-        });
+        if (livegame) {
+            livegame.players.forEach(function (ele) {
+                queryPlayer(ele);
+            });
+        }
+        else {
+            document.getElementById("apierror").style.display = "";
+        }
         return livegame;
     }, playername);
 }

@@ -37,6 +37,13 @@ function addPicture(y, x, unit, player) {
         url.replace("_", "");
     }
     var unit_type = url.substring(url.lastIndexOf("/") + 1);
+    switch (url) {
+        case "/img/icons/Aps":
+            url = "/img/icons/APS";
+            break;
+        case "/img/icons/Mps":
+            url = "/img/icons/MPS";
+    }
     url += ".png";
     //canvas einfügen
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);

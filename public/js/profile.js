@@ -411,6 +411,7 @@ function drawPlayerBuilds(gameX) {
     player_name = player.playername;
     player_id = player.id;
     //console.log("drawPlayerBuilds player name: " + player_name);
+    console.log(gameX);
     game = gameX;
     //console.log("drawPlayerBuilds game:");
     //console.log(game);
@@ -651,6 +652,13 @@ function drawPlayerBuilds(gameX) {
                 url.replace("_", "%20");
             }
             var unit_type = url.substring(url.lastIndexOf("/") + 1);
+            switch (url) {
+                case "/img/icons/Aps":
+                    url = "/img/icons/APS";
+                    break;
+                case "/img/icons/Mps":
+                    url = "/img/icons/MPS";
+            }
             url += ".png";
 
             buildcontainer.innerHTML += "<img src='" + url + "' height='20px' width='20px'> " + unit_type + " (" + (parseInt(ele.substring(ele.indexOf(";") + 1)) / gamesNeu[target_race] * 100).toFixed(2) + "%) <br>";

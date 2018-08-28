@@ -62,6 +62,15 @@ function parseGuides() {
     tabelle = document.getElementById("guide_results");
     var selector = document.getElementById("patch");
     $("#table_of_items tr").remove();
+    guides_filtered.sort(function (a, b) {
+        if (a.patch > b.patch) {
+            return 1;
+        }
+        if (a.patch < b.patch) {
+            return -1;
+        }
+        return 0;
+    });
     for (var i = 0; i < guides_filtered.length; i++) {
         var row = tabelle.insertRow(i + 1);
         var cell = [6];
