@@ -8,8 +8,9 @@
     "\\views",
     "\\views\\guides",
     "\\views\\guides\\general",
+    "\\views\\guides\\grove",
     "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\views\\index.jade",
+  "SelectedNode": "\\public\\js\\livegame.js",
   "PreviewInSolutionExplorer": false
 }

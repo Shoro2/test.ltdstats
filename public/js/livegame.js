@@ -15,7 +15,9 @@ function queryPlayer(playername) {
         if (result.player == null) {
             console.log(playername);
             console.log(result);
-            document.getElementById("apierror").style.display = "";
+            allPlayers.push({ "playername": "Bot" });
+            document.getElementById("loadingstring").innerHTML = "Requesting players.... " + allPlayers.length + "/4";
+            //document.getElementById("apierror").style.display = "";
         }
         else {
             result.player.statistics = JSON.parse(result.player.statistics);
@@ -23,8 +25,11 @@ function queryPlayer(playername) {
             allPlayers.push(player);
             document.getElementById("loadingstring").innerHTML = "Requesting players.... " + allPlayers.length + "/4";
             if (allPlayers.length == 4) {
+                document.getElementById("west").style.display = "";
+                document.getElementById("east").style.display = "";
                 parsePlayers();
                 document.getElementById("loadingstring").innerHTML = "";
+
             }
             return player;
         }
@@ -62,13 +67,10 @@ function queryLivegame(playername) {
     }, playername);
 }
 
-
-
-function getPlayer() {
+function checkContent() {
     var requested_players = 0;
     allPlayers = [];
     document.getElementById("mitte").style.display = "";
-    
     if (document.getElementById("playername").value.length > 0) {
         queryLivegame(document.getElementById("playername").value);
     }
@@ -78,17 +80,38 @@ function getPlayer() {
     document.getElementById("indermitte").textContent = "";
 }
 
+function getPlayer() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var playerurl = url.searchParams.get("player");
+    if (playerurl != null) {
+        document.getElementById("playername").value = playerurl;
+    }
+    if (document.getElementById("playername").value) {
+        document.getElementById("mitte").style.display = "inherit";
+        checkContent();
+    }
+    else {
+        if (document.getElementById("playername2").value) {
+            document.getElementById("mitte").style.display = "inherit";
+            checkContent();
+        }
+
+    }
+
+}
+
 function parsePlayers() {
-    
+
     document.getElementById("mitte").style.display = "none";
+
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
     }
-    delete allPlayers;
     for (var i = 0; i < 4; i++) {
         document.getElementById("name" + (i + 1)).innerHTML = "<b>" + parsedPlayer[i].playername + "</b>";
-        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason+")";
+        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
         document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
@@ -227,9 +250,11 @@ function parsePlayers() {
         else if (player_mech_wins > player_forsaken_wins && player_mech_wins > player_grove_wins && player_mech_wins > player_element_wins && player_mech_wins > player_mastermind_wins) race = "Mech";
         else if (player_mastermind_wins > player_forsaken_wins && player_mastermind_wins > player_grove_wins && player_mastermind_wins > player_mech_wins && player_element_wins < player_mastermind_wins) race = "Mastermind";
         else if (player_atlantean_wins > player_forsaken_wins && player_atlantean_wins > player_grove_wins && player_atlantean_wins > player_mech_wins && player_element_wins < player_atlantean_wins) race = "Atlantean";
-        else var race = "Mastermind";
-
-
+        else race = "Mastermind";
+        var race_selected = race;
+        if (document.getElementById("legionp" + i).value != null) {
+            race_selected = document.getElementById("legionp" + i).value;
+        }
         var favunit = [];
         var leaks = [];
         for (var x = 0; x < 60; x++) {
@@ -240,12 +265,11 @@ function parsePlayers() {
         parsedPlayer[i].games.games.forEach(function (ele) {
             var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
             if (gameDetail) {
-                console.log(ele);
-                if (gameDetail.legion == race) {
+                if (gameDetail.legion == race_selected) {
                     games_count++;
                     var currunit = "";
                     var lastunit = "";
-                    if (gameDetail.unitsPerWave.length>0) {
+                    if (gameDetail.unitsPerWave.length > 0) {
                         gameDetail.unitsPerWave[0].forEach(function (element) {
                             //e=wave ;x=different units
                             currunit = element.substring(0, element.indexOf("_unit"));
@@ -273,18 +297,11 @@ function parsePlayers() {
                                     }
                                 }
                             }
-
                             lastunit = currunit;
                         });
                     }
-                    
                 }
             }
-            
-
-
-
-
         });
         favunit.sort(function (a, b) {
             if (a != 0) {
@@ -307,78 +324,79 @@ function parsePlayers() {
         });
         //check leaks with favunits 0-2
         var gamesWithFav_count = 0;
-        
+
         parsedPlayer[i].games.games.forEach(function (ele) {
             var gamesWithFav_bool = false;
             var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
             if (gameDetail) {
-                if (gameDetail.legion == race) {
+                if (gameDetail.legion == race_selected) {
                     for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
                         //console.log(gameDetail.leaksPerWave[x]);
-
                         var leaked = false;
                         gameDetail.unitsPerWave[x].forEach(function (element) {
                             //console.log(favunit);
                             try {
-                                if (element.substring(0, element.indexOf("_unit")).includes(favunit[0].substring(0, favunit[0].indexOf(";"))) || element.substring(0, element.indexOf("_unit")).includes(favunit[1].substring(0, favunit[0].indexOf(";"))) || element.substring(0, element.indexOf("_unit")).includes(favunit[2].substring(0, favunit[0].indexOf(";")))) {
-                                    gamesWithFav_bool = true;
-                                    if (gameDetail.leaksPerWave[x].length != 0) {
-                                        leaked = true;
+                                favunit.forEach(function (favele) {
+                                    if (favele != 0) {
+                                        if (favele.substring(0, favele.indexOf(";")) == element.substring(0, element.indexOf("_unit"))) {
+                                            gamesWithFav_bool = true;
+                                        }
                                     }
-                                }
+                                });
                             }
                             catch (error) {
-                                console.log(error);
+
                             }
                         });
-                        if (leaked) {
-                            leaks[x]++;
-                        }
-
                     }
                     if (gamesWithFav_bool) {
                         gamesWithFav_count++;
                     }
                 }
             }
-            
-        });
-        document.getElementById("leaks" + (i + 1)).innerHTML = "Leaks on: ";
-        for (var x = 0; x < leaks.length; x++) {
-            if (leaks[x] > 0) {
-                if (((leaks[x] / gamesWithFav_count) * 100).toFixed(2) > 15) {
-                    document.getElementById("leaks" + (i + 1)).innerHTML += (x + 1) + "(" + ((leaks[x] / gamesWithFav_count) * 100).toFixed(2) + "%), ";
-                }
 
-            }
-        }
+        });
         document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
         document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
         document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
-        for (var x = 0; x < 3; x++) {
-            try {
-                var unit = favunit[x].substring(0, favunit[x].indexOf(";"));
-                var count = favunit[x].substring(favunit[x].indexOf(";") + 1);
-                var chance = ((count / games_count) * 100).toFixed(2);
-                var url = "";
-                url = "/img/icons/" + unit.charAt(0).toUpperCase() + unit.substring(1);
-                while (url.includes("_")) {
-                    var index = url.indexOf("_");
-                    url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
-                    url.replace("_", "");
+        //console.log(favunit);
+        for (var x = 0; x < favunit.length; x++) {
+            if (favunit[x] != 0) {
+                try {
+                    var unit = favunit[x].substring(0, favunit[x].indexOf(";"));
+                    var count = favunit[x].substring(favunit[x].indexOf(";") + 1);
+                    var chance = ((count / games_count) * 100).toFixed(2);
+                    var url = "";
+                    url = "/img/icons/" + unit.charAt(0).toUpperCase() + unit.substring(1);
+                    while (url.includes("_")) {
+                        var index = url.indexOf("_");
+                        url = url.substring(0, index) + url.charAt(index + 1).toUpperCase() + url.substring(index + 2);
+                        url.replace("_", "");
+                    }
+                    var unit_type = url.substring(url.lastIndexOf("/") + 1);
+                    switch (url) {
+                        case "/img/icons/Aps":
+                            url = "/img/icons/APS";
+                            break;
+                        case "/img/icons/Mps":
+                            url = "/img/icons/MPS";
+                    }
+                    url += ".png";
+                    //console.log(unit, count);
+                    //console.log(parsedPlayer[i].playername);
+                    document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername + "')><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
                 }
-                var unit_type = url.substring(url.lastIndexOf("/") + 1);
-                url += ".png";
-                //console.log(unit, count);
-                document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername+"')><img class='unitimg' src="+url+">" + unit_type + "(" + chance + "%)</div>";
+                catch (error) {
+                    console.log(error);
+                }
             }
-            catch (error) {
-                console.log(error);
-            }
+
         }
         //console.log(favunit);
     }
 
+
+    getWinchance();
 }
 
 function getPlayerLevel(totalXp) {
@@ -415,72 +433,263 @@ function getFighterGames(fightername, playername) {
         leaks[i] = 0;
     }
     var fightercount_pick = 0;
-    console.log(parsedPlayer);
+    //console.log(parsedPlayer);
     var selectedPlayer = parsedPlayer.filter(filterGames => filterGames.playername == playername)[0];
     var selectedGames = selectedPlayer.games.games;
     selectedGames.forEach(function (ele) {
-        
         gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == playername)[0];
-        console.log(gameDetail.unitsPerWave[0]);
-        if (gameDetail.unitsPerWave[0].length > 1) {
-            for (var i = 0; i < gameDetail.unitsPerWave[0].length; i++) {
-                if (gameDetail.unitsPerWave[0][i].includes(fightername)) {
-                    fightercount_pick++;
-                    if (gameDetail.leaksPerWave.length > 0) {
-                        for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
-                            if (gameDetail.leaksPerWave[i].length > 0) {
-                                leaks[i]++;
+        if (typeof gameDetail !== "undefined") {
+            if (typeof gameDetail.unitsPerWave[0] !== "undefined") {
+                if (gameDetail.unitsPerWave[0].length > 1) {
+                    for (var i = 0; i < gameDetail.unitsPerWave[0].length; i++) {
+                        if (gameDetail.unitsPerWave[0][i].includes(fightername)) {
+                            fightercount_pick++;
+                            if (gameDetail.leaksPerWave.length > 0) {
+                                for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
+                                    if (gameDetail.leaksPerWave[i].length > 0) {
+                                        switch (gameDetail.position) {
+                                            case 1:
+                                                var target_pos = 6;
+                                                break;
+                                            case 2:
+                                                var target_pos = 5;
+                                                break;
+                                            case 3:
+                                                var target_pos = 1;
+                                                break;
+                                            case 4:
+                                                var target_pos = 2;
+                                                break;
+                                        }
+                                        var gameDetail_oponent = ele['gameDetails'].filter(gameDetail_oponent => gameDetail_oponent.position == target_pos)[0];
+                                        leaks[i]++;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+
+                    }
+
+                }
+                else {
+                    if (gameDetail.unitsPerWave[0].length > 0) {
+                        if (gameDetail.unitsPerWave[0][0].includes(fightername)) {
+                            fightercount_pick++;
+                            if (gameDetail.leaksPerWave.length > 0) {
+                                for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
+                                    if (gameDetail.leaksPerWave[i].length > 0) {
+                                        switch (gameDetail.position) {
+                                            case 1:
+                                                var target_pos = 6;
+                                                break;
+                                            case 2:
+                                                var target_pos = 5;
+                                                break;
+                                            case 3:
+                                                var target_pos = 1;
+                                                break;
+                                            case 4:
+                                                var target_pos = 2;
+                                                break;
+                                        }
+                                        var gameDetail_oponent = ele['gameDetails'].filter(gameDetail_oponent => gameDetail_oponent.position == target_pos)[0];
+                                        leaks[i]++;
+                                    }
+                                }
                             }
                         }
                     }
-                    break;
-                }
 
-            }
-            
-        }
-        else {
-            console.log(gameDetail.unitsPerWave[0]);
-            if (gameDetail.unitsPerWave[0].length > 0) {
-                if (gameDetail.unitsPerWave[0][0].includes(fightername)) {
-                    fightercount_pick++;
-                    if (gameDetail.leaksPerWave.length > 0) {
-                        for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
-                            if (gameDetail.leaksPerWave[i].length > 0) {
-                                leaks[i]++;
-                            }
-                        }
-                    }
+
                 }
             }
-            
-
         }
-        
-        
+
+
+
+
     });
-    console.log(leaks);
-    console.log(fightercount_pick);
+    //console.log(leaks);
+    //console.log(fightercount_pick);
     var spot = 0;
     for (var i = 0; i < 4; i++) {
         if (parsedPlayer[i].playername == playername) {
-            spot = i+1;
+            spot = i + 1;
         }
     }
-    console.log(spot);
+    //console.log(spot);
     document.getElementById("leaks" + spot).innerHTML = fightername + "'s chance to leak: ";
     for (var i = 0; i < leaks.length; i++) {
         if (leaks[i] > 0) {
             var chance = ((leaks[i] / fightercount_pick) * 100).toFixed(2);
             if (chance > 15) {
-                console.log("wave: " + i+1);
-                console.log("leaks: "+leaks[i]);
-                console.log("picks: "+fightercount_pick);
-                console.log(" ");
-                document.getElementById("leaks" + spot).innerHTML += i+1 + "(" + ((leaks[i] / fightercount_pick) * 100).toFixed(2) + "%), ";
+                //console.log("wave: " + i+1);
+                //console.log("leaks: "+leaks[i]);
+                //console.log("picks: "+fightercount_pick);
+                //console.log(" ");
+                document.getElementById("leaks" + spot).innerHTML += i + 1 + "(" + ((leaks[i] / fightercount_pick) * 100).toFixed(2) + "%), ";
             }
         }
-        
+
     }
     document.getElementById("leaks" + spot).innerHTML = document.getElementById("leaks" + spot).innerHTML.substring(0, document.getElementById("leaks" + spot).innerHTML.length - 2);
+}
+
+
+
+function getWinchance() {
+    var elos = [];
+    var peakElos = [];
+    for (var i = 0; i < parsedPlayer.length; i++) {
+        console.log(parsedPlayer[i]);
+        switch (document.getElementById("legionp" + i).value) {
+            case "Mastermind":
+                if (typeof parsedPlayer[i].statistics.mastermindElo != "undefinded") {
+                    elos.push(parsedPlayer[i].statistics.mastermindElo);
+                }
+                else {
+                    elos.push(1000);
+                }
+
+                if (typeof parsedPlayer[i].statistics.mastermindPeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.mastermindPeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.mastermindPeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.mastermindPeakElo);
+                }
+                break;
+            case "Element":
+                if (typeof parsedPlayer[i].statistics.elementElo != "undefinded") {
+                    elos.push(parsedPlayer[i].statistics.elementElo);
+                }
+                else {
+                    elos.push(1000);
+                }
+
+                if (typeof parsedPlayer[i].statistics.elementPeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.elementPeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.elementPeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.elementPeakElo);
+                }
+                break;
+            case "Grove":
+                console.log(typeof parsedPlayer[i].statistics.groveElo);
+                if (typeof parsedPlayer[i].statistics.groveElo == "undefined") {
+                    elos.push(1000);
+                    console.log("1k");
+                }
+                else {
+                    elos.push(parsedPlayer[i].statistics.groveElo);
+                }
+
+                if (typeof parsedPlayer[i].statistics.grovePeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.grovePeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.grovePeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.grovePeakElo);
+                }
+                break;
+            case "Forsaken":
+                if (typeof parsedPlayer[i].statistics.forsakenElo == "undefined") {
+
+                    elos.push(1000);
+                }
+                else {
+                    elos.push(parsedPlayer[i].statistics.forsakenElo);
+                }
+
+                if (typeof parsedPlayer[i].statistics.forsakenPeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.forsakenPeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.forsakenPeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.forsakenPeakElo);
+                }
+                break;
+            case "Mech":
+                if (typeof parsedPlayer[i].statistics.mechElo == "undefined") {
+                    elos.push(1000);
+                }
+                else {
+                    elos.push(parsedPlayer[i].statistics.mechElo);
+                }
+
+                if (typeof parsedPlayer[i].statistics.mechPeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.mechPeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.mechPeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.mechPeakElo);
+                }
+                break;
+            case "Atlantean":
+                if (typeof parsedPlayer[i].statistics.atlanteanElo != "undefinded") {
+                    elos.push(1000);
+                }
+                else {
+                    elos.push(parsedPlayer[i].statistics.atlanteanElo);
+                }
+
+                if (typeof parsedPlayer[i].statistics.atlanteanPeakElo == 'undefined') {
+                    if (typeof parsedPlayer[i].statistics.atlanteanPeakEloThisSeason == 'undefined') {
+                        peakElos.push(1000);
+                    }
+                    else {
+                        peakElos.push(parsedPlayer[i].statistics.atlanteanPeakEloThisSeason);
+                    }
+
+                }
+                else {
+                    peakElos.push(parsedPlayer[i].statistics.atlanteanPeakElo);
+                }
+                break;
+        }
+    }
+    var elo_west = parseFloat(((elos[0] + elos[1] + peakElos[0] + peakElos[1]) / 4));
+    var elo_east = parseFloat(((elos[2] + elos[3] + peakElos[2] + peakElos[3]) / 4));
+    var winchance = 50 * (elo_west / elo_east);
+    if (winchance < 0 || winchance > 100) winchance = 50;
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= winchance || width > 100) {
+            clearInterval(id);
+        } else {
+            width++;
+            elem.style.width = width + '%';
+            elem.innerHTML = width * 1 + '%';
+        }
+    }
+    document.getElementById("winchancebar").style.display = "";
 }

@@ -173,12 +173,12 @@ function loadStats(player) {
     player_overall_xp = player.statistics.totalXp
     player_overall_level = getPlayerLevel(player_overall_xp);
     player_winningstreak = player.statistics.winStreak;
-    if (player.bestFriends != null) {
+    if (player.bestFriends.player != null) {
         player_bestfriends = "";
         player_bestfriends += player.bestFriends[0].player.playername + "(" + player.bestFriends[0].gameCount + ")";
-        if (player.bestFriends[1] != null) {
+        if (player.bestFriends[1].player != null) {
             player_bestfriends += ", " + player.bestFriends[1].player.playername + "(" + player.bestFriends[1].gameCount + ")";
-            if (player.bestFriends[2] != null) {
+            if (player.bestFriends[2].player != null) {
                 player_bestfriends += ", " + player.bestFriends[2].player.playername + "(" + player.bestFriends[2].gameCount + ")";
             }
         }
@@ -352,7 +352,7 @@ function parseStats() {
     document.getElementById("general_wins").textContent = "Wins: " + player_totalwins;
     document.getElementById("general_level").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
     document.getElementById("general_winningstreak").textContent = "Winningstreak: " + player_winningstreak;
-    document.getElementById("general_bestfriends").innerHTML = "Best Friends: " + player_bestfriends;
+    if (typeof player_bestfriends !== 'undefined') document.getElementById("general_bestfriends").innerHTML = "Best Friends: " + player_bestfriends;
 
     document.getElementById("mastermind_elo").textContent = "Elo: " + player_mastermind_elo;
     document.getElementById("mastermind_peakelo").textContent = "Peak Elo: " + player_mastermind_peakelo;

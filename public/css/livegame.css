@@ -1,10 +1,19 @@
-.teamcard{
+.teamcard {
     border: 1px solid black;
     margin: 1%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 370px;
 }
 
-.player{
+.player {
     margin: 1%;
+    width: 48%;
+    min-width:350px;
+    border-radius: 5px;
+    color:white;
+    padding:1%;
 }
 #indermitte{
     margin-left:auto;
@@ -41,4 +50,60 @@
     background-clip: padding-box;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     display: inline-block;
+    margin:1%;
+}
+
+
+.favcontainer {
+    width:100%;
+    overflow:auto;
+    height:15%;
+}
+
+    .favcontainer::-webkit-scrollbar {
+        width: 10px; /* remove scrollbar space */
+        background: lightgray;
+        border-radius: 5px;
+        /*background: transparent; optional: just make scrollbar invisible */
+    }
+/* optional: show position indicator in red */
+    .favcontainer::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5px;
+        margin: 5px;
+    }
+
+#player1{
+    background-color:darkred;
+}
+#player2 {
+    background-color: darkblue;
+}
+#player3 {
+    background-color: #baa700;
+}
+#player4 {
+    background-color: teal;
+}
+
+/*progress bar */
+#myProgress {
+    
+    background-color: grey;
+    
+}
+
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: white;
+}
+#winchancebar {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
 }

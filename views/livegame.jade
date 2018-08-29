@@ -2,35 +2,66 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/livegame.css')
     .content
-        .teamcard#west
+        .teamcard#west(style="display:none;")
             .player#player1
                 #name1
                 #elo1
                 #best_legion1
-                #favstart1
+                select#legionp0.form-control(onchange="parsePlayers();")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart1.favcontainer
                 #leaks1
             .player#player2
                 #name2
                 #elo2
                 #best_legion2
-                #favstart2
+                select#legionp1.form-control.mr-sm-2(onchange="parsePlayers();")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart2.favcontainer
                 #leaks2
-            .winchance#winchance_west
-        #indermitte Enter a playername to start
+        #indermitte 
+            p
+            | Enter a playername to start
             input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search')
             button.btn.btn-outline-success2.my-sm-0(onclick="getPlayer();") Search
-        .teamcard#east
+        .winchance#winchancebar(style="display:none;") Winchance West:
+            #myProgress
+                #myBar 50%
+        .teamcard#east(style="display:none;")
             .player#player3
                 #name3
                 #elo3
                 #best_legion3
-                #favstart3
+                select#legionp2.form-control.mr-sm-2(onchange="parsePlayers();")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart3.favcontainer
                 #leaks3
             .player#player4
                 #name4
                 #elo4
                 #best_legion4
-                #favstart4
+                select#legionp3.form-control.mr-sm-2(onchange="parsePlayers();")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart4.favcontainer
                 #leaks4
-            .winchance#winchance_east
     script(src="/js/livegame.js")
