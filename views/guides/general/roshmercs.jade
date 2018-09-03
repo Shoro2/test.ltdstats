@@ -1,0 +1,43 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Individual Mercenary Guides
+        #guide_author 
+            i by 
+                a(href="/profile?player=Roshkatul") Roshkatul
+            a(href="/guides", style="float:right;") Back
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile?player=Roshkatul") Roshkatul
+            #infobox_version Version: v2.35
+            #infobox_section Section: General Guides
+            #infobox_content Content:
+                ul
+                    li
+                        a(href="#snail") Snail
+                    li
+                        a(href="#lizard") Lizard
+                    li
+                        a(href="#dt") Dragon Turtle
+                    li
+                        a(href="#brute") Brute
+                    li
+                        a(href="#fiend") Fiend
+        p.
+        #guide_content
+            h2#snail The Snail:
+            .youtube
+                iframe.ytframe(src="https://www.youtube.com/embed/5sCWvjmRYU8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
+            h2#lizard The Lizard:
+            .youtube
+                iframe.ytframe(src="https://www.youtube.com/embed/2ld-wgf_vBU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
+            h2#dt Dragon Turtle:
+            .youtube
+                iframe.ytframe(src="https://www.youtube.com/embed/kPZkzkMoK-0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
+            h2#brute The Brute:
+            .youtube
+                iframe.ytframe(src="https://www.youtube.com/embed/1BoAZc2WUq4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
+            h2#fiend The Fiend:
+            .youtube
+                iframe.ytframe(src="https://www.youtube.com/embed/_Nb2AAmJfOo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)

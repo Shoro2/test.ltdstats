@@ -81,24 +81,27 @@ function checkContent() {
 }
 
 function getPlayer() {
+    console.log(this);
+    if (document.getElementById("playername").value.length > 0) {
+        window.history.pushState('livegame', 'Livegame', '?player=' + document.getElementById("playername").value);
+    }
+    else if (document.getElementById("playername2").value.length > 0) {
+        window.history.pushState('livegame', 'Livegame', '?player=' + document.getElementById("playername2").value);
+    }
+    checkContent();
+
+
+}
+
+function checkLink() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
-    if (playerurl != null) {
+    // request per url
+    if (playerurl != null && document.getElementById("playername").value.length == 0) {
         document.getElementById("playername").value = playerurl;
-    }
-    if (document.getElementById("playername").value) {
-        document.getElementById("mitte").style.display = "inherit";
         checkContent();
     }
-    else {
-        if (document.getElementById("playername2").value) {
-            document.getElementById("mitte").style.display = "inherit";
-            checkContent();
-        }
-
-    }
-
 }
 
 function parsePlayers() {
@@ -675,8 +678,8 @@ function getWinchance() {
                 break;
         }
     }
-    var elo_west = parseFloat(((elos[0] + elos[1] + peakElos[0] + peakElos[1]) / 4));
-    var elo_east = parseFloat(((elos[2] + elos[3] + peakElos[2] + peakElos[3]) / 4));
+    var elo_west = parseFloat(((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0] + peakElos[1]) / 4));
+    var elo_east = parseFloat(((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2] + peakElos[3]) / 4));
     var winchance = 50 * (elo_west / elo_east);
     if (winchance < 0 || winchance > 100) winchance = 50;
     var elem = document.getElementById("myBar");
@@ -693,3 +696,12 @@ function getWinchance() {
     }
     document.getElementById("winchancebar").style.display = "";
 }
+
+document.onkeydown = function (event) {
+    if (event.keyCode == 13) {
+        if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
+    }
+}
+
+checkLink();
+

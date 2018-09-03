@@ -240,6 +240,11 @@ app.get('/guides', (req, res) => {
                 title: 'Roshkatul´s 7 Tips for new players'
             });
             break;
+        case "roshmercs":
+            res.render('guides/general/roshmercs', {
+                title: 'Roshkatul´s Individual Mercenary Guides'
+            });
+            break;
         case "legionspells":
             res.render('guides/general/akitosspells', {
                 title: 'Akitos Legion Spells Guide'
@@ -473,7 +478,8 @@ app.get('/sql/getLivegame', (req, res) => {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            res.json(data);
+            if (data) res.json(data);
+            else res.send("no data");
         });
 
     }).on("error", (err) => {

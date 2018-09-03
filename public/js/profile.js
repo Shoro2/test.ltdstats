@@ -55,48 +55,8 @@ function loadEloGraph(games) {
                     elo[counter] = myEle.gameDetails[3].overallElo;
                 }
                 date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
+                counter++;
             }
-            else {
-                if (counter == 0) {
-                    if (myEle.gameDetails[0].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[0].overallElo;
-
-                    }
-                    else if (myEle.gameDetails[1].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[1].overallElo;
-                    }
-                    else if (myEle.gameDetails[2].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[2].overallElo;
-                    }
-
-                    else if (myEle.gameDetails[3].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[3].overallElo;
-                    }
-                    else if (myEle.gameDetails[4].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[4].overallElo;
-                    }
-                    else if (myEle.gameDetails[5].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[5].overallElo;
-                    }
-
-                    else if (myEle.gameDetails[6].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[6].overallElo;
-                    }
-                    else if (myEle.gameDetails[7].playername == player_name) {
-                        elo[counter] = myEle.gameDetails[7].overallElo;
-                    }
-                    date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
-                    //console.log(elo[counter]);
-                    //console.log(myEle);
-                }
-                else {
-                    console.log("else");
-                    elo[counter] = elo[counter - 1];
-                    date[counter] = date[counter - 1];
-                }
-            }
-            console.log(myEle);
-            counter++;
         }
 
     });
@@ -134,7 +94,7 @@ function loadEloGraph(games) {
         }
     });
 
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < elo.length; i++) {
         addData(myChart, date[i], elo[i]);
         //console.log(date[i]);
     }
@@ -824,14 +784,20 @@ function drawPlayerBuilds(gameX) {
         else var wave = parseInt(document.getElementById("setWave").value);
         var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
         counter = 0;
-        meinBuild.forEach(element => {
+        try {
+            meinBuild.forEach(element => {
 
-            var meinX = element.substring(element.indexOf(":") + 1, element.indexOf("|"));
-            var meinY = element.substring(element.indexOf("|") + 1);
-            document.getElementById("gamedetails_build").innerHTML += element.substring(0, element.indexOf("_unit")) + " (" + meinX + ", " + meinY + ")" + "<br>";
-            addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")));
+                var meinX = element.substring(element.indexOf(":") + 1, element.indexOf("|"));
+                var meinY = element.substring(element.indexOf("|") + 1);
+                document.getElementById("gamedetails_build").innerHTML += element.substring(0, element.indexOf("_unit")) + " (" + meinX + ", " + meinY + ")" + "<br>";
+                addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")));
 
-        });
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+        
         getPlayerMercsSent(player);
         getPlayerMercsReceived(player);
     }
@@ -1065,7 +1031,7 @@ function drawPlayerBuilds(gameX) {
                 player = result.player
                 loadStats(player);
                 parseStats();
-
+                hideLoad();
                 return player;
             }
 

@@ -63,10 +63,10 @@ function parseGuides() {
     var selector = document.getElementById("patch");
     $("#table_of_items tr").remove();
     guides_filtered.sort(function (a, b) {
-        if (a.patch > b.patch) {
+        if (a.patch < b.patch) {
             return 1;
         }
-        if (a.patch < b.patch) {
+        if (a.patch > b.patch) {
             return -1;
         }
         return 0;
@@ -118,6 +118,7 @@ function parsePatches() {
         }
         else counter++;
     }
+    patches.sort();
     selector = document.getElementById("patch");
     for (i = 0; i < patches.length; i++) {
         var option = document.createElement("option");

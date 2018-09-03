@@ -11,6 +11,6 @@
     "\\views\\guides\\grove",
     "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\public\\js\\livegame.js",
+  "SelectedNode": "\\views\\guides\\grove\\isotropgrove.jade",
   "PreviewInSolutionExplorer": false
 }
