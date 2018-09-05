@@ -365,6 +365,10 @@ function draw(myUnit) {
     }
     else {
         //mercs&creatures
+        document.getElementById("unit_bounty").innerHTML = "<img class='statpic' src='/img/icons/Gold_Currency.png'> Bounty: " + fighter.bounty;
+        if (fighter.legion == "Mercenary") {
+            document.getElementById("unit_income").innerHTML = "<img class='statpic' src='/img/icons/Income.png'> Income: " + fighter.income;
+        }
     }
     document.getElementById("unit_abilities").innerHTML = "Abilities: <ul>";
     if (fighter.abilities.length > 0) {

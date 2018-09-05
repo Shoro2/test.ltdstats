@@ -525,7 +525,7 @@ app.get('/api/units', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconpath,abilities{name,tooltip,iconpath},armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health}}'
+            query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconpath,abilities{name,tooltip,iconpath},armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health,bounty,income}}'
         }),
     })
         .then(function (response) {

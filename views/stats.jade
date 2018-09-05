@@ -62,6 +62,22 @@ block content
                         th.table_header#th9(onclick="sortTable(9)") DPS/Gold
                         th.table_header#th10(onclick="sortTable(10)") Health/Gold
                 tbody
+        #tablecontainer2(style="display:none")
+            table.stattable_mercs#myTable2
+                thead
+                    tr.header
+                        th.table_header#th0(onclick="sortTable(0)") Name
+                        th.table_header#th1(onclick="sortTable(1)") Wave
+                        th.table_header#th2(onclick="sortTable(2)") Attack Type
+                        th.table_header#th3(onclick="sortTable(3)") DPS
+                        th.table_header#th4(onclick="sortTable(4)") Defense Type
+                        th.table_header#th5(onclick="sortTable(5)") Health
+                        th.table_header#th6(onclick="sortTable(6)") Bounty
+                        th.table_header#th7(onclick="sortTable(7)") Prep Time
+                        th.table_header#th8(onclick="sortTable(8)") Gold on leak
+                        th.table_header#th9(onclick="sortTable(9)") Pack Leader 
+                        th.table_header#th10(onclick="sortTable(10)") Shaman
+                tbody
         #chartContainer
             canvas#myChart
     #helpwindow(onclick="hideHelpPage();", style="display:none;")

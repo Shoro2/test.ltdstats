@@ -1,6 +1,8 @@
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("myTable");
+    if (abfrage != "mercstatssheet") table = document.getElementById("myTable");
+    else table = document.getElementById("myTable2");
+    
     sortvalue = n;
     switching = true;
     // Set the sorting direction to ascending:
