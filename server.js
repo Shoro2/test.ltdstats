@@ -197,6 +197,11 @@ app.get('/guides', (req, res) => {
                 title: 'Akitos Forsaken Guide'
             });
             break;
+        case "blacktideforsaken":
+            res.render('guides/forsaken/blacktideforsaken', {
+                title: 'Blacktide´s Forsaken Guide'
+            });
+            break;
         case "isotropsforsaken":
             res.render('guides/forsaken/isotropforsaken', {
                 title: 'Isotrop´s & Weilbockt´s Forsaken Guide'

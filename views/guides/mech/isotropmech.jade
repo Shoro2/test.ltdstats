@@ -7,6 +7,7 @@ block content
             i by 
                 a(href="/profile?player=Isotrop") Isotrop and
                 a(href="/profile?player=Weilbockt") Weilbockt
+            a(href="/guides", style="float:right;") Back
         #guide_infobox
             #infobox_author Author: 
                 a(href="/profile?player=Isotrop") Isotrop 
@@ -15,11 +16,6 @@ block content
             #infobox_version Version: v1.61
             #infobox_section Section: Mech Guides
             #infobox_content Content:
-                ul
-                    - for(var i = 1 ; i < 21; i++){
-                        li 
-                            a(href="#wave"+i)= "Wave"+ i
-                    - }
         p.
         #guide_content
             .youtube

@@ -9,8 +9,8 @@
     "\\views\\guides",
     "\\views\\guides\\general",
     "\\views\\guides\\grove",
-    "\\views\\guides\\mastermind"
+    "\\views\\ladder"
   ],
-  "SelectedNode": "\\views\\guides\\general\\roshmercs.jade",
+  "SelectedNode": "\\public\\js\\stats.js",
   "PreviewInSolutionExplorer": false
 }
