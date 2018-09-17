@@ -24,7 +24,7 @@ function getPlayer() {
 }
 
 function scanUnits() {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "mps", "aps", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "APS", "MPS", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra", "looter", "pack_rat"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -215,11 +215,11 @@ function scanUnits() {
                 url = "/img/icons/Leviathan.png";
                 unit_type = "Leviathan";
                 break;
-            case "aps":
+            case "APS":
                 url = "/img/icons/APS.png";
                 unit_type = "APS";
                 break;
-            case "mps":
+            case "MPS":
                 url = "/img/icons/MPS.png";
                 unit_type = "MPS";
                 break;
@@ -389,6 +389,14 @@ function draw(myUnit) {
                 if (upgrade_name.charAt(e) === " ") {
                     upgrade_name = upgrade_name.substring(0, e) + " " + upgrade_name.charAt(e + 1).toUpperCase() + upgrade_name.substring(e + 2);
                 }
+            }
+            switch (upgrade_name) {
+                case "Aps":
+                    upgrade_name = "APS";
+                    break;
+                case "Mps":
+                    upgrade_name = "MPS";
+                    break;
             }
             document.getElementById("unit_upgrades").innerHTML += "<li><a href='/units?unit=" + upgrade_name + "'><img class='statpic' src='/img/icons/" + upgrade_name.replace(" ", "") + ".png'> " + upgrade_name + " </a><br>";
         }

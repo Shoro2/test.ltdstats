@@ -273,7 +273,7 @@ function loadStats(player) {
     else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Diamond.png'>";
     else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Expert.png'>";
     else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
-    else if (player_overall_elo > 2400 && player_overall_elo < 2600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gradmaster.png'>";
+    else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Grandmaster.png'>";
     // mouseover details
     parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 30% 40%;opacity:1.0;");

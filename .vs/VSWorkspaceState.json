@@ -5,12 +5,12 @@
     "\\public",
     "\\public\\css",
     "\\public\\js",
+    "\\public\\js\\db",
     "\\views",
     "\\views\\guides",
     "\\views\\guides\\general",
-    "\\views\\guides\\grove",
-    "\\views\\ladder"
+    "\\views\\guides\\grove"
   ],
-  "SelectedNode": "\\public\\js\\stats.js",
+  "SelectedNode": "\\views\\guides\\general\\akitosspells.jade",
   "PreviewInSolutionExplorer": false
 }

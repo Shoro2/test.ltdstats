@@ -1,0 +1,16 @@
+textarea{
+    width:86%;
+}
+
+.guide{
+    margin:2%;
+}
+
+#guide_infobox {
+    float: right;
+    border: solid 1px;
+    padding: 1%;
+    margin: 1%;
+    width: 11%;
+    min-width: 130px;
+}

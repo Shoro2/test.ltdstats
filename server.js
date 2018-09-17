@@ -300,6 +300,11 @@ app.get('/guides', (req, res) => {
                 title: 'Income sending vs Saving'
             });
             break;
+        case "new":
+            res.render('guides/createguide', {
+                title: 'Create a guide'
+            });
+            break;
         default:
             res.render('guides/searchguide', {
                 title: 'Guides',
@@ -626,7 +631,7 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 200){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
+        body: JSON.stringify({ query: '{ player(playername: "' + playername + '") { filteredGamesQuery(limit: 150){ count, games{ game_id, ts, position, wave, time, queuetype, legion, iscross, gameresult, overallElo, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave,gameDetails{playername,playerid,position,legion,wave,iscross,gameresult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell} } } } }' }),
     })
         .then(function (response) {
             if (response.ok) {
