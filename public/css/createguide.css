@@ -1,8 +1,8 @@
 textarea{
-    width:86%;
+    width:100%;
 }
 
-.guide{
+#guide{
     margin:2%;
 }
 
@@ -10,7 +10,28 @@ textarea{
     float: right;
     border: solid 1px;
     padding: 1%;
-    margin: 1%;
-    width: 11%;
+    width: 12%;
     min-width: 130px;
+}
+
+.guide_infobox {
+    float: right;
+    border: solid 1px;
+    padding: 1%;
+    width: 12%;
+    min-width: 130px;
+}
+
+#guide_content {
+    float: left;
+    width:86%;
+}
+
+.guide_content {
+    float: left;
+    width: 86%;
+}
+
+#preview{
+    margin:2%;
 }

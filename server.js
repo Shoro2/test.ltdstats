@@ -305,7 +305,39 @@ app.get('/guides', (req, res) => {
                 title: 'Create a guide'
             });
             break;
+        case "upload":
+            var preamble = req.query.preamble;
+            var waves = req.query.waves;
+            var author = req.query.author;
+            var version = req.query.version;
+            var section = req.query.section;
+            var title = req.query.title;
+            var url = 'http://159.69.83.17:3000/guides?action=upload&waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble;
+            if (url.includes("<script") || url.includes("<button") || url.includes("onclick")) {
+                res.send("bad url");
+            }
+            else {
+                http.get(url, (resp) => {
+                    console.log("resp");
+                    let data = '';
+
+                    // A chunk of data has been recieved.
+                    resp.on('data', (chunk) => {
+                        data += chunk;
+                    });
+
+                    // The whole response has been received. Print out the result.
+                    resp.on('end', () => {
+                        res.json(data);
+                    });
+
+                }).on("error", (err) => {
+                    console.log("Error: " + err.message);
+                });
+            }
+            break;
         default:
+            console.log("guide default: "+guide);
             res.render('guides/searchguide', {
                 title: 'Guides',
             });
@@ -478,7 +510,7 @@ app.get('/sql/getGuides', (req, res) => {
 
 app.get('/sql/getLivegame', (req, res) => {
     var pname = req.query.playername;
-    http.get('http://159.69.83.17:3000/db/livegames?myobj='+pname, (resp) => {
+    http.get('http://159.69.83.17:3000/db/livegames?myobj=' + pname, (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -506,7 +538,7 @@ app.get('/api/playerElo', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername:"'+playername+'"){statistics}}'
+            query: '{player(playername:"' + playername + '"){statistics}}'
         }),
     })
         .then(function (response) {
@@ -680,7 +712,7 @@ app.get('/api/profile/player100', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername: "' + playername +'") { playername,statistics,games(queuetype: normal, limit: 100) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
+            query: '{player(playername: "' + playername + '") { playername,statistics,games(queuetype: normal, limit: 100) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
         }),
     })
         .then(function (response) {
@@ -704,7 +736,8 @@ app.get('/api/profile/player', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies,bestFriends(limit: 3){player{playername},gameCount}}}' }),
+            query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies,bestFriends(limit: 3){player{playername},gameCount}}}'
+        }),
     })
         .then(function (response) {
             if (response.ok) {

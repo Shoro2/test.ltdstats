@@ -1,14 +1,42 @@
 extend ../layout
 block content
     link(rel='stylesheet', href='/css/createguide.css')
-    .guide
+    #guide
         h1 Create a Guide
-        b Preamble:
-        #guide_preamble
-            textarea(rows="4" cols="150")#input_preamble
+        p
+        #guide_content
+            b Title:
+            br
+            input(type="text" value="title")#input_title
+            br
+            b Preamble:
+            textarea(rows="4" cols="150")#input_preamble Preamble
+            - for(var i = 1 ; i < 22; i++){
+                b(id="wave"+i)= "Wave " + i +":"
+                textarea(rows="4" cols="150" id="input_w"+i) wave content
+            - }
+            p
+            p
         #guide_infobox
-            #infobox_author Author: 
+            #infobox_author Author:
+                input(type="text" value="author")#input_author
             #infobox_version Version:
+                input(type="text" value="version")#input_version
             #infobox_section Section:
-                
-        
+                br
+                select#input_section
+                    option(value="as")
+                    option(value="General") General
+                    option(value="General") Atlantean
+                    option(value="General") Element
+                    option(value="General") Grove
+                    option(value="General") Forsaken
+                    option(value="General") Mastermind
+                    option(value="General") Mech
+            #infobox_button
+                p
+                button(onclick="save();") Save
+    #preview_box(style="display:none;")
+        #back(onclick="toggleView();") back
+        #preview
+    script(src="/js/createguide.js")
