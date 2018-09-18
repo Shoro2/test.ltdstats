@@ -312,12 +312,13 @@ app.get('/guides', (req, res) => {
             var version = req.query.version;
             var section = req.query.section;
             var title = req.query.title;
-            var url = 'http://159.69.83.17:3000/guides?action=upload&waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble;
+            /*var url = 'http://159.69.83.17:3000/guides/upload?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble;
             if (url.includes("<script") || url.includes("<button") || url.includes("onclick")) {
                 res.send("bad url");
             }
-            else {
-                http.get(url, (resp) => {
+            else {*/
+                console.log("sending request---");
+            http.get('http://159.69.83.17:3000/guides/uploadGuide?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble, (resp) => {
                     console.log("resp");
                     let data = '';
 
@@ -327,14 +328,15 @@ app.get('/guides', (req, res) => {
                     });
 
                     // The whole response has been received. Print out the result.
-                    resp.on('end', () => {
+                resp.on('end', () => {
+                    console.log(data);
                         res.json(data);
                     });
 
                 }).on("error", (err) => {
                     console.log("Error: " + err.message);
                 });
-            }
+            //}
             break;
         default:
             console.log("guide default: "+guide);

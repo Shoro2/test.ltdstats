@@ -96,7 +96,8 @@ function uploadGuide(callback) {
             callback(answer);
         }
     };
-    xhttp.open("GET", '/guides?guide=upload&waves=' + waves + '&author = ' + author + '&version = ' + version + '&section = ' + section + '&title = ' + title + '&preamble = ' + preamble, true);
+
+    xhttp.open("GET", '/guides?guide=upload&waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble, true);
     xhttp.send();
 }
 
@@ -106,12 +107,18 @@ function queryUploadGuide() {
             document.getElementsByClassName("p")[0].textContent = "Upload failed, please report this on the forums.";
         }
         else {
+            result = JSON.parse(result);
             if (result == "bad url") {
                 document.getElementsByClassName("p")[0].textContent = "Bad content, please remove any script/button/onclicks in your guide.";
             }
-            else{
-                document.getElementsByClassName("p")[0].textContent = "Guide Uplaoded.";
-                console.log(result);
+            else if (result == "db error") {
+                document.getElementsByClassName("p")[0].textContent = "DB Error, please report this on the forums.";
+            }
+            else if (result == "success") {
+                console.log("success");
+                document.getElementsByClassName("gif")[0].style.display = "none";
+                document.getElementsByClassName("p")[0].innerHTML = "Guide Uplaoded.<br><a href='/guides?guide=new'>Go ahead</a>";
+                
             }
             
         }
