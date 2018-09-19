@@ -235,6 +235,11 @@ app.get('/guides', (req, res) => {
             });
             break;
         //general
+        case "wavecounters":
+            res.render('guides/general/wavecounters', {
+                title: 'Wave Counter List'
+            });
+            break;
         case "spelldmg":
             res.render('guides/general/spelldmg', {
                 title: 'Legion TD2 mechanics: Spell Damage'

@@ -8,9 +8,8 @@
     "\\public\\js\\db",
     "\\views",
     "\\views\\guides",
-    "\\views\\guides\\general",
-    "\\views\\guides\\grove"
+    "\\views\\guides\\general"
   ],
-  "SelectedNode": "\\public\\js\\profile.js",
+  "SelectedNode": "\\server.js",
   "PreviewInSolutionExplorer": false
 }
