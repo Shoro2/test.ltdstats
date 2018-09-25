@@ -58,6 +58,7 @@
     width:100%;
     overflow:auto;
     height:15%;
+    cursor:pointer;
 }
 
     .favcontainer::-webkit-scrollbar {

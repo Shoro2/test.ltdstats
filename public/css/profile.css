@@ -385,8 +385,12 @@ body {
     float: left;
 }
 
-/* Stats */
 
+#gamedetails_build{
+    cursor:pointer;
+
+}
+/* Stats */
 #chartContainer2 {
     position: relative;
     width: 100%;

@@ -678,8 +678,8 @@ function getWinchance() {
                 break;
         }
     }
-    var elo_west = parseFloat(((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0] + peakElos[1]) / 4));
-    var elo_east = parseFloat(((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2] + peakElos[3]) / 4));
+    var elo_west = parseFloat(((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0]*2 + peakElos[1]*2) / 4));
+    var elo_east = parseFloat(((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2]*2 + peakElos[3]*2) / 4));
     var winchance = 50 * (elo_west / elo_east);
     if (winchance < 0 || winchance > 100) winchance = 50;
     var elem = document.getElementById("myBar");
