@@ -7,9 +7,8 @@
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
-    "\\views\\guides",
-    "\\views\\guides\\general"
+    "\\views\\ladder"
   ],
-  "SelectedNode": "\\public\\js\\livegame.js",
+  "SelectedNode": "\\views\\ladder\\overallladder.jade",
   "PreviewInSolutionExplorer": false
 }
