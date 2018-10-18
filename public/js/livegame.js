@@ -265,47 +265,50 @@ function parsePlayers() {
             if (x < 22) leaks[x] = 0;
         }
         var games_count = 0;
-        parsedPlayer[i].games.games.forEach(function (ele) {
-            var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
-            if (gameDetail) {
-                if (gameDetail.legion == race_selected) {
-                    games_count++;
-                    var currunit = "";
-                    var lastunit = "";
-                    if (gameDetail.unitsPerWave.length > 0) {
-                        gameDetail.unitsPerWave[0].forEach(function (element) {
-                            //e=wave ;x=different units
-                            currunit = element.substring(0, element.indexOf("_unit"));
-                            if (currunit != lastunit) {
-                                var anzahl = 0;
-                                for (var x = 0; x < 60; x++) {
-                                    if (favunit[x] != 0) {
-                                        //unit matching?
-                                        if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
-                                            anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                            //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                            anzahl++;
-                                            //console.log(element);
-                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
-                                        }
-                                    }
-                                }
-                                //no match, add it
-                                if (anzahl > 0 == false) {
+        if (parsedPlayer[i].games.games != null) {
+            parsedPlayer[i].games.games.forEach(function (ele) {
+                var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
+                if (gameDetail) {
+                    if (gameDetail.legion == race_selected) {
+                        games_count++;
+                        var currunit = "";
+                        var lastunit = "";
+                        if (gameDetail.unitsPerWave.length > 0) {
+                            gameDetail.unitsPerWave[0].forEach(function (element) {
+                                //e=wave ;x=different units
+                                currunit = element.substring(0, element.indexOf("_unit"));
+                                if (currunit != lastunit) {
+                                    var anzahl = 0;
                                     for (var x = 0; x < 60; x++) {
-                                        if (favunit[x] == 0) {
-                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
-                                            break;
+                                        if (favunit[x] != 0) {
+                                            //unit matching?
+                                            if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
+                                                anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                                //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                                anzahl++;
+                                                //console.log(element);
+                                                favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
+                                            }
+                                        }
+                                    }
+                                    //no match, add it
+                                    if (anzahl > 0 == false) {
+                                        for (var x = 0; x < 60; x++) {
+                                            if (favunit[x] == 0) {
+                                                favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
+                                                break;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            lastunit = currunit;
-                        });
+                                lastunit = currunit;
+                            });
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        
         favunit.sort(function (a, b) {
             if (a != 0) {
                 var abstandA = a.indexOf(";") + 1;
@@ -429,7 +432,7 @@ function getPlayerLevel(totalXp) {
 
 }
 
-
+// todo: click first
 function getFighterGames(fightername, playername) {
     var leaks = [];
     for (var i = 0; i < 22; i++) {
