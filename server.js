@@ -6,6 +6,7 @@ const tabmenu = require('./public/js/tabmenu');
 require("./private/sqlcon.js")
 const chart = require('chart.js');
 const favicon = require('serve-favicon');
+var bodyParser = require('body-parser');
 
 require('isomorphic-fetch');
 // Constants
@@ -20,7 +21,7 @@ const app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
-
+app.use(bodyParser.json({ limit: '5000mb' }))
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
@@ -173,6 +174,11 @@ app.get('/guides', (req, res) => {
         case "akitoselement":
             res.render('guides/element/akitoselement', {
                 title: 'Akitos Element Guide'
+            });
+            break;
+        case "bluejinelement":
+            res.render('guides/element/bluejinele', {
+                title: 'Bluejin\'s Element Guide'
             });
             break;
         //grove
@@ -479,22 +485,6 @@ app.get('/users/checkname', (req, res) => {
 
 */
 
-app.get('/lihl/getPlayer', (req, res) => {
-    var sql = "SELECT * FROM lihl.player order by elo desc";
-    con.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
-app.get('/sql/rank', (req, res) => {
-    var player = req.query.player;
-    con.query("SELECT (SELECT COUNT(*) FROM legion.player WHERE elo >= (SELECT elo FROM legion.player where name ='" + player + "')) as Rank FROM legion.player LIMIT 1;", function (err, result, fields) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
-
 app.get('/sql/getGuides', (req, res) => {
     http.get('http://159.69.83.17:3000/guides?action=list', (resp) => {
         let data = '';
@@ -536,6 +526,70 @@ app.get('/sql/getLivegame', (req, res) => {
     });
 
 });
+
+//mongodb
+
+
+app.get('/mongo/getGames', (req, res) => {
+    var type = req.query.type;
+    var target_db = req.query.db;
+    var myLimit = req.query.limit;
+    var formating = req.query.formating;
+    var request_url = "";
+    switch (type) {
+        case "id":
+            var search_id = req.query.id;
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=id&limit=" + myLimit + "&formating=" + formating + "&id=" + search_id;
+            break;
+        case "playername":
+            var search_name = req.query.name;
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=playername&limit=" + myLimit + "&formating=" + formating + "&name=" + search_name;
+            break;
+        case "version":
+            var search_version = req.query.version;
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=version&limit=" + myLimit + "&formating=" + formating + "&version=" + search_version;
+            break;
+        case "date":
+            var search_from = req.query.from;
+            var search_to = req.query.to;
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=date&limit=" + myLimit + "&formating=" + formating + "&from=" + search_from + "&to=" + search_to;
+            break;
+        //http://ltdstats.com/mongo/getGames?type=all&db=rankedGames
+        case "all":
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=all&limit=0&formating=none";
+            break;
+
+    }
+    if (request_url != "") {
+        http.get(request_url, (resp) => {
+            let data = '';
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                if (data) res.json(data);
+                else res.send("no data");
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }
+    
+});
+
+
+
+
+
+
+
+
+
+
 
 //api abfragen
 

@@ -7,8 +7,10 @@
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
-    "\\views\\ladder"
+    "\\views\\guides",
+    "\\views\\guides\\element",
+    "\\views\\guides\\forsaken"
   ],
-  "SelectedNode": "\\views\\ladder\\overallladder.jade",
+  "SelectedNode": "\\private",
   "PreviewInSolutionExplorer": false
 }

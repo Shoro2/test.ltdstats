@@ -446,8 +446,12 @@ function getFighterGames(fightername, playername) {
         gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == playername)[0];
         if (typeof gameDetail !== "undefined") {
             if (typeof gameDetail.unitsPerWave[0] !== "undefined") {
+                //check units on 1
+                //more than 1 unit
                 if (gameDetail.unitsPerWave[0].length > 1) {
+                    //for each unit built on 1
                     for (var i = 0; i < gameDetail.unitsPerWave[0].length; i++) {
+                        //unit matching?
                         if (gameDetail.unitsPerWave[0][i].includes(fightername)) {
                             fightercount_pick++;
                             if (gameDetail.leaksPerWave.length > 0) {
@@ -472,12 +476,13 @@ function getFighterGames(fightername, playername) {
                                     }
                                 }
                             }
-                            break;
+                            break; //?
                         }
 
                     }
 
                 }
+                //1 unit only
                 else {
                     if (gameDetail.unitsPerWave[0].length > 0) {
                         if (gameDetail.unitsPerWave[0][0].includes(fightername)) {
