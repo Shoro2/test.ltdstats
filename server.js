@@ -25,6 +25,11 @@ app.use(bodyParser.json({ limit: '5000mb' }))
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
+//mysql
+mysqlcon.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to MySQL");
+});
 
 //routes
 
@@ -459,6 +464,31 @@ app.get('/livegame', (req, res) => {
         title: 'Livegame'
     })
 });
+
+app.get('/4v4/howto', (req, res) => {
+    res.render('4v4/howto', {
+        title: '4vs4 How To'
+    })
+});
+
+
+app.get('/4v4/ladder', (req, res) => {
+    res.render('4v4/ladder', {
+        title: '4vs4 Ladder',
+    });
+});
+
+app.get('/4v4/games', (req, res) => {
+    res.render('4v4/games', {
+        title: '4vs4 Games'
+    })
+});
+
+app.get('/4v4/lobbies', (req, res) => {
+    res.render('4v4/lobbies', {
+        title: '4vs4 Open lobbies'
+    })
+});
 /*
 app.get('/login', (req, res) => {
     res.render('login', {
@@ -525,6 +555,28 @@ app.get('/sql/getLivegame', (req, res) => {
         console.log("Error: " + err.message);
     });
 
+});
+
+app.get('/sql/ladder', (req, res) => {
+    var offset = req.query.offset;
+    mysqlcon.query("SELECT * FROM ltdstats.player order by elo desc offset " + offset + ";", function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/sql/games', (req, res) => {
+    mysqlcon.query("SELECT * FROM ltdstats.games order by id desc;", function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/sql/lobbies', (req, res) => {
+    mysqlcon.query("SELECT * FROM ltdstats.lobby order by idlobby desc;", function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
 });
 
 //mongodb

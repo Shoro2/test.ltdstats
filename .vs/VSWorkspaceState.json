@@ -7,10 +7,10 @@
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
+    "\\views\\4v4",
     "\\views\\guides",
-    "\\views\\guides\\element",
-    "\\views\\guides\\forsaken"
+    "\\views\\ladder"
   ],
-  "SelectedNode": "\\private",
+  "SelectedNode": "\\public\\js\\4v4games.js",
   "PreviewInSolutionExplorer": false
 }

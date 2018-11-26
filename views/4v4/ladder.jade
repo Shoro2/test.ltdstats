@@ -1,0 +1,15 @@
+extend ../layout
+block content
+    link(rel='stylesheet', href='/css/4v4.css')
+    .content
+        .kasten
+            h1.4v4headline 4vs4 Ladder
+            table#myTable
+                tr.header
+                    th.table_header#th0(onclick="sortTable(0)") Rank
+                    th.table_header#th1(onclick="sortTable(1)") Name
+                    th.table_header#th2(onclick="sortTable(2)") Elo
+                    th.table_header#th3(onclick="sortTable(3)") Games
+                    th.table_header#th4(onclick="sortTable(4)") Wins
+    script(src="/js/ladder_sort.js")
+    script(src="/js/4v4ladder.js")

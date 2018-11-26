@@ -1,0 +1,53 @@
+extend ../layout
+block content
+    link(rel='stylesheet', href='/css/4v4.css')
+    .content
+        .kasten
+            h1.v4headline 4vs4 League
+            h5.v4headline Join the adventure now!
+            p
+            h2 How-To (
+                a(href="https://www.youtube.com/watch?v=TDcz0Weluso") Videoguide
+                | ):
+            p
+            h5 Requirements:
+            ul
+                li Legion TD 2 Account
+                li Discord Account
+            h5 Step 1:
+            p
+                | Join Akitos  
+                a(href="https://discordapp.com/invite/GbU2FTH") Discord channel
+            h5 Step 2:
+            p
+                | Check out rules/announcements at 
+                a(href="https://discordapp.com/channels/414234890284826664/514384985243910144") #how-to-play
+            h5 Step 3:
+            p
+                | Rename yourself to your ingame name (right click Akitos server in the list on the left and chose "change nickname").
+                br.
+                b Make sure the name matches your ingame name 100% or you will not receive elo for your games.
+            h5 Step 4:
+            p
+                | Create an 4v4 account in the 
+                a(href="https://discordapp.com/channels/414234890284826664/513790858340859907") #signups 
+                |  channel by typing in '!create'
+            h5 Step 4:
+            p
+                | Create a lobby or join an existing one using !sign to join or !start to create a lobby.
+            h5 Step 5:
+            p
+                | Join the game when the lobby is full. The bot will tell you your position/team for the game. Red/Player 1 has to create the custom game lobby.
+            p
+            h5 Bot commands:
+            ul
+                li !start: Creates a lobby. Only 1 lobby at the same time.
+                li !sign: Joins the lobby, cant be used when you are ingame.
+                li !unsign: Removes you from the lobby.
+                li !lobby: Displays current lobby and its players.
+                li !create: Creates a 4vs4 Account.
+                li !games: Lists all games in progress.
+                li !elo: Displays your elo/rank. Add a playername to look up other players.
+                li !top: Lists top 5 players.
+                li !bot: Lists bottom 5 players.
+                li !closelobby: Closes your created lobby (only if you did !start)
