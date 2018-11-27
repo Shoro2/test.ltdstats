@@ -21,7 +21,7 @@ function drawLadder() {
 }
 
 
-function getLadder(callback, limit, offset) {
+function getLadder(callback) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -29,7 +29,7 @@ function getLadder(callback, limit, offset) {
             callback(player);
         }
     };
-    xhttp.open("GET", "/sql/ladder/?limit=" + limit + "&offset=" + offset, true);
+    xhttp.open("GET", "/sql/ladder", true);
     xhttp.send();
 }
 function queryLadder(limit, offset) {
@@ -39,5 +39,5 @@ function queryLadder(limit, offset) {
         });
         drawLadder();
         return result;
-    }, limit, offset);
+    });
 }

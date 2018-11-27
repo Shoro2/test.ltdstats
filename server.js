@@ -489,6 +489,12 @@ app.get('/4v4/lobbies', (req, res) => {
         title: '4vs4 Open lobbies'
     })
 });
+
+app.get('/donate', (req, res) => {
+    res.render('donate', {
+        title: 'Donate'
+    })
+});
 /*
 app.get('/login', (req, res) => {
     res.render('login', {
@@ -558,8 +564,7 @@ app.get('/sql/getLivegame', (req, res) => {
 });
 
 app.get('/sql/ladder', (req, res) => {
-    var offset = req.query.offset;
-    mysqlcon.query("SELECT * FROM ltdstats.player order by elo desc offset " + offset + ";", function (err, result, fields) {
+    mysqlcon.query("SELECT * FROM ltdstats.player order by elo desc;", function (err, result, fields) {
         if (err) throw err;
         res.json(result);
     });

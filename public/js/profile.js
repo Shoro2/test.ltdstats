@@ -14,6 +14,8 @@ function checkContent() {
     else {
 
         document.getElementById("tab_box_1").textContent = "Select a player";
+        var banner = '<div style="margin-left:auto;margin-right:auto;width:50%;"><iframe src="https://rcm-eu.amazon-adsystem.com/e/cm?o=3&p=48&l=ur1&category=cybermonday2018&banner=1MDA8YY3K5J4CFC3W782&f=ifr&linkID=bdae7178d7745346096600a6c5a6b6ad&t=gvrmrmister-21&tracking_id=gvrmrmister-21" width="728" height="90" scrolling="no" border="0" marginwidth="0" style="border:none; text-align: center;" frameborder="0"></iframe></div>'
+        document.getElementById("tab_box_1").innerHTML += banner;
         openTab(1);
 
     }

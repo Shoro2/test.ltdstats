@@ -2,3 +2,18 @@ extend ../layout
 block content
     link(rel='stylesheet', href='/css/4v4.css')
     .content
+         .kasten
+            h1.4v4headline 4vs4 open lobbies
+            table#myTable
+                tr.header
+                    th.table_header#th0(onclick="sortTable(0)") ID
+                    th.table_header#th1(onclick="sortTable(1)") P1
+                    th.table_header#th2(onclick="sortTable(2)") P2
+                    th.table_header#th3(onclick="sortTable(3)") P3
+                    th.table_header#th4(onclick="sortTable(4)") P4
+                    th.table_header#th5(onclick="sortTable(5)") P5
+                    th.table_header#th6(onclick="sortTable(6)") P6
+                    th.table_header#th7(onclick="sortTable(7)") P7
+                    th.table_header#th8(onclick="sortTable(8)") P8
+    script(src="/js/ladder_sort.js")
+    script(src="/js/4v4lobbies.js")
