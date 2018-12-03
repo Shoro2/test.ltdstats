@@ -3,6 +3,7 @@ block content
     link(rel='stylesheet', href='/css/ladder.css')
     .content
         .umdieladder
+            #amazon_ad
             #filter_display(onclick="expandFilters()") Show filters
             #filter-invis
                 label.filter_label(onclick="getFilters();") Rank
@@ -29,8 +30,8 @@ block content
                     input.filter_input#checkbox10(type="checkbox", name="filter", value="Atlantean Peak Elo", onclick='saveTick(10);')
                 label.filter_label(onclick="getFilters();") Atlantean Peak Elo This Season
                     input.filter_input#checkbox11(type="checkbox", name="filter", value="Atlantean Peak Elo This Season", onclick='saveTick(11);')
-
                 label.filter_label#selectall(onclick="selectNone()") Unselect all
+            
             table.ladder#myladder
                 tr.header
                     th.table_header#th0(onclick="sortTable(0)")

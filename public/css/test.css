@@ -138,3 +138,11 @@ body
   .show > .btn-outline-success.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem white;
   }
+
+#amazon_ad {
+    margin-left:auto;
+    margin-right:auto;
+    width:50%;
+    margin-bottom:2%;
+    text-align:center;
+}

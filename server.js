@@ -579,6 +579,35 @@ app.get('/sql/lobbies', (req, res) => {
     });
 });
 
+
+//ipstack
+
+app.get('/getLang', (req, res) => {
+    var ip = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress
+    console.log(ip.substring(8));
+    http.get('http://api.ipstack.com/' + ip.substring(8) + '?access_key=' + meinKey3, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            data = data.split(",");
+            res.send(data[5]);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
 //mongodb
 
 
