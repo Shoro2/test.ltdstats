@@ -6,7 +6,6 @@ html
         link(rel='stylesheet', href='/css/test.css')
         meta(name="revisit-after", content="2 days")
         meta(name="robots", content="index, follow")
-        meta(name="propeller" content="f99cd243d0c9b89ae2c442fcfd2c7436")
         if(title=="Home")
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Guides, Tutorials")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, profile, stats, ladder, guides,tutorials, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics")
@@ -160,12 +159,12 @@ html
                         li.nav-item.dropdown
                             a#dropdown02.nav-link.dropdown-toggle(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') More
                             div.dropdown-menu(aria-labelledby='dropdown02')
-                                a.dropdown-item(href='/tournaments') Tournaments
                                 a.dropdown-item(href='/builder') Builder
                                 a.dropdown-item(href='/streams') Featured Streams
                                 a.dropdown-item(href='/help') Help
                                 a.dropdown-item(href="/feedback") Feedback & Bugs
                                 a.dropdown-item(href='/cookies') Cookie Policy
+                                a.dropdown-item(href='/donate') Donate
                                 a.dropdown-item(href='/about') About
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
@@ -209,16 +208,12 @@ html
                 div.myfooter
                     a.linkfooter(href="/about") About
                     a.linkfooter(href="/cookies") Cookie Policies
-                    a.linkfooter(href="http://test.ltdstats.com", target="blank") Old Website
                     a.linkfooter(href="feedback") Give Feedback
                     a.linkfooter(href="/help") Help
-                script(src='https://code.jquery.com/jquery-3.1.1.min.js')
-                script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
-                script(src='/js/bootstrap.js')
-                script(src="/js/ads.js")
-                script(src="/js/cookies.js")
-                script(src="/js/checkads.js")
-                script checkAds();checkAnalytics();
-                script (sc_adv_out = window.sc_adv_out || []).push({id : "550580",domain : "n.pclicc1.com"});
-                script(src="//st-n.pclicc1.com/js/a.js")
-                script(sync="async" data-cfasync="false" src="//tharbadir.com/2?z=2185003")
+        script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+        script(src='/js/bootstrap.js')
+        script(src="/js/ads.js")
+        script(src="/js/cookies.js")
+        script(src="/js/checkads.js")
+        script checkAds();checkAnalytics();

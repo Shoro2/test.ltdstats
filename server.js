@@ -45,11 +45,13 @@ app.get('/index.html', (req, res) => {
     })
 });
 
+/*
 app.get('/tournaments', (req, res) => {
     res.render('tournaments', {
         title: 'Tournaments'
     })
 });
+*/
 
 app.get('/stats', (req, res) => {
     res.render('stats', {
@@ -128,13 +130,6 @@ app.get('/ladder/atlantean', (req, res) => {
         title: 'Atlantean Ladder'
     })
 });
-
-app.get('/game', (req, res) => {
-    res.render('games', {
-        title: 'Livegame'
-    })
-});
-
 
 app.get('/builder', (req, res) => {
     res.render('builder', {

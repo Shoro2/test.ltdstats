@@ -5,7 +5,7 @@ block content
     .content
         #builder
         h1 LTDStats.com - Statistics, Guides, Player Profiles and more!
-        p.
+        input(type="hidden" name="IL_IN_TAG" value="2")
         .tabmenu
             .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") News
             .tab_top_passive#tab_top_2(onclick="javascript:openTab(2);") Content
@@ -34,6 +34,7 @@ block content
                         a(href="/guides") Guides
                         p
                         i 2018-08-24 GvR Mr Mister
+                    input(type="hidden" name="IL_IN_ARTICLE")
                     .news
                         b Tool: Elo Parser v1.0
                         br
