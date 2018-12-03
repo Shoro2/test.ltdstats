@@ -1,16 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\private",
     "\\public",
     "\\public\\css",
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
     "\\views\\4v4",
-    "\\views\\guides",
+    "\\views\\guides\\mech",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\views\\index.jade",
+  "SelectedNode": "\\server.js",
   "PreviewInSolutionExplorer": false
 }

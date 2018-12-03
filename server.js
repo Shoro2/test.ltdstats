@@ -586,9 +586,18 @@ app.get('/getLang', (req, res) => {
     var ip = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress
-    console.log(ip.substring(8));
-    http.get('http://api.ipstack.com/' + ip.substring(8) + '?access_key=' + meinKey3, (resp) => {
+        req.connection.socket.remoteAddress;
+    if (ip.substring(8).includes(":")) {
+        //ipv6
+        console.log("ipv6:");
+        console.log(ip);
+    }
+    else {
+        //ipv4
+        console.log("ipv4");
+        ip = ip.substring(8);
+    }
+    http.get('http://api.ipstack.com/' + ip + '?access_key=' + meinKey3, (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
