@@ -863,7 +863,7 @@ app.get('/api/profile/player100', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername: "' + playername + '") { playername,statistics,games(queuetype: normal, limit: 100) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
+            query: '{player(playername: "' + playername + '") { playername,statistics,games(limit: 100) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
         }),
     })
         .then(function (response) {
