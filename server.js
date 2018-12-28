@@ -27,7 +27,7 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 //mysql
 mysqlcon.connect(function (err) {
-    if (err) throw err;
+    if (err) console.log(err);
     console.log("Connected to MySQL");
 });
 
@@ -457,31 +457,6 @@ app.get('/streams', (req, res) => {
 app.get('/livegame', (req, res) => {
     res.render('livegame', {
         title: 'Livegame'
-    })
-});
-
-app.get('/4v4/howto', (req, res) => {
-    res.render('4v4/howto', {
-        title: '4vs4 How To'
-    })
-});
-
-
-app.get('/4v4/ladder', (req, res) => {
-    res.render('4v4/ladder', {
-        title: '4vs4 Ladder',
-    });
-});
-
-app.get('/4v4/games', (req, res) => {
-    res.render('4v4/games', {
-        title: '4vs4 Games'
-    })
-});
-
-app.get('/4v4/lobbies', (req, res) => {
-    res.render('4v4/lobbies', {
-        title: '4vs4 Open lobbies'
     })
 });
 
