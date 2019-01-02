@@ -1,4 +1,4 @@
-//show container
+﻿//show container
 
 /* To add stats:
  * 1. edit function createBarGraph() -> parse data + update chart
@@ -384,6 +384,13 @@ function createBarGraph(data) {
             }
             var meinText = "Average Leaks on game end";
             break;
+        case "gameendingwave":
+            var gameendingwaves = [];
+            for (var i = 0; i < 21; i++) {
+                gameendingwaves[i] = data[i].count;
+            }
+            var meinText = "Wave games ended on";
+            break;
     }
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
@@ -557,6 +564,15 @@ function createBarGraph(data) {
                 myChart.update();
             }
             break;
+        case "gameendingwave":
+            myChart.data.labels.push("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21");
+            myChart.data.datasets.push({ label: "Number of games", data: [], backgroundColor: graphColor[0], borderColor: 'rgba(1,1,1,1)', borderWidth: 1 });
+            myChart.update();
+            for (var i = 0; i < 21; i++) {
+                myChart.data.datasets[0].data.push(gameendingwaves[i]);
+                myChart.update();
+            }
+            break;
     }
 
 }
@@ -652,6 +668,14 @@ function showUnitStatSheet() {
     abfrage = "unitstatssheet";
     queryAllFighters();
 }
+
+function showGameEndingWaves() {
+    document.getElementById("chartContainer").style.display = "";
+    hideWave();
+    showInputs();
+    showStatsPage();
+    abfrage = "gameendingwave";
+}
 // call query
 function readSelection() {
     try {
@@ -681,6 +705,9 @@ function readSelection() {
             break;
         case "leaksonend":
             queryAvgLeaksEnd(document.getElementById("typeselector").value, meineValue);
+            break;
+        case "gameendingwave":
+            queryGameEndingWaves(meineValue);
             break;
         default:
             console.log("Fehler readselection: " + abfrage);
@@ -948,24 +975,6 @@ function createTable(data) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //api requests
 function getEloDistribution(callback) {
     var xhttp = new XMLHttpRequest();
@@ -1154,4 +1163,23 @@ function queryAllFighters() {
         hideLoad();
         return result;
     });
+}
+
+function getGameEndingWaves(callback, version) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/sql/stats/wavegamesended?version='+version, true);
+    xhttp.send();
+}
+function queryGameEndingWaves(version) {
+    showLoad();
+    getGameEndingWaves(function (result) {
+        createBarGraph(JSON.parse(result));
+        hideLoad();
+        return result;
+    }, version);
 }

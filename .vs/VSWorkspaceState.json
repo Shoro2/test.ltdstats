@@ -6,9 +6,8 @@
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
-    "\\views\\4v4",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\server.js",
+  "SelectedNode": "\\public\\css\\profile.css",
   "PreviewInSolutionExplorer": false
 }

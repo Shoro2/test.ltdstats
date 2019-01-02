@@ -23,6 +23,8 @@ block content
                         img.small_icon(src="/img/icons/Worker.png")
                     h4(onclick="showNetworthPerWave();") Networth per Wave
                         img.small_icon(src="/img/icons/GoldCoin.png")
+                    h4(onclick="showGameEndingWaves();") Wave games ended on
+                        img.small_icon(src="/img/icons/AlphaTop10.png")
                 #gamestats.divider
                     h3 On Game End:
                     h4(onclick="showValueOnEnd();") Value on game end
@@ -42,7 +44,7 @@ block content
                 option(value="version") Patch
                 option(value="tsgte") > Date
                 option(value="tslt") < Date
-            input#value_textField.inline(type="text", style="display:none;", placeholder='v2.32')
+            input#value_textField.inline(type="text", style="display:none;", placeholder='v2.4x')
             input#value_dateField.inline(type="date", style="display:none;")
             button#startButton.inline(onclick="readSelection();") Go
         #slider_container(style="display:none")

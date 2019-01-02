@@ -533,6 +533,34 @@ app.get('/sql/getLivegame', (req, res) => {
 
 });
 
+
+
+app.get('/sql/stats/wavegamesended', (req, res) => {
+    var version = req.query.version;
+    if (version.substring(0, 1) == "v") version = version.substring(1);
+    console.log('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version);
+    http.get('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data) res.json(data);
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
+
+
 app.get('/sql/ladder', (req, res) => {
     mysqlcon.query("SELECT * FROM ltdstats.player order by elo desc;", function (err, result, fields) {
         if (err) throw err;
@@ -1186,7 +1214,7 @@ app.get('/api/stats/player/avgworkersEnd', (req, res) => {
         });
 });
 
-app.get('/api/stats/legions/avgwleaksEnd', (req, res) => {
+app.get('/api/stats/legions/avgleaksEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
     fetch('https://api.legiontd2.com/graphql', {
@@ -1375,5 +1403,7 @@ app.get('/api/tour/player', (req, res) => {
         });
 
 });
+
+
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
