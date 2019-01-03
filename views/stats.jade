@@ -16,6 +16,8 @@ block content
                         img.small_icon(src="/img/icons/diagram.png")
                     h4(onclick="showUnitStatSheet();") Figther Stats Overview
                         img.small_icon(src="/img/icons/Royalty.png")
+                    h4(onclick="showFighterStats();") Figther Pick/Winchances (not working yet)
+                        img.small_icon(src="/img/icons/CouncilDecal.png")
                 br
                 #wavestats.divider
                     h3 Per wave:
@@ -44,7 +46,9 @@ block content
                 option(value="version") Patch
                 option(value="tsgte") > Date
                 option(value="tslt") < Date
-            input#value_textField.inline(type="text", style="display:none;", placeholder='v2.4x')
+            input#value_textField.inline(type="text", style="display:none;", placeholder='Patch e.g. 2.44 ')
+            input#value_eloField.inline(type="text", style="display:none;", placeholder='Min. Elo')
+            input#value_fighterField.inline(type="text", style="display:none;", placeholder="Fighter's name")
             input#value_dateField.inline(type="date", style="display:none;")
             button#startButton.inline(onclick="readSelection();") Go
         #slider_container(style="display:none")

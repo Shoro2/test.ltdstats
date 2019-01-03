@@ -1,13 +1,11 @@
-﻿//show container
-
-/* To add stats:
+﻿/* To add stats:
  * 1. edit function createBarGraph() -> parse data + update chart
  * 2. create function showX()
  * 3. edit readSelection()
  * 4. add help
  * */
 
-
+//show container
 function showStatsPage() {
     document.getElementById("stats").style.display = "inherit";
 }
@@ -54,6 +52,9 @@ function showHelpPage() {
             break;
         case "leaksonend":
             content_ele.innerHTML = "<h3>Leaks on Game End/h3><p>Shows the average leaks per wave and legion ON GAME END.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b> < Date:</b></br>Finds any game with timestamp < selected date.<br> If you request to many games you will time out.<p><p><i>Click anywhere to close.</i>";
+            break;
+        case "gameendingwaves":
+            content_ele.innerHTML = "<h3>Wave games ended on/h3><p>Shows the amount of games ended at every wave.<p>Filters:<br><b>Patch:</b><br>prefix: 'v.' + patch version + (wildcard ''%')<br> E.g. v2.32, v2.3%<p><b> > Date:</b><br>Finds any game with timestamp > selected date.<br> Use current date to see todays winchances.<p><b><p><p><i>Click anywhere to close.</i>";
             break;
     }
 }
@@ -195,41 +196,79 @@ function createBarGraph(data) {
             var meinText = "Average Workercount per Wave";
             break;
         case "winrates":
+            var data = JSON.parse(data);
             var total_picks = 0;
-            data = data.stats.legionPickWinRate;
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
-                total_picks += data[i].gamesPicked;
+                if (data[i]._id.gameresult != "tie" && data[i]._id.gameresult != "null") total_picks += data[i].count;
             }
-            var pickchance = [];
-            var winchance = [];
+            var picks_amount = [0, 0, 0, 0, 0, 0];
+            var wins_amount = [0, 0, 0, 0, 0, 0];
+            var winchance = [0, 0, 0, 0, 0, 0];
+            var pickchance = [0, 0, 0, 0, 0, 0];
             for (var i = 0; i < data.length; i++) {
-                switch (data[i].legion) {
+                switch (data[i]._id.legion) {
                     case "Atlantean":
-                        pickchance[0] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[0] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[0] += parseInt(data[i].count);
+                            picks_amount[0] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[0] += parseInt(data[i].count);
+                        }
                         break;
                     case "Element":
-                        pickchance[1] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[1] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[1] += parseInt(data[i].count);
+                            picks_amount[1] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[1] += parseInt(data[i].count);
+                        }
                         break;
                     case "Forsaken":
-                        pickchance[2] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[2] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[2] += parseInt(data[i].count);
+                            picks_amount[2] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[2] += parseInt(data[i].count);
+                        }
                         break;
                     case "Grove":
-                        pickchance[3] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[3] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[3] += parseInt(data[i].count);
+                            picks_amount[3] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[3] += parseInt(data[i].count);
+                        }
                         break;
                     case "Mastermind":
-                        pickchance[4] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[4] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[4] += parseInt(data[i].count);
+                            picks_amount[4] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[4] += parseInt(data[i].count);
+                        }
                         break;
                     case "Mech":
-                        pickchance[5] = ((data[i].gamesPicked / total_picks) * 100).toFixed(2);
-                        winchance[5] = ((data[i].gamesWon / data[i].gamesPicked) * 100).toFixed(2);
+                        if (data[i]._id.gameresult == "won") {
+                            wins_amount[5] += parseInt(data[i].count);
+                            picks_amount[5] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameresult == "lost") {
+                            picks_amount[5] += parseInt(data[i].count);
+                        }
+                        break;
+                    default:
+                        console.log(data[i]._id.legion);
                         break;
                 }
+            }
+            for (var i = 0; i < 6; i++) {
+                pickchance[i] = ((picks_amount[i] / total_picks) * 100).toFixed(2);
+                winchance[i] = ((wins_amount[i] / picks_amount[i]) * 100).toFixed(2);
             }
             var meinText = "Pick- & Winrates per Legion in % (Total Games: " + total_picks/4 + ")";
             break;
@@ -617,6 +656,9 @@ function showWinPickrates() {
     hideWave();
     showInputs();
     showStatsPage();
+    hideSelector();
+    showElo();
+    hideFighterName();
     abfrage = "winrates";
 }
 function showWorkersPerWave() {
@@ -624,6 +666,9 @@ function showWorkersPerWave() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideElo();
+    hideFighterName();
     abfrage = "workersperwave";
 }
 function showNetworthPerWave() {
@@ -631,6 +676,9 @@ function showNetworthPerWave() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideElo();
+    hideFighterName();
     abfrage = "networthperwave";
 }
 function showValueOnEnd() {
@@ -638,6 +686,9 @@ function showValueOnEnd() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideElo();
+    hideFighterName();
     abfrage = "valueonend";
 }
 function showIncomeOnEnd() {
@@ -645,6 +696,9 @@ function showIncomeOnEnd() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideElo();
+    hideFighterName();
     abfrage = "incomeonend";
 }
 function showWorkersOnEnd() {
@@ -652,6 +706,9 @@ function showWorkersOnEnd() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideFighterName();
+    hideElo();
     abfrage = "workersonend";
 }
 function showLeaksOnEnd() {
@@ -659,23 +716,64 @@ function showLeaksOnEnd() {
     hideWave();
     showInputs();
     showStatsPage();
+    showSelector();
+    hideElo();
+    hideFighterName();
     abfrage = "leaksonend";
 }
 function showUnitStatSheet() {
     showStatsPage();
     showWave();
     hideInputs();
+    hideElo();
+    hideFighterName();
     abfrage = "unitstatssheet";
     queryAllFighters();
 }
 
 function showGameEndingWaves() {
     document.getElementById("chartContainer").style.display = "";
+    hideSelector();
     hideWave();
     showInputs();
     showStatsPage();
+    hideElo();
+    hideFighterName();
     abfrage = "gameendingwave";
 }
+
+
+function showFighterStats() {
+    showStatsPage();
+    showElo();
+    hideSelector();
+    showFighterName();
+}
+
+function showFighterName() {
+    document.getElementById("value_fighterField").style.display = "";
+}
+
+function hideFighterName() {
+    document.getElementById("value_fighterField").style.display = "none";
+}
+
+function hideSelector() {
+    document.getElementById("typeselector").style.display = "none";
+    document.getElementById("value_textField").style.display = "";
+}
+function showSelector() {
+    document.getElementById("typeselector").style.display = "";
+}
+
+function showElo() {
+    document.getElementById("value_eloField").style.display = "";
+}
+
+function hideElo() {
+    document.getElementById("value_eloField").style.display = "none";
+}
+
 // call query
 function readSelection() {
     try {
@@ -686,7 +784,8 @@ function readSelection() {
     else var meineValue = document.getElementById("value_dateField").value;
     switch (abfrage) {
         case "winrates":
-            queryWinRates(document.getElementById("typeselector").value, meineValue);
+            var minElo = parseInt(document.getElementById("value_eloField").value);
+            queryWinRates(document.getElementById("typeselector").value, meineValue, minElo);
             break;
         case "workersperwave":
             queryAvgWorkersWave(document.getElementById("typeselector").value, meineValue);
@@ -996,24 +1095,24 @@ function queryEloDistribution() {
         return result;
     });
 }
-function getWinRates(callback, type, value) {
+function getWinRates(callback, type, value, minElo) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             callback(JSON.parse(xhttp.response));
         }
     };
-    xhttp.open("GET", '/api/stats/legions/winrate?type=' + type + '&value=' + value, true);
+    xhttp.open("GET", '/mongo/stats/legions/winrate?type=pickwinchances&version=' + value + "&minelo="+minElo, true);
     xhttp.send();
 }
-function queryWinRates(type, value) {
+function queryWinRates(type, value, minElo) {
     showLoad();
     getWinRates(function (result) {
         console.log(result);
         createBarGraph(result);
 
         return result;
-    }, type, value);
+    }, type, value, minElo);
 }
 
 function getAvgValueEnd(callback, type, value) {

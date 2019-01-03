@@ -560,6 +560,31 @@ app.get('/sql/stats/wavegamesended', (req, res) => {
 });
 
 
+app.get('/mongo/stats/legions/winrate', (req, res) => {
+    var version = req.query.version;
+    var minElo = req.query.minelo;
+    if (version.substring(0, 1) == "v") version = version.substring(1);
+    console.log('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo);
+    http.get('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data) res.json(data);
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
 
 app.get('/sql/ladder', (req, res) => {
     mysqlcon.query("SELECT * FROM ltdstats.player order by elo desc;", function (err, result, fields) {
@@ -1023,7 +1048,7 @@ app.get('/api/stats/fighter', (req, res) => {
                 });
         });
 });
-
+/*
 app.get('/api/stats/legions/winrate', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
@@ -1046,7 +1071,7 @@ app.get('/api/stats/legions/winrate', (req, res) => {
             res.json(data.data);
         });
 });
-
+*/
 app.get('/api/stats/player/winrate', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;

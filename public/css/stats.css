@@ -55,19 +55,12 @@
 }
 
 
-#inputs {
-    width: 30%;
-    min-width:250px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align:center;
-}
+
 
 .inline {
-    float: left;
-    width: 30%;
-    margin-right: 3.33333%;
-
+    min-width: 250px;
+    margin-left: 3%;
+    margin-right: auto;
 }
 
 h4{
@@ -109,7 +102,7 @@ h4{
     width:90%;
     margin-left:auto;
     margin-right:auto;
-    height:200px;
+    height:150px;
 }
 
 #myTable{

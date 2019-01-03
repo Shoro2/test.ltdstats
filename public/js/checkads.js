@@ -38,15 +38,12 @@ function checkAnalytics() {
         
         $.loadScript("https://www.googletagmanager.com/gtag/js?id=UA-111925592-1", function () {
             $.loadScript("/js/analytics.js", function () {
-                console.log("analytics enabled");
-                console.log(window.localStorage.getItem("analytics"));
             });
         });
         
     }
     else {
-        console.log(window.localStorage.getItem("analytics"));
-        console.log("analytics disabled");
+
     }
 }
 
