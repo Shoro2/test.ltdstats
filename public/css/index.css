@@ -32,6 +32,18 @@
     overflow:auto;
 }
 
+.contentbox::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+    background: lightgray;
+    border-radius: 5px;
+    /*background: transparent; optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+.contentbox::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 5px;
+    margin: 5px;
+}
 .news{
     width:75%;
     margin-left:auto;
