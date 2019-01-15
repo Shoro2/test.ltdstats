@@ -426,7 +426,9 @@ function createBarGraph(data) {
         case "gameendingwave":
             var gameendingwaves = [];
             for (var i = 0; i < 21; i++) {
-                gameendingwaves[i] = data[i].count;
+                //gameendingwaves[i] = data[i].count;
+                gameendingwaves[i] = data.filter(data => data._id.wave == i+1)[0];
+                if(gameendingwaves[i] == undefined) gameendingwaves[i]={_id:{wave:i+1},count:0};
             }
             var meinText = "Wave games ended on";
             break;
@@ -608,7 +610,7 @@ function createBarGraph(data) {
             myChart.data.datasets.push({ label: "Number of games", data: [], backgroundColor: graphColor[0], borderColor: 'rgba(1,1,1,1)', borderWidth: 1 });
             myChart.update();
             for (var i = 0; i < 21; i++) {
-                myChart.data.datasets[0].data.push(gameendingwaves[i]);
+                myChart.data.datasets[0].data.push(gameendingwaves[i].count);
                 myChart.update();
             }
             break;

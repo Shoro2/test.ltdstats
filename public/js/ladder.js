@@ -156,8 +156,8 @@ function parsePlayers(myPlayers, type) {
             for (var i = 0; i < players.length; i++) {
                 players[i].statistics = JSON.parse(players[i].statistics);
                 var row = tabelle.insertRow(i + 1);
-                var cell = [24];
-                for (var e = 0; e < 24; e++) {
+                var cell = [25];
+                for (var e = 0; e < 25; e++) {
                     cell[e] = row.insertCell(e);
                     cell[e].classList.add("td_" + e);
                 }
@@ -214,7 +214,7 @@ function parsePlayers(myPlayers, type) {
                 if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
                 if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
                 var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
-                console.log(totalgames);
+                if (players[i].statistics.overallPeakEloThisSeason == null) players[i].statistics.overallPeakEloThisSeason=playres[i].statistics.overallElo;
                 var totalwins = players[i].statistics.wins;
                 var winchance_element = (players[i].statistics.elementWins / players[i].statistics.elementPlayed * 100).toFixed(2);
                 var winchance_grove = (players[i].statistics.groveWins / players[i].statistics.grovePlayed * 100).toFixed(2);
@@ -231,27 +231,28 @@ function parsePlayers(myPlayers, type) {
                 cell[0].innerHTML = i + 1;
                 cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
                 cell[2].innerHTML = players[i].statistics.overallElo;
-                cell[3].innerHTML = totalgames;
-                cell[4].innerHTML = totalwins;
-                cell[5].innerHTML = totalgames - totalwins;
-                cell[6].innerHTML = players[i].statistics.elementPlayed;
-                cell[7].innerHTML = players[i].statistics.elementWins;
-                cell[8].innerHTML = winchance_element;
-                cell[9].innerHTML = players[i].statistics.grovePlayed;
-                cell[10].innerHTML = players[i].statistics.groveWins;
-                cell[11].innerHTML = winchance_grove;
-                cell[12].textContent = players[i].statistics.forsakenPlayed;
-                cell[13].innerHTML = players[i].statistics.forsakenWins;
-                cell[14].innerHTML = winchance_forsaken;
-                cell[15].innerHTML = players[i].statistics.mechPlayed;
-                cell[16].innerHTML = players[i].statistics.mechWins;
-                cell[17].innerHTML = winchance_mech;
-                cell[18].innerHTML = players[i].statistics.mastermindPlayed;
-                cell[19].innerHTML = players[i].statistics.mastermindWins;
-                cell[20].innerHTML = winchance_mastermind;
-                cell[21].innerHTML = players[i].statistics.atlanteanPlayed;
-                cell[22].innerHTML = players[i].statistics.atlanteanWins;
-                cell[23].innerHTML = winchance_atlantean;
+                cell[3].innerHTML = players[i].statistics.overallPeakEloThisSeason;
+                cell[4].innerHTML = totalgames;
+                cell[5].innerHTML = totalwins;
+                cell[6].innerHTML = totalgames - totalwins;
+                cell[7].innerHTML = players[i].statistics.elementPlayed;
+                cell[8].innerHTML = players[i].statistics.elementWins;
+                cell[9].innerHTML = winchance_element;
+                cell[10].innerHTML = players[i].statistics.grovePlayed;
+                cell[11].innerHTML = players[i].statistics.groveWins;
+                cell[12].innerHTML = winchance_grove;
+                cell[13].textContent = players[i].statistics.forsakenPlayed;
+                cell[14].innerHTML = players[i].statistics.forsakenWins;
+                cell[15].innerHTML = winchance_forsaken;
+                cell[16].innerHTML = players[i].statistics.mechPlayed;
+                cell[17].innerHTML = players[i].statistics.mechWins;
+                cell[18].innerHTML = winchance_mech;
+                cell[19].innerHTML = players[i].statistics.mastermindPlayed;
+                cell[20].innerHTML = players[i].statistics.mastermindWins;
+                cell[21].innerHTML = winchance_mastermind;
+                cell[22].innerHTML = players[i].statistics.atlanteanPlayed;
+                cell[23].innerHTML = players[i].statistics.atlanteanWins;
+                cell[24].innerHTML = winchance_atlantean;
             }
             break;
         case "elementElo":

@@ -564,8 +564,10 @@ app.get('/mongo/stats/legions/winrate', (req, res) => {
     var version = req.query.version;
     var minElo = req.query.minelo;
     if (version.substring(0, 1) == "v") version = version.substring(1);
-    console.log('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo);
-    http.get('http://159.69.83.17:3000/stats/patch?db=rankedGames_' + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo, (resp) => {
+    if(parseInt(version.substring(0, 1))<3) var queryurl = 'http://159.69.83.17:3000/stats/patch?db=rankedGames_';
+    else var queryurl = 'http://159.69.83.17:3000/stats/patch?db=classicGames_';
+    console.log( queryurl+ version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo);
+    http.get( queryurl + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo, (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.

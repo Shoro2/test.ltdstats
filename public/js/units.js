@@ -24,7 +24,7 @@ function getPlayer() {
 }
 
 function scanUnits() {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "APS", "MPS", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra", "looter", "pack_rat"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "APS", "MPS", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra", "looter", "pack_rat", "harpy", "sky_queen", "desert_pilgrim", "lost_chieftain"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -293,7 +293,7 @@ function scanUnits() {
                 var unit_type = "Azeria";
                 break;
             case "priestess_of_the_abyss":
-                var url = "/img/icons/PriestessOfTheAbyss.png";
+                var url = "/img/icons/PriestessoftheAbyss.png";
                 var unit_type = "Priestess%20of%20the%20Abyss";
                 break;
             case "eggsack":
@@ -303,6 +303,30 @@ function scanUnits() {
             case "Hydra":
                 url = "/img/icons/Hydra.png";
                 unit_type = "Hydra";
+                break;
+            case "looter":
+                url = "/img/icons/Looter.png";
+                unit_type = "Looter";
+                break;
+            case "pack_rat":
+                url = "/img/icons/PackRat.png";
+                unit_type = "Pack Rat";
+                break;
+            case "harpy":
+                url = "/img/icons/Harpy.png";
+                unit_type = "Harpy";
+                break;
+            case "sky_queen":
+                url = "/img/icons/SkyQueen.png";
+                unit_type = "Sky Queen";
+                break;
+            case "desert_pilgrim":
+                url = "/img/icons/DesertPilgrim.png";
+                unit_type = "Desert Pilgrim";
+                break;
+            case "lost_chieftain":
+                url = "/img/icons/LostChieftain.png";
+                unit_type = "Lost Chieftain";
                 break;
             default:
                 url = "";
@@ -340,6 +364,9 @@ function draw(myUnit) {
             break;
         case "creature_legion_id":
             fighter.legion = "Creature";
+            break;
+        case "nomad_legion_id":
+            fighter.legion = "Nomad";
             break;
         case "aspect_legion_id":
             fighter.legion = "Other";

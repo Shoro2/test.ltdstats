@@ -46,6 +46,7 @@ function addPicture(y, x, unit, player) {
     }
     url += ".png";
     //canvas einfügen
+    console.log("p" + player + "_" + neuesX + "." + neuesY);
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
     //console.log("p" + player + "_" + neuesX + "." + neuesY);
     zielspalte.style = "border: 0px;";
