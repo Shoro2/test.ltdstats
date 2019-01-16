@@ -56,6 +56,8 @@ block content
                     input.filter_input#checkbox23(type="checkbox", name="filter", value="Wins Atlantean", onclick='saveTick(23);')
                 label.filter_label(onclick="getFilters();") Winchance Atlantean
                     input.filter_input#checkbox24(type="checkbox", name="filter", value="Winchance Atlantean", onclick='saveTick(24);')
+                label.filter_label(onclick="getFilters();") Winchance
+                    input.filter_input#checkbox24(type="checkbox", name="filter", value="Winchance", onclick='saveTick(25);')
                 label.filter_label#selectall(onclick="selectNone()") Unselect all
             table.ladder#myladder
                 tr.header
@@ -84,6 +86,7 @@ block content
                     th.table_header#th22(onclick="sortTable(22)")
                     th.table_header#th23(onclick="sortTable(23)")
                     th.table_header#th24(onclick="sortTable(24)")
+                    th.table_header#th25(onclick="sortTable(25)")
         script(src="/js/ladder_sort.js")
         script(src="/js/ladder.js")
         script(src="/js/cookies.js")

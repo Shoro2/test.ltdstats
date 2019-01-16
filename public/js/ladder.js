@@ -156,8 +156,8 @@ function parsePlayers(myPlayers, type) {
             for (var i = 0; i < players.length; i++) {
                 players[i].statistics = JSON.parse(players[i].statistics);
                 var row = tabelle.insertRow(i + 1);
-                var cell = [25];
-                for (var e = 0; e < 25; e++) {
+                var cell = [26];
+                for (var e = 0; e < 26; e++) {
                     cell[e] = row.insertCell(e);
                     cell[e].classList.add("td_" + e);
                 }
@@ -253,6 +253,7 @@ function parsePlayers(myPlayers, type) {
                 cell[22].innerHTML = players[i].statistics.atlanteanPlayed;
                 cell[23].innerHTML = players[i].statistics.atlanteanWins;
                 cell[24].innerHTML = winchance_atlantean;
+                cell[25].innerHTML = ((totalwins/totalgames)*100).toFixed(0);
             }
             break;
         case "elementElo":
