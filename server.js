@@ -648,7 +648,29 @@ app.get('/getLang', (req, res) => {
 });
 
 //mongodb
+app.get('/mongo/getFighterStats', (req, res) => {
+    var fighterName = req.query.fightername;
+    var minElo = req.query.elo;
+    var targetVersion = req.query.version;
+    var request_url = "http://159.69.83.17:3000/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo;
+    console.log(request_url);
+    http.get(request_url, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
 
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data) res.json(data);
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+});
 
 app.get('/mongo/getGames', (req, res) => {
     var type = req.query.type;

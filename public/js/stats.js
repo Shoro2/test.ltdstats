@@ -432,6 +432,11 @@ function createBarGraph(data) {
             }
             var meinText = "Wave games ended on";
             break;
+        case "fighterstats":
+            var winchance = (data.winchance*100).toFixed(2);
+            var pickchance = (data.pickchance*100).toFixed(2);
+            var meinText = data.fighter.charAt(0).toUpperCase()+data.fighter.slice(1)+"'s Pick- and Winchance";
+            break;
     }
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
@@ -614,6 +619,14 @@ function createBarGraph(data) {
                 myChart.update();
             }
             break;
+        case "fighterstats":
+            myChart.data.labels.push("Winchance", "Pickchance");
+            myChart.data.datasets.push({ label: "Chance in %", data: [], backgroundColor: graphColor[0], borderColor: 'rgba(1,1,1,1)', borderWidth: 1 });
+            myChart.update();
+            myChart.data.datasets[0].data.push(winchance);
+            myChart.data.datasets[0].data.push(pickchance);
+            myChart.update();
+            break;
     }
 
 }
@@ -750,7 +763,9 @@ function showFighterStats() {
     showElo();
     hideSelector();
     showFighterName();
+    abfrage = "fighterstats";
 }
+
 
 function showFighterName() {
     document.getElementById("value_fighterField").style.display = "";
@@ -784,6 +799,8 @@ function readSelection() {
     catch{ }
     if (document.getElementById("value_textField").style.display == "") var meineValue = document.getElementById("value_textField").value;
     else var meineValue = document.getElementById("value_dateField").value;
+
+    value_fighterField
     switch (abfrage) {
         case "winrates":
             var minElo = parseInt(document.getElementById("value_eloField").value);
@@ -809,6 +826,11 @@ function readSelection() {
             break;
         case "gameendingwave":
             queryGameEndingWaves(meineValue);
+            break;
+        case "fighterstats":
+            var minElo = parseInt(document.getElementById("value_eloField").value);
+            var fightername = document.getElementById("value_fighterField").value;
+            queryFighterStats(meineValue, fightername, minElo);
             break;
         default:
             console.log("Fehler readselection: " + abfrage);
@@ -1283,4 +1305,23 @@ function queryGameEndingWaves(version) {
         hideLoad();
         return result;
     }, version);
+}
+
+function getFighterStats(callback, version, fightername, minelo) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", '/mongo/getFighterStats?version='+version+'&elo='+minelo+'&fightername='+fightername, true);
+    xhttp.send();
+}
+function queryFighterStats(version, fightername, minelo) {
+    showLoad();
+    getFighterStats(function (result) {
+        createBarGraph(JSON.parse(result));
+        hideLoad();
+        return result;
+    }, version, fightername, minelo);
 }
