@@ -652,7 +652,17 @@ app.get('/mongo/getFighterStats', (req, res) => {
     var fighterName = req.query.fightername;
     var minElo = req.query.elo;
     var targetVersion = req.query.version;
-    var request_url = "http://159.69.83.17:3000/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo;
+    var gamecheck ={};
+    gamecheck.part1 = parseInt(targetVersion.substring(0,1));
+    gamecheck.part2 = parseInt(targetVersion.substring(2,3));
+    var gametype = req.query.gametype;
+    if(gamecheck.part1 > 2){
+        var request_url = "http://159.69.83.17:3000/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo+"&gametype="+gametype;
+    }
+    else{
+        var request_url = "http://159.69.83.17:3000/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo;
+    }
+    
     console.log(request_url);
     http.get(request_url, (resp) => {
         let data = '';

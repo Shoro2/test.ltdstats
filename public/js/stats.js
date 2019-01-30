@@ -425,12 +425,14 @@ function createBarGraph(data) {
             break;
         case "gameendingwave":
             var gameendingwaves = [];
+            var total_games = 0;
             for (var i = 0; i < 21; i++) {
                 //gameendingwaves[i] = data[i].count;
                 gameendingwaves[i] = data.filter(data => data._id.wave == i+1)[0];
+                total_games=total_games+data.filter(data => data._id.wave == i+1)[0].count;
                 if(gameendingwaves[i] == undefined) gameendingwaves[i]={_id:{wave:i+1},count:0};
             }
-            var meinText = "Wave games ended on";
+            var meinText = "Wave games ended on ("+total_games+" games total)";
             break;
         case "fighterstats":
             var winchance = (data.winchance*100).toFixed(2);
@@ -763,6 +765,7 @@ function showFighterStats() {
     showElo();
     hideSelector();
     showFighterName();
+    showGameType();
     abfrage = "fighterstats";
 }
 
@@ -770,6 +773,14 @@ function showFighterStats() {
 function showFighterName() {
     document.getElementById("value_fighterField").style.display = "";
 }
+
+function showGameType(){
+    document.getElementById("value_gametype").style.display = "";
+}
+function hideGameType(){
+    document.getElementById("value_gametype").style.display = "none";
+}
+
 
 function hideFighterName() {
     document.getElementById("value_fighterField").style.display = "none";
@@ -830,7 +841,8 @@ function readSelection() {
         case "fighterstats":
             var minElo = parseInt(document.getElementById("value_eloField").value);
             var fightername = document.getElementById("value_fighterField").value;
-            queryFighterStats(meineValue, fightername, minElo);
+            var gametype = document.getElementById("value_gametype").value;
+            queryFighterStats(meineValue, fightername, minElo, gametype);
             break;
         default:
             console.log("Fehler readselection: " + abfrage);
@@ -1307,21 +1319,21 @@ function queryGameEndingWaves(version) {
     }, version);
 }
 
-function getFighterStats(callback, version, fightername, minelo) {
+function getFighterStats(callback, version, fightername, minelo, gametype) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             callback(JSON.parse(xhttp.response));
         }
     };
-    xhttp.open("GET", '/mongo/getFighterStats?version='+version+'&elo='+minelo+'&fightername='+fightername, true);
+    xhttp.open("GET", '/mongo/getFighterStats?version='+version+'&elo='+minelo+'&fightername='+fightername+'&gametype='+gametype, true);
     xhttp.send();
 }
-function queryFighterStats(version, fightername, minelo) {
+function queryFighterStats(version, fightername, minelo, gametype) {
     showLoad();
     getFighterStats(function (result) {
         createBarGraph(JSON.parse(result));
         hideLoad();
         return result;
-    }, version, fightername, minelo);
+    }, version, fightername, minelo, gametype);
 }
