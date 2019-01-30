@@ -21,10 +21,11 @@
     display: inline;
     position: relative;
 }
-
+.umdieladder   {
+    margin-left: auto;
+    margin-right:auto;
+}
 .ladder{
-    width:100%;
-    border-spacing: 20px;
     display: block;
     overflow-x: scroll;
     white-space: nowrap;
