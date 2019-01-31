@@ -192,6 +192,11 @@ function addSend(element, player) {
         element = element.replace(" ", "");
         element = element.replace("%20", "");
     }
+    //red->yellow
+    if(player==1) player = 3;
+    else if(player==2) player=4;
+    else if(player==3) player=2;
+    else if(player==4) player=1;
     document.getElementById("sends_player" + player).innerHTML += "<img src='/img/icons/" + element + ".png' class='leakpic' title='" + element + "'>";
 }
 
