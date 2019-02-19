@@ -465,6 +465,28 @@ app.get('/donate', (req, res) => {
         title: 'Donate'
     })
 });
+
+//non ltd related
+
+app.get('/ascension', (req, res) => {
+    res.render('ascension/guides', {
+        title: 'Project Ascension Guides'
+    })
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 app.get('/login', (req, res) => {
     res.render('login', {

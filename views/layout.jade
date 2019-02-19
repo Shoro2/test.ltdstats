@@ -78,28 +78,12 @@ html
                         else
                             li.nav-item
                                 a.nav-link(href='/profile') Profile
-                        if(title.includes("Ladder"))      
-                            li.nav-item.dropdown.active
-                                a#dropdown01.nav-link.dropdown-toggle(href='/ladder/overall', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/ladder/overall') Overall
-                                    a.dropdown-item(href='/ladder/element') Element
-                                    a.dropdown-item(href='/ladder/forsaken') Forsaken
-                                    a.dropdown-item(href='/ladder/grove') Grove
-                                    a.dropdown-item(href='/ladder/mech') Mech
-                                    a.dropdown-item(href='/ladder/mastermind') Mastermind
-                                    a.dropdown-item(href='/ladder/atlantean') Atlantean
+                        if(title.includes("Ladder")) 
+                            li.nav-item.active
+                                a.nav-link(href='/ladder/overall') Ladder
                         else
-                            li.nav-item.dropdown
-                                a#dropdown01.nav-link.dropdown-toggle(href='/ladder/overall', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
-                                div.dropdown-menu(aria-labelledby='dropdown01')
-                                    a.dropdown-item(href='/ladder/overall') Overall
-                                    a.dropdown-item(href='/ladder/element') Element
-                                    a.dropdown-item(href='/ladder/forsaken') Forsaken
-                                    a.dropdown-item(href='/ladder/grove') Grove
-                                    a.dropdown-item(href='/ladder/mech') Mech
-                                    a.dropdown-item(href='/ladder/mastermind') Mastermind
-                                    a.dropdown-item(href='/ladder/atlantean') Atlantean
+                            li.nav-item
+                                a.nav-link(href='/ladder/overall') Ladder
                         if(title=="Games")
                             li.nav-item.active
                                 a.nav-link(href='/replay') Replay
@@ -146,6 +130,7 @@ html
                                 a.dropdown-item(href='/cookies') Cookie Policy
                                 a.dropdown-item(href='/donate') Donate
                                 a.dropdown-item(href='/about') About
+                                a.dropdown-item(href='/ascension') Project Ascension Guides
                     if(title.includes("Profile"))
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search')
