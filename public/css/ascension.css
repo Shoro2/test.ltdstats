@@ -5,3 +5,25 @@ body{
 .main-content{
     opacity:0.7;
 }
+
+#guides {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+}
+
+.guide_block {
+    width: 33%;
+    margin-left: 33%;
+    margin-right: 33%;
+    cursor: pointer;
+    border: 1px solid black;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+}
+
+.guide_block:hover{
+    background-color:burlywood;
+}

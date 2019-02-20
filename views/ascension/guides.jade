@@ -2,6 +2,18 @@ extend ../layout
 block content
     link(rel='stylesheet', href='../css/ascension.css')
     .content
-        h1 Project Ascension Guides
         #guides
+            h1 Project Ascension Builds
+            select(id="selectbox" onchange="filterGuides();") 
+                option(value="pve") PVE
+                option(value="pvp") PVP
+                option(value="dungeon") Dungeon
+                option(value="raid") Raid
+                option(value="dps") DPS
+                option(value="tank") Tank
+                option(value="heal") Heal
+                option(value="solo") Solofarm
+                option(value="leveling") Leveling
+            #guide_box
+            #guide_content(style="display:none;")
     script(src="/js/ascensionguides.js")    
