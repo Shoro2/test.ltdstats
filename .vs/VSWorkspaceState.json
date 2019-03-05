@@ -6,8 +6,9 @@
     "\\public\\js",
     "\\public\\js\\db",
     "\\views",
+    "\\views\\ascension",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\public\\js\\ascensionguides.js",
+  "SelectedNode": "\\views\\ascension\\guides.jade",
   "PreviewInSolutionExplorer": false
 }

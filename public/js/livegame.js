@@ -111,6 +111,7 @@ function parsePlayers() {
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
+        console.log(parsedPlayer[i]);
     }
     for (var i = 0; i < 4; i++) {
         document.getElementById("name" + (i + 1)).innerHTML = "<b>" + parsedPlayer[i].playername + "</b>";
@@ -245,7 +246,7 @@ function parsePlayers() {
         player_atlantean_xp = parsedPlayer[i].statistics.atlanteanXp;
         if (typeof parsedPlayer[i].statistics.atlanteanXp == 'undefined') player_atlantean_xp = 0;
         player_atlantean_level = getPlayerLevel(player_atlantean_xp);
-        //icon für race mit meisten wins
+        //icon fï¿½r race mit meisten wins
         var race = "";
         if (player_element_wins > player_forsaken_wins && player_element_wins > player_grove_wins && player_element_wins > player_mech_wins && player_element_wins > player_mastermind_wins) race = "Element";
         else if (player_grove_wins > player_forsaken_wins && player_grove_wins > player_element_wins && player_grove_wins > player_mech_wins && player_grove_wins > player_mastermind_wins) race = "Grove";
@@ -273,7 +274,7 @@ function parsePlayers() {
                         games_count++;
                         var currunit = "";
                         var lastunit = "";
-                        if (gameDetail.unitsPerWave.length > 0) {
+                        if (gameDetail.unitsPerWave != null) {
                             gameDetail.unitsPerWave[0].forEach(function (element) {
                                 //e=wave ;x=different units
                                 currunit = element.substring(0, element.indexOf("_unit"));

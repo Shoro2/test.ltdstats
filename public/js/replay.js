@@ -46,7 +46,7 @@ function addPicture(y, x, unit, player) {
     }
     url += ".png";
     //canvas einfügen
-    console.log("p" + player + "_" + neuesX + "." + neuesY);
+    //console.log("p" + player + "_" + neuesX + "." + neuesY);
     var zielspalte = document.getElementById("p" + player + "_" + neuesX + "." + neuesY);
     //console.log("p" + player + "_" + neuesX + "." + neuesY);
     zielspalte.style = "border: 0px;";
@@ -101,7 +101,17 @@ function fillNames() {
     for (var i = 1; i < 5; i++) {
         var wave = parseInt(document.getElementById("slider").value);
         var worker = gameEvent[i - 1].workersPerWave[wave - 1];
-        var networth = gameEvent[i - 1].netWorthPerWave[wave - 1];
+        var unit_value = 0;
+        //calculate value
+        gameEvent[i-1].unitsPerWave[wave-1].forEach(function(ele){
+            console.log(ele);
+            var unitname = ele.substring(0, ele.indexOf("_unit"));
+            while(unitname.includes("_")){
+                unitname = unitname.replace("_", "");
+            }
+            unit_value += unitstats.filter(meinName => meinName.name == unitname)[0].value;
+        });
+        var networth = unit_value;
         var player_legion = gameEvent[i - 1].legion;
         document.getElementById("p" + i + "_name").innerText = gameEvent[i - 1].playername;
         document.getElementById("networth" + i).innerText = "(" + networth + "/";
