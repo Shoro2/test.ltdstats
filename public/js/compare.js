@@ -407,6 +407,7 @@ function getPlayer() {
     mastermindXp = [2];
     player = [2];
     queryPlayer(document.getElementById("playername").value);
+    queryBothPlayers(document.getElementById("playername").value, document.getElementById("playername2").value);
 }
 
 
@@ -431,6 +432,26 @@ function queryPlayer(playername) {
     }, playername);
 }
 
+function apiGetBothPlayers(callback, playername1, playername2) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var player = JSON.parse(xhttp.response);
+            callback(player);
+        }
+    };
+    xhttp.open("GET", "/mongo/getGames?type=duoplayer&db=rankedGames_3.1&limit=0&formating=none&name1="+playername1+"&name2="+playername2, true);
+    xhttp.send();
+}
+
+function queryBothPlayers(playername1, playername2) {
+    apiGetBothPlayers(function (result) {
+        console.log(result);
+        games_together = JSON.parse(result);
+        console.log(games_together);
+        return games_together;
+    }, playername1, playername2);
+}
 
 document.onkeydown = function (event) {
     if (event.keyCode == 13) {

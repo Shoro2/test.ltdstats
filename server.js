@@ -732,6 +732,12 @@ app.get('/mongo/getGames', (req, res) => {
         case "all":
             request_url = "http://159.69.83.17:3000/db/games?action=search&db=" + target_db + "&type=all&limit=0&formating=none";
             break;
+        case "duoplayer":
+            //http://ltdstats.com/mongo/getGames?type=duoplayer&db=rankedGames3.1&limit=0&formating=none&name1=Egekaer&name2=Haviland%20Tuf
+            var name1 = req.query.name1;
+            var name2 = req.query.name2;
+            request_url = "http://159.69.83.17:3000/db/games?action=search&db=rankedGames_3.1&type=duoplayer&name1="+name1+"&name2="+name2+"&formating=none&limit=0";
+            break;
 
     }
     if (request_url != "") {
