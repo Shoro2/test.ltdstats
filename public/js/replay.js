@@ -1,4 +1,3 @@
-
 var firsttime = false;
 
 function getGameDetails(games) {
@@ -9,10 +8,8 @@ function getGameDetails(games) {
         meinString2 = games.gameDetails.filter(meinString => meinString.position == 5)[0];
         meinString3 = games.gameDetails.filter(meinString => meinString.position == 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
-        
         fillNames();
         waveAnzeigen();
-        
     }
     catch (error) {
         console.log(error);
@@ -20,8 +17,6 @@ function getGameDetails(games) {
         document.getElementById("mitte").innerHTML += "<p><h3> Game not found.</h3>";
         //showLoad();
     }
-    
-
 }
 
 function addPicture(y, x, unit, player) {
@@ -153,7 +148,6 @@ function getPlayerBuild(player) {
         var meinX = element.substring(element.indexOf(":") + 1, element.indexOf("|"));
         var meinY = element.substring(element.indexOf("|") + 1);
         addPicture(meinX, meinY, element.substring(0, element.indexOf("_unit")), player);
-
     });
 }
 
@@ -165,7 +159,6 @@ function getPlayerLeaks(player) {
             addLeak(element, player);
         });
     }
-
 }
 
 function getPlayerSends(player) {
@@ -194,7 +187,6 @@ function getPlayerSends(player) {
             addSend(element, player);
         });
     }
-
 }
 
 function addSend(element, player) {
@@ -224,12 +216,9 @@ function clearPictures() {
             for (var e = 1; e < 19; e++) {
                 document.getElementById("p" + h + "_" + i + "." + e).innerHTML = "";
                 document.getElementById("p" + h + "_" + i + "." + e).style = "border: 1px solid black; background-color: white;";
-
             }
-
         }
     }
-
 }
 
 document.onkeydown = function (event) {
@@ -259,8 +248,6 @@ document.onkeydown = function (event) {
 
 
 };
-
-
 
 document.onmousewheel = function displaywheel(e) {
     if ($(window).height() >= 770) {
@@ -296,7 +283,6 @@ document.getElementById("slider").onchange = function () {
 };
 
 function getPlayer() {
-
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("gameid");
@@ -307,13 +293,9 @@ function getPlayer() {
     else {
         window.location.href = "/replay?gameid=" + document.getElementById("gameid").value;
     }
-
-
-
 }
 
 function h2d(s) {
-
     function add(x, y) {
         var c = 0, r = [];
         x = x.split('').map(Number);
@@ -326,7 +308,6 @@ function h2d(s) {
         if (c) r.unshift(c);
         return r.join('');
     }
-
     var dec = '0';
     s.split('').forEach(function (chr) {
         var n = parseInt(chr, 16);
@@ -359,10 +340,7 @@ document.body.onload = function () {
 
 
 function clearLeaks(player) {
-
     document.getElementById("leaks_player" + player).innerHTML = "";
-
-
 }
 
 function clearSends() {
@@ -375,11 +353,10 @@ function waveAnzeigen() {
     var welle = document.getElementById("slider").value;
     var maxwave = gameEvent[0].wave;
     document.getElementById("wave").textContent = "Wave: " + welle.toString() + "/" + maxwave;
-
+    //legion spell
     var icon_legionspell = [];
     if (welle > 10) {
         for (var i = 0; i < 4; i++) {
-
             if (typeof gameEvent[i].legionSpell !== 'undefined') {
                 icon_legionspell[i] = gameEvent[i].legionSpell;
                 while (icon_legionspell[i].includes(" ") || icon_legionspell[i].includes("%20")) {
@@ -391,7 +368,6 @@ function waveAnzeigen() {
             else {
                 console.log(gameEvent[i]);
             }
-            
         }
     }
     else {
@@ -399,7 +375,7 @@ function waveAnzeigen() {
             document.getElementById("legionspell" + i).innerHTML = "";
         }
     }
-
+    //clear view
     clearPictures();
     clearSends();
     drawSquares();
@@ -411,7 +387,6 @@ function waveAnzeigen() {
     }
     fillNames();
     setKingHp();
-    
 }
 
 function showSelect() {
@@ -448,6 +423,9 @@ function parseTopPlayer(players, legion) {
         case "mastermind":
             var legion_num = 5;
             break;
+        case "nomad":
+            var legion_num = 6;
+            break;
     }
     for (var i = 0; i < players.length; i++) {
         result.innerHTML += "<br> <div id='player_" + i + "' onclick='showGames(" + i + ", " + legion_num + ")'>" + players[i].playername + " Elo: " + players[i].statistics.overallElo + "</div>";
@@ -478,6 +456,9 @@ function showGames(nummer, legion) {
         case 5:
             legion = "Mastermind";
             break;
+        case 6:
+            legion ="Nomad";
+            break;
     }
     var games_results = 0;
     for (var i = 0; i < players[nummer].filteredGamesQuery.games.length; i++) {
@@ -494,10 +475,6 @@ function showGames(nummer, legion) {
 function getGameId(nummer, playernum) {
     window.location.href = "/replay?gameid=" + players[playernum].filteredGamesQuery.games[nummer].game_id;
 }
-
-
-
-
 
 //adds thik lines to grid
 function drawSquares() {
@@ -522,16 +499,6 @@ function drawSquares() {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 
 //API

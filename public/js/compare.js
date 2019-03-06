@@ -410,6 +410,38 @@ function getPlayer() {
     queryBothPlayers(document.getElementById("playername").value, document.getElementById("playername2").value);
 }
 
+function gamesTogether(games_together, name1, name2){
+    console.log(games_together);
+    let games_together_amount = 0;
+    let games_together_wins = 0;
+    let games_against_amount = 0;
+    let games_against_p1 = 0;
+    let games_against_p2 = 0;
+    for(var i=0;i<games_together.length;i++){
+        //together in one team
+        if((games_together[i].gameDetails[0].playername == name1 && games_together[i].gameDetails[1].playername == name2) || (games_together[i].gameDetails[1].playername == name1 && games_together[i].gameDetails[0].playername == name2) || (games_together[i].gameDetails[2].playername == name1 && games_together[i].gameDetails[3].playername == name2) || (games_together[i].gameDetails[3].playername == name1 && games_together[i].gameDetails[2].playername == name2) ){
+            games_together_amount++;
+            if(games_together[i].gameDetails.filter(meinName => meinName.playername == name1)[0].gameresult =="won"){
+                games_together_wins++;
+            }
+        }
+        else{
+            //played against eachother
+            games_against_amount++;
+            if(games_together[i].gameDetails.filter(meinName => meinName.playername == name1)[0].gameresult =="won"){
+                games_against_p1++;
+            }
+            else{
+                games_against_p2++;
+            }
+        }
+    }
+    document.getElementById("games_together").innerHTML="Games together: "+games_together_amount;  
+    document.getElementById("wins_together").innerHTML="Wins together: "+games_together_wins;
+    document.getElementById("games_against").innerHTML="Games against: "+games_against_amount;  
+    document.getElementById("wins_player1").innerHTML="Wins "+name1+": "+games_against_p1; 
+    document.getElementById("wins_player2").innerHTML="Wins "+name2+": "+games_against_p2; 
+}
 
 function apiGetPlayer(callback, playername) {
     var xhttp = new XMLHttpRequest();
@@ -446,9 +478,8 @@ function apiGetBothPlayers(callback, playername1, playername2) {
 
 function queryBothPlayers(playername1, playername2) {
     apiGetBothPlayers(function (result) {
-        console.log(result);
         games_together = JSON.parse(result);
-        console.log(games_together);
+        gamesTogether(games_together, playername1, playername2);
         return games_together;
     }, playername1, playername2);
 }

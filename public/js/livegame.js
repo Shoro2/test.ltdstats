@@ -105,18 +105,16 @@ function checkLink() {
 }
 
 function parsePlayers() {
-
     document.getElementById("mitte").style.display = "none";
-
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
         console.log(parsedPlayer[i]);
     }
     for (var i = 0; i < 4; i++) {
-        document.getElementById("name" + (i + 1)).innerHTML = "<b>" + parsedPlayer[i].playername + "</b>";
+        document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails("+i+");'>" + parsedPlayer[i].playername + "</b>";
         document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
-        document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
+        //document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
         player_totalwins = parsedPlayer[i].statistics.wins;
@@ -266,7 +264,8 @@ function parsePlayers() {
             if (x < 22) leaks[x] = 0;
         }
         var games_count = 0;
-        if (parsedPlayer[i].games.games != null) {
+        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
+        if (parsedPlayer[i].games.count > 0) {
             parsedPlayer[i].games.games.forEach(function (ele) {
                 var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
                 if (gameDetail) {
@@ -309,7 +308,11 @@ function parsePlayers() {
                 }
             });
         }
-        
+        else{
+            console.log("player "+i+" has no games played");
+            console.log(i);
+            document.getElementById("favstart"+(i+1)).innerHTML="No recorded games available.";
+        }
         favunit.sort(function (a, b) {
             if (a != 0) {
                 var abstandA = a.indexOf(";") + 1;
@@ -365,8 +368,9 @@ function parsePlayers() {
         });
         document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
         document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
-        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
+        
         //console.log(favunit);
+        console.log(favunit);
         for (var x = 0; x < favunit.length; x++) {
             if (favunit[x] != 0) {
                 try {
@@ -392,6 +396,7 @@ function parsePlayers() {
                     //console.log(unit, count);
                     //console.log(parsedPlayer[i].playername);
                     document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername + "')><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                    document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
                 }
                 catch (error) {
                     console.log(error);
@@ -479,9 +484,7 @@ function getFighterGames(fightername, playername) {
                             }
                             break; //?
                         }
-
                     }
-
                 }
                 //1 unit only
                 else {
@@ -512,15 +515,9 @@ function getFighterGames(fightername, playername) {
                             }
                         }
                     }
-
-
                 }
             }
         }
-
-
-
-
     });
     //console.log(leaks);
     //console.log(fightercount_pick);
@@ -543,7 +540,6 @@ function getFighterGames(fightername, playername) {
                 document.getElementById("leaks" + spot).innerHTML += i + 1 + "(" + ((leaks[i] / fightercount_pick) * 100).toFixed(2) + "%), ";
             }
         }
-
     }
     document.getElementById("leaks" + spot).innerHTML = document.getElementById("leaks" + spot).innerHTML.substring(0, document.getElementById("leaks" + spot).innerHTML.length - 2);
 }
@@ -571,7 +567,6 @@ function getWinchance() {
                     else {
                         peakElos.push(parsedPlayer[i].statistics.mastermindPeakEloThisSeason);
                     }
-
                 }
                 else {
                     peakElos.push(parsedPlayer[i].statistics.mastermindPeakElo);
@@ -709,6 +704,26 @@ function getWinchance() {
 document.onkeydown = function (event) {
     if (event.keyCode == 13) {
         if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
+    }
+}
+
+function showPlayerDetails(nummer){
+    const details_box = document.getElementById("player_details_box");
+    const details_content = document.getElementById("playername_details");
+    details_box.style.display="";
+    parsedPlayer = [];
+    for (var i = 0; i < 4; i++) {
+        parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
+    }
+    details_content.innerHTML += "<h3>"+parsedPlayer[nummer].playername+"</h3>";
+    document.getElementById("unitselector"+nummer).style.display="";
+}
+
+function hidePlayerDetails(){
+    document.getElementById("player_details_box").style.display="none";
+    document.getElementById("playername_details").innerHTML="";
+    for (let i = 0; i < 4; i++) {
+        document.getElementById("unitselector"+i).style.display="none";
     }
 }
 

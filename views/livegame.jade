@@ -2,6 +2,18 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/livegame.css')
     .content
+        #player_details_box(style="display:none;")
+            #closebutton(style="float:right;") 
+                b(onclick="hidePlayerDetails();") Close
+            #player_details_content
+                #playername_details
+                select#unitselector0(style="display:none;")
+                select#unitselector1(style="display:none;")
+                select#unitselector2(style="display:none;")
+                select#unitselector3(style="display:none;")
+                table#leaktable
+                    td Wave
+                    td Chance
         #amazon_ad
         .teamcard#west(style="display:none;")
             .player#player1
@@ -32,13 +44,9 @@ block content
                 #leaks2
         #indermitte 
             p
-            h3 Discord Bot not up (have to wait for Lisk). 
-            br 
-            h3 Currently disabled :(
-            p
             | Enter a player's name to start
             input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-top:10%; margin-bottom:2%;")
-            button.btn.my-sm-0(onclick="//getPlayer();") Search
+            button.btn.my-sm-0(onclick="getPlayer();") Search
         .winchance#winchancebar(style="display:none;") Winchance West:
             #myProgress
                 #myBar 50%
