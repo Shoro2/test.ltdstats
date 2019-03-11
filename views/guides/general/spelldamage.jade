@@ -1,0 +1,96 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Spell Damage & Mana Gain
+        #guide_author 
+            i by 
+                a(href="/profile?player=Jules") Jules
+            a(href="/guides", style="float:right;") Back
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile?player=Jules") Jules
+            #infobox_version Version: v3.12
+            #infobox_section Section: General Guides
+            #infobox_content Content:
+                ul
+                    li 
+                        a(href="#spelldmg") Spell damage
+                    li 
+                        a(href="#managain") Mana gain
+        p.
+        #guide_content
+            p
+            | Every instance of damage is:
+            br
+            | 1. Autoattack or spell
+            br
+            | 2. Impact, pierce, magic or pure
+            p
+            | Impact, pierce, magic, and pure attacks deal varying amounts of damage, depending on the defending unit's defense type. The full matrix is below:
+            p
+                img(src="/img/icons/attacktypes_matrix.png")
+            p
+                b#spelldmg Spell damage 
+                |  is any source of damage that isn't dealt by the unit's autoattack. Spell damage can be impact, pierce, magic, or pure.
+            p
+            | The following abilities can amplify or reduce spell damage:
+            ul
+                li Sorcerer (legion spell)
+                li Rogue Wave's Delusion
+                li Killer Slug's Spell Resistance (wave 14)
+                li Kraken's Spell Resistance
+            p
+            | The following abilities deal spell damage:
+            ul
+                li King Claw's Shell Shock
+                li Eggsack's Azurite Shell
+                li Aqua Spirit's Water Bounce (just the bounced attack)
+                li Rogue Wave's Delusion (just the bounced attack)
+                li Fire Elemental's Combustion (the bounced attack + the burn damage on both targets)
+                li Violet's Lightning Strike
+                li Disciple's Mana Burst
+                li Starcaller's Asteroid
+                li Fire Archer's Flaming Arrows
+                li Buzz's Anaphlaxis (currently bugged and not amplified by spell damage amplification)
+                li Consort's Paraphylaxis (currently bugged and not amplified by spell damage amplification)
+                li Honeyflower's Fragrance
+                li Deathcap's Noxious Scent
+                li Banana Bunk's Barbs
+                li Banana Haven's Thorns
+                li Zeus' Power Surge
+                li Pyro's Pyromancy (just the splashed damage)
+                li Tempest's Machine Gunner
+                li Leviathan's Bombardier
+                li Berserker's Brawler
+                li Fatalizer's Duelist
+                li Millennium's Explosive Shells
+                li Doomsday Machine's Detonation
+                li Great Boar's Stampede
+                li Red Eyes' Thunderous Charge
+            p
+                b#managain Mana gain 
+                |  affects all sources of mana regeneration and mana gain.
+            p
+            | The following abilities can amplify mana gain:
+            ul
+                li Sorcerer (legion spell)
+                li Starcaller's Amplify Magic
+            p
+            | The following get amplified by mana gain:
+            ul
+                li All base mana regeneration
+                li Angler's Junior Fisherman
+                li Bounty Hunter's Commercial Fisherman
+                li Proton's Generator
+                li Atom's Generator
+                li Fire Lord's Intellect
+                li Fenix's Intellect
+                li Head Chef's Necromancy
+                li Lord of Death's Intellect
+                li Hades' Intellect and Necromancy
+                li Zeus' Magnetic Accelerator
+                li Harpy's Acrobatics
+                li Sky Queen's Acrobatics and Crimson Claws
+                li Great Boar's Stampede
+                li Red Eyes' Thunderous Charge

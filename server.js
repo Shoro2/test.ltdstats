@@ -240,7 +240,17 @@ app.get('/guides', (req, res) => {
                 title: 'Roshkatul´s Low Quality Guide: How to pick your mastermind roll'
             });
             break;
+        case "bonnybutcher":
+            res.render('guides/mastermind/butcher', {
+                title: 'Bonny´s Aura-Guide: Butcher'
+            });
+            break;
         //general
+        case "bonnyaura":
+            res.render('guides/general/auras', {
+                title: 'Bonny´s General Aura Guide'
+            });
+            break;
         case "wavecounters":
             res.render('guides/general/wavecounters', {
                 title: 'Wave Counter List'
@@ -249,6 +259,11 @@ app.get('/guides', (req, res) => {
         case "spelldmg":
             res.render('guides/general/spelldmg', {
                 title: 'Legion TD2 mechanics: Spell Damage'
+            });
+            break;
+        case "spelldamage":
+            res.render('guides/general/spelldamage', {
+                title: 'Spell Damage & Mana Gain'
             });
             break;
         case "roshkatulstips":
