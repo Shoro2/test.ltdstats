@@ -245,6 +245,11 @@ app.get('/guides', (req, res) => {
                 title: 'Bonny´s Aura-Guide: Butcher'
             });
             break;
+        case "bonnywhitemane":
+            res.render('guides/mastermind/whitemane', {
+                title: 'Bonny´s Aura-Guide: Whitemane'
+            });
+            break;
         //general
         case "bonnyaura":
             res.render('guides/general/auras', {

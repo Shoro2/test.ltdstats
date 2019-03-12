@@ -5,9 +5,12 @@
     "\\public\\css",
     "\\public\\js",
     "\\views",
-    "\\views\\ascension",
+    "\\views\\guides",
+    "\\views\\guides\\forsaken",
+    "\\views\\guides\\general",
+    "\\views\\guides\\mastermind",
     "\\views\\ladder"
   ],
-  "SelectedNode": "\\views\\ascension\\guides.jade",
+  "SelectedNode": "\\views\\guides\\mastermind\\butcher.jade",
   "PreviewInSolutionExplorer": false
 }
