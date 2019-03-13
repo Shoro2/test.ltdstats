@@ -40,11 +40,11 @@ function parsePlayers() {
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
-        console.log(parsedPlayer[i]);
+        //console.log(parsedPlayer[i]);
     }
     for (var i = 0; i < 4; i++) {
         document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails("+i+");'>" + parsedPlayer[i].playername + "</b>";
-        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
+        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakElo + ")";
         //document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
@@ -176,14 +176,7 @@ function parsePlayers() {
         if (typeof parsedPlayer[i].statistics.atlanteanXp == 'undefined') player_atlantean_xp = 0;
         player_atlantean_level = getPlayerLevel(player_atlantean_xp);
         //icon f�r race mit meisten wins
-        var race = "";
-        if (player_element_wins > player_forsaken_wins && player_element_wins > player_grove_wins && player_element_wins > player_mech_wins && player_element_wins > player_mastermind_wins) race = "Element";
-        else if (player_grove_wins > player_forsaken_wins && player_grove_wins > player_element_wins && player_grove_wins > player_mech_wins && player_grove_wins > player_mastermind_wins) race = "Grove";
-        else if (player_forsaken_wins > player_element_wins && player_forsaken_wins > player_grove_wins && player_forsaken_wins > player_mech_wins && player_forsaken_wins > player_mastermind_wins) race = "Forsaken";
-        else if (player_mech_wins > player_forsaken_wins && player_mech_wins > player_grove_wins && player_mech_wins > player_element_wins && player_mech_wins > player_mastermind_wins) race = "Mech";
-        else if (player_mastermind_wins > player_forsaken_wins && player_mastermind_wins > player_grove_wins && player_mastermind_wins > player_mech_wins && player_element_wins < player_mastermind_wins) race = "Mastermind";
-        else if (player_atlantean_wins > player_forsaken_wins && player_atlantean_wins > player_grove_wins && player_atlantean_wins > player_mech_wins && player_element_wins < player_atlantean_wins) race = "Atlantean";
-        else race = "Mastermind";
+        var race = "Mastermind";
         var race_selected = race;
         if (document.getElementById("legionp" + i).value != null) {
             race_selected = document.getElementById("legionp" + i).value;
@@ -301,7 +294,7 @@ function parsePlayers() {
         document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
         
         //console.log(favunit);
-        console.log(favunit);
+        //console.log(favunit);
         for (var x = 0; x < favunit.length; x++) {
             if (favunit[x] != 0) {
                 try {
@@ -327,7 +320,7 @@ function parsePlayers() {
                     //console.log(unit, count);
                     //console.log(parsedPlayer[i].playername);
                     document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername + "')><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
-                    document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
+                    //document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
                 }
                 catch (error) {
                     console.log(error);
@@ -646,17 +639,13 @@ function showPlayerDetails(nummer){
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
     }
-    details_content.innerHTML += "<h3>"+parsedPlayer[nummer].playername+"' Season 3 stats</h3>";
-    document.getElementById("unitselector"+nummer).style.display="";
+    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 3 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername+"' target='_blank'>Profile</a>)</h3>";
     queryPlayerGames(parsedPlayer[nummer].playername);
 }
 
 function hidePlayerDetails(){
     document.getElementById("player_details_box").style.display="none";
     document.getElementById("playername_details").innerHTML="";
-    for (let i = 0; i < 4; i++) {
-        document.getElementById("unitselector"+i).style.display="none";
-    }
 }
 
 
@@ -709,9 +698,11 @@ function sqlGetLivegame(callback, playername) {
             var livegame = JSON.parse(xhttp.response);
             callback(livegame);
         }
+        else if (this.status === 500) document.getElementById("apierror").style.display = "";
     };
     xhttp.open("GET", '/sql/getLivegame?playername=' + playername, true);
     xhttp.send();
+
 }
 
 function queryLivegame(playername) {
@@ -730,3 +721,4 @@ function queryLivegame(playername) {
         return livegame;
     }, playername);
 }
+
