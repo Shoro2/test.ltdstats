@@ -1,11 +1,19 @@
 .card{
     margin:1%;
     padding:1%;
+    
 }
 
 .twitchicon{
-    float:left;
     margin-right:0.5%;
     height:24px;
     width:24px;
+}
+
+.left {
+    float: right;
+    width: 30%;
+    text-align: center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
