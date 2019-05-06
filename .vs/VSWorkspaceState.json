@@ -2,15 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\public\\css",
     "\\public\\js",
     "\\views",
-    "\\views\\guides",
-    "\\views\\guides\\forsaken",
-    "\\views\\guides\\general",
-    "\\views\\guides\\mastermind",
-    "\\views\\ladder"
+    "\\views\\ascension"
   ],
-  "SelectedNode": "\\public\\css\\streams.css",
+  "SelectedNode": "\\public\\js\\ascensionguides.js",
   "PreviewInSolutionExplorer": false
 }
