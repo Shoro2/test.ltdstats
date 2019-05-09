@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 require('isomorphic-fetch');
 // Constants
 const PORT = 61624;
-const HOST = '127.0.0.1';
+const HOST = '0.0.0.0';
 const http = require('http');
 
 // App
@@ -250,7 +250,52 @@ app.get('/guides', (req, res) => {
                 title: 'Bonny´s Aura-Guide: Whitemane'
             });
             break;
+        case "bonnyaps":
+            res.render('guides/mastermind/aps', {
+                title: 'Bonny´s Aura-Guide: APS'
+            });
+            break;
+        case "bonnyhero":
+            res.render('guides/mastermind/hero', {
+                title: 'Bonny´s Aura-Guide: Hero'
+            });
+            break;
+        case "bonnyleviathan":
+            res.render('guides/mastermind/leviathan', {
+                title: 'Bonny´s Aura-Guide: Leviathan'
+            });
+            break;
+        case "bonnylioness":
+            res.render('guides/mastermind/lioness', {
+                title: 'Bonny´s Aura-Guide: Lioness'
+            });
+            break;
+        case "bonnyoceantemplar":
+            res.render('guides/mastermind/oceantemplar', {
+                title: 'Bonny´s Aura-Guide: Ocean Templar'
+            });
+            break;
+        case "bonnysorcerer":
+            res.render('guides/mastermind/sorcerer', {
+                title: 'Bonny´s Aura-Guide: Sorcerer'
+            });
+            break;
+        case "bonnystarcaller":
+            res.render('guides/mastermind/starcaller', {
+                title: 'Bonny´s Aura-Guide: Starcaller'
+            });
+            break;
+        case "bonnyvampire":
+            res.render('guides/mastermind/vampire', {
+                title: 'Bonny´s Aura-Guide: Vampire'
+            });
+            break;
         //general
+        case "bonnysplit":
+            res.render('guides/general/splitting', {
+                title: 'Bonny´s Basic Splitting Guide'
+            });
+            break;
         case "bonnyaura":
             res.render('guides/general/auras', {
                 title: 'Bonny´s General Aura Guide'

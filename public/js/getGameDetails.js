@@ -90,7 +90,7 @@ function getGameDetails(seasonGames, type, name){
 
 
             //game details
-            gameDetails = game.gameDetails.filter(meinName => meinName.playername == name)[0];
+            gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername == name })[0];
             if(debug) //console.log(gameDetails);
             //classic games
             if(gametype == "Classic"){
@@ -196,7 +196,7 @@ function getGameDetails(seasonGames, type, name){
     console.log("Total games: " + amount_total_games);
     for (let index = 0; index < seasonGames.length; index++) {
         const game = seasonGames[index];
-        const gameDetails = game.gameDetails.filter(meinName => meinName.playername == name)[0];
+        const gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername == name })[0];
         //console.log(gameDetails.unitsPerWave[0][0].substring(0, gameDetails.unitsPerWave[0][0].indexOf("_unit")));
         for (var i = 0; i < favunits.length; i++) {
             let found = false;
