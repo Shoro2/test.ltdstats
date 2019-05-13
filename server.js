@@ -7,6 +7,7 @@ require("./private/sqlcon.js")
 const chart = require('chart.js');
 const favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 require('isomorphic-fetch');
 // Constants
@@ -844,7 +845,7 @@ app.get('/api/playerElo', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername:"' + playername + '"){statistics}}'
+            query: '{player(playername:"' + playername + '"){playername,statistics}}'
         }),
     })
         .then(function (response) {
@@ -857,14 +858,44 @@ app.get('/api/playerElo', (req, res) => {
                 throw error
             }
         }).then(function (data) {
-            //player object an frontend
             data.data.player.statistics = JSON.parse(data.data.player.statistics);
-            res.render("elo", {
-                meineElo: data.data.player.statistics.overallElo,
-                title: "Elo"
+            http.get('http://159.69.83.17:3000/db/livegames?myobj=' + playername, (resp) => {
+                let result = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    result += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    if (result) {
+                        let livegame = JSON.parse(result);
+                        res.render("elo", {
+                            meineElo: data.data.player.statistics.overallElo,
+                            title: "Elo",
+                            playername: data.data.player.playername,
+                            players: livegame.players,
+                            elos: livegame.elos
+                        });
+                    }
+                    else {
+                        res.render("elo", {
+                            meineElo: data.data.player.statistics.overallElo,
+                            title: "Elo",
+                            playername: data.data.player.playername,
+                            players: "not ingame",
+                            elos: "not ingame"
+                        });
+                    }
+                });
+
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
             });
         });
 });
+
 
 
 app.get('/api/units', (req, res) => {
