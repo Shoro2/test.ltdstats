@@ -28,7 +28,7 @@
 }
 #guide_content
 {
-    height:80%;
+    height:75%;
     overflow: auto;
 }
 
@@ -53,4 +53,14 @@
 .ytframe{
     width:100%;
     height:100%;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 10px; /* remove scrollbar space */
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+    margin: 5px;
 }

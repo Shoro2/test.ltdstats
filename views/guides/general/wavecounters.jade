@@ -1,9 +1,9 @@
-extend ../../layout
+﻿extend ../../layout
 block content
     link(rel='stylesheet', href='/css/guides.css')
     .guide
         #amazon_ad
-        h2#guide_title Wave Counters
+        h2#guide_title Wave Counters Guide
         #guide_author 
             i by 
                 a(href="/profile?player=Jules") Jules
@@ -11,189 +11,169 @@ block content
         #guide_infobox
             #infobox_author Author: 
                 a(href="/profile?player=Jules") Jules
-            #infobox_version Version: v2.36
+            #infobox_version Version: v3.13
             #infobox_section Section: General Guides
             #infobox_content
+                ul
+                    - for(var i = 1 ; i < 22; i++){
+                        li 
+                            a(href="#wave"+i)= "Wave "+ i
+                    - }
         p.
         #guide_content
-            ul
-                li 
-                    a(href="/units?unit=crab") 1 
-                    | - 
-                    a(href="/units?unit=Bone%20Crusher") Bone Crusher
-                li 
-                    a(href="/units?unit=wale") 2 
-                    | - 
-                    a(href="/units?unit=Nightmare") Nightmare
-                    | , 
-                    a(href="/units?unit=Looter") Looter
-                    | , 
-                    a(href="/units?unit=Pack%20Rat") Pack Rat
-                    | , 
-                    a(href="/units?unit=Bone%20Warrior") Bone Warrior
-                    | , 
-                    a(href="/units?unit=Sea%20Serpent") Sea Serpent
-                li 
-                    a(href="/units?unit=hopper") 3 
-                    | - 
-                    a(href="/units?unit=Gargoyle") Gargoyle
-                    | , 
-                    a(href="/units?unit=") Green Devil
-                    | , 
-                    a(href="/units?unit=Wileshroom") Wileshroom
-                li 
-                    a(href="/units?unit=Flying%20Chicken") 4 
-                    | - 
-                    a(href="/units?unit=Nightmare") Nightmare
-                    | , 
-                    a(href="/units?unit=Tempest") Tempest
-                    | , 
-                    a(href="/units?unit=Sea%20Serpent") Sea Serpent
-                li 
-                    a(href="/units?unit=scorpion") 5 
-                    | - 
-                    a(href="/units?unit=pyro") Pyro
-                    | , 
-                    a(href="/units?unit=violet") Violet
-                li 
-                    a(href="/units?unit=rocko") 6 
-                    | - 
-                    a(href="/units?unit=looter") Looter
-                    | , 
-                    a(href="/units?unit=pack&20rat") Pack Rat
-                    | , 
-                    a(href="/units?unit=bone%20warrior") Bone Warrior
-                    | , 
-                    a(href="/units?unit=berserker") Berserker
-                    | , 
-                    a(href="/units?unit=devilfish") Devilfish
-                li 
-                    a(href="/units?unit=sludge") 7 
-                    | - 
-                    a(href="/units?unit=peewee") Peewee
-                    | , 
-                    a(href="/units?unit=veteran") Veteran
-                    | , 
-                    a(href="/units?unit=millenium") Millennium
-                    | , 
-                    a(href="/units?unit=wileshroom") Wileshroom
-                    | , 
-                    a(href="/units?unit=canopie") Canopie
-                    | , 
-                    a(href="/units?unit=aqua%20spirit") Aqua Spirit
-                li 
-                    a(href="/units?unit=kobra") 8 
-                    | - 
-                    a(href="/units?unit=peewee") Peewee
-                    | , 
-                    a(href="/units?unit=veteran") Veteran
-                    | , 
-                    a(href="/units?unit=aqua%20spirit") Aqua Spirit
-                li 
-                    a(href="/units?unit=carapace") 9 
-                    |- 
-                    a(href="/units?unit=mudman") Mudman
-                    | , 
-                    a(href="/units?unit=deathcap") Deathcap
-                li 
-                    a(href="/units?unit=granddaddy") 10 
-                    | - 
-                    a(href="/units?unit=berserker") Berserker
-                    | (in theory, but sometimes fails due to targeting), 
-                    a(href="/units?unit=ranger") Ranger
-                    | , 
-                    a(href="/units?unit=daphne") Daphne
-                    | , 
-                    a(href="/units?unit=sea%20serpent") Sea Serpent
-                    | , 
-                    a(href="/units?unit=deepcoiler") Deepcoiler
-                li 
-                    a(href="/units?unit=quill%20shooter") 11 
-                    | - 
-                    a(href="/units?unit=ocean%20templar") Ocean Templar
-                    | , 
-                    a(href="/units?unit=pyro") Pyro
-                li 
-                    a(href="/units?unit=mantis") 12 
-                    | - 
-                    a(href="/units?unit=banana%20bunk") Banana Bunk
-                    | /
-                    a(href="/units?unit=banana%20haven") Banana Haven
-                    | , 
-                    a(href="/units?unit=leviathan") Leviathan
-                    | , 
-                    a(href="/units?unit=kingpin") Kingpin
-                li 
-                    a(href="/units?unit=drill%20golem") 13 
-                    | - 
-                    a(href="/units?unit=fatalizer") Fatalizer
-                    | , 
-                    a(href="/units?unit=hydra") Hydra
-                    | , 
-                    a(href="/units?unit=antler") Antler
-                    | , 
-                    a(href="/units?unit=whitemane") Whitemane
-                    | , 
-                    a(href="/units?unit=violet") Violet
-                li 
-                    a(href="/units?unit=killer%20slug") 14 
-                    | - 
-                    a(href="/units?unit=veteran") Veteran
-                    | , 
-                    a(href="/units?unit=millennium") Millennium
-                    | , 
-                    a(href="/units?unit=doomsday%20machine") Doomsday Machine
-                li 
-                    a(href="/units?unit=quadrapus") 15 
-                    | - 
-                    a(href="/units?unit=priest%20of%20the%20abyss") Priestess of the Abyss
-                    | , 
-                    a(href="/units?unit=azeria") Azeria
-                    | , 
-                    a(href="/units?unit=lord%20of%20death") Lord of Death
-                li 
-                    a(href="/units?unit=cardinal") 16 
-                    | - 
-                    a(href="/units?unit=doppelganger") Doppelganger
-                    | , 
-                    a(href="/units?unit=sea%20serpent") Sea Serpent
-                li 
-                    a(href="/units?unit=metal%20dragon") 17 
-                    | - 
-                    a(href="/units?unit=banana%20haven") Banana Haven
-                    | , 
-                    a(href="/units?unit=golem") Golem
-                    | , 
-                    a(href="/units?unit=king%20claw") King Claw
-                li 
-                    a(href="/units?unit=wale%20chief") 18 
-                    | - 
-                    a(href="/units?unit=fenix") Fenix
-                    | , 
-                    a(href="/units?unit=zeus") Zeus
-                    | , 
-                    a(href="/units?unit=Fatalizer") Fatalizer
-                    | , 
-                    a(href="/units?unit=Deathcap") Deathcap
-                li 
-                    a(href="/units?unit=dire%20toad") 19 
-                    | - 
-                    a(href="/units?unit=banana%20haven") Banana Haven
-                    | , 
-                    a(href="/units?unit=leviathan") Leviathan
-                    | , 
-                    a(href="/units?unit=kingpin") Kingpin
-                li 
-                    a(href="/units?unit=maccabeus") 20 
-                    | - 
-                    a(href="/units?unit=doomsday%20machine") Doomsday Machine
-                    | , 
-                    a(href="/units?unit=Fatalizer") Fatalizer
-                    | , 
-                    a(href="/units?unit=Hades") Hades
-                    | , 
-                    a(href="/units?unit=Ranger") Ranger
-                    | , 
-                    a(href="/units?unit=Daphne") Daphne
-                    | , 
-                    a(href="/units?unit=green%20devil") Green Devil
+            p.
+                I've heard a decent number of players request a guide on "which units are good on which waves." It's often as simple as using attack and defense type, but ultimately, Legion TD 2 is a complex game with lots of interactions. This guide is based on my personal experience. I'm happy to take feedback and change it, and I'll do my best to update it every patch.
+            p
+                b Notes
+                ul
+                    li I assume units are in a theoretical balanced state. If a particular unit is OP on a given patch, that doesn't make it a counter to every wave.
+                    li I assume the average case with an average mercenary send. Some units will be strong in combination with other units or weak against certain mercenaries - that doesn't mean they are or aren't a counter to a particular wave.
+                    li #1 = hard counters: units that perform significantly better than their value would suggest, or units that auto-clear the wave (mostly applies to strong units on early waves).
+                    li #2 = soft counters: units that perform moderately better than their value would suggest.
+                b General Tips
+                ul
+                    li Understand attack/defense types. You don't have to know the exact percentages by heart, but you should know that magic counters natural, pierce counters swift and arcane, and impact counters fortified and arcane.
+                    #mittig(style="margin: auto;width:20%;text-align:center;")
+                        img(src="https://legiontd2.com/community/attachments/2019-03-06_19h59_14-png.6709/")
+                        br
+                        i This can be opened in-game by clicking the book icon in the bottom right​
+                    li Tier 1 units (10-25 gold) are strong because they allow you to spend your gold efficiently. Unless you're good enough to know better, 
+                        b spend all of your gold every wave
+                        |, including that last 37 gold on two Bone Warriors.
+                    li It is sometimes better to prepare for future waves by building units that are bad on the current wave.
+            p
+                b#wave1 Wave 1
+                br
+                i On this wave, you should often build units that counter future waves.
+                br
+                | #1: Bounty Hunter, Grarl, Azeria, Fire Elemental, Mudman, Bone Crusher, Butcher, Nightmare, Honeyflower, Antler, Pyro, Desert Pilgrim, Sand Badger, Berserker, Priestess of the Abyss
+                br
+                | #2: Windhawk, Gateguard, Consort, Wileshroom, Tempest, Warg
+                br
+                b#wave2 Wave 2
+                br
+                | #1: Antler, Pyro, Nightmare, Banana Bunk, Violet
+                br
+                | #2: Bone Warrior, Looter, Pack Rat, Butcher, Bone Crusher, Windhawk, Grarl, Honeyflower, Warg, Wileshroom, Tempest, Sea Serpent
+                br
+                b#wave3 Wave 3
+                br
+                | #1: Gargoyle, Green Devil, Pyro, Banana Bunk, Fire Elemental, Priestess of the Abyss, Sand Badger, Violet
+                br
+                | #2: Peewee, Veteran, Honeyflower, Wileshroom, Pollywog, Seraphin, Devilfish
+                br
+                b#wave4 Wave 4
+                br
+                | #1: Fire Archer, Devilfish, Nightmare, Berserker, Sea Serpent, Buzz, Consort, Warg, Harpy, Sky Queen, Ranger, Daphne, Banana Bunk
+                br
+                | #2: Pyro, Honeyflower, Aqua Spirit, Fire Elemental, Violet
+                br
+                b#wave5 Wave 5
+                br
+                | #1: Pyro, Violet, Mudman, Desert Pilgrim, Ocean Templar
+                br
+                | #2: Banana Bunk, Buzz, Consort, Pollywog, Seraphin, Priestess of the Abyss, Antler, Bone Crusher, Butcher, Honeyflower
+                br
+                b#wave6 Wave 6
+                br
+                i This wave has a ramping ability that makes it stronger against solitary units and weaker against many units.
+                br
+                | #1: Devilfish, Looter, Pack Rat, Hydra, Violet, Windhawk, Bone Warrior, Berserker, Antler, Millennium, Bazooka, Zeus, Butcher
+                br
+                | #2: Grarl, Fire Elemental, Daphne, Fire Archer, Dark Mage, Pollywog, Proton, Buzz, Canopie, Gateguard
+                br
+                b#wave7 Wave 7
+                br
+                | #1: Canopie, Millennium, Sand Badger, Peewee, Veteran, Aqua Spirit, Rogue Wave, Deepcoiler, Banana Bunk
+                br
+                | #2: Fire Elemental, Tempest, Leviathan, Ranger, Daphne, Bazooka, Harpy, Sky Queen, Disciple, Sea Serpent, Bounty Hunter, Gateguard, Harbinger
+                br
+                b#wave8 Wave 8
+                br
+                | #1: Peewee, Veteran, Aqua Spirit, Rogue Wave, Fire Elemental, Deepcoiler, Kingpin, Lord of Death, Banana Bunk
+                br
+                | #2: Millennium, Priestess of the Abyss, Canopie, Sand Badger, Gargoyle, Green Devil, Tempest, Leviathan, Ranger, Daphne, Harpy, Sky Queen, Disciple, Sea Serpent, Bounty Hunter, APS, Nightmare, Gateguard, Harbinger
+                br
+                b#wave9 Wave 9
+                br
+                i This wave has an ability that makes it stronger against ranged units and weaker against melee units.
+                br
+                | #1: King Claw, Hydra, Windhawk, Violet, Mudman, Golem, Kingpin, Butcher, Head Chef, Antler, Whitemane, Great Boar, Deathcap
+                br
+                | #2: Grarl, Bone Crusher, Buzz, Consort, Canopie, Pyro, Banana Bunk, Gateguard, Harbinger, Honeyflower, Banana Bunk, Banana Haven
+                br
+                b#wave10 Wave 10
+                br
+                | #1: Sea Serpent, Deepcoiler, King Claw, Hydra, Windhawk, Disciple, Starcaller, Pack Rat, Nightmare, Doppelganger, Berserker, Fatalizer, Ranger, Daphne, Antler, Whitemane, Buzz, Consort
+                br
+                | #2: Looter, Bone Warrior, Green Devil, Tempest, Leviathan, Harpy, Sky Queen, Bazooka, Millennium, Banana Bunk, Banana Haven, Devilfish
+                br
+                b#wave11 Wave 11
+                br
+                i Be careful about AOE units like Pyro and Deathcap on ranged waves like 11 because they can be countered by tank mercenaries.
+                br
+                | #1: Pollywog, Seraphin, Ocean Templar, Desert Pilgrim, Lost Chieftain, Mudman, Golem, Banana Bunk, Banana Haven
+                br
+                | #2: Kingpin, Priestess of the Abyss, Azeria, Lord of Death, Fire Lord, Honeyflower, Deathcap, Pyro, Harpy, Sky Queen, APS, MPS, Tempest, Leviathan, Violet, Gateguard, Harbinger, Buzz, Consort
+                br
+                b#wave12 Wave 12
+                br
+                | #1: Banana Bunk, Banana Haven, Tempest, Leviathan, APS, MPS, Great Boar, Red Eyes, Kingpin, Bounty Hunter, Warg, Lioness, Alpha Male, Pyro, Honeyflower, Deathcap
+                br
+                | #2: Harpy, Sky Queen, Buzz, Consort, Gateguard, Harbinger, Ranger, Daphne, Mudman, Golem, Angler, Disciple, Starcaller
+                br
+                b#wave13 Wave 13
+                br
+                | #1: Berserker, Fatalizer, King Claw, Hydra, Windhawk, Violet, Butcher, Head Chef, Doomsday Machine
+                br
+                | #2: Devilfish, Grarl, Doppelganger, Azeria, Fire Lord, Fenix, Millennium, Pack Rat, Bazooka, Zeus
+                br
+                b#wave14 Wave 14
+                br
+                | #1: Sand Badger, Iron Scales, Canopie, Millennium, Doomsday Machine
+                br
+                | #2: Wileshroom, Doppelganger, Sea Serpent, Deepcoiler, Aqua Spirit, Rogue Wave, Ranger, Daphne, Bazooka, Great Boar, Red Eyes, Harpy, Sky Queen, Kingpin, Mudman, Golem, Kingpin, Disciple
+                br
+                b#wave15 Wave 15
+                br
+                | #1: Pollywog, Priestess of the Abyss, Azeria, Green Devil, Lord of Death, Sand Badger, Iron Scales
+                br
+                | #2: Canopie, Veteran, Fire Elemental, Gargoyle, Fire Lord, Fenix, Hades, Desert Pilgrim, Lost Chieftain, Millennium, Doomsday Machine
+                br
+                b#wave16 Wave 16
+                br
+                | #1: Nightmare, Doppelganger, Sea Serpent, Deepcoiler, Warg, Lioness, Alpha Male, Honeyflower, Deathcap, Pyro
+                br
+                | #2: Devilfish, Aqua Spirit, Rogue Wave, Fire Elemental, Disciple, Starcaller, Hades, Buzz, Consort, Tempest, Leviathan, Harpy, Sky Queen, Banana Bunk, Banana Haven, Ranger, Daphne, Hydra
+                br
+                b#wave17 Wave 17
+                br
+                | #1: Hydra, Banana Bunk, Banana Haven, Great Boar, Red Eyes, Bounty Hunter, King Claw, Mudman, Golem, Kingpin, Warg, Lioness, Alpha Male, Doomsday Machine, APS, MPS, Windhawk, Antler, Whitemane, Pyro, Honeyflower, Deathcap
+                br
+                | #2: Millennium, Angler, Grarl, Harpy, Sky Queen, Gateguard, Harbinger, Violet, Aqua Spirit, Rogue Wave, Bazooka, Butcher, Head Chef, Disciple, Starcaller
+                br
+                b#wave18 Wave 18
+                br
+                i This wave has fewer and softer counters because it deals both impact and magic damage.
+                br
+                | #1: Fire Lord, Fenix, Berserker, Fatalizer, Honeyflower, Deathcap, Pyro, Lord of Death
+                br
+                | #2: Pollywog, Seraphin, Devilfish, Azeria, Priestess of the Abyss, Lord of Death, Desert Pilgrim, Lost Chieftain, Zeus, Sand Badger, Iron Scales, Veteran, Fire Elemental, Hades
+                br
+                b#wave19 Wave 19
+                br
+                | #1: Banana Bunk, Banana Haven, Tempest, Leviathan, APS, MPS, Kingpin, Bounty Hunter, Warg, Lioness, Alpha Male
+                br
+                | #2: Harpy, Sky Queen, Buzz, Consort, Gateguard, Harbinger, Ranger, Daphne, Hydra, Mudman, Golem, Angler, Disciple, Starcaller, Great Boar, Red Eyes, Hades
+                br
+                b#wave20 Wave 20
+                br
+                | #1: Millennium, Doomsday Machine, Sand Badger, Iron Scales, Green Devil, Azeria, Starcaller, Berserker, Fatalizer, Lord of Death, Hades, Ranger, Daphne
+                br
+                | #2: Hydra, Gateguard, Harbinger, Rogue Wave, Mudman, Golem, Canopie, Priestess of the Abyss, Wileshroom, Peewee, Veteran, Gargoyle, Tier 1 units
+                br
+                b#wave21 Wave 21
+                br
+                | #1: None
+                br
+                | #2: Azeria, Starcaller, Honeyflower, Deathcap, Hydra, Hades, Great Boar, Red Eyes

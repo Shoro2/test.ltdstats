@@ -294,19 +294,30 @@ function getPlayerLevel(totalXp) {
     if (totalXp < 57001) return 9
     if (totalXp < 73001) return 10
     if (totalXp < 91001) return 11
-    if (totalXp < 101001) return 12
-    if (totalXp < 123001) return 13
-    if (totalXp < 147001) return 14
-    if (totalXp < 173001) return 15
-    if (totalXp < 201001) return 16
-    if (totalXp < 231001) return 17
-    if (totalXp < 263001) return 18
-    if (totalXp < 297001) return 19
-    if (totalXp < 335001) return 20
-    if (totalXp < 375001) return 21
-    if (totalXp < 417001) return 22
-    if (totalXp < 461001) return 23
-
+    if (totalXp < 111001) return 12
+    if (totalXp < 133001) return 13
+    if (totalXp < 157001) return 14
+    if (totalXp < 183001) return 15
+    if (totalXp < 211001) return 16
+    if (totalXp < 241001) return 17
+    if (totalXp < 273001) return 18
+    if (totalXp < 307001) return 19
+    if (totalXp < 343001) return 20
+    if (totalXp < 381001) return 21
+    if (totalXp < 421001) return 22
+    if (totalXp < 463001) return 23
+    if (totalXp < 507000) return 24
+    if (totalXp < 553001) return 25
+    if (totalXp < 601001) return 26
+    if (totalXp < 651001) return 27
+    if (totalXp < 703001) return 28
+    if (totalXp < 757001) return 29
+    if (totalXp < 813001) return 30
+    if (totalXp < 871001) return 31
+    if (totalXp < 931001) return 32
+    if (totalXp < 993001) return 33
+    if (totalXp < 1057001) return 34
+    return 35
 }
 
 function parseStats() {

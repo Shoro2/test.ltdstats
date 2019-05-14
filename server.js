@@ -7,6 +7,7 @@ require("./private/sqlcon.js")
 const chart = require('chart.js');
 const favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 require('isomorphic-fetch');
 // Constants
@@ -250,7 +251,52 @@ app.get('/guides', (req, res) => {
                 title: 'Bonny´s Aura-Guide: Whitemane'
             });
             break;
+        case "bonnyaps":
+            res.render('guides/mastermind/aps', {
+                title: 'Bonny´s Aura-Guide: APS'
+            });
+            break;
+        case "bonnyhero":
+            res.render('guides/mastermind/hero', {
+                title: 'Bonny´s Aura-Guide: Hero'
+            });
+            break;
+        case "bonnyleviathan":
+            res.render('guides/mastermind/leviathan', {
+                title: 'Bonny´s Aura-Guide: Leviathan'
+            });
+            break;
+        case "bonnylioness":
+            res.render('guides/mastermind/lioness', {
+                title: 'Bonny´s Aura-Guide: Lioness'
+            });
+            break;
+        case "bonnyoceantemplar":
+            res.render('guides/mastermind/oceantemplar', {
+                title: 'Bonny´s Aura-Guide: Ocean Templar'
+            });
+            break;
+        case "bonnysorcerer":
+            res.render('guides/mastermind/sorcerer', {
+                title: 'Bonny´s Aura-Guide: Sorcerer'
+            });
+            break;
+        case "bonnystarcaller":
+            res.render('guides/mastermind/starcaller', {
+                title: 'Bonny´s Aura-Guide: Starcaller'
+            });
+            break;
+        case "bonnyvampire":
+            res.render('guides/mastermind/vampire', {
+                title: 'Bonny´s Aura-Guide: Vampire'
+            });
+            break;
         //general
+        case "bonnysplit":
+            res.render('guides/general/splitting', {
+                title: 'Bonny´s Basic Splitting Guide'
+            });
+            break;
         case "bonnyaura":
             res.render('guides/general/auras', {
                 title: 'Bonny´s General Aura Guide'
@@ -799,7 +845,7 @@ app.get('/api/playerElo', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername:"' + playername + '"){statistics}}'
+            query: '{player(playername:"' + playername + '"){playername,statistics}}'
         }),
     })
         .then(function (response) {
@@ -812,14 +858,44 @@ app.get('/api/playerElo', (req, res) => {
                 throw error
             }
         }).then(function (data) {
-            //player object an frontend
             data.data.player.statistics = JSON.parse(data.data.player.statistics);
-            res.render("elo", {
-                meineElo: data.data.player.statistics.overallElo,
-                title: "Elo"
+            http.get('http://159.69.83.17:3000/db/livegames?myobj=' + playername, (resp) => {
+                let result = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    result += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    if (result) {
+                        let livegame = JSON.parse(result);
+                        res.render("elo", {
+                            meineElo: data.data.player.statistics.overallElo,
+                            title: "Elo",
+                            playername: data.data.player.playername,
+                            players: livegame.players,
+                            elos: livegame.elos
+                        });
+                    }
+                    else {
+                        res.render("elo", {
+                            meineElo: data.data.player.statistics.overallElo,
+                            title: "Elo",
+                            playername: data.data.player.playername,
+                            players: "not ingame",
+                            elos: "not ingame"
+                        });
+                    }
+                });
+
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
             });
         });
 });
+
 
 
 app.get('/api/units', (req, res) => {

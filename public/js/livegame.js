@@ -39,7 +39,8 @@ function parsePlayers() {
     document.getElementById("mitte").style.display = "none";
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
-        parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
+        //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
         //console.log(parsedPlayer[i]);
     }
     for (var i = 0; i < 4; i++) {
@@ -191,7 +192,7 @@ function parsePlayers() {
         document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
         if (parsedPlayer[i].games.count > 0) {
             parsedPlayer[i].games.games.forEach(function (ele) {
-                var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
+                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
                 if (gameDetail) {
                     if (gameDetail.legion == race_selected) {
                         games_count++;
@@ -261,7 +262,7 @@ function parsePlayers() {
 
         parsedPlayer[i].games.games.forEach(function (ele) {
             var gamesWithFav_bool = false;
-            var gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == parsedPlayer[i].playername)[0];
+            var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
             if (gameDetail) {
                 if (gameDetail.legion == race_selected) {
                     for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
@@ -370,10 +371,10 @@ function getFighterGames(fightername, playername) {
     }
     var fightercount_pick = 0;
     //console.log(parsedPlayer);
-    var selectedPlayer = parsedPlayer.filter(filterGames => filterGames.playername == playername)[0];
+    var selectedPlayer = parsedPlayer.filter(function (filterGames) { return filterGames.playername == playername })[0];
     var selectedGames = selectedPlayer.games.games;
     selectedGames.forEach(function (ele) {
-        gameDetail = ele['gameDetails'].filter(gameDetail => gameDetail.playername == playername)[0];
+        gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == playername })[0];
         if (typeof gameDetail !== "undefined") {
             if (typeof gameDetail.unitsPerWave[0] !== "undefined") {
                 //check units on 1
@@ -401,7 +402,7 @@ function getFighterGames(fightername, playername) {
                                                 var target_pos = 2;
                                                 break;
                                         }
-                                        var gameDetail_oponent = ele['gameDetails'].filter(gameDetail_oponent => gameDetail_oponent.position == target_pos)[0];
+                                        var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
                                         leaks[i]++;
                                     }
                                 }
@@ -432,7 +433,7 @@ function getFighterGames(fightername, playername) {
                                                 var target_pos = 2;
                                                 break;
                                         }
-                                        var gameDetail_oponent = ele['gameDetails'].filter(gameDetail_oponent => gameDetail_oponent.position == target_pos)[0];
+                                        var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
                                         leaks[i]++;
                                     }
                                 }
@@ -637,7 +638,7 @@ function showPlayerDetails(nummer){
     details_box.style.display="";
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
-        parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
     }
     details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 3 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername+"' target='_blank'>Profile</a>)</h3>";
     queryPlayerGames(parsedPlayer[nummer].playername);

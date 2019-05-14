@@ -2,15 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\public\\css",
     "\\public\\js",
     "\\views",
-    "\\views\\guides",
-    "\\views\\guides\\forsaken",
+    "\\views\\ascension",
+    "\\views\\guides\\element",
     "\\views\\guides\\general",
-    "\\views\\guides\\mastermind",
-    "\\views\\ladder"
+    "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\public\\css\\streams.css",
+  "SelectedNode": "\\public\\js\\getGameDetails.js",
   "PreviewInSolutionExplorer": false
 }
