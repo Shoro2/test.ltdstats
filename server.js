@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 require('isomorphic-fetch');
 // Constants
 const PORT = 61624;
-const HOST = '127.0.0.1';
+const HOST = '0.0.0.0';
 const http = require('http');
 
 // App
