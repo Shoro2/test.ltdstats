@@ -1,14 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\private",
     "\\public",
+    "\\public\\css",
     "\\public\\js",
     "\\views",
-    "\\views\\ascension",
-    "\\views\\guides\\element",
-    "\\views\\guides\\general",
-    "\\views\\guides\\mastermind"
+    "\\views\\ascension"
   ],
-  "SelectedNode": "\\public\\js\\getGameDetails.js",
+  "SelectedNode": "\\public\\css\\quiz.css",
   "PreviewInSolutionExplorer": false
 }
