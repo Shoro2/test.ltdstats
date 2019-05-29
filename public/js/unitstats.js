@@ -80,9 +80,16 @@ var unitstats = [
     {name:"lioness",value:260},
     {name:"looter",value:10},
     {name:"lostchieftain",value:390},
-    {name:"packrat",value:75},
+    { name: "packrat", value: 75 },
+    {name: "packratnest", value: 75},
     {name:"redeyes",value:690},
     {name:"sandbadger",value:195},
     {name:"skyqueen",value:200},
-    {name:"warg",value:85}
+    { name: "warg", value: 85 },
+    // Shrine
+    { name: "maskedspirit", value: 25 },
+    { name: "falsemaiden", value: 95 },
+    { name: "hellraiser", value: 215 },
+    { name: "hellraiserbuffed", value: 215 },
+    { name: "nekomata", value: 60 }
 ];

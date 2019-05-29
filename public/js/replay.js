@@ -38,6 +38,10 @@ function addPicture(y, x, unit, player) {
             break;
         case "/img/icons/Mps":
             url = "/img/icons/MPS";
+            break;
+        case "/img/icons/HellRaiserBuffed":
+            url = "/img/icons/HellRaiser";
+            break;
     }
     url += ".png";
     //canvas einfügen
