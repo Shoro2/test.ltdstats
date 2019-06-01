@@ -532,7 +532,7 @@ app.get('/donate', (req, res) => {
     })
 });
 
-app.get('/quiz', (req, res) => {
+app.get("/quiz", (req, res) => {
     res.render('quiz', {
         title: 'Quiz'
     })
@@ -627,6 +627,27 @@ app.get('/quiz/getScores', (req, res) => {
 app.get('/sql/getLivegame', (req, res) => {
     var pname = req.query.playername;
     http.get('http://159.69.83.17:3000/db/livegames?myobj=' + pname, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data) res.json(data);
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
+app.get('/api/getLivegames', (req, res) => {
+    http.get('http://159.69.83.17:3000/db/livegames?', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.

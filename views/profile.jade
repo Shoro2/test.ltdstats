@@ -12,6 +12,7 @@ block content
         .style(style='clear: both;')
         .tab_box#tab_box_1
             .profile
+                #ingame Currently ingame 
                 h1#player_name1
                 #playerbadge_level.badge
                 #playerbadge_rank.badge
@@ -19,58 +20,86 @@ block content
                 #rank
                 #player_icon1
                 #stats
-                    #general
-                        h4 General:
-                        #general_games
-                        #general_wins
-                        #general_ties
-                        #general_quits
-                        #general_level
-                        #general_winningstreak
-                        #general_bestfriends
-                    #mastermind.stats_small 
-                        h4 Mastermind:
-                        #mastermind_elo
-                        #mastermind_peakelo
-                        #mastermind_games
-                        #mastermind_wins
-                        #mastermind_level
-                    #element.stats_small 
-                        h4 Element:
-                        #element_elo
-                        #element_peakelo
-                        #element_games
-                        #element_wins
-                        #element_level
-                    #grove.stats_small 
-                        h4 Grove:
-                        #grove_elo
-                        #grove_peakelo
-                        #grove_games
-                        #grove_wins
-                        #grove_level
-                    #forsaken.stats_small 
-                        h4 Forsaken:
-                        #forsaken_elo
-                        #forsaken_peakelo
-                        #forsaken_games
-                        #forsaken_wins
-                        #forsaken_level
-                    #mech.stats_small 
-                        h4 Mech:
-                        #mech_elo
-                        #mech_peakelo
-                        #mech_games
-                        #mech_wins
-                        #mech_level
-                    #atlantean.stats_small
-                        h4 Atlantean:
-                        #atlantean_elo
-                        #atlantean_peakelo
-                        #atlantean_games
-                        #atlantean_wins
-                        #atlantean_level
-                        
+                    #mittig
+                        b This page is under construction!
+                        #gameamount
+                        #totalwins
+                        #totalties
+                        #totalquits
+                        #collectionvalue
+                        #gameswithoutcard
+                        #playtime
+                        #playerlevel
+                        #winstreak
+                        #casualgames
+                        #bestfriends
+                    button#toggleseason Overall 
+                    table#seasonstats
+                        tr
+                            th
+                        tr
+                            td 
+                                b Total Games
+                            td#ts_totalgames
+                            td
+                                b Total Wins
+                            td#ts_totalwins
+                            td
+                                b Rank
+                            td#ts_rank
+                        tr
+                            td 
+                                b Normal Elo
+                            td#ts_normalelo
+                            td 
+                                b Normal Peak Elo
+                            td#ts_normalpeakelo
+                        tr
+                            td
+                                b Classic Elo
+                            td#ts_classicelo
+                            td
+                                b Classic Peak Elo
+                            td#ts_classicpeakelo
+                            td
+                                b Classic Wins
+                            td#ts_classicwins
+                    table#overallstats
+                        tr
+                            th
+                        tr
+                            td 
+                                b Total Games
+                            td#to_totalgames
+                            td
+                                b Total Wins
+                            td#to_totalwins
+                            td
+                                b 
+                            td
+                        tr
+                            td 
+                                b Normal Elo
+                            td#to_normalelo
+                        tr
+                            td 
+                                b Normal Peak Elo
+                            td#to_normalpeakelo
+                        tr
+                            td
+                                b Rank
+                            td#to_rank
+                        tr
+                            td
+                                b Classic Elo
+                            td#to_classicelo
+                            td
+                                b Classic Peak Elo
+                            td#to_classicpeakelo
+                            td
+                                b Classic Wins
+                            td#to_classicwins
+                            
         .tab_box#tab_box_2
             .profile
                 h1#player_name2

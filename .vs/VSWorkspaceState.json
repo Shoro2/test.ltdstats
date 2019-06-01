@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\private",
     "\\public",
+    "\\public\\css",
     "\\public\\js",
     "\\views",
     "\\views\\ascension"
