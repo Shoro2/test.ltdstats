@@ -532,6 +532,11 @@ app.get('/donate', (req, res) => {
     })
 });
 
+app.get('/quiz', (req, res) => {
+    res.render('quiz', {
+        title: 'Quiz'
+    })
+});
 //non ltd related
 
 app.get('/ascension', (req, res) => {
@@ -581,6 +586,26 @@ app.get('/users/checkname', (req, res) => {
 
 app.get('/sql/getGuides', (req, res) => {
     http.get('http://159.69.83.17:3000/guides?action=list', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            res.json(data);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
+app.get('/quiz/getScores', (req, res) => {
+    http.get('http://159.69.83.17:3000/quiz/getScores?', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.

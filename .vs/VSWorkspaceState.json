@@ -4,11 +4,8 @@
     "\\public",
     "\\public\\js",
     "\\views",
-    "\\views\\ascension",
-    "\\views\\guides\\element",
-    "\\views\\guides\\general",
-    "\\views\\guides\\mastermind"
+    "\\views\\ascension"
   ],
-  "SelectedNode": "\\public\\js\\getGameDetails.js",
+  "SelectedNode": "\\public\\js\\quiz.js",
   "PreviewInSolutionExplorer": false
 }
