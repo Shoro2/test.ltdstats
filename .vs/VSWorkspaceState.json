@@ -3,11 +3,10 @@
     "",
     "\\private",
     "\\public",
-    "\\public\\css",
     "\\public\\js",
     "\\views",
     "\\views\\ascension"
   ],
-  "SelectedNode": "\\public\\css\\quiz.css",
+  "SelectedNode": "\\public\\js\\replay.js",
   "PreviewInSolutionExplorer": false
 }
