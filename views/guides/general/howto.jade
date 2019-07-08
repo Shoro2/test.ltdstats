@@ -1,0 +1,465 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Legion TD 2 Gameplay Guide
+        #guide_author 
+            i by 
+                a(href="/profile?player=Jules") Jules
+            a(href="/guides", style="float:right;") Back
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile?player=Jules") Jules
+            #infobox_version Version: v4.00
+            #infobox_section Section: General Guides
+            #infobox_content Content:
+                ul
+        p.
+        #guide_content
+            b Overview
+            br
+            br
+            | Legion TD 2 is a 2v2 and 4v4 strategy game. Build fighters to defend your lane against waves of enemies and hire mercenaries to attack your opponents. To win, you must defeat the opposing team's king before they defeat yours. From start to finish, a match lasts around 20 minutes.
+            br
+            br
+            img(src='https://legiontd2.com/community/attachments/overview-jpg.7219/')
+            br
+            br
+            span(style='font-size: 22px')
+              b Controls
+            br
+            ul
+              li
+                b Left-click
+                |  to do most things in the game.
+              li
+                b Right-click
+                |  to ping. Most units, icons, and UI elements can be pinged.
+              li
+                b Right-click + drag
+                |  to ping common shotcalls.
+              li
+                b 1
+                |  to pan the camera to your lane.
+              li
+                b 3
+                |  to pan the camera to the lane of the player you're attacking.
+              li
+                b TAB
+                |  to see an overview of your and your ally's builds
+            span(style='font-size: 22px')
+              b Play Area
+            br
+            br
+            img(src='https://legiontd2.com/community/attachments/screen-1-jpg.7218/' height="600px" width="1000px")
+            br
+            ol
+              li
+                b King HP
+                | : Keep your king alive to win
+              li
+                b Lane
+                | : Where the action happens. Build and upgrade your fighters here.
+              li
+                b Fighters
+                | : Your 6 available fighters
+              li
+                b Reroll
+                | : Reroll up to five times at any time to get 6 new fighters
+              li
+                b Workers
+                | : Train workers to generate mythium
+              li
+                b Mercenaries
+                | : Hire mercenaries to attack your opponent
+              li
+                b King Upgrades
+                | : Upgrade the king’s attack, regeneration, and spell damage
+              li
+                b Legion Spells
+                | : Select one legion spell on wave 11
+              li
+                b Resources
+                | : Your gold, mythium, income, and worker count
+              li
+                b Value Bar
+                | : Shows your current and recommended value (gold spend on fighters)
+              li
+                b Power Score
+                | : Approximates how powerful each player is
+            b
+              span(style='font-size: 22px') Resources
+            br
+            br
+            img(src='https://legiontd2.com/community/attachments/gold-png.7220/', alt='Gold.png')
+            b Gold
+            |  is your primary resource and can be used to:
+            br
+            ul
+              li Build fighters
+              li Train workers
+              li Activate some fighters’ active abilities
+            | There are a few ways to earn gold:
+            br
+            ul
+              li Clear waves
+              li When your opponents leak (fail to clear their waves)
+              li When the opposing king takes damage
+              li As income at the end of each wave
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/mythium-png.7221/', alt='Mythium.png')
+            b Mythium
+            |  is your secondary resource and can be used to:
+            br
+            ul
+              li Hire mercenaries
+              li Upgrade the king
+            | You generate mythium consistently over time based on the number of workers you have.
+            br
+            br
+            | Economy in Legion TD 2 is best described by the following engine:
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/econ-png.7222/', alt='Econ.png')
+            br
+            span(style='font-size: 22px')
+              b Waves
+            br
+            br
+            | Legion TD 2 has 21 rounds or "waves," each with increasing difficulty. Most games will end before wave 21. Each wave is separated into two phases: a build phase and a battle phase.
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/buildphase-jpg.7258/', alt='BuildPhase.jpg')
+            br
+            b Build Phase
+            br
+            | The build phase occurs at the start of each wave and lasts for approximately 30 seconds. You can perform all actions during the build phase:
+            br
+            ul
+              li Build, upgrade, and sell fighters
+              li Reroll your fighters
+              li Train workers
+              li Hire mercenaries
+              li Upgrade the king
+              li
+                | Activate some fighters’ active abilities
+                br
+              li Select your legion spell on wave 11
+            b
+              img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/battlephase-jpg.7259/', alt='BattlePhase.jpg')
+              br
+              | Battle Phase
+            br
+            | During the battle phase, your fighters come to life and battle against enemy waves. Fighters move, attack, and cast spells automatically. Even if your fighters die in battle, they return fully restored the following wave. You can perform limited actions during the battle phase:
+            br
+            ul
+              li Reroll your fighters
+              li Train workers
+              li Hire mercenaries
+              li Scout your opponents
+            span(style='font-size: 22px')
+              b Fighters
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/hud_fighter-jpg.7223/', alt='HUD_fighter.jpg')
+            br
+            br
+            | Your fighters are your defense. Each wave during the build phase, you build and upgrade fighters. During the battle phase, enemy waves spawn at the top of your lane and move downwards towards your fighters. Fighters move upwards to challenge them.
+            br
+            br
+            | When your fighters lose the battle, you "leak" and:
+            br
+            ul
+              li You earn partial gold
+              li Your opponents earn some gold
+              li The leaked enemies may damage your king
+            | When your fighters win the battle, you "clear" and:
+            br
+            ul
+              li You earn the maximum gold
+              li Your remaining fighters teleport to your king to defend against allied leaks
+            b
+              span(style='font-size: 22px') Workers
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/worker-png.7224/', alt='Worker.png')
+            br
+            br
+            | Workers cost 50 gold and generate 1 mythium per 10 seconds.
+            br
+            br
+            | Your strategy should be to clear waves with as little gold spent on fighters (value) as possible. Spend just enough gold on fighters to clear your waves and spend the rest of your gold on workers. Because workers start generating mythium immediately, it’s best to train workers as soon as you can.
+            br
+            br
+            | Getting too few workers means you'll have low mythium, which means weak offense and poor late game scaling. Getting too many workers means you won’t have enough value to clear waves, which means reduced gold and damage to your king.
+            br
+            br
+            span(style='font-size: 22px')
+              b Mercenaries
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/hud_merc-jpg.7225/', alt='HUD_merc.jpg')
+            br
+            br
+            | Mercenaries cost mythium and are used to attack your opponent. Mythium can be spent on mercenaries every wave or saved for multiple waves to unleash a larger attack.
+            br
+            br
+            | Mercenaries attack your opponent whenever the next battle phase begins.
+            br
+            ul
+              li
+                | Mercenaries hired during the build phase will attack your opponent as soon as the battle phase begins.
+              li
+                | Mercenaries hired during the battle phase will attack your opponent when the next wave's battle phase begins.
+            | Each player attacks exactly one other player, depending on which lane you are in.
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/attackorder-png.7257/', alt='AttackOrder.png')
+            br
+            b
+              span(style='font-size: 22px') King Upgrades
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/hud_kingup-jpg.7226/', alt='HUD_kingup.jpg')
+            br
+            br
+            | King upgrades cost mythium and are used to power up your king’s attack, regeneration, and spell damage. King upgrades can only be researched during the build phase.
+            br
+            br
+            b
+              span(style='font-size: 22px') Income
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/income-png.7227/', alt='Income.png')
+            br
+            br
+            | Your income increases immediately and permanently whenever you spend mythium. You gain gold equal to your income at the end of each wave. Spending mythium during the battle phase is good because it increases your income before the wave ends, which maximizes your gold gained from income.
+            br
+            br
+            | Income is how you scale into late game. Without sufficient income, you won't have enough gold to spend on fighters (value) to clear late game waves.
+            br
+            br
+            | High-income mercenaries and king upgrades provide maximum income. Low-income mercenaries provide reduced income but are more powerful or have a special ability.
+            br
+            br
+            span(style='font-size: 22px')
+              b Legion Spells
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/hud_legionspell-jpg.7228/', alt='HUD_legionspell.jpg')
+            br
+            br
+            | Legion spells are in-game upgrades that boost your economy, empower your units, attack your opponent, or provide other benefits. At the start of the game, all players are given the same three randomized spells. Players select one spell on wave 11.
+            br
+            br
+            span(style='font-size: 22px')
+              b Attack and Defense Types
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/attackdefensetype-png.7229/', alt='AttackDefenseType.png')
+            br
+            br
+            | Every unit has an attack and defense type. Damage dealt to a unit will be multiplied by a factor ranging from 75% to 125%, depending on the attack and defense type. You don't have to know the exact percentages, but it helps to know which types counter each other.
+            br
+            br
+            b
+              span(style='font-size: 22px')
+                span(style='color: #59b300')
+                  | Congratulations! You've learned the fundamentals of Legion TD 2. Continue reading for more advanced tips.
+            br
+            br
+            span(style='font-size: 22px')
+              b Mastermind
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/2019-07-04_21h19_11-png.7230/', alt='2019-07-04_21h19_11.png')
+            br
+            br
+            | If you play Mastermind, you start the game with 10 options and must select 6 fighters. There are two schools of thought:
+            br
+            br
+            b Pick for the short run
+            br
+            | Select 6 fighters that are strong early game. Reroll as desired. A good default strategy.
+            br
+            ul
+              li
+                | Pick fighters that are inexpensive, strong waves 1-10, and allow you to push workers efficiently.
+              li Pick at least one fighter that costs 10-25 gold, ideally two.
+              li Avoid more than one fighter that costs 180+ gold.
+              li
+                | Avoid fighters that cost >250 gold, unless you plan to use it as an opening (e.g. Grarl + Eggsack).
+              li Diversify attack/defense types.
+            b Pick for the long run
+            br
+            | Select 6 fighters that you plan to keep throughout most of the game. Reroll in case of emergency. Good if you have a strong late game synergy and a clear path to late game
+            br
+            ul
+              li Pick a well-rounded comp that allows you to push workers efficiently.
+              li Pick at least one fighter that costs 10-25 gold.
+              li Look for a strong synergy between two fighters or with a legion spell.
+              li
+                | Diversify gold costs. Don’t pick more than two fighters that cost a similar amount.
+              li Diversity attack/defense types.
+            b
+              span(style='font-size: 22px') Building 
+            br
+            ul
+              li
+                | When in doubt, spend all your gold every wave, including your remaining ~20 gold on a cheap fighter.
+              li
+                | Diversity attack and defense types. Building too much of one type creates obvious weaknesses in your build that can be exploited by your opponents.
+              li
+                | Be conscious about whether you want to prepare for the current wave or a future wave. If you’re undervalued (not enough gold spent on fighters) or expect your opponent to attack you this wave, prepare accordingly. If you’re overvalued (a lot of gold spent on fighters) or expect your opponent to attack you on a future wave, prepare one or two waves ahead.
+            span(style='font-size: 22px')
+              b Positioning
+            br
+            ul
+              li
+                | Position tanky fighters in the front and high-damage fighters in the back. Build a healthy mix of tanks and damage.
+              li
+                | Distribute how much each fighter tanks, roughly in proportion to how tanky each fighter is. It’s good to have a 3000 HP fighter tank before a 1000 HP fighter, but it’s even better to have the 3000 HP fighter tank 75% of the wave while the 1000 HP fighter tanks 25% of the wave. Doing so maximizes the time your fighters are alive and dealing damage.
+              li
+                | Most auras affect up to 6 adjacently-deployed fighters. The effect depends on how the fighters are positioned during the build phase before the battle phase begins.
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/aura-png.7260/', alt='Aura.png')
+            br
+            br
+            span(style='font-size: 22px')
+              b Clearing
+            br
+            | It’s not always possible to know if you’ll clear a wave, but here are some heuristics that can help:
+            br
+            ul
+              li
+                b
+                  b Value
+                | : Every wave has a recommended value, which increases if your opponent is saving mythium against you. When in doubt, try to stay close to the recommended value. The necessary value to clear a wave will generally be +/- 25% of the recommended value.
+              li
+                b Attack and defense types: 
+                | If you have good typing against a wave, you can clear the wave with less value. If you have poor typing against a wave, you’ll need extra value.
+              li
+                b Synergies and abilities: 
+                | Fighters that synergize with each other or have special abilities allow you to clear some waves with less value.
+            | As you play more, you’ll get a better sense of your ability to clear waves. Eventually, you’ll be able to rely on experience and intuition over heuristics.
+            br
+            br
+            b
+              span(style='font-size: 22px') Pushing Workers
+            br
+            br
+            | Your strategy should be to clear waves with as little value as possible, and extra gold should be spent on workers. It’s not always possible to know if you can safely train a worker, but here are some rules of thumb:
+            br
+            ul
+              li
+                | If your attacking opponent spent no mythium last wave (either on mercenaries or king upgrades), avoid training workers.
+              li
+                | For each 40 mythium your attacking opponent spends, train approximately 1 worker.
+              li
+                | If you comfortably clear a wave, train an additional worker. If you leak, train fewer workers.
+              li
+                | If you’re strong against upcoming waves, train an additional worker. If you’re weak against upcoming waves, train fewer workers.
+              li
+                | If your attacking opponent saves mythium for a long time or upgrades the king frequently, take a risk and train an additional worker. If your attacking opponent sends mercenaries frequently, be conservative and train fewer workers.
+              li
+                | If other players (your ally or opponents) leak significantly, train an extra worker.
+              li
+                | If all legion spells are defense, train an extra worker. If you expect your attacking opponent to select an offensive legion spell, train fewer workers.
+              li
+                | If you’re spending mythium (and gaining ~50 gold of gold from the additional income), train an extra worker. If you’re saving mythium, train fewer workers.
+            span(style='font-size: 22px')
+              b Mercenaries vs. King Upgrades
+            br
+            br
+            | Your three options for spending mythium are high-income mercenaries, low-income mercenaries, and king upgrades.
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/snail-png.7231/', alt='Snail.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/lizard-png.7232/', alt='Lizard.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/dragonturtle-png.7233/', alt='DragonTurtle.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/fiend-png.7234/', alt='Fiend.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/dino-png.7235/', alt='Dino.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/cannoneer-png.7236/', alt='Cannoneer.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/drake-png.7237/', alt='Drake.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/mimic-png.7238/', alt='Mimic.png')
+            br
+            b High-income mercenaries
+            br
+            ul
+              li Good if you’re not sure if you can break your opponent (cause them to leak)
+              li Good if you need gold from income to hold the next wave
+              li Generally stronger early game
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/brute-png.7239/', alt='Brute.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/hermit-png.7240/', alt='Hermit.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/safetymole-png.7250/', alt='SafetyMole.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/packleader-png.7241/', alt='PackLeader.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/ogre-png.7242/', alt='Ogre.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/witch-png.7243/', alt='Witch.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/foureyes-png.7244/', alt='FourEyes.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/ghostknight-png.7245/', alt='GhostKnight.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/centaur-png.7246/', alt='Centaur.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/siegeram-png.7248/', alt='SiegeRam.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/shaman-png.7247/', alt='Shaman.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/kraken-png.7249/', alt='Kraken.png')
+            br
+            b Low-income mercenaries
+            br
+            ul
+              li
+                | Good if you’re reasonably confident you can break your opponent
+                br
+              li Generally stronger late game
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/upgradekingattack-png.7251/', alt='UpgradeKingAttack.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/upgradekingregen-png.7252/', alt='UpgradeKingRegen.png')
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/upgradekingspell-png.7253/', alt='UpgradeKingSpell.png')
+            br
+            b King upgrades
+            br
+            ul
+              li
+                | Upgrade Attack and Upgrade Spell are good if you and your ally are likely to both leak the next wave
+                br
+              li
+                | Upgrade Regeneration is good if your king is damaged
+                br
+              li
+                | Good if you’re confident you cannot break your opponent (denies your opponent bounty)
+            | Be unpredictable. Consistently doing the same thing (e.g. king upgrades every wave) allows your opponent to capitalize.
+            br
+            br
+            span(style='font-size: 22px')
+              b Saving Mythium
+            br
+            br
+            img.bbCodeImage.LbImage(src='https://legiontd2.com/community/attachments/bigbrain-jpg.7254/', alt='BigBrain.jpg')
+            br
+            br
+            b Spending mythium frequently (“Incoming” / “Resending”)
+            br
+            ul
+              li
+                | Maximizes the gold you earn from income
+                br
+              li
+                | Good if your comp scales well (incoming causes rich games that frequently go to late game)
+                br
+              li
+                | Good if your opponent is undervalued
+                br
+              li
+                | Good if you need gold for a particular fighter, an extra worker, or extra value next wave
+            b Saving mythium
+            br
+            ul
+              li
+                | Pressures your opponent and forces them to stay low on workers
+                br
+              li
+                | Higher threat of causing a big leak and winning the game
+                br
+              li
+                | Good if your comp doesn’t scale as well (saving causes starved games that rarely go to late game)
+                br
+              li
+                | Good if your opponent is very weak on a particular wave
+                br
+              li
+                | Good if you’re very weak on a particular wave and need to undercut your opponents (sending mercenaries one wave before they send)
+            | Be unpredictable. Sometimes sending on an opponent's strong wave can catch them off guard. A mixed strategy of incoming and saving is often the key to victory.
+            .messageTextEndMarker  

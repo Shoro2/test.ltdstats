@@ -156,6 +156,12 @@ app.get('/compare', (req, res) => {
     })
 });
 
+app.get('/howto', (req, res) => {
+    res.render('guides/general/howto', {
+        title: 'Legion TD 2 - Gameplay Guide'
+    })
+});
+
 //Guides
 
 app.get('/guides', (req, res) => {
@@ -292,6 +298,11 @@ app.get('/guides', (req, res) => {
             });
             break;
         //general
+        case "howto":
+                res.render('guides/mastermind/howto', {
+                    title: 'Legion TD 2 - Gameplay Guide'
+                });
+                break;
         case "bonnysplit":
             res.render('guides/general/splitting', {
                 title: 'Bonny´s Basic Splitting Guide'
