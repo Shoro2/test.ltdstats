@@ -47,7 +47,7 @@
     margin-left:auto;
     margin-right:auto;
     width:70%;
-    height:90%;
+    text-align:center;
 }
 
 .ytframe{
@@ -63,4 +63,11 @@
     background: lightgray;
     border-radius: 5px;
     margin: 5px;
+}
+
+.guidepic{
+    max-height: 500px;
+    width:90%;
+    margin-left:5%;
+    margin-right:5%;
 }

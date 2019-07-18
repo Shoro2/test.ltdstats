@@ -3,10 +3,13 @@
     "",
     "\\private",
     "\\public",
-    "\\public\\js",
+    "\\public\\css",
     "\\views",
-    "\\views\\ascension"
+    "\\views\\ascension",
+    "\\views\\guides",
+    "\\views\\guides\\general",
+    "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\public\\js\\replay.js",
+  "SelectedNode": "\\public\\css\\guides.css",
   "PreviewInSolutionExplorer": false
 }

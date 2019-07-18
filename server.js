@@ -236,7 +236,12 @@ app.get('/guides', (req, res) => {
                 title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
             });
             break;
-        //mastermind
+            //mastermind
+        case "bonnyopeners":
+            res.render('guides/mastermind/openers', {
+                title: 'Mastermind Openers'
+            });
+            break;
         case "zitronenrittersmm":
             res.render('guides/mastermind/zitronenritter', {
                 title: 'Zitronenritter´s Mastermind Guide'
@@ -299,7 +304,7 @@ app.get('/guides', (req, res) => {
             break;
         //general
         case "howto":
-                res.render('guides/mastermind/howto', {
+                res.render('guides/general/howto', {
                     title: 'Legion TD 2 - Gameplay Guide'
                 });
                 break;
