@@ -187,6 +187,7 @@
     opacity: 0.9;
     background-color: lightgray;
     overflow: auto;
+    margin-top: 2%;
 }
 
     #stats::-webkit-scrollbar {

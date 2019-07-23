@@ -3,13 +3,13 @@
     "",
     "\\private",
     "\\public",
-    "\\public\\css",
+    "\\public\\js",
     "\\views",
     "\\views\\ascension",
     "\\views\\guides",
     "\\views\\guides\\general",
     "\\views\\guides\\mastermind"
   ],
-  "SelectedNode": "\\public\\css\\guides.css",
+  "SelectedNode": "\\views\\ascension\\guides.jade",
   "PreviewInSolutionExplorer": false
 }

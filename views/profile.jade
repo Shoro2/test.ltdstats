@@ -20,86 +20,39 @@ block content
                 #rank
                 #player_icon1
                 #stats
+                    button#toggleseason(style="float:right;") Overall
                     #mittig
-                        b This page is under construction!
-                        #gameamount
-                        #totalwins
-                        #totalties
-                        #totalquits
-                        #collectionvalue
-                        #gameswithoutcard
-                        #playtime
-                        #playerlevel
-                        #winstreak
-                        #casualgames
-                        #bestfriends
-                    button#toggleseason Overall 
-                    table#seasonstats
-                        tr
-                            th
-                        tr
-                            td 
-                                b Total Games
-                            td#ts_totalgames
-                            td
-                                b Total Wins
-                            td#ts_totalwins
-                            td
-                                b Rank
-                            td#ts_rank
-                        tr
-                            td 
-                                b Normal Elo
-                            td#ts_normalelo
-                            td 
-                                b Normal Peak Elo
-                            td#ts_normalpeakelo
-                        tr
-                            td
-                                b Classic Elo
-                            td#ts_classicelo
-                            td
-                                b Classic Peak Elo
-                            td#ts_classicpeakelo
-                            td
-                                b Classic Wins
-                            td#ts_classicwins
-                    table#overallstats
-                        tr
-                            th
-                        tr
-                            td 
-                                b Total Games
-                            td#to_totalgames
-                            td
-                                b Total Wins
-                            td#to_totalwins
-                            td
-                                b 
-                            td
-                        tr
-                            td 
-                                b Normal Elo
-                            td#to_normalelo
-                        tr
-                            td 
-                                b Normal Peak Elo
-                            td#to_normalpeakelo
-                        tr
-                            td
-                                b Rank
-                            td#to_rank
-                        tr
-                            td
-                                b Classic Elo
-                            td#to_classicelo
-                            td
-                                b Classic Peak Elo
-                            td#to_classicpeakelo
-                            td
-                                b Classic Wins
-                            td#to_classicwins
-                            
+                        #total
+                            #playerLevel
+                            #gamesPlayed
+                            #winRate
+                            #winStreak
+                            #classicElo
+                            #gameTime
+                            #collectionValue
+                            #gamesWithoutCard
+                            #botWins
+                            #bestfriends
+                        #seasonal
+                            h3 Seasonal
+                            #s_overallElo
+                            #s_rankedPeakElo
+                            #s_rankedWins
+                            #s_rankedLoses
+                            #s_classicElo
+                            #s_classicPeakElo
+                            #s_classicWins
+                            #s_classicLoses
+                        #overall
+                            h3 Overall
+                            #o_rankedPeakElo
+                            #o_rankedWins
+                            #o_rankedQuits
+                            #o_rankedTies
+                            #o_rankedLoses
+                            #o_casualGames
+                            #o_casualWins
+                            #o_classicPeakElo      
         .tab_box#tab_box_2
             .profile
                 h1#player_name2

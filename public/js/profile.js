@@ -119,18 +119,17 @@ function loadGames() {
 function loadStats(player) {
     player_name = player.playername;
     player_id = player.id;
-    //player_icon = player.AvatarUrl;
+    player_icon = player.avatarUrl;
     //general
-    player_totalgames = player.statistics.gamesPlayed;
-    player_totalwins = player.statistics.wins;
+    player_totalgames = player.statistics.gamesPlayed; //total ranked games
+    player_totalwins = player.statistics.wins; //overall ranked wins
     player_totalwinchance = player.statistics.winRate;
     if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
     player_ties = player.statistics.ties;
     if (typeof player.statistics.ties == 'undefined') player_ties = 0;
     player_quits = player.statistics.quits;
     if (typeof player.statistics.quits == 'undefined') player_quits = 0;
-    player_overall_elo = player.statistics.overallElo;
-    //console.log(player.statistics.overallPeakElo);
+    player_overall_elo = player.statistics.overallElo; //current elo season
     if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
     else player_overall_peakelo = player.statistics.overallPeakElo;
     player_overall_xp = player.statistics.totalXp
@@ -215,11 +214,10 @@ function getPlayerLevel(totalXp) {
 }
 
 function parseStats() {
-    document.getElementById("gameamount").textContent = "Games: " + player_totalgames;
-    document.getElementById("totalwins").textContent = "Wins: " + player_totalwins + " (" + player_totalwinchance + "%)";
+    document.getElementById("gamesPlayed").textContent = "Games: " + player_totalgames;
+    document.getElementById("o_rankedWins").textContent = "Wins: " + player_totalwins + " (" + player_totalwinchance + "%)";
     document.getElementById("playerlevel").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
-    document.getElementById("winstreak").textContent = "Winningstreak: " + player_winningstreak;
-    console.log(player_bestfriends);
+    document.getElementById("winStreak").textContent = "Winningstreak: " + player_winningstreak;
     if (typeof player_bestfriends !== 'undefined') document.getElementById("bestfriends").innerHTML = "Best Friends: " + player_bestfriends;
 }
 
