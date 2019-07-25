@@ -17,7 +17,7 @@ html
         if(title.includes("Ladder"))
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Ladder")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, ladder, ranking, rank, top player, best player, legion ladder, mastermind, element, grove, forsaken, mech, atlantean")
-            meta(name="description", content="Offical ladder showing top 100 players by legion.")
+            meta(name="description", content="Offical LTD2 ranked ladder. Look up top players or your own spot in the ladder.")
         if(title=="Games")
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Replay")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, replay, past game, games, game, top games")
@@ -25,7 +25,7 @@ html
         if(title=="Compare")
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Compare")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, compare, player")
-            meta(name="description", content="Compare two players statistics/progress")
+            meta(name="description", content="Compare two players to see who is the better LTD player.")
         if(title=="Builder")
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Builder")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, builder, build, share, attrib")
@@ -41,7 +41,7 @@ html
         if(title.includes("Stats"))
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Statistics, Stats")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, player, elo, distribution, pickrates, winrates, mastermind, mech, forsaken, element, grove, fighter, worker per wave, networth per wave, value on game end, workers on game end, income on game end, leaks on game end")
-            meta(name="description", content="View high quality Legion TD 2 guides created by top players.")
+            meta(name="description", content="View high quality beginner and advanced Legion TD 2 guides created by top players.")
         if(title.includes("Tournaments"))
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Tournaments")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, tournaments, tournament, competition, tourney, teams, team list, player list, best teams, masters cup, masters cup I, masters cup II")
@@ -49,11 +49,11 @@ html
         if(title.includes("Streams"))
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Streams, Youtube, Twitch, Streamer")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, video, stream, streamer, youtube, twitch, good players, top players")
-            meta(name="description", content="Offical hosted Legion TD 2 tournaments.")
+            meta(name="description", content="Offical hosted Legion TD 2 streams.")
         if(title.includes("Livegame"))
             meta(name="page-topic", content="Gaming, Statistics,Legion TD 2, Livegame")
             meta(name="keywords", content="legion, legion td, legion td 2, statistics, ltd2, ltd, ltdtstats, ltdstats.com, legion td 2 statistics, livegame, winchance")
-            meta(name="description", content="Look up your current game.")
+            meta(name="description", content="Look up your current game and prepare for the battle.")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
     body
         header
@@ -177,8 +177,9 @@ html
                     a.linkfooter(href="/help") Help
         script(src='https://code.jquery.com/jquery-3.1.1.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+        script(src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js")
         script(src='/js/bootstrap.js')
         script(src="/js/ads.js")
         script(src="/js/cookies.js")
         script(src="/js/checkads.js")
-        script queryLanguage();checkAnalytics();
+        script queryLanguage();checkAnalytics();var lazyLoadInstance = new LazyLoad({elements_selector: ".lazy"});

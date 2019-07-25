@@ -213,14 +213,41 @@ function getPlayerLevel(totalXp) {
     return 35
 }
 
+//parses stats into profile tab1
 function parseStats() {
+    // top
+    document.getElementById("playerLevel").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
+    // general
     document.getElementById("gamesPlayed").textContent = "Games: " + player_totalgames;
+    document.getElementById("o_rankedWins").textContent = "";
     document.getElementById("o_rankedWins").textContent = "Wins: " + player_totalwins + " (" + player_totalwinchance + "%)";
-    document.getElementById("playerlevel").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
+    
     document.getElementById("winStreak").textContent = "Winningstreak: " + player_winningstreak;
-    if (typeof player_bestfriends !== 'undefined') document.getElementById("bestfriends").innerHTML = "Best Friends: " + player_bestfriends;
+    // seasonal
+    // overall
+    
+    if (typeof player_bestfriends !== 'undefined') document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
 }
 
+//toggle seasonal/overall view
+$( "#toggleseason" ).click(function() {
+    var seasonal = document.getElementById("seasonal");
+    var overall = document.getElementById("overall");
+    //check current view
+    if(seasonal.style.display=="none"){
+        overall.style.display="none";
+        $( "#seasonal" ).fadeIn( "slow", function() {
+            // Animation complete
+          });
+    }
+    else{
+        seasonal.style.display="none";
+        $( "#overall" ).fadeIn( "slow", function() {
+            // Animation complete
+          });
+    }
+    
+  });
 
 //builds
 function toggleFilters() {

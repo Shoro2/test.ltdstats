@@ -19,11 +19,11 @@ block content
                 h3#player_elo1
                 #rank
                 #player_icon1
+                #playerLevel
                 #stats
-                    button#toggleseason(style="float:right;") Overall
+                    button#toggleseason.btn.btn-outline-success.my-sm-0(style="float:right;", onclick="toggleStats();") Overall
                     #mittig
-                        #total
-                            #playerLevel
+                        #general
                             #gamesPlayed
                             #winRate
                             #winStreak
@@ -32,7 +32,7 @@ block content
                             #collectionValue
                             #gamesWithoutCard
                             #botWins
-                            #bestfriends
+                            #bestFriends
                         #seasonal
                             h3 Seasonal
                             #s_overallElo
@@ -43,7 +43,7 @@ block content
                             #s_classicPeakElo
                             #s_classicWins
                             #s_classicLoses
-                        #overall
+                        #overall(style="display:none;")
                             h3 Overall
                             #o_rankedPeakElo
                             #o_rankedWins
