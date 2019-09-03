@@ -170,7 +170,7 @@ function loadStats(player) {
     else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
     else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Grandmaster.png'>";
     // mouseover details
-    parseStats();
+    parseStats(player);
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 23% 40%;opacity:1.0;");
     document.title = "LTDStats - " + player_name + "'s Profile";
 }
@@ -214,18 +214,17 @@ function getPlayerLevel(totalXp) {
 }
 
 //parses stats into profile tab1
-function parseStats() {
+function parseStats(player) {
     // top
     document.getElementById("playerLevel").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
     // general
-    document.getElementById("gamesPlayed").textContent = "Games: " + player_totalgames;
-    document.getElementById("o_rankedWins").textContent = "";
-    document.getElementById("o_rankedWins").textContent = "Wins: " + player_totalwins + " (" + player_totalwinchance + "%)";
+
     
     document.getElementById("winStreak").textContent = "Winningstreak: " + player_winningstreak;
     // seasonal
     // overall
-    
+    document.getElementById("o_gamesPlayed").textContent = "Ranked Games: " + player_totalgames;
+    document.getElementById("o_rankedWins").textContent = "Ranked Wins: "+player.statistics.rankedWins+ " (" + player_totalwinchance + "%)";
     if (typeof player_bestfriends !== 'undefined') document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
 }
 
@@ -236,14 +235,17 @@ $( "#toggleseason" ).click(function() {
     //check current view
     if(seasonal.style.display=="none"){
         overall.style.display="none";
-        $( "#seasonal" ).fadeIn( "slow", function() {
+        $( "#seasonal" ).fadeIn( "fast", function() {
             // Animation complete
+            $("#toggleseason").text("Overall");
           });
     }
     else{
         seasonal.style.display="none";
-        $( "#overall" ).fadeIn( "slow", function() {
+        $( "#overall" ).fadeIn( "fast", function() {
             // Animation complete
+            $("#toggleseason").text("Seasonal");
+            
           });
     }
     
@@ -968,7 +970,7 @@ function queryLivegames() {
                 result.player.statistics = JSON.parse(result.player.statistics);
                 player = result.player
                 loadStats(player);
-                parseStats();
+                parseStats(player);
                 hideLoad();
                 return player;
             }

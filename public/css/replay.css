@@ -51,6 +51,7 @@
         top: 50px;
         padding-top: 10px;
         overflow: no-content;
+        height:100%;
     }
 }
 .main-content::-webkit-scrollbar {

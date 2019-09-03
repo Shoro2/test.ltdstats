@@ -213,6 +213,7 @@ function parsePlayers(myPlayers, type) {
                 if (players[i].statistics.losses == null) players[i].statistics.losses = 0;
                 if (players[i].statistics.quits == null) players[i].statistics.quits = 0;
                 if (players[i].statistics.ties == null) players[i].statistics.ties = 0;
+                //var totalgames = players[i].statistics.wins + players[i].statistics.losses + players[i].statistics.quits + players[i].statistics.ties;
                 var totalgames = players[i].statistics.wins + players[i].statistics.losses+ players[i].statistics.quits;
                 if (players[i].statistics.overallPeakEloThisSeason == null) players[i].statistics.overallPeakEloThisSeason=playres[i].statistics.overallElo;
                 var totalwins = players[i].statistics.wins;

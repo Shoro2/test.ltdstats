@@ -159,6 +159,7 @@
 
 .profile {
     height: 100%;
+    padding: 1%;
 }
 
 /*MARKIERUNG*/
@@ -187,7 +188,7 @@
     opacity: 0.9;
     background-color: lightgray;
     overflow: auto;
-    margin-top: 1%;
+    margin-top: 2%;
 }
 
     #stats::-webkit-scrollbar {

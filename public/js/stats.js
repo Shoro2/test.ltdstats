@@ -807,7 +807,7 @@ function readSelection() {
     try {
         myChart.destroy();
     }
-    catch(error){ }
+    catch{ }
     if (document.getElementById("value_textField").style.display == "") var meineValue = document.getElementById("value_textField").value;
     else var meineValue = document.getElementById("value_dateField").value;
 
@@ -862,7 +862,7 @@ function createTable(data) {
     }
     for (var i = 0; i < allFighters.length; i++) {
         try { myTable.deleteRow(i + 1); }
-        catch(error){ }
+        catch{ }
         var row = myTable.insertRow(i + 1);
         var cell = [];
         var wave = document.getElementById("waveselector").value;

@@ -21,11 +21,9 @@ block content
                 #player_icon1
                 #playerLevel
                 #stats
-                    button#toggleseason.btn.btn-outline-success.my-sm-0(style="float:right;", onclick="toggleStats();") Overall
+                    button#toggleseason.btn.btn-outline-success.my-sm-0(style="float:right;") Overall
                     #mittig
                         #general
-                            #gamesPlayed
-                            #winRate
                             #winStreak
                             #classicElo
                             #gameTime
@@ -46,6 +44,7 @@ block content
                         #overall(style="display:none;")
                             h3 Overall
                             #o_rankedPeakElo
+                            #o_gamesPlayed
                             #o_rankedWins
                             #o_rankedQuits
                             #o_rankedTies

@@ -411,7 +411,6 @@ function getPlayer() {
 }
 
 function gamesTogether(games_together, name1, name2){
-    console.log(games_together);
     let games_together_amount = 0;
     let games_together_wins = 0;
     let games_against_amount = 0;

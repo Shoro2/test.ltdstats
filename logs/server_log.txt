@@ -1,0 +1,6 @@
+1.8.2019 12:13:31: Running on http://10.128.0.10:3000
+1.8.2019 12:13:53: http://10.128.0.10:3666/stats/patch?type=fighterstats&version=4.01&fightername=pyro&elo=1200&gametype=normal
+1.8.2019 12:13:53: Error: read ECONNRESET
+2.8.2019 10:06:14: Http relay listening on port: 3000
+2.8.2019 10:06:14: Https Server Running on https://10.128.0.10:443
+2.8.2019 11:17:32: ipv4
