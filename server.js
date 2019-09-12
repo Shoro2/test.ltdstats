@@ -10,7 +10,9 @@ var bodyParser = require('body-parser');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var fs = require("fs");
 var redirectToHttps = require('express-http-to-https').redirectToHTTPS();
-
+//DEBUG SWITCH
+const debug = true;
+//
 require('isomorphic-fetch');
 // Constants
 const PORT = 3000;
@@ -25,14 +27,7 @@ const app = express();
 
 function writeLog(text) {
     var date = new Date();
-    var years = date.getFullYear();
-    var months = date.getMonth();
-    var days = date.getDay();
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "0" + date.getSeconds();
-    var formattedTime = days+"."+months+"."+years +" "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-    var line = formattedTime + ": " + text + "\r\n";
+    var line = date.toString() + ": " + text + "\r\n";
     fs.appendFile("logs/server_log.txt", line, (err) => {
         if (err) console.log(err);
     });
@@ -67,18 +62,21 @@ app.get('/profile', (req, res) => {
     res.render('profile', {
         title: 'Profile'
     });
+    if(debug) writeLog("/profile (" + res.ip+")");
 });
 
 app.get('/index.html', (req, res) => {
     res.render('index', {
         title: 'Home'
     });
+    if (debug) writeLog("/index (" + res.ip + ")");
 });
 
 app.get('/', (req, res) => {
     res.render('index', {
         title: 'Home'
     });
+    if (debug) writeLog("/ (" + res.ip + ")");
 });
 
 /*
@@ -93,120 +91,98 @@ app.get('/stats', (req, res) => {
     res.render('stats', {
         title: 'Stats'
     });
+    if (debug) writeLog("/stats (" + res.ip + ")");
 });
 
 app.get('/stats/player', (req, res) => {
     res.render('stats', {
         title: 'Player Stats'
     });
+    if (debug) writeLog("/stats/player (" + res.ip + ")");
 });
 
 app.get('/stats/overall', (req, res) => {
     res.render('stats', {
         title: 'Overall Stats'
     });
+    if (debug) writeLog("/stats/overall (" + res.ip + ")");
 });
 
 app.get('/stats/daily', (req, res) => {
     res.render('stats', {
         title: 'Daily Stats'
     });
+    if (debug) writeLog("/stats/daily (" + res.ip + ")");
 });
 
 app.get('/stats/patch', (req, res) => {
     res.render('stats', {
         title: 'Patch Stats'
     });
+    if (debug) writeLog("/stats/patch (" + res.ip + ")");
 });
 
 app.get('/ladder', (req, res) => {
     res.render('ladder/overallladder', {
         title: 'Overall Ladder'
     });
+    if (debug) writeLog("/ladder (" + res.ip + ")");
 });
 
 app.get('/ladder/overall', (req, res) => {
     res.render('ladder/overallladder', {
         title: 'Overall Ladder'
     });
-});
-
-app.get('/ladder/element', (req, res) => {
-    res.render('ladder/elementladder', {
-        title: 'Element Ladder'
-    });
-});
-
-app.get('/ladder/grove', (req, res) => {
-    res.render('ladder/groveladder', {
-        title: 'Grove Ladder'
-    });
-});
-
-app.get('/ladder/forsaken', (req, res) => {
-    res.render('ladder/forsakenladder', {
-        title: 'Forsaken Ladder'
-    });
-});
-
-app.get('/ladder/mech', (req, res) => {
-    res.render('ladder/mechladder', {
-        title: 'Mech Ladder'
-    });
-});
-
-app.get('/ladder/mastermind', (req, res) => {
-    res.render('ladder/mastermindladder', {
-        title: 'Mastermind Ladder'
-    });
-});
-
-app.get('/ladder/atlantean', (req, res) => {
-    res.render('ladder/atlanteanladder', {
-        title: 'Atlantean Ladder'
-    });
+    if (debug) writeLog("/ladder/overall (" + res.ip + ")");
 });
 
 app.get('/builder', (req, res) => {
     res.render('builder', {
         title: 'Builder'
     });
+    if (debug) writeLog("/builder (" + res.ip + ")");
 });
 
 app.get('/units', (req, res) => {
     res.render('units', {
         title: 'Units'
     });
+    if (debug) writeLog("/units (" + res.ip + ")");
 });
 
 app.get('/replay', (req, res) => {
     res.render('replay', {
         title: 'Replay'
     });
+    if (debug) writeLog("/replay (" + res.ip + ")");
 });
 
 app.get('/gameview', (req, res) => {
     res.render('gameviewer', {
         title: 'View Game'
     });
+    if (debug) writeLog("/gameview (" + res.ip + ")");
 });
 
 app.get('/compare', (req, res) => {
     res.render('compare', {
         title: 'Compare'
     });
+    if (debug) writeLog("/compare (" + res.ip + ")");
 });
 
 app.get('/howto', (req, res) => {
     res.render('guides/general/howto', {
         title: 'Legion TD 2 - Gameplay Guide'
     });
+    if (debug) writeLog("/howto (" + res.ip + ")");
 });
 
 //Guides
 
 app.get('/guides', (req, res) => {
     var guide = req.query.guide;
+    if (debug) writeLog("/guides "+guide+" (" + res.ip + ")");
     switch (guide) {
         //element
         case "elementbasics":
@@ -440,6 +416,7 @@ app.get('/guides', (req, res) => {
             });
             break;
         case "upload":
+            if (debug) writeLog("/guides UPLOAD (" + res.ip + ")");
             var preamble = req.query.preamble;
             var waves = req.query.waves;
             var author = req.query.author;
@@ -477,6 +454,7 @@ app.get('/guides', (req, res) => {
             res.render('guides/searchguide', {
                 title: 'Guides'
             });
+            if (debug) writeLog("/guides DEFAULT (" + res.ip + ")");
             break;
     }
 });
@@ -485,114 +463,133 @@ app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About'
     });
+    if (debug) writeLog("/about (" + res.ip + ")");
 });
 
 app.get('/cookies', (req, res) => {
     res.render('cookies', {
         title: 'Cookie Policies'
     });
+    if (debug) writeLog("/cookies (" + res.ip + ")");
 });
 
 app.get('/faq', (req, res) => {
     res.render('faq', {
         title: 'FAQ'
     });
+    if (debug) writeLog("/faq (" + res.ip + ")");
 });
 
 app.get('/feedback', (req, res) => {
     res.render('feedback', {
         title: 'Feddback & Bug Report'
     });
+    if (debug) writeLog("/feedback (" + res.ip + ")");
 });
 
 app.get('/help', (req, res) => {
     res.render('help', {
         title: 'Help'
     });
+    if (debug) writeLog("/help (" + res.ip + ")");
 });
 
 app.get('/help/profile', (req, res) => {
     res.render('help/helpprofile', {
         title: 'Help - Profile'
     });
+    if (debug) writeLog("/help/profile (" + res.ip + ")");
 });
 
 app.get('/help/ladder', (req, res) => {
     res.render('help/helpladder', {
         title: 'Help - Ladder'
     });
+    if (debug) writeLog("/help/ladder (" + res.ip + ")");
 });
 
 app.get('/help/replay', (req, res) => {
     res.render('help/helpreplay', {
         title: 'Help - Replay'
     });
+    if (debug) writeLog("/help/replay (" + res.ip + ")");
 });
 
 app.get('/help/compare', (req, res) => {
     res.render('help/helpcompare', {
         title: 'Help - Compare'
     });
+    if (debug) writeLog("/help/compare (" + res.ip + ")");
 });
 
 app.get('/help/builder', (req, res) => {
     res.render('help/helpbuilder', {
         title: 'Help - Builder'
     });
+    if (debug) writeLog("/help/builder (" + res.ip + ")");
 });
 
 app.get('/help/units', (req, res) => {
     res.render('help/helpunits', {
         title: 'Help - Units'
     });
+    if (debug) writeLog("/help/units (" + res.ip + ")");
 });
 
 app.get('/help/guides', (req, res) => {
     res.render('help/helpguides', {
         title: 'Help - Guides'
     });
+    if (debug) writeLog("/help/guides (" + res.ip + ")");
 });
 
 app.get('/help/statistics', (req, res) => {
     res.render('help/helpstatistics', {
         title: 'Help - Statistics'
     });
+    if (debug) writeLog("/help/statistics (" + res.ip + ")");
 });
 
 app.get('/contact', (req, res) => {
     res.render('contact', {
         title: 'Contact'
     });
+    if (debug) writeLog("/contact (" + res.ip + ")");
 });
 
 app.get('/lihl', (req, res) => {
     res.render('lihl', {
         title: 'LIHL'
     });
+    if (debug) writeLog("/lihl (" + res.ip + ")");
 });
 
 app.get('/streams', (req, res) => {
     res.render('streams', {
         title: 'Featured Streams'
     });
+    if (debug) writeLog("/streams (" + res.ip + ")");
 });
 
 app.get('/livegame', (req, res) => {
     res.render('livegame', {
         title: 'Livegame'
     });
+    if (debug) writeLog("/livegame (" + res.ip + ")");
 });
 
 app.get('/donate', (req, res) => {
     res.render('donate', {
         title: 'Donate'
     });
+    if (debug) writeLog("/donate (" + res.ip + ")");
 });
 
 app.get("/quiz", (req, res) => {
     res.render('quiz', {
         title: 'Quiz'
     });
+    if (debug) writeLog("/quiz (" + res.ip + ")");
 });
 //non ltd related
 
@@ -600,6 +597,7 @@ app.get('/ascension', (req, res) => {
     res.render('ascension/guides', {
         title: 'Project Ascension Guides'
     });
+    if (debug) writeLog("/ascension (" + res.ip + ")");
 });
 
 
@@ -959,6 +957,7 @@ app.get('/api/playerElo', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1018,6 +1017,7 @@ app.get('/api/units', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1040,6 +1040,7 @@ app.get('/api/replay/getGame', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1062,6 +1063,7 @@ app.get('/api/replay/getTopPlayer', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1086,6 +1088,7 @@ app.get('/api/ladder', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1163,6 +1166,7 @@ app.get('/api/profile/player100', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1187,6 +1191,7 @@ app.get('/api/profile/player', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1208,6 +1213,7 @@ app.get('/api/stats/elo', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1230,6 +1236,7 @@ app.get('/api/stats/fighter', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1247,6 +1254,7 @@ app.get('/api/stats/fighter', (req, res) => {
                     else {
                         var error = new Error(response.statusText);
                         error.response = response;
+                        writeLog(error);
                         throw error;
                     }
                 }).then(function (data) {
@@ -1264,6 +1272,7 @@ app.get('/api/stats/fighter', (req, res) => {
                             else {
                                 var error = new Error(response.statusText);
                                 error.response = response;
+                                writeLog(error);
                                 throw error;
                             }
                         }).then(function (data) {
@@ -1281,6 +1290,7 @@ app.get('/api/stats/fighter', (req, res) => {
                                     else {
                                         var error = new Error(response.statusText);
                                         error.response = response;
+                                        writeLog(error);
                                         throw error;
                                     }
                                 }).then(function (data) {
@@ -1298,6 +1308,7 @@ app.get('/api/stats/fighter', (req, res) => {
                                             else {
                                                 var error = new Error(response.statusText);
                                                 error.response = response;
+                                                writeLog(error);
                                                 throw error;
                                             }
                                         }).then(function (data) {
@@ -1350,6 +1361,7 @@ app.get('/api/stats/player/winrate', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1373,6 +1385,7 @@ app.get('/api/stats/legions/avgvalueEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1397,6 +1410,7 @@ app.get('/api/stats/player/avgvalueEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1421,6 +1435,7 @@ app.get('/api/stats/legions/avgvincEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1432,7 +1447,7 @@ app.get('/api/stats/legions/avgvincEnd', (req, res) => {
 app.get('/api/stats/player/avgvincEnd', (req, res) => {
     var type = req.query.type;
     var value = req.query.value;
-    var value2 = requ.query.value2;
+    var value2 = req.query.value2;
     fetch('https://api.legiontd2.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
@@ -1445,6 +1460,7 @@ app.get('/api/stats/player/avgvincEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1469,6 +1485,7 @@ app.get('/api/stats/legions/avgworkersEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1493,6 +1510,7 @@ app.get('/api/stats/player/avgworkersEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1516,6 +1534,7 @@ app.get('/api/stats/legions/avgleaksEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1540,6 +1559,7 @@ app.get('/api/stats/player/avgwleaksEnd', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1563,6 +1583,7 @@ app.get('/api/stats/legions/avgworkersWave', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1587,6 +1608,7 @@ app.get('/api/stats/player/avgworkersWave', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1610,6 +1632,7 @@ app.get('/api/stats/legions/avgnetworthsWave', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1634,6 +1657,7 @@ app.get('/api/stats/player/avgnetworthsWave', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1655,6 +1679,7 @@ app.get('/api/stats/playercount', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1682,6 +1707,7 @@ app.get('/api/tour/player', (req, res) => {
             else {
                 var error = new Error(response.statusText);
                 error.response = response;
+                writeLog(error);
                 throw error;
             }
         }).then(function (data) {
@@ -1704,12 +1730,12 @@ var httpRelay = app.listen(PORT, function () {
 // Server für SSL Encryption konfigurieren
 var server = https.createServer(options, app).listen(sslPort, function (err) {
     if (err) console.log(err);
-    console.log("Https Server listening on port: " + sslPort);
+    writeLog("Https Server listening on port: " + sslPort);
 });
 
 // Auch auf Port 80 lauschen, damit redirected werden kann
 var httpRelay = http.createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);
-    console.log("Http Relay listening on port: "+PORT);
+    writeLog("Http Relay listening on port: " + PORT);
 });
 
