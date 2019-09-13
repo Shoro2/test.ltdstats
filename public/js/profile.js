@@ -123,6 +123,7 @@ function loadStats(player) {
     //general
     player_totalgames = player.statistics.gamesPlayed; //total ranked games
     player_totalwins = player.statistics.wins; //overall ranked wins
+    if (typeof player.statistics.wins == 'undefined') player_totalwins = 0;
     player_totalwinchance = player.statistics.winRate;
     if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
     player_ties = player.statistics.ties;
@@ -132,11 +133,11 @@ function loadStats(player) {
     player_overall_elo = player.statistics.overallElo; //current elo season
     if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
     else player_overall_peakelo = player.statistics.overallPeakElo;
-    player_overall_xp = player.statistics.totalXp
+    player_overall_xp = player.statistics.totalXp;
     player_overall_level = getPlayerLevel(player_overall_xp);
     player_winningstreak = player.statistics.winStreak;
-    console.log(player);
-    if (player.bestFriends[0].player != null) {
+    console.log(player.bestFriends);
+    if (player.bestFriends > 0) {
         player_bestfriends = "";
         player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
         if (player.bestFriends[1].player != null) {
@@ -176,41 +177,41 @@ function loadStats(player) {
 }
 
 function getPlayerLevel(totalXp) {
-    if (totalXp < 1) return 1
-    if (totalXp < 1001) return 2
-    if (totalXp < 3001) return 3
-    if (totalXp < 7001) return 4
-    if (totalXp < 13001) return 5
-    if (totalXp < 21001) return 6
-    if (totalXp < 31001) return 7
-    if (totalXp < 43001) return 8
-    if (totalXp < 57001) return 9
-    if (totalXp < 73001) return 10
-    if (totalXp < 91001) return 11
-    if (totalXp < 111001) return 12
-    if (totalXp < 133001) return 13
-    if (totalXp < 157001) return 14
-    if (totalXp < 183001) return 15
-    if (totalXp < 211001) return 16
-    if (totalXp < 241001) return 17
-    if (totalXp < 273001) return 18
-    if (totalXp < 307001) return 19
-    if (totalXp < 343001) return 20
-    if (totalXp < 381001) return 21
-    if (totalXp < 421001) return 22
-    if (totalXp < 463001) return 23
-    if (totalXp < 507000) return 24
-    if (totalXp < 553001) return 25
-    if (totalXp < 601001) return 26
-    if (totalXp < 651001) return 27
-    if (totalXp < 703001) return 28
-    if (totalXp < 757001) return 29
-    if (totalXp < 813001) return 30
-    if (totalXp < 871001) return 31
-    if (totalXp < 931001) return 32
-    if (totalXp < 993001) return 33
-    if (totalXp < 1057001) return 34
-    return 35
+    if (totalXp < 1) return 1;
+    if (totalXp < 1001) return 2;
+    if (totalXp < 3001) return 3;
+    if (totalXp < 7001) return 4;
+    if (totalXp < 13001) return 5;
+    if (totalXp < 21001) return 6;
+    if (totalXp < 31001) return 7;
+    if (totalXp < 43001) return 8;
+    if (totalXp < 57001) return 9;
+    if (totalXp < 73001) return 10;
+    if (totalXp < 91001) return 11;
+    if (totalXp < 111001) return 12;
+    if (totalXp < 133001) return 13;
+    if (totalXp < 157001) return 14;
+    if (totalXp < 183001) return 15;
+    if (totalXp < 211001) return 16;
+    if (totalXp < 241001) return 17;
+    if (totalXp < 273001) return 18;
+    if (totalXp < 307001) return 19;
+    if (totalXp < 343001) return 20;
+    if (totalXp < 381001) return 21;
+    if (totalXp < 421001) return 22;
+    if (totalXp < 463001) return 23;
+    if (totalXp < 507000) return 24;
+    if (totalXp < 553001) return 25;
+    if (totalXp < 601001) return 26;
+    if (totalXp < 651001) return 27;
+    if (totalXp < 703001) return 28;
+    if (totalXp < 757001) return 29;
+    if (totalXp < 813001) return 30;
+    if (totalXp < 871001) return 31;
+    if (totalXp < 931001) return 32;
+    if (totalXp < 993001) return 33;
+    if (totalXp < 1057001) return 34;
+    return 35;
 }
 
 //parses stats into profile tab1
@@ -224,8 +225,13 @@ function parseStats(player) {
     // seasonal
     // overall
     document.getElementById("o_gamesPlayed").textContent = "Ranked Games: " + player_totalgames;
-    document.getElementById("o_rankedWins").textContent = "Ranked Wins: "+player.statistics.rankedWins+ " (" + player_totalwinchance + "%)";
+    document.getElementById("o_rankedWins").textContent = "Ranked Wins: "+player.statistics.wins+ " (" + player_totalwinchance + "%)";
     if (typeof player_bestfriends !== 'undefined') document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
+
+
+
+
+
 }
 
 //toggle seasonal/overall view
@@ -281,7 +287,7 @@ function drawPlayerBuilds(gameX) {
     anzahl = 0;
     leaks = new Array(6);
     sends = new Array(6);
-    sendchance = new Array(6)
+    sendchance = new Array(6);
     builds = new Array(6);
     for (var i = 0; i < leaks.length; i++) {
         leaks[i] = new Array(21);
@@ -553,11 +559,11 @@ function drawPlayerBuilds(gameX) {
                 var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
                 legion = ", Legion: " + gameDetail['legion'];
                 if (i > 0) {
-                    var gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                    gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
                     currelo = gameDetail['overallElo'];
                 }
                 else currelo = parseInt(player.statistics.overallElo);
-                var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
                 pastelo = gameDetail['overallElo'];
                 var elochange = 0;
                 elochange = currelo - pastelo;
@@ -588,6 +594,7 @@ function drawPlayerBuilds(gameX) {
         meinString2 = games[pos].gameDetails.filter(meinString => meinString.position == 5)[0];
         meinString3 = games[pos].gameDetails.filter(meinString => meinString.position == 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
+        
         //console.log(gameEvent);
     }
 
@@ -596,55 +603,61 @@ function drawPlayerBuilds(gameX) {
     }
 
     function drawGameDetails(player_position) {
-        var selectedGame = document.getElementById("setGame").value;
-        getGameDetails(selectedGame, games);
-        if (gameEvent[0]) {
-            if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
-            else var wave = parseInt(document.getElementById("setWave").value);
-            for (var i = 0; i < 4; i++) {
-                var neuesI = i + 1;
-                try {
-                    document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
-                    document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
-                    document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
-                    document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
-                    document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
-                    document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
-                    document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
-                    if (gameEvent[i].playername == player_name) var position = i;
-                }
-                catch{
+        try {
+            var selectedGame = document.getElementById("setGame").value;
+            getGameDetails(selectedGame, games);
+            if (gameEvent[0]) {
+                if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+                else var wave = parseInt(document.getElementById("setWave").value);
+                for (var i = 0; i < 4; i++) {
+                    var neuesI = i + 1;
+                    try {
+                        document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
+                        document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
+                        document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
+                        document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
+                        document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
+                        document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
+                        document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
+                        if (gameEvent[i].playername == player_name) var position = i;
+                    }
+                    catch{
+                        console.log("failed to write game details");
+                    }
+
+
 
                 }
+                getPlayerBuild(player_position);
+                //Summary:
 
-
-
+                var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
+                document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
+                document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ") + " UTC";
+                document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
+                document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
+                document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
             }
-            getPlayerBuild(player_position);
-            //Summary:
-
-            var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
-            document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
-            document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ") + " UTC";
-            document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
-            document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-            document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
         }
+        catch (err) {
+            console.log(err);
+        }
+        
     }
     function dec2hex(str) { // .toString(16) only works up to 2^53
-        var dec = str.toString().split(''), sum = [], hex = [], i, s
+        var dec = str.toString().split(''), sum = [], hex = [], i, s;
         while (dec.length) {
-            s = 1 * dec.shift()
+            s = 1 * dec.shift();
             for (i = 0; s || i < sum.length; i++) {
-                s += (sum[i] || 0) * 10
-                sum[i] = s % 16
-                s = (s - sum[i]) / 16
+                s += (sum[i] || 0) * 10;
+                sum[i] = s % 16;
+                s = (s - sum[i]) / 16;
             }
         }
         while (sum.length) {
-            hex.push(sum.pop().toString(16))
+            hex.push(sum.pop().toString(16));
         }
-        return hex.join('')
+        return hex.join('');
     }
     function getPlayerValue(player, level) {
         try {
@@ -812,7 +825,7 @@ function drawPlayerBuilds(gameX) {
             //4
             ctx = el4.getContext('2d');
             ctx.drawImage(meinBild1, 32, 0, 32, 32, 0, 0, 300, 150);
-        }
+        };
     }
 
     function clearPictures() {
@@ -968,7 +981,7 @@ function queryLivegames() {
             }
             else {
                 result.player.statistics = JSON.parse(result.player.statistics);
-                player = result.player
+                player = result.player;
                 loadStats(player);
                 parseStats(player);
                 hideLoad();

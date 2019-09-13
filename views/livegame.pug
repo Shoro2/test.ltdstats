@@ -1,0 +1,95 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/livegame.css')
+    .content
+        #player_details_box(style="display:none;")
+            #closebutton(style="float:right;") 
+                b(onclick="hidePlayerDetails();") Close
+            #player_details_content
+                #playername_details
+                #season_stats
+                select#unitselector(onchange="changeActiveUnit(this.value);")
+                table#leaktable
+                    tr
+                        td Wave
+                        td Leak Chance
+                        td Leak Amount
+                    - for(var i= 1; i<22;i++){
+                        tr
+                            td(id="wave"+i)
+                            td(id="leakchance"+i)
+                            td(id="leakamount"+i)
+                    - }
+        #amazon_ad
+        .teamcard#west(style="display:none;")
+            .player#player1
+                #name1
+                #elo1
+                #best_legion1(style="display:none;") 
+                button.showDetails(onclick="showPlayerDetails(0);") Season 4 Stats
+                select#legionp0.form-control(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart1.favcontainer
+                #leaks1.leaks
+            .player#player2
+                #name2
+                #elo2
+                #best_legion2(style="display:none;")
+                button.showDetails(onclick="showPlayerDetails(1);") Season 4 Stats
+                select#legionp1.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart2.favcontainer
+                #leaks2.leaks
+        #indermitte 
+            input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-top:10%; margin-bottom:2%;width:20%; margin-left:40%")
+            button.btn.my-sm-0(onclick="getPlayer();") Search
+            p
+            | Current Livegames:
+            h2 Normal (ranked)
+            #normalgames
+            h2 Classic (4v4)
+            #classicgames
+        .winchance#winchancebar(style="display:none;") Winchance West:
+            #myProgress
+                #myBar 50%
+        .teamcard#east(style="display:none;")
+            .player#player3
+                #name3
+                #elo3
+                #best_legion3(style="display:none;")
+                button.showDetails(onclick="showPlayerDetails(2);") Season 4 Stats
+                select#legionp2.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart3.favcontainer
+                #leaks3.leaks
+            .player#player4
+                #name4
+                #elo4
+                #best_legion4(style="display:none;")
+                button.showDetails(onclick="showPlayerDetails(3);") Season 4 Stats
+                select#legionp3.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart4.favcontainer
+                #leaks4.leaks
+    script(src="/js/livegame.js")
+    script(src="/js/getGameDetails.js")

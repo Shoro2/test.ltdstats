@@ -3,10 +3,10 @@ var firsttime = false;
 function getGameDetails(games) {
     firsttime = true;
     try {
-        meinString = games.gameDetails.filter(meinString => meinString.position == 1)[0];
-        meinString1 = games.gameDetails.filter(meinString => meinString.position == 2)[0];
-        meinString2 = games.gameDetails.filter(meinString => meinString.position == 5)[0];
-        meinString3 = games.gameDetails.filter(meinString => meinString.position == 6)[0];
+        meinString = games.gameDetails.filter(meinString => meinString.position === 1)[0];
+        meinString1 = games.gameDetails.filter(meinString => meinString.position === 2)[0];
+        meinString2 = games.gameDetails.filter(meinString => meinString.position === 5)[0];
+        meinString3 = games.gameDetails.filter(meinString => meinString.position === 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
         fillNames();
         waveAnzeigen();
@@ -103,12 +103,11 @@ function fillNames() {
         var unit_value = 0;
         //calculate value
         gameEvent[i-1].unitsPerWave[wave-1].forEach(function(ele){
-            console.log(ele);
             var unitname = ele.substring(0, ele.indexOf("_unit"));
             while(unitname.includes("_")){
                 unitname = unitname.replace("_", "");
             }
-            unit_value += unitstats.filter(meinName => meinName.name == unitname)[0].value;
+            unit_value += unitstats.filter(meinName => meinName.name === unitname)[0].value;
         });
         var networth = unit_value;
         var player_legion = gameEvent[i - 1].legion;
@@ -199,10 +198,10 @@ function addSend(element, player) {
         element = element.replace("%20", "");
     }
     //red->yellow
-    if(player==1) player = 3;
-    else if(player==2) player=4;
-    else if(player==3) player=2;
-    else if(player==4) player=1;
+    if(player===1) player = 3;
+    else if(player===2) player=4;
+    else if(player===3) player=2;
+    else if(player===4) player=1;
     document.getElementById("sends_player" + player).innerHTML += "<img src='/img/icons/" + element + ".png' class='leakpic' title='" + element + "'>";
 }
 
@@ -408,27 +407,28 @@ function searchPlayers() {
 function parseTopPlayer(players, legion) {
     var result = document.getElementById("result");
     result.innerHTML = "";
+    var legion_num = 0;
     switch (legion) {
         case "element":
-            var legion_num = 0;
+            legion_num = 0;
             break;
         case "grove":
-            var legion_num = 1;
+            legion_num = 1;
             break;
         case "forsaken":
-            var legion_num = 2;
+            legion_num = 2;
             break;
         case "mech":
-            var legion_num = 3;
+            legion_num = 3;
             break;
         case "atlantean":
-            var legion_num = 4;
+            legion_num = 4;
             break;
         case "mastermind":
-            var legion_num = 5;
+            legion_num = 5;
             break;
         case "nomad":
-            var legion_num = 6;
+            legion_num = 6;
             break;
     }
     for (var i = 0; i < players.length; i++) {
@@ -466,10 +466,10 @@ function showGames(nummer, legion) {
     }
     var games_results = 0;
     for (var i = 0; i < players[nummer].filteredGamesQuery.games.length; i++) {
-        if (players[nummer].filteredGamesQuery.games[i].legion == legion) {
+        if (players[nummer].filteredGamesQuery.games[i].legion === legion) {
             games_results++;
             result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", " + nummer + ")'>" + players[nummer].filteredGamesQuery.games[i].game_id + " Legion: " + players[nummer].filteredGamesQuery.games[i].legion + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
-            if (games_results == 10) break;
+            if (games_results === 10) break;
         }
         
     }
@@ -486,7 +486,7 @@ function drawSquares() {
     Array.prototype.forEach.call(smalls, function (element) {
         var x = element.id.substring(element.id.indexOf(".") + 1);
         var y = element.id.substring(element.id.indexOf("_")+1, element.id.indexOf("."));
-        if (x % 2 == 1) {
+        if (x % 2 === 1) {
 
             element.style["border-left"] = "2px solid black";
         }
@@ -494,7 +494,7 @@ function drawSquares() {
 
             element.style["border-right"] = "2px solid black";
         }
-        if (y % 2 == 1) {
+        if (y % 2 === 1) {
             element.style["border-bottom"] = "2px solid black";
         }
         else {

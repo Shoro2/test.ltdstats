@@ -1,0 +1,238 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/popmotion.css')
+    link(rel='stylesheet', href='/css/index.css')
+    .content
+        #builder
+        h1 LTDStats.com - Statistics, Guides, Player Profiles and more!
+        input(type="hidden" name="IL_IN_TAG" value="2")
+        .tabmenu
+            .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") News
+            .tab_top_passive#tab_top_2(onclick="javascript:openTab(2);") Content
+            .style(style='clear: both;')
+            .tab_box#tab_box_1
+                .newsbox
+                    .news
+                        b Profile/Livegame rework
+                        br
+                        | Im currently working on a 
+                        a(href="/livegame") /livegame 
+                        | and 
+                        a(href="/profile") /profile 
+                        | rework.
+                        p
+                            i 2019-09-12 GvR Mr Mister
+                    .news
+                        b Maintenance Downtime
+                        br
+                        | Im moving my machines to another host, there will be downtimes within the next few days. 
+                        p
+                            i 2019-07-23 GvR Mr Mister
+                    .news
+                        b Test your LTD knowledge
+                        br
+                        | Check out the Legion TD 2 Quiz: 
+                        a(href="https://discord.gg/cf8kqR") #quiz LTD2 Discord
+                        p
+                            i 2019-05-14 GvR Mr Mister
+                    .news
+                        b New Guides
+                        br
+                        | Do you want to optimize your builds around auras? Watch 
+                        a(href="/guides") Bonny's Aura Guides
+                        p
+                            i 2019-05-09 GvR Mr Mister
+                    #amazon_ad
+                    .news
+                        b Happy Birthday LTDStats.com - 1 Year User Statistic
+                        p
+                            h6 Users per country:
+                            .img.lazy(align="center")
+                                img.lazy(data-src="/img/usermap.png" height="300" width="479")
+                            br
+                            | Germany 34,81%
+                            br
+                            | United States 14,10%
+                            br
+                            | Denmark 4,85%
+                        p
+                            h6 Visited Pages:
+                            | Ladder 9,05%
+                            br
+                            | Profile 7,98%
+                            br
+                            | Guides 6,14%
+                        p
+                            i 2019-03-27 GvR Mr Mister
+                    .news
+                        b Livegame rework & new guides
+                        br
+                        | Added Season 3 stats overview to 
+                        a(href="/livegame") livegames
+                        br
+                        | Check out Bonny's new 
+                        a(href="/guides") Aura Guides
+                        p
+                        i 2019-03-13 GvR Mr Mister
+                    .news
+                        b Patch 3.12 is live
+                        br
+                        | Added new fighter's images
+                        br
+                        | Replay shows value instead of networth
+                        br
+                        | Fixed Roshkatul's MM Guide link
+                        br
+                        | Livegame calculated values are based on 2on2 games (instead of all games)
+                        p
+                        i 2019-03-05 GvR Mr Mister
+                    .news
+                        b Patch 3.0 is live
+                        br
+                        | Fighter Pick- and Winchances are live!
+                        | Separated classic game 
+                        a(href="/stats") stats
+                        |  coming soon.
+                        p
+                        i 2019-02-02 GvR Mr Mister
+                    .news
+                        b Happy New Year & new statistics!
+                        br
+                        | I wish you all a successfull 2019 and may the rolls be with you.
+                        br
+                        | My new database (>1.6M games!!!) is nearly finished and I can start providing new/more stats.
+                        br
+                        | Upcoming features:
+                        ul
+                            li Wave games ended on
+                                img.lazy(data-src="/img/icons/checkmark.png" height="24px" width="24px")
+                            li Build lookup (search games with unit(s) x on position y for wave z)
+                            li Pick/Winchances with ties excluded
+                                img.lazy(data-src="/img/icons/checkmark.png" height="24px" width="24px")
+                            li Fighter Pick/Winchances
+                                img.lazy(data-src="/img/icons/checkmark.png" height="24px" width="24px")
+                            li Compare stats for different patches
+                            li Separated classic game stats
+                            li 4v4 support for replay/matchhistory/livegame
+                        a(href="/stats") Stats
+                        p
+                        i 2019-01-02 GvR Mr Mister
+                    .news
+                        b New feature: Livegame lookup!
+                        br
+                        | Search for your current game to get information about your enemies.
+                        br
+                        | You receive information about their builds and chances to leak with it (click a fighter's image).
+                        br
+                        a(href="/livegame") Livegame
+                        p
+                        i 2018-08-24 GvR Mr Mister
+                    .news
+                        b New guides:
+                        br
+                        | Mercenary guide by Roshkatul
+                        br
+                        | Grove guide by Haze_Tech
+                        br
+                        a(href="/guides") Guides
+                        p
+                        i 2018-08-24 GvR Mr Mister
+                    .news
+                        b Tool: Elo Parser v1.0
+                        br
+                        | A small tool that parses a player's elo in a txt file so you can work with it (!elo command for twitch etc).
+                        br
+                        a(href="https://github.com/Shoro2/EloParser", target="blank") GitHub
+                        br
+                        | EloParser/Elo Parser/bin/Release/Elo Parser.exe
+                        p
+                        i 2018-08-20 GvR Mr Mister
+                    .news
+                        b Roshkatul's Guide: Income sending vs Saving
+                        br
+                        | Check out the new Guide by Rank 1 player Roshkatul:
+                        br
+                        a(href="/guides?guide=sendvssave") Guide
+                        p
+                        i 2018-08-09 GvR Mr Mister
+                    .news
+                        b Atlantean Legion released with patch v2.34!
+                        br
+                        | Check out the 
+                        a(href="/ladder/atlantean") Atlantean Ladder
+                        |  to look up top Atlantean players and their builds.
+                        p
+                        i 2018-08-08 GvR Mr Mister
+                    .news
+                        b Added statistics:
+                        br
+                        | Player Elo Distribution, Legion Pick/Winrates, Workers per Wave, Networth per Wave, Value on game end, Workers on game end, Income on game end and Leaks on game end.
+                        p
+                        i 2018-07-24 GvR Mr Mister
+                    .news
+                        b Want to contribute?
+                        br
+                        | For all of you that have experience in webdesign/coding may look into this: 
+                        a(href="https://github.com/Shoro2/ltdstats", target="blank") LTDStats GitHub Project
+                        p
+                        i 2018-07-24 GvR Mr Mister
+                    .news
+                        b Next-to-add:
+                        br
+                        | More statistics, detailed help section (/help), guides layout, compare layout, livegame lookup
+                        p
+                        i 2018-07-24 GvR Mr Mister
+            .tab_box#tab_box_2
+                    .contentbox
+                        b Profile
+                        p Check out statistics, elograph, the matchhistory, collection and players ingame behaviour. 
+                            a(href="/help/profile")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/profile.png")
+                        b Ladder
+                        p Check out your rank or top 100 in the offical ladder.
+                            a(href="/help/ladder")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/ladder.png")
+                        b Replay
+                        p Look up your game for detailed information about it.
+                            a(href="/help/replay")
+                                    img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/replay.png")
+                        b Compare
+                        p Compare two players.
+                            a(href="/help/compare")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/compare.png")
+                        b Builder
+                        p Share your perfect build with <a href="https://github.com/attrib/legion2-builder">Attrib's Builder Tool</a>.
+                            a(href="/help/builder")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/builder.png" width="1100px")
+                        b Units
+                        p Look up any fighter, mercanery or wave unit.
+                            a(href="/help/units")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/units.png" width="1100px")
+                        b Guides
+                        p Here you can find guides for all races and general hints.
+                            a(href="/help/guides")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/guides.png" width="1100px")
+                        b Statistics
+                        p Provides you detailled statistic about specific patches/days/players or overall data.
+                            a(href="/help/statistics")
+                                img.lazy(data-src="/img/icons/qmark.png", title="Help", width="15px", height="15px", style="margin:5px; float:right;")
+                        p
+                            img.indexbild.lazy(data-src="/img/statistics.png" width="1100px")
+    script(src="/js/jquery.js")                    
+    script(src="/js/tabmenu.js")
+    link(rel='stylesheet', href='/css/tabmenu.css')
+    script openTab(1);

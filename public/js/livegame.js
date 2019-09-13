@@ -8,16 +8,15 @@ function checkContent() {
     else {
         queryLivegame(document.getElementById("playername2").value);
     }
-    document.getElementById("indermitte").textContent = "";
+    document.getElementById("indermitte").style.display = "none";
 }
 
 function getPlayer() {
-    console.log(this);
     if (document.getElementById("playername").value.length > 0) {
-        window.history.pushState('livegame', 'Livegame', '?player=' + document.getElementById("playername").value);
+        window.history.pushState('livegame', 'Livegame', '?playername=' + document.getElementById("playername").value);
     }
     else if (document.getElementById("playername2").value.length > 0) {
-        window.history.pushState('livegame', 'Livegame', '?player=' + document.getElementById("playername2").value);
+        window.history.pushState('livegame', 'Livegame', '?playername=' + document.getElementById("playername2").value);
     }
     checkContent();
 
@@ -27,9 +26,9 @@ function getPlayer() {
 function checkLink() {
     var url_string = window.location.href;
     var url = new URL(url_string);
-    var playerurl = url.searchParams.get("player");
+    var playerurl = url.searchParams.get("playername");
     // request per url
-    if (playerurl != null && document.getElementById("playername").value.length == 0) {
+    if (playerurl !== null) {
         document.getElementById("playername").value = playerurl;
         checkContent();
     }
@@ -40,10 +39,16 @@ function parsePlayers() {
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
-        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i]; })[0];
+        if (parsedPlayer[i]==undefined) {
+            parsedPlayer[i] = {
+                playername: "Bot", statistics: { overallElo: 1000, gamesPlayed: 0 }, games: {} };
+        }
         //console.log(parsedPlayer[i]);
     }
-    for (var i = 0; i < 4; i++) {
+    console.log(allPlayers);
+    console.log(parsedPlayer);
+    for (i = 0; i < 4; i++) {
         document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails("+i+");'>" + parsedPlayer[i].playername + "</b>";
         document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakElo + ")";
         //document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
@@ -259,38 +264,40 @@ function parsePlayers() {
         });
         //check leaks with favunits 0-2
         var gamesWithFav_count = 0;
-
-        parsedPlayer[i].games.games.forEach(function (ele) {
-            var gamesWithFav_bool = false;
-            var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
-            if (gameDetail) {
-                if (gameDetail.legion == race_selected) {
-                    for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
-                        //console.log(gameDetail.leaksPerWave[x]);
-                        var leaked = false;
-                        gameDetail.unitsPerWave[x].forEach(function (element) {
-                            //console.log(favunit);
-                            try {
-                                favunit.forEach(function (favele) {
-                                    if (favele != 0) {
-                                        if (favele.substring(0, favele.indexOf(";")) == element.substring(0, element.indexOf("_unit"))) {
-                                            gamesWithFav_bool = true;
+        if (parsedPlayer[i].games.length > 0) {
+            parsedPlayer[i].games.games.forEach(function (ele) {
+                var gamesWithFav_bool = false;
+                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
+                if (gameDetail) {
+                    if (gameDetail.legion == race_selected) {
+                        for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
+                            //console.log(gameDetail.leaksPerWave[x]);
+                            var leaked = false;
+                            gameDetail.unitsPerWave[x].forEach(function (element) {
+                                //console.log(favunit);
+                                try {
+                                    favunit.forEach(function (favele) {
+                                        if (favele != 0) {
+                                            if (favele.substring(0, favele.indexOf(";")) == element.substring(0, element.indexOf("_unit"))) {
+                                                gamesWithFav_bool = true;
+                                            }
                                         }
-                                    }
-                                });
-                            }
-                            catch (error) {
-
-                            }
-                        });
-                    }
-                    if (gamesWithFav_bool) {
-                        gamesWithFav_count++;
+                                    });
+                                }
+                                catch (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                        if (gamesWithFav_bool) {
+                            gamesWithFav_count++;
+                        }
                     }
                 }
-            }
 
-        });
+            });
+        }
+        
         document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
         document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
         
@@ -319,8 +326,9 @@ function parsePlayers() {
                     }
                     url += ".png";
                     //console.log(unit, count);
-                    //console.log(parsedPlayer[i].playername);
-                    document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick=getFighterGames('" + unit + "','" + parsedPlayer[i].playername + "')><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                    console.log(parsedPlayer[i].playername);
+
+                    document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
                     //document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
                 }
                 catch (error) {
@@ -388,18 +396,19 @@ function getFighterGames(fightername, playername) {
                             if (gameDetail.leaksPerWave.length > 0) {
                                 for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
                                     if (gameDetail.leaksPerWave[i].length > 0) {
+                                        var target_pos;
                                         switch (gameDetail.position) {
                                             case 1:
-                                                var target_pos = 6;
+                                                target_pos = 6;
                                                 break;
                                             case 2:
-                                                var target_pos = 5;
+                                                target_pos = 5;
                                                 break;
                                             case 3:
-                                                var target_pos = 1;
+                                                target_pos = 1;
                                                 break;
                                             case 4:
-                                                var target_pos = 2;
+                                                target_pos = 2;
                                                 break;
                                         }
                                         var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
@@ -419,18 +428,19 @@ function getFighterGames(fightername, playername) {
                             if (gameDetail.leaksPerWave.length > 0) {
                                 for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
                                     if (gameDetail.leaksPerWave[i].length > 0) {
+                                        var target_pos;
                                         switch (gameDetail.position) {
                                             case 1:
-                                                var target_pos = 6;
+                                                target_pos = 6;
                                                 break;
                                             case 2:
-                                                var target_pos = 5;
+                                                target_pos = 5;
                                                 break;
                                             case 3:
-                                                var target_pos = 1;
+                                                target_pos = 1;
                                                 break;
                                             case 4:
-                                                var target_pos = 2;
+                                                target_pos = 2;
                                                 break;
                                         }
                                         var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
@@ -630,7 +640,7 @@ document.onkeydown = function (event) {
     if (event.keyCode == 13) {
         if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
     }
-}
+};
 
 function showPlayerDetails(nummer){
     const details_box = document.getElementById("player_details_box");
@@ -640,7 +650,7 @@ function showPlayerDetails(nummer){
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
     }
-    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 3 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername+"' target='_blank'>Profile</a>)</h3>";
+    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 4 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername+"' target='_blank'>Profile</a>)</h3>";
     queryPlayerGames(parsedPlayer[nummer].playername);
 }
 
@@ -649,8 +659,54 @@ function hidePlayerDetails(){
     document.getElementById("playername_details").innerHTML="";
 }
 
+function showLivegame(name) {
+    document.getElementById("playername").value = name;
+    document.getElementById("playername2").value = name;
+    window.history.pushState('livegame', 'Livegame', '?playername=' + document.getElementById("playername2").value);
+    checkContent();
+}
+
+function listGames(livegames) {
+    var classiccontainer = document.getElementById("classicgames");
+    var normalcontainer = document.getElementById("normalgames");
+    if (livegames) {
+        var counter_r = 0, counter_c = 0;
+        for (var i = livegames.length-1; i > 0; i--) {
+            var currgame = livegames[i];
+            var time1 = new Date(currgame.ts);
+            var time2 = new Date();
+            var timediff = time2 - time1;
+            var minutes = (timediff / 1000 / 60).toFixed(0);
+            var seconds = (timediff / 1000 % 60).toFixed(0);
+            var minutes_str = "", seconds_str = "";
+            if (minutes.toString().length < 2) minutes_str = "0" + minutes;
+            else minutes_str = minutes.toString();
+            if (seconds.toString().length < 2) seconds_str = "0" + minutes;
+            else seconds_str = seconds.toString();
+            //console.log(currgame);
+            if (currgame.gametype === "classic") {
+                classiccontainer.innerHTML += "<div class='game_row' onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                counter_c++;
+            }
+            else {
+                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + ")  VS " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                counter_r++;
+            }
+           
+        }
+        if (counter_c === 0) classiccontainer.innerHTML = "No active games found.";
+        if (counter_r === 0) normalcontainer.innerHTML = "No active games found.";
+    }
+    else {
+        normalcontainer.innerText = "No games found.";
+        console.log(livegames);
+    }
+}
+
+
 
 checkLink();
+queryAllLivegames();
 
 function apiGetPlayer(callback, playername) {
     var xhttp = new XMLHttpRequest();
@@ -670,14 +726,14 @@ function queryPlayer(playername) {
             console.log(playername);
             console.log(result);
             allPlayers.push({ "playername": "Bot" });
-            document.getElementById("loadingstring").innerHTML = "Requesting players.... " + allPlayers.length + "/4";
+            document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             //document.getElementById("apierror").style.display = "";
         }
         else {
             result.player.statistics = JSON.parse(result.player.statistics);
             player = result.player
             allPlayers.push(player);
-            document.getElementById("loadingstring").innerHTML = "Requesting players.... " + allPlayers.length + "/4";
+            document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             if (allPlayers.length == 4) {
                 document.getElementById("west").style.display = "";
                 document.getElementById("east").style.display = "";
@@ -689,6 +745,34 @@ function queryPlayer(playername) {
         }
 
     }, playername);
+}
+
+function getAllLivegames(callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var livegames = JSON.parse(xhttp.response);
+            callback(livegames);
+        }
+        else if (this.status === 500) document.getElementById("apierror").style.display = "";
+    };
+    xhttp.open("GET", '/api/getLivegames', true);
+    xhttp.send();
+}
+
+function queryAllLivegames() {
+    getAllLivegames(function (result, err) {
+        livegames = JSON.parse(result);
+        if (livegames) {
+            listGames(livegames);
+            return livegames;
+        }
+        else {
+            console.log(err);
+            document.getElementById("apierror").style.display = "";
+        }
+        
+    });
 }
 
 
@@ -707,7 +791,7 @@ function sqlGetLivegame(callback, playername) {
 }
 
 function queryLivegame(playername) {
-    document.getElementById("loadingstring").innerHTML = "Requesting Livegame...."
+    document.getElementById("loadingstring").innerHTML = "Requesting Livegame...";
     sqlGetLivegame(function (result) {
         livegame = JSON.parse(result);
         console.log(livegame);
