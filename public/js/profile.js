@@ -137,7 +137,7 @@ function loadStats(player) {
     player_overall_level = getPlayerLevel(player_overall_xp);
     player_winningstreak = player.statistics.winStreak;
     console.log(player.bestFriends);
-    if (player.bestFriends > 0) {
+    if (player.bestFriends != undefined) {
         player_bestfriends = "";
         player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
         if (player.bestFriends[1].player != null) {
@@ -225,8 +225,8 @@ function parseStats(player) {
     // seasonal
     // overall
     document.getElementById("o_gamesPlayed").textContent = "Ranked Games: " + player_totalgames;
-    document.getElementById("o_rankedWins").textContent = "Ranked Wins: "+player.statistics.wins+ " (" + player_totalwinchance + "%)";
-    if (typeof player_bestfriends !== 'undefined') document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
+    document.getElementById("o_rankedWins").textContent = "Ranked Wins: " + player.statistics.wins + " (" + player_totalwinchance + "%)";
+    if (player_bestfriends !== undefined) document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
 
 
 

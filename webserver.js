@@ -966,7 +966,7 @@ app.get('/api/playerElo', (req, res) => {
 
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
-                    if (result) {
+                    if (result != "null") {
                         let livegame = JSON.parse(result);
                         res.render("elo", {
                             meineElo: data.data.player.statistics.overallElo,

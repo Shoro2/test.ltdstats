@@ -193,11 +193,11 @@ function parsePlayers() {
             favunit[x] = 0;
             if (x < 22) leaks[x] = 0;
         }
-        var games_count = 0;
+        var games_count = 0, leakedOne = 0, sendedOne = 0;
         document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
         if (parsedPlayer[i].games.count > 0) {
             parsedPlayer[i].games.games.forEach(function (ele) {
-                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
+                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername; })[0];
                 if (gameDetail) {
                     if (gameDetail.legion == race_selected) {
                         games_count++;
@@ -234,9 +234,15 @@ function parsePlayers() {
                                 lastunit = currunit;
                             });
                         }
+                        if (gameDetail.mercsSentPerWave[0].length > 0) sendedOne++;
+                        if (gameDetail.mercsReceivedPerWave[0].length > 0 && gameDetail.leaksPerWave[0].length > 0) leakedOne++;
                     }
                 }
             });
+            let sendChanceOne = 0, leakChanceOne = 0;
+            if (sendedOne > 0) sendChanceOne = (sendedOne / games_count * 100).toFixed(0);
+            if (leakedOne > 0) leakChanceOne = (leakedOne / games_count * 100).toFixed(0);
+            document.getElementById("best_legion" + (i + 1)).innerHTML = "Chance to send 1: " + sendChanceOne + "%, Chance to leak 1: " + leakChanceOne + "%";
         }
         else{
             console.log("player "+i+" has no games played");
@@ -299,7 +305,6 @@ function parsePlayers() {
         }
         
         document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
-        document.getElementById("best_legion" + (i + 1)).innerHTML = "Prefered Legion: " + race;
         
         //console.log(favunit);
         //console.log(favunit);
@@ -345,32 +350,42 @@ function parsePlayers() {
 }
 
 function getPlayerLevel(totalXp) {
-    if (totalXp < 1) return 1
-    if (totalXp < 1001) return 2
-    if (totalXp < 3001) return 3
-    if (totalXp < 7001) return 4
-    if (totalXp < 13001) return 5
-    if (totalXp < 21001) return 6
-    if (totalXp < 31001) return 7
-    if (totalXp < 43001) return 8
-    if (totalXp < 57001) return 9
-    if (totalXp < 73001) return 10
-    if (totalXp < 91001) return 11
-    if (totalXp < 101001) return 12
-    if (totalXp < 123001) return 13
-    if (totalXp < 147001) return 14
-    if (totalXp < 173001) return 15
-    if (totalXp < 201001) return 16
-    if (totalXp < 231001) return 17
-    if (totalXp < 263001) return 18
-    if (totalXp < 297001) return 19
-    if (totalXp < 335001) return 20
-    if (totalXp < 375001) return 21
-    if (totalXp < 417001) return 22
-    if (totalXp < 461001) return 23
-
+    if (totalXp < 1) return 1;
+    if (totalXp < 1001) return 2;
+    if (totalXp < 3001) return 3;
+    if (totalXp < 7001) return 4;
+    if (totalXp < 13001) return 5;
+    if (totalXp < 21001) return 6;
+    if (totalXp < 31001) return 7;
+    if (totalXp < 43001) return 8;
+    if (totalXp < 57001) return 9;
+    if (totalXp < 73001) return 10;
+    if (totalXp < 91001) return 11;
+    if (totalXp < 111001) return 12;
+    if (totalXp < 133001) return 13;
+    if (totalXp < 157001) return 14;
+    if (totalXp < 183001) return 15;
+    if (totalXp < 211001) return 16;
+    if (totalXp < 241001) return 17;
+    if (totalXp < 273001) return 18;
+    if (totalXp < 307001) return 19;
+    if (totalXp < 343001) return 20;
+    if (totalXp < 381001) return 21;
+    if (totalXp < 421001) return 22;
+    if (totalXp < 463001) return 23;
+    if (totalXp < 507000) return 24;
+    if (totalXp < 553001) return 25;
+    if (totalXp < 601001) return 26;
+    if (totalXp < 651001) return 27;
+    if (totalXp < 703001) return 28;
+    if (totalXp < 757001) return 29;
+    if (totalXp < 813001) return 30;
+    if (totalXp < 871001) return 31;
+    if (totalXp < 931001) return 32;
+    if (totalXp < 993001) return 33;
+    if (totalXp < 1057001) return 34;
+    return 35;
 }
-
 // todo: click first
 function getFighterGames(fightername, playername) {
     var leaks = [];
@@ -454,25 +469,20 @@ function getFighterGames(fightername, playername) {
             }
         }
     });
-    //console.log(leaks);
-    //console.log(fightercount_pick);
+
     var spot = 0;
     for (var i = 0; i < 4; i++) {
         if (parsedPlayer[i].playername == playername) {
             spot = i + 1;
         }
     }
-    //console.log(spot);
-    document.getElementById("leaks" + spot).innerHTML = fightername + "'s chance to leak: ";
+
+    document.getElementById("leaks" + spot).innerHTML = "Leaks: ";
     for (var i = 0; i < leaks.length; i++) {
         if (leaks[i] > 0) {
             var chance = ((leaks[i] / fightercount_pick) * 100).toFixed(2);
-            if (chance > 15) {
-                //console.log("wave: " + i+1);
-                //console.log("leaks: "+leaks[i]);
-                //console.log("picks: "+fightercount_pick);
-                //console.log(" ");
-                document.getElementById("leaks" + spot).innerHTML += i + 1 + "(" + ((leaks[i] / fightercount_pick) * 100).toFixed(2) + "%), ";
+            if (chance > 20) {
+                document.getElementById("leaks" + spot).innerHTML += i + 1 + " (" + (leaks[i] / fightercount_pick * 100).toFixed(0) + "%), ";
             }
         }
     }
@@ -685,7 +695,7 @@ function listGames(livegames) {
             else seconds_str = seconds.toString();
             //console.log(currgame);
             if (currgame.gametype === "classic") {
-                classiccontainer.innerHTML += "<div class='game_row' onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                classiccontainer.innerHTML += "<div class='game_row_4v4'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_c++;
             }
             else {
@@ -722,7 +732,7 @@ function apiGetPlayer(callback, playername) {
 
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
-        if (result.player == null) {
+        if (result.player === null) {
             console.log(playername);
             console.log(result);
             allPlayers.push({ "playername": "Bot" });
@@ -734,7 +744,8 @@ function queryPlayer(playername) {
             player = result.player
             allPlayers.push(player);
             document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
-            if (allPlayers.length == 4) {
+            //finished loading
+            if (allPlayers.length === 4) {
                 document.getElementById("west").style.display = "";
                 document.getElementById("east").style.display = "";
                 parsePlayers();

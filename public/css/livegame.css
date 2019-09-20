@@ -170,6 +170,11 @@
     cursor:pointer;
 }
 
+.game_row_4v4 {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
 .leaks{
     height:10%;
 }
