@@ -3649,3 +3649,7 @@ Fri Sep 20 2019 13:14:58 GMT+0200 (GMT+02:00): /profile
 Fri Sep 20 2019 13:18:30 GMT+0200 (GMT+02:00): /builder
 Fri Sep 20 2019 13:24:09 GMT+0200 (GMT+02:00): /help/ladder
 Fri Sep 20 2019 13:24:24 GMT+0200 (GMT+02:00): /builder
+Tue Oct 15 2019 09:53:42 GMT+0200 (GMT+02:00): Https Server listening on port: 443
+Tue Oct 15 2019 09:53:42 GMT+0200 (GMT+02:00): Http Relay listening on port: 3000
+Tue Oct 15 2019 09:57:43 GMT+0200 (GMT+02:00): Https Server listening on port: 443
+Tue Oct 15 2019 09:57:43 GMT+0200 (GMT+02:00): Http Relay listening on port: 3000

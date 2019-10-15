@@ -445,7 +445,7 @@ function gamesTogether(games_together, name1, name2){
 function apiGetPlayer(callback, playername) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var player = JSON.parse(xhttp.response);
             callback(player);
         }
@@ -457,7 +457,7 @@ function apiGetPlayer(callback, playername) {
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
         result.player.statistics = JSON.parse(result.player.statistics);
-        player = result.player
+        player = result.player;
         parseStats(player);
         return player;
     }, playername);
@@ -466,7 +466,7 @@ function queryPlayer(playername) {
 function apiGetBothPlayers(callback, playername1, playername2) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var player = JSON.parse(xhttp.response);
             callback(player);
         }
@@ -484,8 +484,8 @@ function queryBothPlayers(playername1, playername2) {
 }
 
 document.onkeydown = function (event) {
-    if (event.keyCode == 13) {
-        if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
+    if (event.keyCode === 13) {
+        if (event.target.id === "playername" || event.target.id === "playername2") getPlayer();
     }
 }
 

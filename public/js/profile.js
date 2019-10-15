@@ -2,7 +2,7 @@ function checkContent() {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var playerurl = url.searchParams.get("player");
-    if (playerurl != null) {
+    if (playerurl !== null) {
         document.getElementById("playername").value = playerurl;
     }
     if (document.getElementById("playername").value) {
@@ -976,7 +976,7 @@ function queryLivegames() {
 
     function queryPlayer(playername) {
         apiGetPlayer(function (result) {
-            if (result.player == null) {
+            if (result.player === null) {
                 document.getElementById("apierror").style.display = "";
             }
             else {

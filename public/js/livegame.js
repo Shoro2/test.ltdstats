@@ -1,3 +1,5 @@
+var selectedPlayerName = "";
+
 function checkContent() {
     var requested_players = 0;
     allPlayers = [];
@@ -40,9 +42,8 @@ function parsePlayers() {
     for (var i = 0; i < 4; i++) {
         //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i]; })[0];
-        if (parsedPlayer[i]==undefined) {
-            parsedPlayer[i] = {
-                playername: "Bot", statistics: { overallElo: 1000, gamesPlayed: 0 }, games: {} };
+        if (parsedPlayer[i] === null) {
+            parsedPlayer[i] = { playername: "Bot", statistics: { overallElo: 1000, gamesPlayed: 0 }, games: {} };
         }
         //console.log(parsedPlayer[i]);
     }
@@ -184,7 +185,7 @@ function parsePlayers() {
         //icon f�r race mit meisten wins
         var race = "Mastermind";
         var race_selected = race;
-        if (document.getElementById("legionp" + i).value != null) {
+        if (document.getElementById("legionp" + i).value !== null) {
             race_selected = document.getElementById("legionp" + i).value;
         }
         var favunit = [];
@@ -194,7 +195,7 @@ function parsePlayers() {
             if (x < 22) leaks[x] = 0;
         }
         var games_count = 0, leakedOne = 0, sendedOne = 0;
-        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts:";
+        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 100 games):";
         if (parsedPlayer[i].games.count > 0) {
             parsedPlayer[i].games.games.forEach(function (ele) {
                 var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername; })[0];
@@ -203,7 +204,7 @@ function parsePlayers() {
                         games_count++;
                         var currunit = "";
                         var lastunit = "";
-                        if (gameDetail.unitsPerWave != null) {
+                        if (gameDetail.unitsPerWave !== null) {
                             gameDetail.unitsPerWave[0].forEach(function (element) {
                                 //e=wave ;x=different units
                                 currunit = element.substring(0, element.indexOf("_unit"));
@@ -250,12 +251,12 @@ function parsePlayers() {
             document.getElementById("favstart"+(i+1)).innerHTML="No recorded games available.";
         }
         favunit.sort(function (a, b) {
-            if (a != 0) {
+            if (a !== 0) {
                 var abstandA = a.indexOf(";") + 1;
                 var lastA = a.substring(abstandA, a.length);
             }
             else lastA = 0;
-            if (b != 0) {
+            if (b !== 0) {
                 var abstandB = b.indexOf(";") + 1;
                 var lastB = b.substring(abstandB, b.length);
             }
@@ -270,7 +271,7 @@ function parsePlayers() {
         });
         //check leaks with favunits 0-2
         var gamesWithFav_count = 0;
-        if (parsedPlayer[i].games.length > 0) {
+        if (parsedPlayer[i].games === null) {
             parsedPlayer[i].games.games.forEach(function (ele) {
                 var gamesWithFav_bool = false;
                 var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
@@ -331,7 +332,7 @@ function parsePlayers() {
                     }
                     url += ".png";
                     //console.log(unit, count);
-                    console.log(parsedPlayer[i].playername);
+                    //console.log(parsedPlayer[i].playername);
 
                     document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
                     //document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
@@ -495,7 +496,7 @@ function getWinchance() {
     var elos = [];
     var peakElos = [];
     for (var i = 0; i < parsedPlayer.length; i++) {
-        console.log(parsedPlayer[i]);
+        //console.log(parsedPlayer[i]);
         switch (document.getElementById("legionp" + i).value) {
             case "Mastermind":
                 if (typeof parsedPlayer[i].statistics.mastermindElo != "undefinded") {
@@ -647,8 +648,8 @@ function getWinchance() {
 }
 
 document.onkeydown = function (event) {
-    if (event.keyCode == 13) {
-        if (event.target.id == "playername" || event.target.id == "playername2") getPlayer();
+    if (event.keyCode === 13) {
+        if (event.target.id === "playername" || event.target.id === "playername2") getPlayer();
     }
 };
 
@@ -660,8 +661,9 @@ function showPlayerDetails(nummer){
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
     }
-    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 4 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername+"' target='_blank'>Profile</a>)</h3>";
-    queryPlayerGames(parsedPlayer[nummer].playername);
+    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 4 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername + "' target='_blank'>Profile</a>)</h3>";
+    selectedPlayerName = parsedPlayer[nummer].playername;
+    queryPlayerGames(selectedPlayerName);
 }
 
 function hidePlayerDetails(){
@@ -721,7 +723,7 @@ queryAllLivegames();
 function apiGetPlayer(callback, playername) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var player = JSON.parse(xhttp.response);
             callback(player);
         }
@@ -733,6 +735,7 @@ function apiGetPlayer(callback, playername) {
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
         if (result.player === null) {
+            console.log("Failed to load player:");
             console.log(playername);
             console.log(result);
             allPlayers.push({ "playername": "Bot" });
@@ -741,7 +744,7 @@ function queryPlayer(playername) {
         }
         else {
             result.player.statistics = JSON.parse(result.player.statistics);
-            player = result.player
+            player = result.player;
             allPlayers.push(player);
             document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             //finished loading

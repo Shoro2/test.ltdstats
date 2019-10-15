@@ -1,19 +1,26 @@
 function apiGetPlayerGames(callback, playername) {
     let xhttp = new XMLHttpRequest();
+    document.getElementById("mitte").style.display = "";
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             let player = JSON.parse(xhttp.response);
             callback(player);
         }
     };
-    xhttp.open("GET", "/mongo/getGames?type=playername&db=rankedGames_3.1&limit=0&formating=none&name="+playername, true);
+    var targetversion = document.getElementById("targetver").value;
+
+    xhttp.open("GET", "/mongo/getGames?type=playername&db=rankedGames_" + targetversion + "&limit=0&formating=none&name=" + playername, true);
     xhttp.send();
 }
 
 function queryPlayerGames(playername) {
+    if (playername === null) playername = selectedPlayerName;
     apiGetPlayerGames(function (result) {
         let games = JSON.parse(result);
+        console.log(games);
+        console.log(playername);
         getGameDetails(games, "Normal", playername);
+        document.getElementById("mitte").style.display = "none";
         return games;
     }, playername);
 }
@@ -48,7 +55,7 @@ for (let index = 0; index < favunits.length; index++) {
     favunits[index][1] = 0;
 }
 
-function getGameDetails(seasonGames, type, name){
+function getGameDetails(seasonGames, type, name) {
     const gametype = type;
     amount_total_games = 0;
     amount_cross_games = 0;
@@ -79,9 +86,9 @@ function getGameDetails(seasonGames, type, name){
     //each game
     for (let index = 0; index < seasonGames.length; index++) {
         const game = seasonGames[index];
-        
+
         //match filters
-        if(game.queuetype == gametype){
+        if (game.queuetype === gametype) {
             //general stuff
             amount_total_games++;
             endingwaves += game.endingwave;
@@ -90,75 +97,75 @@ function getGameDetails(seasonGames, type, name){
 
 
             //game details
-            gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername == name })[0];
-            if(debug) //console.log(gameDetails);
-            //classic games
-            if(gametype == "Classic"){
-                //cross
-                if(gameDetails.iscross == 1){
-                    amount_cross_games++;
-                    isCross = true;
+            gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername === name; })[0];
+            if (debug) //console.log(gameDetails);
+                //classic games
+                if (gametype === "Classic") {
+                    //cross
+                    if (gameDetails.iscross === 1) {
+                        amount_cross_games++;
+                        isCross = true;
+                    }
                 }
-            }
 
             //party
-            if(gameDetails.partyMembers){
+            if (gameDetails.partyMembers) {
                 amount_party_games++;
                 isParty = true;
             }
 
             //winner & streaks
-            if(gameDetails.gameresult=="won"){
+            if (gameDetails.gameresult === "won") {
                 amount_total_wins++;
-                if(isCross) amount_cross_wins++;
-                if(isParty) amount_party_wins++;
-                if(last_result=="won") win_streak++;
+                if (isCross) amount_cross_wins++;
+                if (isParty) amount_party_wins++;
+                if (last_result === "won") win_streak++;
                 lose_streak = 0;
-                if(win_streak>win_streak_max) win_streak_max = win_streak;
-                last_result="won";
+                if (win_streak > win_streak_max) win_streak_max = win_streak;
+                last_result = "won";
             }
-            else{
-                if(last_result=="lost") lose_streak++;
+            else {
+                if (last_result === "lost") lose_streak++;
                 win_streak = 0;
-                if(lose_streak>lose_streak_max) lose_streak_max = lose_streak;
-                last_result="lost";
+                if (lose_streak > lose_streak_max) lose_streak_max = lose_streak;
+                last_result = "lost";
             }
 
             //elo
-            if(gameDetails.overallElo > max_elo) max_elo = gameDetails.overallElo;
-            if(gameDetails.overallElo < min_elo) min_elo = gameDetails.overallElo;
+            if (gameDetails.overallElo > max_elo) max_elo = gameDetails.overallElo;
+            if (gameDetails.overallElo < min_elo) min_elo = gameDetails.overallElo;
 
             //favorite starts
             //store starting units in favunits[x][0-1]
-            if (gameDetails.unitsPerWave != null) {
+            if (gameDetails.unitsPerWave !== null) {
                 //lvl 1 units
                 gameDetails.unitsPerWave[0].forEach(function (element) {
                     currunit = element.substring(0, element.indexOf("_unit"));
-                    if(debug) //console.log(currunit);
-                    if (currunit != lastunit) {
-                        let anzahl = 0;
-                        for (let x = 0; x < unit_cache; x++) {
-                            if (favunits[x][0] != 0) {
-                                //unit matching?
-                                if (favunits[x][0] == (currunit)) {
-                                    anzahl = favunits[x][1];
-                                    anzahl++;
-                                    favunits[x][0] = currunit;
-                                    favunits[x][1] = anzahl;
-                                }
-                            }
-                        }
-                        //no match, add it
-                        if (anzahl > 0 == false) {
+                    if (debug) //console.log(currunit);
+                        if (currunit !== lastunit) {
+                            let anzahl = 0;
                             for (let x = 0; x < unit_cache; x++) {
-                                if (favunits[x][1] == 0) {
-                                    favunits[x][0] = currunit;
-                                    favunits[x][1] = 1;
-                                    break;
+                                if (favunits[x][0] !== 0) {
+                                    //unit matching?
+                                    if (favunits[x][0] === (currunit)) {
+                                        anzahl = favunits[x][1];
+                                        anzahl++;
+                                        favunits[x][0] = currunit;
+                                        favunits[x][1] = anzahl;
+                                    }
+                                }
+                            }
+                            //no match, add it
+                            if (anzahl > 0 === false) {
+                                for (let x = 0; x < unit_cache; x++) {
+                                    if (favunits[x][1] === 0) {
+                                        favunits[x][0] = currunit;
+                                        favunits[x][1] = 1;
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
                     lastunit = currunit;
                 });
             }
@@ -167,14 +174,14 @@ function getGameDetails(seasonGames, type, name){
     //sort and remove empty slots
     favunits.sort(compareSecondColumn);
     for (var i = favunits.length; i > 0; i--) {
-        if (favunits[i-1][0] == 0) {
+        if (favunits[i - 1][0] === 0) {
             favunits.pop();
         }
     }
     //count favunits
     let meinCounter = 0;
-    for (var i = 0; i < favunits.length; i++) {
-        if (favunits[i][0] != 0) meinCounter++;
+    for (i = 0; i < favunits.length; i++) {
+        if (favunits[i][0] !== 0) meinCounter++;
     }
     //fighter specific stats
     //for each fighter
@@ -189,20 +196,20 @@ function getGameDetails(seasonGames, type, name){
     let wave_leaks_amount = new Array(meinCounter);
     for (let i = 0; i < wave_leaks_amount.length; i++) {
         wave_leaks_amount[i] = new Array(21);
-        for (var e = 0; e < 21; e++) {
+        for (e = 0; e < 21; e++) {
             wave_leaks_amount[i][e] = 0;
         }
     }
     console.log("Total games: " + amount_total_games);
     for (let index = 0; index < seasonGames.length; index++) {
         const game = seasonGames[index];
-        const gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername == name })[0];
+        const gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername === name })[0];
         //console.log(gameDetails.unitsPerWave[0][0].substring(0, gameDetails.unitsPerWave[0][0].indexOf("_unit")));
-        for (var i = 0; i < favunits.length; i++) {
+        for (i = 0; i < favunits.length; i++) {
             let found = false;
             //console.log(favunits[i][0]);
-            for (var e = 0; e < gameDetails.unitsPerWave[0].length; e++) {
-                if (gameDetails.unitsPerWave[0][e].substring(0, gameDetails.unitsPerWave[0][e].indexOf("_unit")) == favunits[i][0]) {
+            for (e = 0; e < gameDetails.unitsPerWave[0].length; e++) {
+                if (gameDetails.unitsPerWave[0][e].substring(0, gameDetails.unitsPerWave[0][e].indexOf("_unit")) === favunits[i][0]) {
                     //player started with favunits[i][0]
                     //check its leaks
                     if (gameDetails.leaksPerWave) {
@@ -216,7 +223,7 @@ function getGameDetails(seasonGames, type, name){
                         found = true;
                         break;
                     }
-                    
+
                 }
             }
             if (found) break;
@@ -224,27 +231,27 @@ function getGameDetails(seasonGames, type, name){
     }
     //averages
     //in min
-    gamelength = (gamelength/amount_total_games/60).toFixed(2);
-    endingwaves = (endingwaves/amount_total_games).toFixed(2);
-    let cross_chance = (amount_cross_games/amount_total_games*100).toFixed(2);
-    let winchance_total = (amount_total_wins/amount_total_games*100).toFixed(2);
-    let winchance_party = (amount_party_wins/amount_party_games*100).toFixed(2);
-    let winchance_cross = (amount_cross_wins/amount_cross_games*100).toFixed(2);
+    gamelength = (gamelength / amount_total_games / 60).toFixed(2);
+    endingwaves = (endingwaves / amount_total_games).toFixed(2);
+    let cross_chance = (amount_cross_games / amount_total_games * 100).toFixed(2);
+    let winchance_total = (amount_total_wins / amount_total_games * 100).toFixed(2);
+    let winchance_party = (amount_party_wins / amount_party_games * 100).toFixed(2);
+    let winchance_cross = (amount_cross_wins / amount_cross_games * 100).toFixed(2);
 
-    if(debug){
+    if (debug) {
         console.log("Averages:");
-        console.log("Gamelength: "+gamelength);
-        console.log("Endingwave: "+endingwaves);
-        console.log("Cross Chance: "+cross_chance);
-        console.log("Total games: "+amount_total_games);
-        console.log("Win Chance Total: "+winchance_total);
-        console.log("Party games: "+amount_party_games);
-        console.log("Win Chance Party: "+winchance_party);
-        console.log("Cross games: "+amount_cross_games);
-        console.log("Win Chance Cross: "+winchance_cross);
-        console.log("Max wins in a row: "+win_streak_max);
-        console.log("Max loses in a row: "+lose_streak_max);
-        console.log("Min Elo: "+min_elo);
+        console.log("Gamelength: " + gamelength);
+        console.log("Endingwave: " + endingwaves);
+        console.log("Cross Chance: " + cross_chance);
+        console.log("Total games: " + amount_total_games);
+        console.log("Win Chance Total: " + winchance_total);
+        console.log("Party games: " + amount_party_games);
+        console.log("Win Chance Party: " + winchance_party);
+        console.log("Cross games: " + amount_cross_games);
+        console.log("Win Chance Cross: " + winchance_cross);
+        console.log("Max wins in a row: " + win_streak_max);
+        console.log("Max loses in a row: " + lose_streak_max);
+        console.log("Min Elo: " + min_elo);
         console.log("Max Elo: " + max_elo);
         console.log("Favunits:");
         console.log(favunits);
@@ -281,8 +288,8 @@ function nameToUpper(input_name) {
     input_name = input_name.substring(0, 1).toUpperCase() + input_name.substring(1);
     while (input_name.includes("_")) {
         let index = input_name.indexOf("_");
-        input_name = input_name.substring(0, index) +" "+ input_name.substring(index + 1, index + 2).toUpperCase() + input_name.substring(index + 2);
-        
+        input_name = input_name.substring(0, index) + " " + input_name.substring(index + 1, index + 2).toUpperCase() + input_name.substring(index + 2);
+
         //input_name.replace("_", " ");
     }
     return input_name;
@@ -291,11 +298,13 @@ function nameToUpper(input_name) {
 function parseResults(wave_leaks, wave_leaks_amount) {
     //parse selector
     while (document.getElementById("unitselector").options.length > 0) document.getElementById("unitselector").remove(document.getElementById("unitselector").length - 1);
-        
+
     for (let i = 0; i < favunits.length; i++) {
         document.getElementById("unitselector").add(new Option(nameToUpper(favunits[i][0]) + " - (" + (favunits[i][1] / amount_total_games * 100).toFixed(2) + "%)", favunits[i][0]));
     }
     try {
+        document.getElementById("errormsg").style.display = "none";
+        document.getElementById("leaktable").style.display = "";
         for (let i = 1; i < 22; i++) {
             document.getElementById("wave" + i).innerHTML = i;
             let chance = (wave_leaks[0][i - 1] / favunits[0][1] * 100);
@@ -316,9 +325,11 @@ function parseResults(wave_leaks, wave_leaks_amount) {
     }
     catch (error) {
         console.log(error);
-        document.getElementById("wave1").innerHTML = "No Season 3 games found.";
+        document.getElementById("errormsg").style.display = "";
+        document.getElementById("leaktable").style.display = "none";
+        //document.getElementById("wave1").innerHTML = "No Season 3 games found.";
     }
-    
+
 }
 
 function changeActiveUnit(unit) {
@@ -327,7 +338,7 @@ function changeActiveUnit(unit) {
     console.log(wave_leaks);
     console.log(wave_leaks_amount);
     for (var i = 0; i < favunits.length; i++) {
-        if (favunits[i][0] == unit) {
+        if (favunits[i][0] === unit) {
             for (let e = 1; e < 22; e++) {
                 document.getElementById("wave" + e).innerHTML = e;
                 let chance = (wave_leaks[i][e - 1] / favunits[i][1] * 100);
