@@ -93,7 +93,7 @@
 /*progress bar */
 #myProgress {
     
-    background-color: grey;
+    background-color: red;
     
 }
 
@@ -104,6 +104,16 @@
     text-align: center; /* To center it horizontally (if you want) */
     line-height: 30px; /* To center it vertically */
     color: white;
+    float:left;
+}
+#myBar2 {
+    width: 1%;
+    height: 30px;
+    background-color: red;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: white;
+    float:left;
 }
 #winchancebar {
     width: 50%;
@@ -183,4 +193,13 @@
     margin-left: 45%;
     margin-right: 45%;
     margin-bottom: 1%;
+}
+
+.gameresults{
+    float:right;
+}
+
+#east{
+    float:left;
+    width:98%;
 }

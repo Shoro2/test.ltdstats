@@ -79,11 +79,17 @@ html
                             li.nav-item
                                 a.nav-link(href='/profile') Profile
                         if(title.includes("Ladder")) 
-                            li.nav-item.active
-                                a.nav-link(href='/ladder') Ladder
+                             li.nav-item.dropdown.active
+                                a#dropdown02.nav-link.dropdown-toggle(href='/ladder', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/ladder') Ranked Ladder
+                                    a.dropdown-item(href='/ladder?classic') Classic Ladder (inoffical)
                         else
-                            li.nav-item
-                                a.nav-link(href='/ladder') Ladder
+                            li.nav-item.dropdown
+                                a#dropdown02.nav-link.dropdown-toggle(href='/ladder', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
+                                div.dropdown-menu(aria-labelledby='dropdown01')
+                                    a.dropdown-item(href='/ladder') Ranked Ladder
+                                    a.dropdown-item(href='/ladder?classic') Classic Ladder (inoffical)
                         if(title=="Games")
                             li.nav-item.active
                                 a.nav-link(href='/replay') Replay
@@ -182,4 +188,5 @@ html
         script(src="/js/ads.js")
         script(src="/js/cookies.js")
         script(src="/js/checkads.js")
+        script(src="/js/unitstats.js")
         script queryLanguage();checkAnalytics();var lazyLoadInstance = new LazyLoad({elements_selector: ".lazy"});

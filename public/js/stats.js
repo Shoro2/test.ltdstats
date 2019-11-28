@@ -430,7 +430,7 @@ function createBarGraph(data) {
                 //gameendingwaves[i] = data[i].count;
                 gameendingwaves[i] = data.filter(data => data._id.wave == i+1)[0];
                 total_games=total_games+data.filter(data => data._id.wave == i+1)[0].count;
-                if(gameendingwaves[i] == undefined) gameendingwaves[i]={_id:{wave:i+1},count:0};
+                if(typeof gameendingwaves[i] == "undefined") gameendingwaves[i]={_id:{wave:i+1},count:0};
             }
             var meinText = "Wave games ended on ("+total_games+" games total)";
             break;

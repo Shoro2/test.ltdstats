@@ -1,4 +1,7 @@
+//globals
 var selectedPlayerName = "";
+var duoWest = false, duoEast = false;
+var winsFive = [], roles = [], count_highpush = [], count_lowpush = [], count_samepush = [], count_leaked = [], count_held = [];
 
 function checkContent() {
     var requested_players = 0;
@@ -41,23 +44,22 @@ function parsePlayers() {
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
-        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i]; })[0];
-        if (parsedPlayer[i] === null) {
-            parsedPlayer[i] = { playername: "Bot", statistics: { overallElo: 1000, gamesPlayed: 0 }, games: {} };
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername === livegame.players[i]; })[0];
+        if (parsedPlayer[i] === undefined) {
+            parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername === "Bot (player not found)"; })[0];
         }
         //console.log(parsedPlayer[i]);
     }
-    console.log(allPlayers);
-    console.log(parsedPlayer);
+    var score_worker = [0, 0, 0, 0], score_value = [0, 0, 0, 0], game_count = [0, 0, 0, 0];
     for (i = 0; i < 4; i++) {
-        document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails("+i+");'>" + parsedPlayer[i].playername + "</b>";
-        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakElo + ")";
+        document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails(" + i + ");'>" + parsedPlayer[i].playername + "</b>";
+        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
         //document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
         player_totalwins = parsedPlayer[i].statistics.wins;
         player_totalwinchance = ((player_totalwins / player_totalgames) * 100).toFixed(2);
-        if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
+        if (isNaN(player_totalwinchance)) player_totalwinchance = 0;
         player_ties = parsedPlayer[i].statistics.ties;
         if (typeof parsedPlayer[i].statistics.ties == 'undefined') player_ties = 0;
         player_quits = parsedPlayer[i].statistics.quits;
@@ -69,186 +71,228 @@ function parsePlayers() {
         player_overall_xp = parsedPlayer[i].statistics.totalXp
         player_overall_level = getPlayerLevel(player_overall_xp);
         player_winningstreak = parsedPlayer[i].statistics.winStreak;
-        if (parsedPlayer[i].bestFriends != null) {
-            player_bestfriends = "";
-            player_bestfriends += parsedPlayer[i].bestFriends[0].parsedPlayer[i].playername + "(" + parsedPlayer[i].bestFriends[0].gameCount + ")";
-            if (parsedPlayer[i].bestFriends[1] != null) {
-                player_bestfriends += ", " + parsedPlayer[i].bestFriends[1].parsedPlayer[i].playername + "(" + parsedPlayer[i].bestFriends[1].gameCount + ")";
-                if (parsedPlayer[i].bestFriends[2] != null) {
-                    player_bestfriends += ", " + parsedPlayer[i].bestFriends[2].parsedPlayer[i].playername + "(" + parsedPlayer[i].bestFriends[2].gameCount + ")";
-                }
-            }
-        }
-        //player_higheststreak = parsedPlayer[i].Playerstatistics[26].StatisticValue;
-        //element
-        player_element_elo = parsedPlayer[i].statistics.elementElo;
-        if (typeof parsedPlayer[i].statistics.elementElo == 'undefined') player_element_elo = 1000;
-        player_element_peakelo = parsedPlayer[i].statistics.elementPeakElo;
-        if (typeof parsedPlayer[i].statistics.elementPeakElo == 'undefined') player_element_peakelo = parsedPlayer[i].statistics.elementPeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.elementPeakEloThisSeason == 'undefined') player_element_peakelo = 1000;
-        player_element_games = parsedPlayer[i].statistics.elementPlayed;
-        if (typeof parsedPlayer[i].statistics.elementPlayed == 'undefined') player_element_games = 0;
-        player_element_wins = parsedPlayer[i].statistics.elementWins;
-        if (typeof parsedPlayer[i].statistics.elementWins == 'undefined') player_element_wins = 0;
-        player_element_winchance = ((player_element_wins / player_element_games) * 100).toFixed(2);
-        if (player_element_winchance == 'NaN') player_element_winchance = 0;
-        player_element_losses = parsedPlayer[i].statistics.elementLosses;
-        if (typeof parsedPlayer[i].statistics.elementLosses == 'undefined') player_element_losses = 0;
-        player_element_xp = parsedPlayer[i].statistics.elementXp;
-        if (typeof parsedPlayer[i].statistics.elementXp == 'undefined') player_element_xp = 0;
-        player_element_level = getPlayerLevel(player_element_xp);
-        //grove
-        player_grove_elo = parsedPlayer[i].statistics.groveElo;
-        if (typeof parsedPlayer[i].statistics.groveElo == 'undefined') player_grove_elo = 1000;
-        player_grove_peakelo = parsedPlayer[i].statistics.grovePeakElo;
-        if (typeof parsedPlayer[i].statistics.grovePeakElo == 'undefined') player_grove_peakelo = parsedPlayer[i].statistics.grovePeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.grovePeakEloThisSeason == 'undefined') player_grove_peakelo = 1000;
-        player_grove_games = parsedPlayer[i].statistics.grovePlayed;
-        if (typeof parsedPlayer[i].statistics.grovePlayed == 'undefined') player_grove_games = 0;
-        player_grove_wins = parsedPlayer[i].statistics.groveWins;
-        if (typeof parsedPlayer[i].statistics.groveWins == 'undefined') player_grove_wins = 0;
-        player_grove_winchance = ((player_grove_wins / player_grove_games) * 100).toFixed(2);
-        if (player_grove_winchance == 'NaN') player_grove_winchance = 0;
-        player_grove_losses = parsedPlayer[i].statistics.groveLosses;
-        if (typeof parsedPlayer[i].statistics.groveLosses == 'undefined') player_grove_losses = 0;
-        player_grove_xp = parsedPlayer[i].statistics.groveXp;
-        if (typeof parsedPlayer[i].statistics.groveXp == 'undefined') player_grove_xp = 0;
-        player_grove_level = getPlayerLevel(player_grove_xp);
-        //forsaken
-        player_forsaken_elo = parsedPlayer[i].statistics.forsakenElo;
-        if (typeof parsedPlayer[i].statistics.forsakenElo == 'undefined') player_forsaken_elo = 1000;
-        player_forsaken_peakelo = parsedPlayer[i].statistics.forsakenPeakElo;
-        if (typeof parsedPlayer[i].statistics.forsakenPeakElo == 'undefined') player_forsaken_peakelo = parsedPlayer[i].statistics.forsakenPeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.forsakenPeakEloThisSeason == 'undefined') player_forsaken_peakelo = 1000;
-        player_forsaken_games = parsedPlayer[i].statistics.forsakenPlayed;
-        if (typeof parsedPlayer[i].statistics.forsakenPlayed == 'undefined') player_forsaken_games = 0;
-        player_forsaken_wins = parsedPlayer[i].statistics.forsakenWins;
-        if (typeof parsedPlayer[i].statistics.forsakenWins == 'undefined') player_forsaken_wins = 0;
-        player_forsaken_winchance = ((player_forsaken_wins / player_forsaken_games) * 100).toFixed(2);
-        if (player_forsaken_winchance == 'NaN') player_forsaken_winchance = 0;
-        player_forsaken_losses = parsedPlayer[i].statistics.forsakenLosses;
-        if (typeof parsedPlayer[i].statistics.forsakenLosses == 'undefined') player_forsaken_losses = 0;
-        player_forsaken_xp = parsedPlayer[i].statistics.forsakenXp;
-        if (typeof parsedPlayer[i].statistics.forsakenXp == 'undefined') player_forsaken_xp = 0;
-        player_forsaken_level = getPlayerLevel(player_forsaken_xp);
-        //mech
-        player_mech_elo = parsedPlayer[i].statistics.mechElo;
-        if (typeof parsedPlayer[i].statistics.mechElo == 'undefined') player_mech_elo = 1000;
-        player_mech_peakelo = parsedPlayer[i].statistics.mechPeakElo;
-        if (typeof parsedPlayer[i].statistics.mechPeakElo == 'undefined') player_mech_peakelo = parsedPlayer[i].statistics.mechPeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.mechPeakEloThisSeason == 'undefined') player_mech_peakelo = 1000;
-        player_mech_games = parsedPlayer[i].statistics.mechPlayed;
-        if (typeof parsedPlayer[i].statistics.mechPlayed == 'undefined') player_mech_games = 0;
-        player_mech_wins = parsedPlayer[i].statistics.mechWins;
-        if (typeof parsedPlayer[i].statistics.mechWins == 'undefined') player_mech_wins = 0;
-        player_mech_winchance = ((player_mech_wins / player_mech_games) * 100).toFixed(2);
-        if (player_mech_winchance == 'NaN') player_mech_winchance = 0;
-        player_mech_losses = parsedPlayer[i].statistics.mechLosses;
-        if (typeof parsedPlayer[i].statistics.mechLosses == 'undefined') player_mech_losses = 0;
-        player_mech_xp = parsedPlayer[i].statistics.mechXp;
-        if (typeof parsedPlayer[i].statistics.mechXp == 'undefined') player_mech_xp = 0;
-        player_mech_level = getPlayerLevel(player_mech_xp);
-        //mastermind
-        player_mastermind_elo = parsedPlayer[i].statistics.mastermindElo;
-        if (typeof parsedPlayer[i].statistics.mastermindElo == 'undefined') player_mastermind_elo = 1000;
-        player_mastermind_peakelo = parsedPlayer[i].statistics.mastermindPeakElo;
-        if (typeof parsedPlayer[i].statistics.mastermindPeakElo == 'undefined') player_mastermind_peakelo = parsedPlayer[i].statistics.mastermindPeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.mastermindPeakEloThisSeason == 'undefined') player_mastermind_peakelo = 1000;
-        player_mastermind_games = parsedPlayer[i].statistics.mastermindPlayed;
-        if (typeof parsedPlayer[i].statistics.mastermindPlayed == 'undefined') player_mastermind_games = 0;
-        player_mastermind_wins = parsedPlayer[i].statistics.mastermindWins;
-        if (typeof parsedPlayer[i].statistics.mastermindWins == 'undefined') player_mastermind_wins = 0;
-        player_mastermind_winchance = ((player_mastermind_wins / player_mastermind_games) * 100).toFixed(2);
-        if (player_mastermind_winchance == 'NaN') player_mastermind_winchance = 0;
-        player_mastermind_losses = parsedPlayer[i].statistics.mastermindLosses;
-        if (typeof parsedPlayer[i].statistics.mastermindLosses == 'undefined') player_mastermind_losses = 0;
-        player_mastermind_xp = parsedPlayer[i].statistics.mastermindXp;
-        if (typeof parsedPlayer[i].statistics.mastermindXp == 'undefined') player_mastermind_xp = 0;
-        player_mastermind_level = getPlayerLevel(player_mastermind_xp);
-        //atlantean
-        player_atlantean_elo = parsedPlayer[i].statistics.atlanteanElo;
-        if (typeof parsedPlayer[i].statistics.atlanteanElo == 'undefined') player_atlantean_elo = 1000;
-        player_atlantean_peakelo = parsedPlayer[i].statistics.atlanteanPeakElo;
-        if (typeof parsedPlayer[i].statistics.atlanteanPeakElo == 'undefined') player_atlantean_peakelo = parsedPlayer[i].statistics.atlanteanPeakEloThisSeason;
-        if (typeof parsedPlayer[i].statistics.atlanteanPeakEloThisSeason == 'undefined') player_atlantean_peakelo = 1000;
-        player_atlantean_games = parsedPlayer[i].statistics.atlanteanPlayed;
-        if (typeof parsedPlayer[i].statistics.atlanteanPlayed == 'undefined') player_atlantean_games = 0;
-        player_atlantean_wins = parsedPlayer[i].statistics.atlanteanWins;
-        if (typeof parsedPlayer[i].statistics.atlanteanWins == 'undefined') player_atlantean_wins = 0;
-        player_atlantean_winchance = ((player_atlantean_wins / player_atlantean_games) * 100).toFixed(2);
-        if (player_atlantean_winchance == 'NaN') player_atlantean_winchance = 0;
-        player_atlantean_losses = parsedPlayer[i].statistics.atlanteanLosses;
-        if (typeof parsedPlayer[i].statistics.atlanteanLosses == 'undefined') player_atlantean_losses = 0;
-        player_atlantean_xp = parsedPlayer[i].statistics.atlanteanXp;
-        if (typeof parsedPlayer[i].statistics.atlanteanXp == 'undefined') player_atlantean_xp = 0;
-        player_atlantean_level = getPlayerLevel(player_atlantean_xp);
-        //icon f�r race mit meisten wins
-        var race = "Mastermind";
-        var race_selected = race;
-        if (document.getElementById("legionp" + i).value !== null) {
-            race_selected = document.getElementById("legionp" + i).value;
-        }
+
+        if (player_winningstreak > 5) document.getElementById("player" + (i+1)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+
         var favunit = [];
         var leaks = [];
+        
         for (var x = 0; x < 60; x++) {
             favunit[x] = 0;
             if (x < 22) leaks[x] = 0;
         }
         var games_count = 0, leakedOne = 0, sendedOne = 0;
-        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 100 games):";
+        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 50 games):";
         if (parsedPlayer[i].games.count > 0) {
+            console.log(parsedPlayer[i]);
             parsedPlayer[i].games.games.forEach(function (ele) {
+                game_count[i]++;
                 var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername; })[0];
+                var gameDetail_position = 0;
                 if (gameDetail) {
-                    if (gameDetail.legion == race_selected) {
-                        games_count++;
-                        var currunit = "";
-                        var lastunit = "";
-                        if (gameDetail.unitsPerWave !== null) {
-                            gameDetail.unitsPerWave[0].forEach(function (element) {
-                                //e=wave ;x=different units
-                                currunit = element.substring(0, element.indexOf("_unit"));
-                                if (currunit != lastunit) {
-                                    var anzahl = 0;
-                                    for (var x = 0; x < 60; x++) {
-                                        if (favunit[x] != 0) {
-                                            //unit matching?
-                                            if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
-                                                anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                                //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                                anzahl++;
-                                                //console.log(element);
-                                                favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
-                                            }
-                                        }
-                                    }
-                                    //no match, add it
-                                    if (anzahl > 0 == false) {
-                                        for (var x = 0; x < 60; x++) {
-                                            if (favunit[x] == 0) {
-                                                favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
-                                                break;
-                                            }
+                    games_count++;
+                    gameDetail_position = gameDetail.position;
+                    //compare workers
+                    var gameDetailSelected = [];
+                    switch (gameDetail_position) {
+                        case 1:
+                            gameDetailSelected[0] = gameDetail;
+                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                            break;
+                        case 2:
+                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                            gameDetailSelected[1] = gameDetail;
+                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                            break;
+                        case 5:
+                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                            gameDetailSelected[2] = gameDetail;
+                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                            break;
+                        case 6:
+                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                            gameDetailSelected[3] = gameDetail;
+                            break;
+                        default:
+                            console.log("failed to read " + gameDetail_position);
+                            break;
+                    }
+                    //WORKERS
+
+                    var workersPerWave = [];
+                    for (var e = 0; e < 4; e++) {
+                        workersPerWave[e] = [];
+                    }
+                    for (e = 0; e < 4; e++) {
+                        gameDetailSelected[e].workersPerWave.forEach(function (wpw) {
+                            workersPerWave[e].push(wpw);
+                        });
+                    }
+                    console.log(workersPerWave);
+                    for (var q = 0; q < workersPerWave[0].length; q++) {
+                        switch (gameDetail_position) {
+                            case 1:
+                                if (workersPerWave[0][q] > workersPerWave[1][q]) score_worker[i]++;
+                                else if (workersPerWave[0][q] < workersPerWave[1][q]) score_worker[i]--;
+                                if (workersPerWave[0][q] > workersPerWave[2][q]) score_worker[i]++;
+                                else if (workersPerWave[0][q] < workersPerWave[2][q]) score_worker[i]--;
+                                if (workersPerWave[0][q] > workersPerWave[3][q]) score_worker[i]++;
+                                else if (workersPerWave[0][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    break;
+                            case 2:
+                                if (workersPerWave[1][q] > workersPerWave[0][q]) score_worker[i]++;
+                                else if (workersPerWave[1][q] < workersPerWave[0][q]) score_worker[i]--;
+                                if (workersPerWave[1][q] > workersPerWave[2][q]) score_worker[i]++;
+                                else if (workersPerWave[1][q] < workersPerWave[2][q]) score_worker[i]--;
+                                if (workersPerWave[1][q] > workersPerWave[3][q]) score_worker[i]++;
+                                else if (workersPerWave[1][q] < workersPerWave[3][q]) score_worker[i]--;
+                                break;
+                            case 5:
+                                if (workersPerWave[2][q] > workersPerWave[1][q]) score_worker[i]++;
+                                else if (workersPerWave[2][q] < workersPerWave[1][q]) score_worker[i]--;
+                                if (workersPerWave[2][q] > workersPerWave[0][q]) score_worker[i]++;
+                                else if (workersPerWave[2][q] < workersPerWave[0][q]) score_worker[i]--;
+                                if (workersPerWave[2][q] > workersPerWave[3][q]) score_worker[i]++;
+                                else if (workersPerWave[2][q] < workersPerWave[3][q]) score_worker[i]--;
+                                break;
+                            case 6:
+                                if (workersPerWave[3][q] > workersPerWave[1][q]) score_worker[i]++;
+                                else if (workersPerWave[3][q] < workersPerWave[1][q]) score_worker[i]--;
+                                if (workersPerWave[3][q] > workersPerWave[2][q]) score_worker[i]++;
+                                else if (workersPerWave[3][q] < workersPerWave[2][q]) score_worker[i]--;
+                                if (workersPerWave[3][q] > workersPerWave[0][q]) score_worker[i]++;
+                                else if (workersPerWave[3][q] < workersPerWave[0][q]) score_worker[i]--;
+                                break;
+                            default:
+                                console.log("failed to read " + gameDetail_position);
+                                break;
+                        }
+
+                    }
+                    //console.log(workersPerWave);
+                    score_worker[i] = score_worker[i] / workersPerWave[0].length;
+
+
+                    //VALUE
+                    var valuePerWave = [];
+                    for (var e = 0; e < 4; e++) {
+                        valuePerWave[e] = [];
+                    }
+                    var valuec;
+                    for (e = 0; e < 4; e++) {
+                        //console.log(gameDetailSelected[e].unitsPerWave);
+                        gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
+                            valuec = 0;
+                            ele.forEach(function (ele2) {
+                                var unitname = ele2.substring(0, ele2.indexOf("_unit"));
+                                while (unitname.includes("_")) {
+                                    unitname = unitname.replace("_", "");
+                                }
+                                if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) console.log("failed to look up " + unitname + "'s value");
+                                else valuec += parseInt(unitstats.filter(meinName => meinName.name === unitname)[0].value);
+                            });
+                            valuePerWave[e].push(valuec);
+                        });
+                    }
+                    console.log(valuePerWave);
+                    for (q = 0; q < valuePerWave[0].length; q++) {
+                        switch (gameDetail_position) {
+                            case 1:
+                                if (valuePerWave[0][q] > valuePerWave[1][q]) score_value[i]++;
+                                else if (valuePerWave[0][q] < valuePerWave[1][q]) score_value[i]--;
+                                if (valuePerWave[0][q] > valuePerWave[2][q]) score_value[i]++;
+                                else if (valuePerWave[0][q] < valuePerWave[2][q]) score_value[i]--;
+                                if (valuePerWave[0][q] > valuePerWave[3][q]) score_value[i]++;
+                                else if (valuePerWave[0][q] < valuePerWave[3][q]) score_value[i]--;
+                                break;
+                            case 2:
+                                if (valuePerWave[1][q] > valuePerWave[0][q]) score_value[i]++;
+                                else if (valuePerWave[1][q] < valuePerWave[0][q]) score_value[i]--;
+                                if (valuePerWave[1][q] > valuePerWave[2][q]) score_value[i]++;
+                                else if (valuePerWave[1][q] < valuePerWave[2][q]) score_value[i]--;
+                                if (valuePerWave[1][q] > valuePerWave[3][q]) score_value[i]++;
+                                else if (valuePerWave[1][q] < valuePerWave[3][q]) score_value[i]--;
+                                break;
+                            case 5:
+                                if (valuePerWave[2][q] > valuePerWave[1][q]) score_value[i]++;
+                                else if (valuePerWave[2][q] < valuePerWave[1][q]) score_value[i]--;
+                                if (valuePerWave[2][q] > valuePerWave[0][q]) score_value[i]++;
+                                else if (valuePerWave[2][q] < valuePerWave[0][q]) score_value[i]--;
+                                if (valuePerWave[2][q] > valuePerWave[3][q]) score_value[i]++;
+                                else if (valuePerWave[2][q] < valuePerWave[3][q]) score_value[i]--;
+                                break;
+                            case 6:
+                                if (valuePerWave[3][q] > valuePerWave[1][q]) score_value[i]++;
+                                else if (valuePerWave[3][q] < valuePerWave[1][q]) score_value[i]--;
+                                if (valuePerWave[3][q] > valuePerWave[2][q]) score_value[i]++;
+                                else if (valuePerWave[3][q] < valuePerWave[2][q]) score_value[i]--;
+                                if (valuePerWave[3][q] > valuePerWave[0][q]) score_value[i]++;
+                                else if (valuePerWave[3][q] < valuePerWave[0][q]) score_value[i]--;
+                                break;
+                        }
+                    }
+                    score_value[i] = score_value[i] / valuePerWave[0].length;
+                    //console.log(valuePerWave);
+
+
+                    var currunit = "", lastunit = "";
+                    if (gameDetail.unitsPerWave !== null) {
+                        gameDetail.unitsPerWave[0].forEach(function (element) {
+                            //e=wave ;x=different units
+                            currunit = element.substring(0, element.indexOf("_unit"));
+                            if (currunit != lastunit) {
+                                var anzahl = 0;
+                                for (var x = 0; x < 60; x++) {
+                                    if (favunit[x] != 0) {
+                                        //unit matching?
+                                        if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
+                                            anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                            //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                            anzahl++;
+                                            //console.log(element);
+                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
                                         }
                                     }
                                 }
-                                lastunit = currunit;
-                            });
-                        }
-                        if (gameDetail.mercsSentPerWave[0].length > 0) sendedOne++;
-                        if (gameDetail.mercsReceivedPerWave[0].length > 0 && gameDetail.leaksPerWave[0].length > 0) leakedOne++;
+                                //no match, add it
+                                if (anzahl === 0) {
+                                    for (x = 0; x < 60; x++) {
+                                        if (favunit[x] == 0) {
+                                            favunit[x] = element.substring(0, element.indexOf("_unit")) + ";1";
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            lastunit = currunit;
+                        });
                     }
+                    //if (gameDetail.mercsSentPerWave[0].length > 0) sendedOne++;
+                    if (gameDetail.mercsReceivedPerWave[0].length > 0 && gameDetail.leaksPerWave[0].length > 0) leakedOne++;
                 }
+                //check if player sent on 1
+                var counterp = 0;
+                if (gameDetail_position === 1) counterp = 5;
+                else if (gameDetail_position === 2) counterp = 6;
+                else if (gameDetail_position === 5) counterp = 2;
+                else if (gameDetail_position === 6) counterp = 1;
+                gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === counterp; })[0];
+                if (gameDetail.mercsReceivedPerWave[0].length > 0) sendedOne++;
             });
             let sendChanceOne = 0, leakChanceOne = 0;
             if (sendedOne > 0) sendChanceOne = (sendedOne / games_count * 100).toFixed(0);
             if (leakedOne > 0) leakChanceOne = (leakedOne / games_count * 100).toFixed(0);
             document.getElementById("best_legion" + (i + 1)).innerHTML = "Chance to send 1: " + sendChanceOne + "%, Chance to leak 1: " + leakChanceOne + "%";
         }
-        else{
-            console.log("player "+i+" has no games played");
-            console.log(i);
-            document.getElementById("favstart"+(i+1)).innerHTML="No recorded games available.";
+        else {
+            console.log("player " + i + " has no games played");
+            document.getElementById("favstart" + (i + 1)).innerHTML = "No recorded games available.";
         }
         favunit.sort(function (a, b) {
             if (a !== 0) {
@@ -276,37 +320,36 @@ function parsePlayers() {
                 var gamesWithFav_bool = false;
                 var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
                 if (gameDetail) {
-                    if (gameDetail.legion == race_selected) {
-                        for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
-                            //console.log(gameDetail.leaksPerWave[x]);
-                            var leaked = false;
-                            gameDetail.unitsPerWave[x].forEach(function (element) {
-                                //console.log(favunit);
-                                try {
-                                    favunit.forEach(function (favele) {
-                                        if (favele != 0) {
-                                            if (favele.substring(0, favele.indexOf(";")) == element.substring(0, element.indexOf("_unit"))) {
-                                                gamesWithFav_bool = true;
-                                            }
+                    for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
+                        //console.log(gameDetail.leaksPerWave[x]);
+                        var leaked = false;
+                        gameDetail.unitsPerWave[x].forEach(function (element) {
+                            //console.log(favunit);
+                            try {
+                                favunit.forEach(function (favele) {
+                                    if (favele != 0) {
+                                        if (favele.substring(0, favele.indexOf(";")) == element.substring(0, element.indexOf("_unit"))) {
+                                            gamesWithFav_bool = true;
                                         }
-                                    });
-                                }
-                                catch (error) {
-                                    console.log(error);
-                                }
-                            });
-                        }
-                        if (gamesWithFav_bool) {
-                            gamesWithFav_count++;
-                        }
+                                    }
+                                });
+                            }
+                            catch (error) {
+                                console.log(error);
+                            }
+                        });
                     }
+                    if (gamesWithFav_bool) {
+                        gamesWithFav_count++;
+                    }
+
                 }
 
             });
         }
-        
+
         document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
-        
+
         //console.log(favunit);
         //console.log(favunit);
         for (var x = 0; x < favunit.length; x++) {
@@ -345,6 +388,101 @@ function parsePlayers() {
         }
         //console.log(favunit);
     }
+
+    var friends = [];
+    for (i = 0; i < 4; i++) {
+        friends[i] = [];
+    }
+
+    //check for duo synergy
+    try {
+        for (i = 0; i < 4; i++) {
+            if (parsedPlayer[i].bestFriends !== undefined) {
+                //console.log(parsedPlayer[i].bestFriends);
+                for (var e = 0; e < parsedPlayer[i].bestFriends.length; e++) {
+                    //console.log(parsedPlayer[i].bestFriends[e]);
+                    friends[i][e] = parsedPlayer[i].bestFriends[e].player.playername;
+                }
+            }
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+    var meinCounter = 0;
+    friends.forEach(function (ele) {
+        //console.log(ele);
+        if ((meinCounter === 0 || meinCounter === 1) && (ele.includes(parsedPlayer[0].playername) || ele.includes(parsedPlayer[1].playername))) {
+            //west duo
+            duoWest = true;
+        }
+        if ((meinCounter === 2 || meinCounter === 3) && (ele.includes(parsedPlayer[2].playername) || ele.includes(parsedPlayer[3].playername))) {
+            //west duo
+            duoEast = true;
+        }
+        meinCounter++;
+    });
+    if (duoWest) {
+        document.getElementById("name1").innerHTML += " (friends)";
+        document.getElementById("name2").innerHTML += " (friends)";
+    }
+    if (duoEast) {
+        document.getElementById("name3").innerHTML += " (friends)";
+        document.getElementById("name4").innerHTML += " (friends)";
+    }
+    //console.log(duoWest + ", " + duoEast);
+    //add win/loses indicator
+    try {
+        for (i = 0; i < parsedPlayer.length; i++) {
+            winsFive[i] = 5;
+            document.getElementById("name" + (i + 1)).innerHTML += " <div class='gameresults' id='gameresult" + (i + 1) + "'></div>";
+            for (e = 0; e < 5; e++) {
+                if (parsedPlayer[i].games.games.length < 5 && e === 0) e = 5 - games.games.length;
+                if (parsedPlayer[i].games.games[e] !== undefined) {
+                    var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
+                    if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 1)).innerHTML += "W";
+                    else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 1)).innerHTML += "T";
+                    else {
+                        document.getElementById("gameresult" + (i + 1)).innerHTML += "L";
+                        winsFive[i]--;
+                    }
+                    if (e < 4) document.getElementById("gameresult" + (i + 1)).innerHTML += "/";
+                }
+
+            }
+
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+    var player_roles_worker = ["", "", "", ""];
+    var player_roles_value = ["", "", "", ""];
+    for (var xy = 0; xy < 4; xy++) {
+        //worker
+        score_worker[xy] = score_worker[xy] / game_count[xy];
+        if (score_worker[xy] < 0.01 && score_worker[xy] > -0.01) player_roles_worker[xy] = "Even Worker";
+        else if (score_worker[xy] > 0.05) player_roles_worker[xy] = "Very High Worker";
+        else if (score_worker[xy] < -0.05) player_roles_worker[xy] = "Very Low Worker";
+        else if (score_worker[xy] < -0.01 && score_worker[xy] > -0.05) player_roles_worker[xy] = "Low Worker";
+        else if (score_worker[xy] < 0.05 && score_worker[xy] > 0.01) player_roles_worker[xy] = "High Worker";
+        document.getElementById("name" + (xy + 1)).innerHTML += " (" + player_roles_worker[xy];
+        //value
+        score_value[xy] = score_value[xy] / game_count[xy];
+        if (score_value[xy] < 0.01 && score_value[xy] > -0.01) player_roles_value[xy] = "Even Value";
+        else if (score_value[xy] > 0.05) player_roles_value[xy] = "Very High Value";
+        else if (score_value[xy] < -0.05) player_roles_value[xy] = "Very Low Value";
+        else if (score_value[xy] < -0.01 && score_value[xy] > -0.05) player_roles_value[xy] = "Low Value";
+        else if (score_value[xy] < 0.05 && score_value[xy] > 0.01) player_roles_value[xy] = "High Value";
+        document.getElementById("name" + (xy + 1)).innerHTML += ", " + player_roles_value[xy] + ")";
+        
+
+    }
+    console.log(game_count);
+    console.log(score_worker);
+    console.log(score_value);
 
 
     getWinchance();
@@ -459,7 +597,7 @@ function getFighterGames(fightername, playername) {
                                                 target_pos = 2;
                                                 break;
                                         }
-                                        var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
+                                        //var gameDetail_oponent = ele['gameDetails'].filter(function (gameDetail_oponent) { return gameDetail_oponent.position == target_pos })[0];
                                         leaks[i]++;
                                     }
                                 }
@@ -495,144 +633,29 @@ function getFighterGames(fightername, playername) {
 function getWinchance() {
     var elos = [];
     var peakElos = [];
+    var bonus_w = 0; bonus_e = 0;
     for (var i = 0; i < parsedPlayer.length; i++) {
         //console.log(parsedPlayer[i]);
-        switch (document.getElementById("legionp" + i).value) {
-            case "Mastermind":
-                if (typeof parsedPlayer[i].statistics.mastermindElo != "undefinded") {
-                    elos.push(parsedPlayer[i].statistics.mastermindElo);
-                }
-                else {
-                    elos.push(1000);
-                }
-
-                if (typeof parsedPlayer[i].statistics.mastermindPeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.mastermindPeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.mastermindPeakEloThisSeason);
-                    }
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.mastermindPeakElo);
-                }
-                break;
-            case "Element":
-                if (typeof parsedPlayer[i].statistics.elementElo != "undefinded") {
-                    elos.push(parsedPlayer[i].statistics.elementElo);
-                }
-                else {
-                    elos.push(1000);
-                }
-
-                if (typeof parsedPlayer[i].statistics.elementPeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.elementPeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.elementPeakEloThisSeason);
-                    }
-
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.elementPeakElo);
-                }
-                break;
-            case "Grove":
-                console.log(typeof parsedPlayer[i].statistics.groveElo);
-                if (typeof parsedPlayer[i].statistics.groveElo == "undefined") {
-                    elos.push(1000);
-                    console.log("1k");
-                }
-                else {
-                    elos.push(parsedPlayer[i].statistics.groveElo);
-                }
-
-                if (typeof parsedPlayer[i].statistics.grovePeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.grovePeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.grovePeakEloThisSeason);
-                    }
-
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.grovePeakElo);
-                }
-                break;
-            case "Forsaken":
-                if (typeof parsedPlayer[i].statistics.forsakenElo == "undefined") {
-
-                    elos.push(1000);
-                }
-                else {
-                    elos.push(parsedPlayer[i].statistics.forsakenElo);
-                }
-
-                if (typeof parsedPlayer[i].statistics.forsakenPeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.forsakenPeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.forsakenPeakEloThisSeason);
-                    }
-
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.forsakenPeakElo);
-                }
-                break;
-            case "Mech":
-                if (typeof parsedPlayer[i].statistics.mechElo == "undefined") {
-                    elos.push(1000);
-                }
-                else {
-                    elos.push(parsedPlayer[i].statistics.mechElo);
-                }
-
-                if (typeof parsedPlayer[i].statistics.mechPeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.mechPeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.mechPeakEloThisSeason);
-                    }
-
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.mechPeakElo);
-                }
-                break;
-            case "Atlantean":
-                if (typeof parsedPlayer[i].statistics.atlanteanElo != "undefinded") {
-                    elos.push(1000);
-                }
-                else {
-                    elos.push(parsedPlayer[i].statistics.atlanteanElo);
-                }
-
-                if (typeof parsedPlayer[i].statistics.atlanteanPeakElo == 'undefined') {
-                    if (typeof parsedPlayer[i].statistics.atlanteanPeakEloThisSeason == 'undefined') {
-                        peakElos.push(1000);
-                    }
-                    else {
-                        peakElos.push(parsedPlayer[i].statistics.atlanteanPeakEloThisSeason);
-                    }
-
-                }
-                else {
-                    peakElos.push(parsedPlayer[i].statistics.atlanteanPeakElo);
-                }
-                break;
-        }
+        if (parsedPlayer[i].statistics.overallElo !== undefined) elos.push(parsedPlayer[i].statistics.overallElo);
+        else elos.push(1000);
+        if (parsedPlayer[i].statistics.overallPeakEloThisSeason !== undefined) peakElos.push(parsedPlayer[i].statistics.overallPeakEloThisSeason);
+        else peakElos.push(1000);
+        if (parsedPlayer[i].statistics.winStreak > 5 && i < 3) bonus_w += 5;
+        else if (parsedPlayer[i].statistics.winStreak > 5 && i > 2) bonus_e += 5;
     }
-    var elo_west = parseFloat(((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0]*2 + peakElos[1]*2) / 4));
-    var elo_east = parseFloat(((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2]*2 + peakElos[3]*2) / 4));
+    var elo_west = parseFloat((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0] * 1 + peakElos[1] * 1) / 4);
+    var elo_east = parseFloat((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2] * 1 + peakElos[3] * 1) / 4);
     var winchance = 50 * (elo_west / elo_east);
+    for (i = 0; i < 4; i++) {
+        if (i < 3) winchance += winsFive[i];
+        else winchance -= winsFive[i];
+    }
+    winchance = winchance + bonus_w - bonus_e;
     if (winchance < 0 || winchance > 100) winchance = 50;
+    if (duoWest) winchance = winchance + 5;
+    if (duoEast) winchance = winchance - 5;
     var elem = document.getElementById("myBar");
+    var elem2 = document.getElementById("myBar2");
     var width = 1;
     var id = setInterval(frame, 10);
     function frame() {
@@ -641,10 +664,13 @@ function getWinchance() {
         } else {
             width++;
             elem.style.width = width + '%';
-            elem.innerHTML = width * 1 + '%';
+            elem.innerHTML = "West: " + width * 1 + '%';
+            elem2.style.width = (100 - width) + '%';
+            elem2.innerHTML = "East: " + (100 - width * 1) + '%';
         }
     }
     document.getElementById("winchancebar").style.display = "";
+
 }
 
 document.onkeydown = function (event) {
@@ -653,10 +679,10 @@ document.onkeydown = function (event) {
     }
 };
 
-function showPlayerDetails(nummer){
+function showPlayerDetails(nummer) {
     const details_box = document.getElementById("player_details_box");
     const details_content = document.getElementById("playername_details");
-    details_box.style.display="";
+    details_box.style.display = "";
     parsedPlayer = [];
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
@@ -666,9 +692,9 @@ function showPlayerDetails(nummer){
     queryPlayerGames(selectedPlayerName);
 }
 
-function hidePlayerDetails(){
-    document.getElementById("player_details_box").style.display="none";
-    document.getElementById("playername_details").innerHTML="";
+function hidePlayerDetails() {
+    document.getElementById("player_details_box").style.display = "none";
+    document.getElementById("playername_details").innerHTML = "";
 }
 
 function showLivegame(name) {
@@ -683,7 +709,7 @@ function listGames(livegames) {
     var normalcontainer = document.getElementById("normalgames");
     if (livegames) {
         var counter_r = 0, counter_c = 0;
-        for (var i = livegames.length-1; i > 0; i--) {
+        for (var i = livegames.length - 1; i > 0; i--) {
             var currgame = livegames[i];
             var time1 = new Date(currgame.ts);
             var time2 = new Date();
@@ -704,7 +730,7 @@ function listGames(livegames) {
                 normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + ")  VS " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_r++;
             }
-           
+
         }
         if (counter_c === 0) classiccontainer.innerHTML = "No active games found.";
         if (counter_r === 0) normalcontainer.innerHTML = "No active games found.";
@@ -738,7 +764,7 @@ function queryPlayer(playername) {
             console.log("Failed to load player:");
             console.log(playername);
             console.log(result);
-            allPlayers.push({ "playername": "Bot" });
+            allPlayers.push({ "playername": "Bot (player not found)", "statistics": {}, "bestFriends": [], "games": {} });
             document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             //document.getElementById("apierror").style.display = "";
         }
@@ -785,7 +811,7 @@ function queryAllLivegames() {
             console.log(err);
             document.getElementById("apierror").style.display = "";
         }
-        
+
     });
 }
 
@@ -808,7 +834,7 @@ function queryLivegame(playername) {
     document.getElementById("loadingstring").innerHTML = "Requesting Livegame...";
     sqlGetLivegame(function (result) {
         livegame = JSON.parse(result);
-        console.log(livegame);
+        //console.log(livegame);
         if (livegame) {
             livegame.players.forEach(function (ele) {
                 queryPlayer(ele);

@@ -255,7 +255,7 @@ function getGameDetails(seasonGames, type, name) {
         console.log("Max Elo: " + max_elo);
         console.log("Favunits:");
         console.log(favunits);
-        console.log("Wave Leaks:")
+        console.log("Wave Leaks:");
         console.log(wave_leaks);
         console.log("Wave Leaks Amount");
         console.log(wave_leaks_amount);

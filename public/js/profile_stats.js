@@ -579,7 +579,9 @@ function readSelection() {
     try {
         myChart2.destroy();
     }
-    catch{ }
+    catch(err){
+        console.log(err);
+    }
     if (document.getElementById("value_textField").style.display == "") var meineValue = document.getElementById("value_textField").value;
     else var meineValue = document.getElementById("value_dateField").value;
     switch (abfrage) {

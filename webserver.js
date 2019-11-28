@@ -866,6 +866,8 @@ app.get('/mongo/getFighterStats', (req, res) => {
     });
 });
 
+
+
 app.get('/mongo/getGames', (req, res) => {
     var type = req.query.type;
     var target_db = req.query.db;
@@ -1129,6 +1131,8 @@ app.get('/api/profile/playerOverallGames', (req, res) => {
         });
 });
 
+
+
 // player with 100 last games
 app.get('/api/profile/player100', (req, res) => {
     var playername = req.query.playername;
@@ -1136,7 +1140,7 @@ app.get('/api/profile/player100', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername: "' + playername + '") { playername,statistics,games(limit: 100, queuetype:normal) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,partyMembers{playername}}}}}}'
+            query: '{player(playername: "' + playername + '") { playername,statistics,bestFriends(limit:3){player{playername}gameCount},games(limit: 50, queuetype:normal) {count,games{gameid,gameDetails{ts,wave,playername,legion,workers,income,value,iscross,gameresult,overallElo,position,leakValue,leakCaughtValue,mvpScore,legionSpell,unitsPerWave,leaksPerWave,netWorthPerWave,mercsSentPerWave,mercsReceivedPerWave,workersPerWave,partyMembers{playername}}}}}}'
         })
     })
         .then(function (response) {
@@ -1163,7 +1167,7 @@ app.get('/api/profile/player', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies,bestFriends(limit: 3){player{playername},gameCount}}}'
+            query: '{player(playername:"' + playername + '"){id,playername,statistics,badges,cards,items,fightercosmetics,trophies,avatarUrl,bestFriends(limit: 3){player{playername},gameCount}}}'
         })
     })
         .then(function (response) {

@@ -15,7 +15,7 @@ function checkContent() {
     else {
 
         document.getElementById("tab_box_1").textContent = "Select a player";
-        var banner = '<div id="amazon_ad"></div>'
+        var banner = '<div id="amazon_ad"></div>';
         document.getElementById("tab_box_1").innerHTML += banner;
         openTab(1);
 
@@ -41,8 +41,8 @@ function loadEloGraph(games) {
     var date = [100];
     games.forEach(function (myEle) {
         if (counter < 200) {
-            //console.log(myEle);
-            if (myEle.queuetype != "Custom") {
+			try{
+				if (myEle.queuetype !== "Custom") {
                 if (myEle.gameDetails[0].playername == player_name) {
                     elo[counter] = myEle.gameDetails[0].overallElo;
 
@@ -60,6 +60,14 @@ function loadEloGraph(games) {
                 date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
                 counter++;
             }
+			}
+			catch(err){
+				console.log("Error loading game: ");
+				console.log(err);
+				console.log(myEle);
+				
+			}
+            
         }
 
     });
@@ -136,17 +144,29 @@ function loadStats(player) {
     player_overall_xp = player.statistics.totalXp;
     player_overall_level = getPlayerLevel(player_overall_xp);
     player_winningstreak = player.statistics.winStreak;
-    console.log(player.bestFriends);
-    if (player.bestFriends != undefined) {
-        player_bestfriends = "";
+    player_bestfriends = "";
+    if (player.bestFriends !== undefined && player.bestFriends[0]!== undefined) {
+       
         player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
-        if (player.bestFriends[1].player != null) {
+        if (player.bestFriends[1].player !== null) {
             player_bestfriends += ", " + player.bestFriends[1].player.playername + " (" + player.bestFriends[1].gameCount + ")";
-            if (player.bestFriends[2].player != null) {
+            if (player.bestFriends[2].player !== null) {
                 player_bestfriends += ", " + player.bestFriends[2].player.playername + " (" + player.bestFriends[2].gameCount + ")";
             }
         }
     }
+
+    if(typeof player.statistics.rankedTiesThisSeason == 'undefined') player_seasonal_ties = 0;
+    player_seasonal_wins = player.statistics.rankedWinsThisSeason;
+    player_seasonal_losses = player.statistics.rankedLossesThisSeason;
+    player_seasonal_games = player_seasonal_wins + player_seasonal_losses + player_seasonal_ties;
+
+    player_seasonal_classic_wins = player.statistics.classicWinsThisSeason;
+    player_seasonal_classic_losses = player.statistics.classicLossesThisSeason;
+    player_seasonal_classic_games = player_seasonal_classic_wins + player_seasonal_classic_losses;
+    player_seasonal_classic_elo = player.statistics.classicElo;
+    player_seasonal_classic_peakelo = player.statistics.classicPeakEloThisSeason;
+
     
     //icon für race mit meisten wins
     var bgimage = "mastermind_2.png";
@@ -223,10 +243,19 @@ function parseStats(player) {
     
     document.getElementById("winStreak").textContent = "Winningstreak: " + player_winningstreak;
     // seasonal
+    document.getElementById("s_rankedGames").textContent = "Ranked Games: " + player_seasonal_games;
+    document.getElementById("s_rankedWins").textContent = "Ranked Wins: " + player_seasonal_wins + " ("+(player_seasonal_wins/player_seasonal_games*100).toFixed(2)+"%)";
+    document.getElementById("s_rankedLosses").textContent = "Ranked Losses: " + player_seasonal_losses;
+
+    document.getElementById("s_classicGames").textContent = "Classic Games: " + player_seasonal_classic_games;
+    document.getElementById("s_classicWins").textContent = "Classic Wins: " + player_seasonal_classic_wins+ " ("+(player_seasonal_classic_wins/player_seasonal_classic_games*100).toFixed(2)+"%)";
+    document.getElementById("s_classicLosses").textContent = "Classic Losses: " + player_seasonal_classic_losses;
+    document.getElementById("s_classicElo").textContent = "Classic Elo (unoffical): " + player_seasonal_classic_elo;
+    document.getElementById("s_classicPeakElo").textContent = "Classic Peak Elo (unoffical): " + player_seasonal_classic_peakelo;
     // overall
     document.getElementById("o_gamesPlayed").textContent = "Ranked Games: " + player_totalgames;
     document.getElementById("o_rankedWins").textContent = "Ranked Wins: " + player.statistics.wins + " (" + player_totalwinchance + "%)";
-    if (player_bestfriends !== undefined) document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
+    if (player_bestfriends !== "") document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
 
 
 
@@ -571,6 +600,7 @@ function drawPlayerBuilds(gameX) {
             } catch (err) {
                 // Catch games that error out with no game detail.
                 console.log(err);
+				console.log(games[i]);
             }
 
             var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
