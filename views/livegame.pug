@@ -16,7 +16,8 @@ block content
                     option(value="2.4") v2.4x
                     option(value="3.0") v3.0x
                     option(value="3.1") v3.1x
-                    option(value="4.0" selected) v4.0x
+                    option(value="4.0") v4.0x
+                    option(value="5.0" selected) v5.0x
                 select#unitselector(onchange="changeActiveUnit(this.value);")
                 table#leaktable
                     tr
@@ -37,7 +38,7 @@ block content
                 #name1
                 #elo1
                 #best_legion1
-                button.showDetails(onclick="showPlayerDetails(0);") Season 4 Stats
+                button.showDetails(onclick="showPlayerDetails(0);") Seasonal Stats
                 select#legionp0.form-control(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element
@@ -51,7 +52,7 @@ block content
                 #name2
                 #elo2
                 #best_legion2
-                button.showDetails(onclick="showPlayerDetails(1);") Season 4 Stats
+                button.showDetails(onclick="showPlayerDetails(1);") Seasonal Stats
                 select#legionp1.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element
@@ -79,7 +80,7 @@ block content
                 #name3
                 #elo3
                 #best_legion3
-                button.showDetails(onclick="showPlayerDetails(2);") Season 4 Stats
+                button.showDetails(onclick="showPlayerDetails(2);") Seasonal Stats
                 select#legionp2.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element
@@ -93,7 +94,7 @@ block content
                 #name4
                 #elo4
                 #best_legion4
-                button.showDetails(onclick="showPlayerDetails(3);") Season 4 Stats
+                button.showDetails(onclick="showPlayerDetails(3);") Seasonal Stats
                 select#legionp3.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element

@@ -95,5 +95,7 @@ var unitstats = [
     { name: "orchid", value: 280 },
     { name: "infiltrator", value: 80 },
     { name: "eternalwanderer", value: 125 },
-    { name: "samuraisoul", value: 400 }
+    { name: "samuraisoul", value: 400 },
+    { name: "yozora", value: 190 },
+    { name: "arctaire", value: 430 }
 ];

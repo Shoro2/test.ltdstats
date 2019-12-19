@@ -792,6 +792,7 @@ function getAllLivegames(callback) {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var livegames = JSON.parse(xhttp.response);
+            console.log(livegames);
             callback(livegames);
         }
         else if (this.status === 500) document.getElementById("apierror").style.display = "";

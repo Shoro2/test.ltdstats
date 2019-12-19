@@ -696,9 +696,8 @@ app.get('/sql/getLivegame', (req, res) => {
 });
 
 app.get('/api/getLivegames', (req, res) => {
-    http.get('http://10.128.0.10:3666/db/livegames?', (resp) => {
+    http.get('http://10.128.0.10:3666/db/livegames?t', (resp) => {
         let data = '';
-
         // A chunk of data has been recieved.
         resp.on('data', (chunk) => {
             data += chunk;
@@ -706,12 +705,14 @@ app.get('/api/getLivegames', (req, res) => {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            if (data) res.json(data);
+            if (data) {
+                res.json(data); 
+            }
             else res.send("no data");
         });
 
     }).on("error", (err) => {
-        writeLog("Error: " + err.message);
+        console.log("Error: " + err.message);
     });
 
 });
