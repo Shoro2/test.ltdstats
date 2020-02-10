@@ -725,7 +725,7 @@ function listGames(livegames) {
             else seconds_str = seconds.toString();
             //console.log(currgame);
             if (currgame.gametype === "classic") {
-                classiccontainer.innerHTML += "<div class='game_row_4v4'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                classiccontainer.innerHTML += "<div class='game_row_4v4'>" + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_c++;
             }
             else {
