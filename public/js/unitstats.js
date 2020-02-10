@@ -97,5 +97,7 @@ var unitstats = [
     { name: "eternalwanderer", value: 125 },
     { name: "samuraisoul", value: 400 },
     { name: "yozora", value: 190 },
-    { name: "arctaire", value: 430 }
+    { name: "arctaire", value: 430 },
+    { name: "soulgate", value: 260 },
+    {name: "hellgate", value: 420 }
 ];

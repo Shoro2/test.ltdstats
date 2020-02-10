@@ -247,7 +247,12 @@ app.get('/guides', (req, res) => {
                 title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
             });
             break;
-            //mastermind
+        case "sleepwiththefishes":
+            res.render('guides/atlantean/sleepwiththefishes', {
+                title: 'Guide build order for Classic Atlantean'
+            });
+            break;
+        //mastermind
         case "bonnyopeners":
             res.render('guides/mastermind/openers', {
                 title: 'Mastermind Openers'

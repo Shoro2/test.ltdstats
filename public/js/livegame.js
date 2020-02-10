@@ -134,7 +134,7 @@ function parsePlayers() {
                             workersPerWave[e].push(wpw);
                         });
                     }
-                    console.log(workersPerWave);
+                    //console.log(workersPerWave);
                     for (var q = 0; q < workersPerWave[0].length; q++) {
                         switch (gameDetail_position) {
                             case 1:
@@ -181,7 +181,7 @@ function parsePlayers() {
 
                     //VALUE
                     var valuePerWave = [];
-                    for (var e = 0; e < 4; e++) {
+                    for (e = 0; e < 4; e++) {
                         valuePerWave[e] = [];
                     }
                     var valuec;
@@ -200,7 +200,7 @@ function parsePlayers() {
                             valuePerWave[e].push(valuec);
                         });
                     }
-                    console.log(valuePerWave);
+                    //console.log(valuePerWave);
                     for (q = 0; q < valuePerWave[0].length; q++) {
                         switch (gameDetail_position) {
                             case 1:
@@ -480,10 +480,11 @@ function parsePlayers() {
         
 
     }
+    /*
     console.log(game_count);
     console.log(score_worker);
     console.log(score_value);
-
+    */
 
     getWinchance();
 }
@@ -541,6 +542,7 @@ function getFighterGames(fightername, playername) {
             if (typeof gameDetail.unitsPerWave[0] !== "undefined") {
                 //check units on 1
                 //more than 1 unit
+                var target_pos;
                 if (gameDetail.unitsPerWave[0].length > 1) {
                     //for each unit built on 1
                     for (var i = 0; i < gameDetail.unitsPerWave[0].length; i++) {
@@ -548,9 +550,8 @@ function getFighterGames(fightername, playername) {
                         if (gameDetail.unitsPerWave[0][i].includes(fightername)) {
                             fightercount_pick++;
                             if (gameDetail.leaksPerWave.length > 0) {
-                                for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
+                                for (i = 0; i < gameDetail.leaksPerWave.length; i++) {
                                     if (gameDetail.leaksPerWave[i].length > 0) {
-                                        var target_pos;
                                         switch (gameDetail.position) {
                                             case 1:
                                                 target_pos = 6;
@@ -582,7 +583,6 @@ function getFighterGames(fightername, playername) {
                             if (gameDetail.leaksPerWave.length > 0) {
                                 for (var i = 0; i < gameDetail.leaksPerWave.length; i++) {
                                     if (gameDetail.leaksPerWave[i].length > 0) {
-                                        var target_pos;
                                         switch (gameDetail.position) {
                                             case 1:
                                                 target_pos = 6;
@@ -687,7 +687,7 @@ function showPlayerDetails(nummer) {
     for (var i = 0; i < 4; i++) {
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
     }
-    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 4 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername + "' target='_blank'>Profile</a>)</h3>";
+    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 5 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername + "' target='_blank'>Profile</a>)</h3>";
     selectedPlayerName = parsedPlayer[nummer].playername;
     queryPlayerGames(selectedPlayerName);
 }
@@ -707,10 +707,12 @@ function showLivegame(name) {
 function listGames(livegames) {
     var classiccontainer = document.getElementById("classicgames");
     var normalcontainer = document.getElementById("normalgames");
+    console.log(livegames);
     if (livegames) {
         var counter_r = 0, counter_c = 0;
-        for (var i = livegames.length - 1; i > 0; i--) {
+        for (var i = livegames.length - 1; i > -1; i--) {
             var currgame = livegames[i];
+            console.log(currgame);
             var time1 = new Date(currgame.ts);
             var time2 = new Date();
             var timediff = time2 - time1;
@@ -727,7 +729,7 @@ function listGames(livegames) {
                 counter_c++;
             }
             else {
-                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.gameid + ": " + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + ")  VS " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + ")  VS " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_r++;
             }
 
