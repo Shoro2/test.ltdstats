@@ -307,27 +307,45 @@ function parseResults(wave_leaks, wave_leaks_amount) {
     while (document.getElementById("unitselector").options.length > 0) document.getElementById("unitselector").remove(document.getElementById("unitselector").length - 1);
 
     for (let i = 0; i < favunits.length; i++) {
-        document.getElementById("unitselector").add(new Option(nameToUpper(favunits[i][0]) + " - (" + (favunits[i][1] / amount_total_games * 100).toFixed(2) + "%)", favunits[i][0]));
+        var chance = (favunits[i][1] / amount_total_games * 100).toFixed(2);
+        var option = new Option(nameToUpper(favunits[i][0]) + " - (" + chance + "%)", favunits[i][0]);
+        document.getElementById("unitselector").add(option);
     }
     try {
         document.getElementById("errormsg").style.display = "none";
         document.getElementById("leaktable").style.display = "";
         for (let i = 1; i < 22; i++) {
-            document.getElementById("wave" + i).innerHTML = i;
+            var row_wave = document.getElementById("wave" + i)
+            var row_chance = document.getElementById("leakchance" + i);
+            var row_amount = document.getElementById("leakamount" + i);
+
             let chance = (wave_leaks[0][i - 1] / favunits[0][1] * 100);
-            if (chance > 0) {
-                document.getElementById("leakchance" + i).innerHTML = chance.toFixed(2) + "%";
-            }
-            else {
-                document.getElementById("leakchance" + i).innerHTML = "0%";
-            }
-            let avg_amount = (wave_leaks_amount[0][i - 1] / wave_leaks[0][i - 1]).toFixed(2);
-            if (avg_amount > 0) {
-                document.getElementById("leakamount" + i).innerHTML = avg_amount;
-            }
-            else {
-                document.getElementById("leakamount" + i).innerHTML = "0";
-            }
+            let avg_amount = (wave_leaks_amount[0][i - 1] / wave_leaks[0][i - 1]);
+            if(!avg_amount) avg_amount = 0;
+            row_wave.innerHTML = i;
+            row_amount.innerHTML = avg_amount.toFixed(1);
+
+            row_chance.innerHTML = chance.toFixed(1) + "%";
+            if(chance>50){
+                row_chance.style.backgroundColor="red";
+                row_wave.style.backgroundColor="red";
+                row_amount.style.backgroundColor="red";
+            } 
+            else if(chance>25){
+                row_chance.style.backgroundColor="LightCoral";
+                row_wave.style.backgroundColor="LightCoral";
+                row_amount.style.backgroundColor="LightCoral";
+            } 
+            else if(chance>15){
+                row_chance.style.backgroundColor="yellow";
+                row_wave.style.backgroundColor="yellow";
+                row_amount.style.backgroundColor="yellow";
+            } 
+            else{
+                row_chance.style.backgroundColor="";
+                row_wave.style.backgroundColor="";
+                row_amount.style.backgroundColor="";
+            } 
         }
     }
     catch (error) {
@@ -396,21 +414,37 @@ function changeActiveUnit(unit) {
     for (var i = 0; i < favunits.length; i++) {
         if (favunits[i][0] === unit) {
             for (let e = 1; e < 22; e++) {
-                document.getElementById("wave" + e).innerHTML = e;
+                var row_wave = document.getElementById("wave" + e)
+                var row_chance = document.getElementById("leakchance" + e);
+                var row_amount = document.getElementById("leakamount" + e);
+
                 let chance = (wave_leaks[i][e - 1] / favunits[i][1] * 100);
-                if (chance > 0) {
-                    document.getElementById("leakchance" + e).innerHTML = chance.toFixed(2) + "%";
-                }
-                else {
-                    document.getElementById("leakchance" + e).innerHTML = "0%";
-                }
-                let avg_amount = (wave_leaks_amount[i][e - 1] / wave_leaks[i][e - 1]).toFixed(2);
-                if (avg_amount > 0) {
-                    document.getElementById("leakamount" + e).innerHTML = avg_amount;
-                }
-                else {
-                    document.getElementById("leakamount" + e).innerHTML = "0";
-                }
+                let avg_amount = (wave_leaks_amount[i][e - 1] / wave_leaks[i][e - 1]);
+                if(!avg_amount) avg_amount = 0;
+                row_wave.innerHTML = e;
+                row_amount.innerHTML = avg_amount.toFixed(1);
+
+                row_chance.innerHTML = chance.toFixed(1) + "%";
+                if(chance>50){
+                    row_chance.style.backgroundColor="red";
+                    row_wave.style.backgroundColor="red";
+                    row_amount.style.backgroundColor="red";
+                } 
+                else if(chance>25){
+                    row_chance.style.backgroundColor="LightCoral";
+                    row_wave.style.backgroundColor="LightCoral";
+                    row_amount.style.backgroundColor="LightCoral";
+                } 
+                else if(chance>15){
+                    row_chance.style.backgroundColor="yellow";
+                    row_wave.style.backgroundColor="yellow";
+                    row_amount.style.backgroundColor="yellow";
+                } 
+                else{
+                    row_chance.style.backgroundColor="";
+                    row_wave.style.backgroundColor="";
+                    row_amount.style.backgroundColor="";
+                } 
             }
             break;
         }
