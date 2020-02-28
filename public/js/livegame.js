@@ -707,7 +707,7 @@ function showLivegame(name) {
 function listGames(livegames) {
     var classiccontainer = document.getElementById("classicgames");
     var normalcontainer = document.getElementById("normalgames");
-    console.log(livegames);
+    //console.log(livegames);
     if (livegames) {
         var counter_r = 0, counter_c = 0;
         for (var i = livegames.length - 1; i > -1; i--) {
@@ -725,11 +725,11 @@ function listGames(livegames) {
             else seconds_str = seconds.toString();
             //console.log(currgame);
             if (currgame.gametype === "classic") {
-                classiccontainer.innerHTML += "<div class='game_row_4v4'>" + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + "), " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") VS " + currgame.players[4] + "(" + currgame.elos[4] + "), " + currgame.players[5] + "(" + currgame.elos[5] + "), " + currgame.players[6] + "(" + currgame.elos[6] + "), " + currgame.players[7] + "(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                classiccontainer.innerHTML += "<div class='game_row_4v4'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + "), <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") VS <b>" + currgame.players[4] + "</b>(" + currgame.elos[4] + "), <b>" + currgame.players[5] + "</b>(" + currgame.elos[5] + "), <b>" + currgame.players[6] + "</b>(" + currgame.elos[6] + "), <b>" + currgame.players[7] + "</b>(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_c++;
             }
             else {
-                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'>" + currgame.players[0] + "(" + currgame.elos[0] + "), " + currgame.players[1] + "(" + currgame.elos[1] + ")  VS " + currgame.players[2] + "(" + currgame.elos[2] + "), " + currgame.players[3] + "(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + ")  VS <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_r++;
             }
 

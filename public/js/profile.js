@@ -128,6 +128,7 @@ function loadStats(player) {
     player_name = player.playername;
     player_id = player.id;
     player_icon = player.avatarUrl;
+    player_icon = "/img/i"+player_icon.substring(1);
     //general
     player_totalgames = player.statistics.gamesPlayed; //total ranked games
     player_totalwins = player.statistics.wins; //overall ranked wins
@@ -167,6 +168,34 @@ function loadStats(player) {
     player_seasonal_classic_elo = player.statistics.classicElo;
     player_seasonal_classic_peakelo = player.statistics.classicPeakEloThisSeason;
 
+    player_atlantean_games = player.statistics.atlanteanPlayed;
+    if(!player_atlantean_games) player_atlantean_games = 0;
+    player_atlantean_wins = player.statistics.atlanteanWins;
+    if(!player_atlantean_wins) player_atlantean_wins= 0;
+    player_element_games = player.statistics.elementPlayed;
+    if(!player_element_games) player_element_games= 0;
+    player_element_wins = player.statistics.elementWins;
+    if(!player_element_wins) player_element_wins= 0;
+    player_grove_games = player.statistics.grovePlayed;
+    if(!player_grove_games)player_grove_games = 0;
+    player_grove_wins = player.statistics.groveWins;
+    if(!player_grove_wins)player_grove_wins = 0;
+    player_mech_games = player.statistics.mechPlayed;
+    if(!player_mech_games) player_mech_games= 0;
+    player_mech_wins = player.statistics.mechWins;
+    if(!player_mech_wins)player_mech_wins = 0;
+    player_forsaken_games = player.statistics.forsakenPlayed;
+    if(!player_forsaken_games)player_forsaken_games = 0;
+    player_forsaken_wins = player.statistics.forsakenWins;
+    if(!player_forsaken_wins)player_forsaken_wins = 0;
+    player_nomad_games = player.statistics.nomadPlayed;
+    if(!player_nomad_games)player_nomad_games = 0;
+    player_nomad_wins = player.statistics.nomadWins;
+    if(!player_nomad_wins) player_nomad_wins= 0;
+    player_shrine_games = player.statistics.shrinePlayed;
+    if(!player_shrine_games) player_shrine_games = 0;
+    player_shrine_wins = player.statistics.shrineWins;
+    if(!player_shrine_wins) player_shrine_wins= 0;
     
     //icon für race mit meisten wins
     var bgimage = "mastermind_2.png";
@@ -191,9 +220,11 @@ function loadStats(player) {
     else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
     else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Grandmaster.png'>";
     // mouseover details
-    parseStats(player);
+    parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 23% 40%;opacity:1.0;");
     document.title = "LTDStats - " + player_name + "'s Profile";
+
+    document.getElementById("player_icon1").innerHTML ="<img id='img_playericon' src='"+player_icon+"'></img>";
 }
 
 function getPlayerLevel(totalXp) {
@@ -235,7 +266,7 @@ function getPlayerLevel(totalXp) {
 }
 
 //parses stats into profile tab1
-function parseStats(player) {
+function parseStats() {
     // top
     document.getElementById("playerLevel").textContent = "Level: " + player_overall_level + " (" + player_overall_xp + " XP)";
     // general
@@ -255,6 +286,27 @@ function parseStats(player) {
     // overall
     document.getElementById("o_gamesPlayed").textContent = "Ranked Games: " + player_totalgames;
     document.getElementById("o_rankedWins").textContent = "Ranked Wins: " + player.statistics.wins + " (" + player_totalwinchance + "%)";
+
+    document.getElementById("o_atlantean_games").textContent = "Atlantean Games: " + player_atlantean_games;
+    document.getElementById("o_atlantean_wins").textContent = "Atlantean Wins: " + player_atlantean_wins;
+    document.getElementById("o_element_games").textContent = "Element Games: " + player_element_games;
+    document.getElementById("o_element_wins").textContent = "Element Wins: " + player_element_wins;
+    document.getElementById("o_grove_games").textContent = "Grove Games: " + player_grove_games;
+    document.getElementById("o_grove_wins").textContent = "Grove Wins: " + player_grove_wins;
+    document.getElementById("o_mech_games").textContent = "Mech Games: " + player_mech_games;
+    document.getElementById("o_mech_wins").textContent = "Mech Wins: " + player_mech_wins;
+    document.getElementById("o_forsaken_games").textContent = "Forsaken Games: " + player_forsaken_games;
+    document.getElementById("o_forsaken_wins").textContent = "Forsaken Wins: " + player_forsaken_wins;
+    document.getElementById("o_nomad_games").textContent = "Nomad Games: " + player_nomad_games;
+    document.getElementById("o_nomad_wins").textContent = "Nomad Wins: " + player_nomad_wins;
+    document.getElementById("o_shrine_games").textContent = "Shrine Games: " + player_shrine_games;
+    document.getElementById("o_shrine_wins").textContent = "Shrine Wins: " + player_shrine_wins;
+
+
+
+
+
+
     if (player_bestfriends !== "") document.getElementById("bestFriends").innerHTML = "Played together with: " + player_bestfriends;
 
 

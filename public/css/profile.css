@@ -11,6 +11,13 @@
     width: 50px;
 }
 
+#img_playericon {
+    height: 40px;
+    width: 40px;
+    float: left;
+    margin-top: 7px;
+}
+
 #img_level {
     height: 50px;
     width: 50px;
@@ -526,4 +533,13 @@ th {
     margin-left:5%;
     margin-right:5%;
     height:90%;
+}
+
+#toggleseason{
+    color: black;
+}
+
+
+#toggleseason:hover{
+    color: white;
 }
