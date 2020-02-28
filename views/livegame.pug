@@ -8,6 +8,7 @@ block content
             #player_details_content
                 #playername_details
                 #season_stats
+                #grapharea
                 select#targetver(onchange="queryPlayerGames(null);")
                     option(value="2.0") Season 2
                     option(value="3.0") Season 3
@@ -101,3 +102,5 @@ block content
                 #leaks4.leaks
     script(src="/js/livegame.js")
     script(src="/js/getGameDetails.js")
+    script(src="/js/Chart.js")
+    script(src="/js/unitstats.js")

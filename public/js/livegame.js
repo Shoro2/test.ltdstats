@@ -194,7 +194,10 @@ function parsePlayers() {
                                 while (unitname.includes("_")) {
                                     unitname = unitname.replace("_", "");
                                 }
-                                if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) console.log("failed to look up " + unitname + "'s value");
+                                if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) {
+                                    console.log("failed to look up " + unitname + "'s value");
+                                    console.log(gameDetailSelected[e]);
+                                }
                                 else valuec += parseInt(unitstats.filter(meinName => meinName.name === unitname)[0].value);
                             });
                             valuePerWave[e].push(valuec);
@@ -712,7 +715,6 @@ function listGames(livegames) {
         var counter_r = 0, counter_c = 0;
         for (var i = livegames.length - 1; i > -1; i--) {
             var currgame = livegames[i];
-            console.log(currgame);
             var time1 = new Date(currgame.ts);
             var time2 = new Date();
             var timediff = time2 - time1;
@@ -762,7 +764,7 @@ function apiGetPlayer(callback, playername) {
 
 function queryPlayer(playername) {
     apiGetPlayer(function (result) {
-        if (result.player === null) {
+        if (!result.player) {
             console.log("Failed to load player:");
             console.log(playername);
             console.log(result);
@@ -794,7 +796,7 @@ function getAllLivegames(callback) {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var livegames = JSON.parse(xhttp.response);
-            console.log(livegames);
+            //console.log(livegames);
             callback(livegames);
         }
         else if (this.status === 500) document.getElementById("apierror").style.display = "";

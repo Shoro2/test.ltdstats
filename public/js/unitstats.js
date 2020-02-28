@@ -99,5 +99,12 @@ var unitstats = [
     { name: "yozora", value: 190 },
     { name: "arctaire", value: 430 },
     { name: "soulgate", value: 260 },
-    { name: "hellgate", value: 420 }
+    { name: "hellgate", value: 420 },
+
+
+
+    //buggy api yay
+    { name:"atlanteant1", value: 15},
+    { name:"atlanteant1u", value: 95},
+    { name:"atlanteant1u2", value: 95},
 ];

@@ -36,30 +36,18 @@ function setPlayer() {
 }
 
 function loadEloGraph(games) {
+    var graphData = [];
     var counter = 0;
     var elo = [100];
     var date = [100];
     games.forEach(function (myEle) {
         if (counter < 200) {
 			try{
-				if (myEle.queuetype !== "Custom") {
-                if (myEle.gameDetails[0].playername == player_name) {
-                    elo[counter] = myEle.gameDetails[0].overallElo;
-
+				if (myEle.queuetype == "Normal") {
+                    var gameDetail = myEle['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == player_name; })[0];
+                    graphData.push({elo: gameDetail.overallElo, date: myEle.ts.substring(0, myEle.ts.indexOf("T"))});
+                    counter++;
                 }
-                else if (myEle.gameDetails[1].playername == player_name) {
-                    elo[counter] = myEle.gameDetails[1].overallElo;
-                }
-                else if (myEle.gameDetails[2].playername == player_name) {
-                    elo[counter] = myEle.gameDetails[2].overallElo;
-                }
-
-                else if (myEle.gameDetails[3].playername == player_name) {
-                    elo[counter] = myEle.gameDetails[3].overallElo;
-                }
-                date[counter] = myEle.ts.substring(0, myEle.ts.indexOf("T"));
-                counter++;
-            }
 			}
 			catch(err){
 				console.log("Error loading game: ");
@@ -71,8 +59,7 @@ function loadEloGraph(games) {
         }
 
     });
-    date.reverse();
-    elo.reverse();
+    graphData.reverse();
     document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>" + player_name + "</h1><div id='chart-container'><canvas id='myChart'></canvas></div></div>";
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
@@ -105,10 +92,9 @@ function loadEloGraph(games) {
         }
     });
 
-    for (var i = 0; i < elo.length; i++) {
-        addData(myChart, date[i], elo[i]);
-        //console.log(date[i]);
-    }
+    graphData.forEach(function(ele){
+        addData(myChart, ele.date, ele.elo)
+    });
 }
 
 function addData(chart, label, data) {

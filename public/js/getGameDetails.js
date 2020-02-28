@@ -42,6 +42,7 @@ let lose_streak_max = 0;
 let last_result = "";
 let max_elo = 0;
 let min_elo = 10000;
+var graphData = [];
 
 const unit_cache = 60;
 const debug = true;
@@ -204,6 +205,7 @@ function getGameDetails(seasonGames, type, name) {
     for (let index = 0; index < seasonGames.length; index++) {
         const game = seasonGames[index];
         const gameDetails = game.gameDetails.filter(function (meinName) { return meinName.playername === name })[0];
+        graphData.push({elo: gameDetails.overallElo, date: game.ts.substring(0, game.ts.indexOf("T"))});
         //console.log(gameDetails.unitsPerWave[0][0].substring(0, gameDetails.unitsPerWave[0][0].indexOf("_unit")));
         for (i = 0; i < favunits.length; i++) {
             let found = false;
@@ -237,6 +239,8 @@ function getGameDetails(seasonGames, type, name) {
     let winchance_total = (amount_total_wins / amount_total_games * 100).toFixed(2);
     let winchance_party = (amount_party_wins / amount_party_games * 100).toFixed(2);
     let winchance_cross = (amount_cross_wins / amount_cross_games * 100).toFixed(2);
+
+    loadEloGraph();
 
     if (debug) {
         console.log("Averages:");
@@ -274,6 +278,9 @@ function getGameDetails(seasonGames, type, name) {
     window.localStorage.setItem("wave_leaks_amount", JSON.stringify(wave_leaks_amount));
     parseResults(wave_leaks, wave_leaks_amount);
 }
+
+
+
 
 function compareSecondColumn(a, b) {
     if (a[1] === b[1]) {
@@ -329,6 +336,55 @@ function parseResults(wave_leaks, wave_leaks_amount) {
         document.getElementById("leaktable").style.display = "none";
         //document.getElementById("wave1").innerHTML = "No Season 3 games found.";
     }
+
+}
+
+
+function loadEloGraph() {
+    graphData.reverse();
+    document.getElementById("grapharea").innerHTML = "<div id='chart-container'><canvas id='myChart'></canvas></div>";
+    var ctx = document.getElementById("myChart");
+    ctx.height = 500;
+    ctx.width = 1000;
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Elo',
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.9)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            }
+        }
+    });
+
+    graphData.forEach(function(ele){
+        addData(myChart, ele.date, ele.elo)
+    });
+}
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update();
 
 }
 
