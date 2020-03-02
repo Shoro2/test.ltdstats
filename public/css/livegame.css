@@ -83,11 +83,23 @@
 #player2 {
     background-color: darkblue;
 }
+#player3 {
+    background-color: orangered;
+}
+#player4 {
+    background-color: purple;
+}
 #player5 {
     background-color: #baa700;
 }
 #player6 {
     background-color: teal;
+}
+#player7 {
+    background-color: green;
+}
+#player8 {
+    background-color: palevioletred;
 }
 
 /*progress bar */
@@ -156,6 +168,13 @@
 .game_row_4v4 {
     background-color: lightgray;
     border-radius: 5px;
+}
+
+.game_row_4v4:hover {
+    background-color: darkgray;
+    border-radius: 5px;
+    text-decoration:underline;
+    cursor:pointer;
 }
 
 .leaks{

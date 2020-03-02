@@ -56,7 +56,7 @@ function parsePlayers() {
         //console.log(parsedPlayer[i]);
     }
     var score_worker = [0, 0, 0, 0, 0, 0, 0, 0], score_value = [0, 0, 0, 0, 0, 0, 0, 0], game_count = [0, 0, 0, 0, 0, 0, 0, 0];
-
+    console.log(parsedPlayer);
     for (i = 0; i < playercount; i++) {
         if(playercount==4) gametype = "normal";
         else gametype = "classic";
@@ -109,9 +109,9 @@ function parsePlayers() {
         else{
             document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 50 games):";if (player_winningstreak > 5) document.getElementById("player" + (i+1)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
         }
-        
-        if (parsedPlayer[i].games.count > 0) {
-            console.log(parsedPlayer[i]);
+        //if(!parsedPlayer[i].games)parsedPlayer[i].games.count=0;
+        if (parsedPlayer[i].games) {
+            
             parsedPlayer[i].games.games.forEach(function (ele) {
                 if(ele.gameDetails.length == 4) gametype = "normal";
                 else gametype="classic";
@@ -1292,6 +1292,20 @@ function queryPlayer(playername) {
             if (allPlayers.length === livegame.players.length) {
                 document.getElementById("west").style.display = "";
                 document.getElementById("east").style.display = "";
+                if(livegame.players.length == 8){
+                    //classic css changes
+                    document.getElementById("player3").style.display="";
+                    document.getElementById("player4").style.display="";
+                    document.getElementById("player7").style.display="";
+                    document.getElementById("player8").style.display="";
+                    document.getElementsByClassName("teamcard")[0].style.height = "80%";
+                    document.getElementsByClassName("teamcard")[0].style.maxHeight = "80%";
+                    document.getElementsByClassName("teamcard")[1].style.height = "80%";
+                    document.getElementsByClassName("teamcard")[1].style.maxHeight = "80%";
+                    for(var i=1;i<9;i++){
+                        document.getElementById("player"+i).style.height="45%";
+                    }
+                }
                 parsePlayers();
                 document.getElementById("loadingstring").innerHTML = "";
 
