@@ -42,7 +42,12 @@ function checkLink() {
 function parsePlayers() {
     document.getElementById("mitte").style.display = "none";
     parsedPlayer = [];
-    for (var i = 0; i < 4; i++) {
+    playercount = allPlayers.length;
+    console.log(playercount);
+    gametype ="";
+    if(playercount==4) gametype = "normal";
+    else gametype = "classic";
+    for (var i = 0; i < playercount; i++) {
         //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername === livegame.players[i]; })[0];
         if (parsedPlayer[i] === undefined) {
@@ -50,10 +55,20 @@ function parsePlayers() {
         }
         //console.log(parsedPlayer[i]);
     }
-    var score_worker = [0, 0, 0, 0], score_value = [0, 0, 0, 0], game_count = [0, 0, 0, 0];
-    for (i = 0; i < 4; i++) {
-        document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails(" + i + ");'>" + parsedPlayer[i].playername + "</b>";
-        document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
+    var score_worker = [0, 0, 0, 0, 0, 0, 0, 0], score_value = [0, 0, 0, 0, 0, 0, 0, 0], game_count = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    for (i = 0; i < playercount; i++) {
+        if(playercount==4) gametype = "normal";
+        else gametype = "classic";
+        if(i>=2 && gametype=="normal"){
+            document.getElementById("name" + (i + 3)).innerHTML = "<b onclick='showPlayerDetails(" + (i) + ");'>" + parsedPlayer[i].playername + "</b>";
+            document.getElementById("elo" + (i + 3)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
+        }
+        else{
+            document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails(" + i + ");'>" + parsedPlayer[i].playername + "</b>";
+            document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
+        }
+        
         //document.getElementById("name" + (i + 1)).innerHTML = parsedPlayer[i].playername;
 
         player_totalgames = parsedPlayer[i].statistics.gamesPlayed;
@@ -71,8 +86,14 @@ function parsePlayers() {
         player_overall_xp = parsedPlayer[i].statistics.totalXp
         player_overall_level = getPlayerLevel(player_overall_xp);
         player_winningstreak = parsedPlayer[i].statistics.winStreak;
-
-        if (player_winningstreak > 5) document.getElementById("player" + (i+1)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+        if(i>=2 && gametype=="normal"){
+            if (player_winningstreak > 5) document.getElementById("player" + (i+3)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+        }
+        else{
+            if (player_winningstreak > 5) document.getElementById("player" + (i+1)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+        }
+        
+        
 
         var favunit = [];
         var leaks = [];
@@ -82,10 +103,18 @@ function parsePlayers() {
             if (x < 22) leaks[x] = 0;
         }
         var games_count = 0, leakedOne = 0, sendedOne = 0;
-        document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 50 games):";
+        if(i>=2 && gametype=="normal"){
+            document.getElementById("favstart" + (i + 3)).innerHTML = "Favorite Starts (last 50 games):";if (player_winningstreak > 5) document.getElementById("player" + (i+3)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+        }
+        else{
+            document.getElementById("favstart" + (i + 1)).innerHTML = "Favorite Starts (last 50 games):";if (player_winningstreak > 5) document.getElementById("player" + (i+1)).style.boxShadow = "rgba(255,0,0, .5) 0px 0px 10px 10px";
+        }
+        
         if (parsedPlayer[i].games.count > 0) {
             console.log(parsedPlayer[i]);
             parsedPlayer[i].games.games.forEach(function (ele) {
+                if(ele.gameDetails.length == 4) gametype = "normal";
+                else gametype="classic";
                 game_count[i]++;
                 var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername; })[0];
                 var gameDetail_position = 0;
@@ -94,154 +123,560 @@ function parsePlayers() {
                     gameDetail_position = gameDetail.position;
                     //compare workers
                     var gameDetailSelected = [];
-                    switch (gameDetail_position) {
-                        case 1:
-                            gameDetailSelected[0] = gameDetail;
-                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
-                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
-                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
-                            break;
-                        case 2:
-                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
-                            gameDetailSelected[1] = gameDetail;
-                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
-                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
-                            break;
-                        case 5:
-                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
-                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
-                            gameDetailSelected[2] = gameDetail;
-                            gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
-                            break;
-                        case 6:
-                            gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
-                            gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
-                            gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
-                            gameDetailSelected[3] = gameDetail;
-                            break;
-                        default:
-                            console.log("failed to read " + gameDetail_position);
-                            break;
-                    }
-                    //WORKERS
-
-                    var workersPerWave = [];
-                    for (var e = 0; e < 4; e++) {
-                        workersPerWave[e] = [];
-                    }
-                    for (e = 0; e < 4; e++) {
-                        gameDetailSelected[e].workersPerWave.forEach(function (wpw) {
-                            workersPerWave[e].push(wpw);
-                        });
-                    }
-                    //console.log(workersPerWave);
-                    for (var q = 0; q < workersPerWave[0].length; q++) {
+                    if(gametype=="normal"){
                         switch (gameDetail_position) {
                             case 1:
-                                if (workersPerWave[0][q] > workersPerWave[1][q]) score_worker[i]++;
-                                else if (workersPerWave[0][q] < workersPerWave[1][q]) score_worker[i]--;
-                                if (workersPerWave[0][q] > workersPerWave[2][q]) score_worker[i]++;
-                                else if (workersPerWave[0][q] < workersPerWave[2][q]) score_worker[i]--;
-                                if (workersPerWave[0][q] > workersPerWave[3][q]) score_worker[i]++;
-                                else if (workersPerWave[0][q] < workersPerWave[3][q]) score_worker[i]--;
-                                    break;
+                                gameDetailSelected[0] = gameDetail;
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                break;
                             case 2:
-                                if (workersPerWave[1][q] > workersPerWave[0][q]) score_worker[i]++;
-                                else if (workersPerWave[1][q] < workersPerWave[0][q]) score_worker[i]--;
-                                if (workersPerWave[1][q] > workersPerWave[2][q]) score_worker[i]++;
-                                else if (workersPerWave[1][q] < workersPerWave[2][q]) score_worker[i]--;
-                                if (workersPerWave[1][q] > workersPerWave[3][q]) score_worker[i]++;
-                                else if (workersPerWave[1][q] < workersPerWave[3][q]) score_worker[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = gameDetail;
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
                                 break;
                             case 5:
-                                if (workersPerWave[2][q] > workersPerWave[1][q]) score_worker[i]++;
-                                else if (workersPerWave[2][q] < workersPerWave[1][q]) score_worker[i]--;
-                                if (workersPerWave[2][q] > workersPerWave[0][q]) score_worker[i]++;
-                                else if (workersPerWave[2][q] < workersPerWave[0][q]) score_worker[i]--;
-                                if (workersPerWave[2][q] > workersPerWave[3][q]) score_worker[i]++;
-                                else if (workersPerWave[2][q] < workersPerWave[3][q]) score_worker[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = gameDetail;
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
                                 break;
                             case 6:
-                                if (workersPerWave[3][q] > workersPerWave[1][q]) score_worker[i]++;
-                                else if (workersPerWave[3][q] < workersPerWave[1][q]) score_worker[i]--;
-                                if (workersPerWave[3][q] > workersPerWave[2][q]) score_worker[i]++;
-                                else if (workersPerWave[3][q] < workersPerWave[2][q]) score_worker[i]--;
-                                if (workersPerWave[3][q] > workersPerWave[0][q]) score_worker[i]++;
-                                else if (workersPerWave[3][q] < workersPerWave[0][q]) score_worker[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[3] = gameDetail;
                                 break;
                             default:
                                 console.log("failed to read " + gameDetail_position);
                                 break;
                         }
-
                     }
-                    //console.log(workersPerWave);
-                    score_worker[i] = score_worker[i] / workersPerWave[0].length;
-
-
-                    //VALUE
-                    var valuePerWave = [];
-                    for (e = 0; e < 4; e++) {
-                        valuePerWave[e] = [];
-                    }
-                    var valuec;
-                    for (e = 0; e < 4; e++) {
-                        //console.log(gameDetailSelected[e].unitsPerWave);
-                        gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
-                            valuec = 0;
-                            ele.forEach(function (ele2) {
-                                var unitname = ele2.substring(0, ele2.indexOf("_unit"));
-                                while (unitname.includes("_")) {
-                                    unitname = unitname.replace("_", "");
-                                }
-                                if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) {
-                                    console.log("failed to look up " + unitname + "'s value");
-                                    console.log(gameDetailSelected[e]);
-                                }
-                                else valuec += parseInt(unitstats.filter(meinName => meinName.name === unitname)[0].value);
-                            });
-                            valuePerWave[e].push(valuec);
-                        });
-                    }
-                    //console.log(valuePerWave);
-                    for (q = 0; q < valuePerWave[0].length; q++) {
+                    else{
+                        console.log(ele);
                         switch (gameDetail_position) {
                             case 1:
-                                if (valuePerWave[0][q] > valuePerWave[1][q]) score_value[i]++;
-                                else if (valuePerWave[0][q] < valuePerWave[1][q]) score_value[i]--;
-                                if (valuePerWave[0][q] > valuePerWave[2][q]) score_value[i]++;
-                                else if (valuePerWave[0][q] < valuePerWave[2][q]) score_value[i]--;
-                                if (valuePerWave[0][q] > valuePerWave[3][q]) score_value[i]++;
-                                else if (valuePerWave[0][q] < valuePerWave[3][q]) score_value[i]--;
+                                gameDetailSelected[0] = gameDetail;
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
                                 break;
                             case 2:
-                                if (valuePerWave[1][q] > valuePerWave[0][q]) score_value[i]++;
-                                else if (valuePerWave[1][q] < valuePerWave[0][q]) score_value[i]--;
-                                if (valuePerWave[1][q] > valuePerWave[2][q]) score_value[i]++;
-                                else if (valuePerWave[1][q] < valuePerWave[2][q]) score_value[i]--;
-                                if (valuePerWave[1][q] > valuePerWave[3][q]) score_value[i]++;
-                                else if (valuePerWave[1][q] < valuePerWave[3][q]) score_value[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = gameDetail;
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
+                                break;
+                            case 3:
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = gameDetail;
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
+                                break;
+                            case 4:
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = gameDetail;
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
                                 break;
                             case 5:
-                                if (valuePerWave[2][q] > valuePerWave[1][q]) score_value[i]++;
-                                else if (valuePerWave[2][q] < valuePerWave[1][q]) score_value[i]--;
-                                if (valuePerWave[2][q] > valuePerWave[0][q]) score_value[i]++;
-                                else if (valuePerWave[2][q] < valuePerWave[0][q]) score_value[i]--;
-                                if (valuePerWave[2][q] > valuePerWave[3][q]) score_value[i]++;
-                                else if (valuePerWave[2][q] < valuePerWave[3][q]) score_value[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = gameDetail;
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
                                 break;
                             case 6:
-                                if (valuePerWave[3][q] > valuePerWave[1][q]) score_value[i]++;
-                                else if (valuePerWave[3][q] < valuePerWave[1][q]) score_value[i]--;
-                                if (valuePerWave[3][q] > valuePerWave[2][q]) score_value[i]++;
-                                else if (valuePerWave[3][q] < valuePerWave[2][q]) score_value[i]--;
-                                if (valuePerWave[3][q] > valuePerWave[0][q]) score_value[i]++;
-                                else if (valuePerWave[3][q] < valuePerWave[0][q]) score_value[i]--;
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = gameDetail;
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
+                                break;
+                            case 7:
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = gameDetail;
+                                gameDetailSelected[7] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 8; })[0];
+                                break;
+                            case 8:
+                                gameDetailSelected[0] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 1; })[0];
+                                gameDetailSelected[1] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 2; })[0];
+                                gameDetailSelected[2] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 3; })[0];
+                                gameDetailSelected[3] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 4; })[0];
+                                gameDetailSelected[4] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 5; })[0];
+                                gameDetailSelected[5] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 6; })[0];
+                                gameDetailSelected[6] = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === 7; })[0];
+                                gameDetailSelected[7] = gameDetail;
+                                break;
+                            default:
+                                console.log("failed to read " + gameDetail_position);
                                 break;
                         }
                     }
-                    score_value[i] = score_value[i] / valuePerWave[0].length;
-                    //console.log(valuePerWave);
+                    //WORKERS
+                    if(gametype=="normal"){
+                        var workersPerWave = [];
+                        for (var e = 0; e < 4; e++) {
+                            workersPerWave[e] = [];
+                        }
+                        for (e = 0; e < 4; e++) {
+                            gameDetailSelected[e].workersPerWave.forEach(function (wpw) {
+                                workersPerWave[e].push(wpw);
+                            });
+                        }
+                        //console.log(workersPerWave);
+                        for (var q = 0; q < workersPerWave[0].length; q++) {
+                            switch (gameDetail_position) {
+                                case 1:
+                                    if (workersPerWave[0][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[3][q]) score_worker[i]--;
+                                        break;
+                                case 2:
+                                    if (workersPerWave[1][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    break;
+                                case 5:
+                                    if (workersPerWave[2][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    break;
+                                case 6:
+                                    if (workersPerWave[3][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    break;
+                                default:
+                                    console.log("failed to read " + gameDetail_position);
+                                    break;
+                            }
+    
+                        }
+                        //console.log(workersPerWave);
+                        score_worker[i] = score_worker[i] / workersPerWave[0].length;
+    
+    
+                        //VALUE
+                        var valuePerWave = [];
+                        for (e = 0; e < 4; e++) {
+                            valuePerWave[e] = [];
+                        }
+                        var valuec;
+                        for (e = 0; e < 4; e++) {
+                            //console.log(gameDetailSelected[e].unitsPerWave);
+                            gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
+                                valuec = 0;
+                                ele.forEach(function (ele2) {
+                                    var unitname = ele2.substring(0, ele2.indexOf("_unit"));
+                                    while (unitname.includes("_")) {
+                                        unitname = unitname.replace("_", "");
+                                    }
+                                    if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) {
+                                        console.log("failed to look up " + unitname + "'s value");
+                                        console.log(gameDetailSelected[e]);
+                                    }
+                                    else valuec += parseInt(unitstats.filter(meinName => meinName.name === unitname)[0].value);
+                                });
+                                valuePerWave[e].push(valuec);
+                            });
+                        }
+                        //console.log(valuePerWave);
+                        for (q = 0; q < valuePerWave[0].length; q++) {
+                            switch (gameDetail_position) {
+                                case 1:
+                                    if (valuePerWave[0][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[3][q]) score_value[i]--;
+                                    break;
+                                case 2:
+                                    if (valuePerWave[1][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[3][q]) score_value[i]--;
+                                    break;
+                                case 5:
+                                    if (valuePerWave[2][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[3][q]) score_value[i]--;
+                                    break;
+                                case 6:
+                                    if (valuePerWave[3][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[0][q]) score_value[i]--;
+                                    break;
+                            }
+                        }
+                        score_value[i] = score_value[i] / valuePerWave[0].length;
+                        //console.log(valuePerWave);
+                    }
+                    else{
+                        var workersPerWave = [];
+                        for (var e = 0; e < 8; e++) {
+                            workersPerWave[e] = [];
+                        }
+                        console.log(gameDetailSelected);
+                        for (e = 0; e < 8; e++) {
+                            gameDetailSelected[e].workersPerWave.forEach(function (wpw) {
+                                workersPerWave[e].push(wpw);
+                            });
+                        }
+                        //console.log(workersPerWave);
+                        for (var q = 0; q < workersPerWave[0].length; q++) {
+                            switch (gameDetail_position) {
+                                case 1:
+                                    if (workersPerWave[0][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[0][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[0][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 2:
+                                    if (workersPerWave[1][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[1][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[1][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 3:
+                                    if (workersPerWave[2][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[2][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[2][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 4:
+                                    if (workersPerWave[3][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[3][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[3][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 5:
+                                    if (workersPerWave[4][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[4][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[4][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 6:
+                                    if (workersPerWave[5][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[5][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[5][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 7:
+                                    if (workersPerWave[6][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    if (workersPerWave[6][q] > workersPerWave[7][q]) score_worker[i]++;
+                                    else if (workersPerWave[6][q] < workersPerWave[7][q]) score_worker[i]--;
+                                    break;
+                                case 8:
+                                    if (workersPerWave[7][q] > workersPerWave[0][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[0][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[1][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[1][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[3][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[3][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[4][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[4][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[5][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[5][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[6][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[6][q]) score_worker[i]--;
+                                    if (workersPerWave[7][q] > workersPerWave[2][q]) score_worker[i]++;
+                                    else if (workersPerWave[7][q] < workersPerWave[2][q]) score_worker[i]--;
+                                    break;
+                                default:
+                                    console.log("failed to read " + gameDetail_position);
+                                    break;
+                            }
+    
+                        }
+                        //console.log(workersPerWave);
+                        score_worker[i] = score_worker[i] / workersPerWave[0].length;
+    
+    
+                        //VALUE
+                        var valuePerWave = [];
+                        for (e = 0; e < 4; e++) {
+                            valuePerWave[e] = [];
+                        }
+                        var valuec;
+                        for (e = 0; e < 4; e++) {
+                            //console.log(gameDetailSelected[e].unitsPerWave);
+                            gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
+                                valuec = 0;
+                                ele.forEach(function (ele2) {
+                                    var unitname = ele2.substring(0, ele2.indexOf("_unit"));
+                                    while (unitname.includes("_")) {
+                                        unitname = unitname.replace("_", "");
+                                    }
+                                    if (unitstats.filter(meinName => meinName.name === unitname)[0] === undefined) {
+                                        console.log("failed to look up " + unitname + "'s value");
+                                        console.log(gameDetailSelected[e]);
+                                    }
+                                    else valuec += parseInt(unitstats.filter(meinName => meinName.name === unitname)[0].value);
+                                });
+                                valuePerWave[e].push(valuec);
+                            });
+                        }
+                        //console.log(valuePerWave);
+                        for (q = 0; q < valuePerWave[0].length; q++) {
+                            switch (gameDetail_position) {
+                                case 1:
+                                    if (valuePerWave[0][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[0][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[0][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 2:
+                                    if (valuePerWave[1][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[1][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[1][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 3:
+                                    if (valuePerWave[2][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[2][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[2][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 4:
+                                    if (valuePerWave[3][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[3][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[3][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 5:
+                                    if (valuePerWave[4][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[4][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[4][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 6:
+                                    if (valuePerWave[5][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[5][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[5][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 7:
+                                    if (valuePerWave[6][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[2][q]) score_value[i]--;
+                                    if (valuePerWave[6][q] > valuePerWave[7][q]) score_value[i]++;
+                                    else if (valuePerWave[6][q] < valuePerWave[7][q]) score_value[i]--;
+                                    break;
+                                case 8:
+                                    if (valuePerWave[7][q] > valuePerWave[0][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[0][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[1][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[1][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[3][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[3][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[4][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[4][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[5][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[5][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[6][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[6][q]) score_value[i]--;
+                                    if (valuePerWave[7][q] > valuePerWave[2][q]) score_value[i]++;
+                                    else if (valuePerWave[7][q] < valuePerWave[2][q]) score_value[i]--;
+                                    break;
+                                default:
+                                    console.log("failed to read " + gameDetail_position);
+                                    break;
+                                }
+                            }
+                        score_value[i] = score_value[i] / valuePerWave[0].length;
+                        //console.log(valuePerWave);
+                    }
 
 
                     var currunit = "", lastunit = "";
@@ -283,19 +718,37 @@ function parsePlayers() {
                 var counterp = 0;
                 if (gameDetail_position === 1) counterp = 5;
                 else if (gameDetail_position === 2) counterp = 6;
+                else if (gameDetail_position === 3) counterp = 7;
+                else if (gameDetail_position === 4) counterp = 8;
                 else if (gameDetail_position === 5) counterp = 2;
                 else if (gameDetail_position === 6) counterp = 1;
+                else if (gameDetail_position === 7) counterp = 4;
+                else if (gameDetail_position === 8) counterp = 3;
                 gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.position === counterp; })[0];
                 if (gameDetail.mercsReceivedPerWave[0].length > 0) sendedOne++;
             });
+            if(playercount==4) gametype = "normal";
+            else gametype = "classic";
             let sendChanceOne = 0, leakChanceOne = 0;
             if (sendedOne > 0) sendChanceOne = (sendedOne / games_count * 100).toFixed(0);
             if (leakedOne > 0) leakChanceOne = (leakedOne / games_count * 100).toFixed(0);
-            document.getElementById("best_legion" + (i + 1)).innerHTML = "Chance to send 1: " + sendChanceOne + "%, Chance to leak 1: " + leakChanceOne + "%";
+            if(i>=2 && gametype=="normal"){
+                document.getElementById("best_legion" + (i + 3)).innerHTML = "Chance to send 1: " + sendChanceOne + "%, Chance to leak 1: " + leakChanceOne + "%";
+            }
+            else{
+                document.getElementById("best_legion" + (i + 1)).innerHTML = "Chance to send 1: " + sendChanceOne + "%, Chance to leak 1: " + leakChanceOne + "%";
+            }
+            
         }
         else {
             console.log("player " + i + " has no games played");
-            document.getElementById("favstart" + (i + 1)).innerHTML = "No recorded games available.";
+            if(i>=2 && gametype=="normal"){
+                document.getElementById("favstart" + (i + 3)).innerHTML = "No recorded games available.";
+            }
+            else{
+                document.getElementById("favstart" + (i + 1)).innerHTML = "No recorded games available.";
+            }
+            
         }
         favunit.sort(function (a, b) {
             if (a !== 0) {
@@ -350,8 +803,13 @@ function parsePlayers() {
 
             });
         }
-
-        document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
+        if(i>=2 && gametype=="normal"){
+            document.getElementById("leaks" + (i + 3)).innerHTML = document.getElementById("leaks" + (i + 3)).innerHTML.substring(0, document.getElementById("leaks" + (i + 3)).innerHTML.length - 2);
+        }
+        else{
+            document.getElementById("leaks" + (i + 1)).innerHTML = document.getElementById("leaks" + (i + 1)).innerHTML.substring(0, document.getElementById("leaks" + (i + 1)).innerHTML.length - 2);
+        }
+        
 
         //console.log(favunit);
         //console.log(favunit);
@@ -379,8 +837,13 @@ function parsePlayers() {
                     url += ".png";
                     //console.log(unit, count);
                     //console.log(parsedPlayer[i].playername);
-
-                    document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                    if(i>=2 && gametype=="normal"){
+                        document.getElementById("favstart" + (i + 3)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 3) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                    }
+                    else{
+                        document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                    }
+                    
                     //document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
                 }
                 catch (error) {
@@ -412,7 +875,7 @@ function parsePlayers() {
     catch (err) {
         console.log(err);
     }
-
+    // TODO ADD CLASSIC
     var meinCounter = 0;
     friends.forEach(function (ele) {
         //console.log(ele);
@@ -431,26 +894,45 @@ function parsePlayers() {
         document.getElementById("name2").innerHTML += " (friends)";
     }
     if (duoEast) {
-        document.getElementById("name3").innerHTML += " (friends)";
-        document.getElementById("name4").innerHTML += " (friends)";
+        document.getElementById("name5").innerHTML += " (friends)";
+        document.getElementById("name6").innerHTML += " (friends)";
     }
     //console.log(duoWest + ", " + duoEast);
     //add win/loses indicator
     try {
         for (i = 0; i < parsedPlayer.length; i++) {
             winsFive[i] = 5;
-            document.getElementById("name" + (i + 1)).innerHTML += " <div class='gameresults' id='gameresult" + (i + 1) + "'></div>";
+            if(i>=2 && gametype=="normal"){
+                document.getElementById("name" + (i + 3)).innerHTML += " <div class='gameresults' id='gameresult" + (i + 3) + "'></div>";
+            }
+            else{
+                document.getElementById("name" + (i + 1)).innerHTML += " <div class='gameresults' id='gameresult" + (i + 1) + "'></div>";
+            }
+           
             for (e = 0; e < 5; e++) {
                 if (parsedPlayer[i].games.games.length < 5 && e === 0) e = 5 - games.games.length;
                 if (parsedPlayer[i].games.games[e] !== undefined) {
-                    var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
-                    if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 1)).innerHTML += "W";
-                    else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 1)).innerHTML += "T";
-                    else {
-                        document.getElementById("gameresult" + (i + 1)).innerHTML += "L";
-                        winsFive[i]--;
+                    if(i>=2 && gametype=="normal"){
+                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
+                        if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 3)).innerHTML += "W";
+                        else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 3)).innerHTML += "T";
+                        else {
+                            document.getElementById("gameresult" + (i + 3)).innerHTML += "L";
+                            winsFive[i]--;
+                        }
+                        if (e < 4) document.getElementById("gameresult" + (i + 3)).innerHTML += "/";
                     }
-                    if (e < 4) document.getElementById("gameresult" + (i + 1)).innerHTML += "/";
+                    else{
+                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
+                        if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 1)).innerHTML += "W";
+                        else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 1)).innerHTML += "T";
+                        else {
+                            document.getElementById("gameresult" + (i + 1)).innerHTML += "L";
+                            winsFive[i]--;
+                        }
+                        if (e < 4) document.getElementById("gameresult" + (i + 1)).innerHTML += "/";
+                    }
+                    
                 }
 
             }
@@ -463,23 +945,44 @@ function parsePlayers() {
 
     var player_roles_worker = ["", "", "", ""];
     var player_roles_value = ["", "", "", ""];
-    for (var xy = 0; xy < 4; xy++) {
-        //worker
-        score_worker[xy] = score_worker[xy] / game_count[xy];
-        if (score_worker[xy] < 0.01 && score_worker[xy] > -0.01) player_roles_worker[xy] = "Even Worker";
-        else if (score_worker[xy] > 0.05) player_roles_worker[xy] = "Very High Worker";
-        else if (score_worker[xy] < -0.05) player_roles_worker[xy] = "Very Low Worker";
-        else if (score_worker[xy] < -0.01 && score_worker[xy] > -0.05) player_roles_worker[xy] = "Low Worker";
-        else if (score_worker[xy] < 0.05 && score_worker[xy] > 0.01) player_roles_worker[xy] = "High Worker";
-        document.getElementById("name" + (xy + 1)).innerHTML += " (" + player_roles_worker[xy];
-        //value
-        score_value[xy] = score_value[xy] / game_count[xy];
-        if (score_value[xy] < 0.01 && score_value[xy] > -0.01) player_roles_value[xy] = "Even Value";
-        else if (score_value[xy] > 0.05) player_roles_value[xy] = "Very High Value";
-        else if (score_value[xy] < -0.05) player_roles_value[xy] = "Very Low Value";
-        else if (score_value[xy] < -0.01 && score_value[xy] > -0.05) player_roles_value[xy] = "Low Value";
-        else if (score_value[xy] < 0.05 && score_value[xy] > 0.01) player_roles_value[xy] = "High Value";
-        document.getElementById("name" + (xy + 1)).innerHTML += ", " + player_roles_value[xy] + ")";
+    for (var xy = 0; xy < playercount; xy++) {
+        if(xy>=2 && gametype=="normal"){
+            //worker
+            score_worker[xy] = score_worker[xy] / game_count[xy];
+            if (score_worker[xy] < 0.01 && score_worker[xy] > -0.01) player_roles_worker[xy] = "Even Worker";
+            else if (score_worker[xy] > 0.05) player_roles_worker[xy] = "Very High Worker";
+            else if (score_worker[xy] < -0.05) player_roles_worker[xy] = "Very Low Worker";
+            else if (score_worker[xy] < -0.01 && score_worker[xy] > -0.05) player_roles_worker[xy] = "Low Worker";
+            else if (score_worker[xy] < 0.05 && score_worker[xy] > 0.01) player_roles_worker[xy] = "High Worker";
+            document.getElementById("name" + (xy + 3)).innerHTML += " (" + player_roles_worker[xy];
+            //value
+            score_value[xy] = score_value[xy] / game_count[xy];
+            if (score_value[xy] < 0.01 && score_value[xy] > -0.01) player_roles_value[xy] = "Even Value";
+            else if (score_value[xy] > 0.05) player_roles_value[xy] = "Very High Value";
+            else if (score_value[xy] < -0.05) player_roles_value[xy] = "Very Low Value";
+            else if (score_value[xy] < -0.01 && score_value[xy] > -0.05) player_roles_value[xy] = "Low Value";
+            else if (score_value[xy] < 0.05 && score_value[xy] > 0.01) player_roles_value[xy] = "High Value";
+            document.getElementById("name" + (xy + 3)).innerHTML += ", " + player_roles_value[xy] + ")";
+        }
+        else{
+            //worker
+            score_worker[xy] = score_worker[xy] / game_count[xy];
+            if (score_worker[xy] < 0.01 && score_worker[xy] > -0.01) player_roles_worker[xy] = "Even Worker";
+            else if (score_worker[xy] > 0.05) player_roles_worker[xy] = "Very High Worker";
+            else if (score_worker[xy] < -0.05) player_roles_worker[xy] = "Very Low Worker";
+            else if (score_worker[xy] < -0.01 && score_worker[xy] > -0.05) player_roles_worker[xy] = "Low Worker";
+            else if (score_worker[xy] < 0.05 && score_worker[xy] > 0.01) player_roles_worker[xy] = "High Worker";
+            document.getElementById("name" + (xy + 1)).innerHTML += " (" + player_roles_worker[xy];
+            //value
+            score_value[xy] = score_value[xy] / game_count[xy];
+            if (score_value[xy] < 0.01 && score_value[xy] > -0.01) player_roles_value[xy] = "Even Value";
+            else if (score_value[xy] > 0.05) player_roles_value[xy] = "Very High Value";
+            else if (score_value[xy] < -0.05) player_roles_value[xy] = "Very Low Value";
+            else if (score_value[xy] < -0.01 && score_value[xy] > -0.05) player_roles_value[xy] = "Low Value";
+            else if (score_value[xy] < 0.05 && score_value[xy] > 0.01) player_roles_value[xy] = "High Value";
+            document.getElementById("name" + (xy + 1)).innerHTML += ", " + player_roles_value[xy] + ")";
+        }
+        
         
 
     }
@@ -613,7 +1116,7 @@ function getFighterGames(fightername, playername) {
     });
 
     var spot = 0;
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < playercount; i++) {
         if (parsedPlayer[i].playername == playername) {
             spot = i + 1;
         }
@@ -646,14 +1149,21 @@ function getWinchance() {
         if (parsedPlayer[i].statistics.winStreak > 5 && i < 3) bonus_w += 5;
         else if (parsedPlayer[i].statistics.winStreak > 5 && i > 2) bonus_e += 5;
     }
-    var elo_west = parseFloat((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0] * 1 + peakElos[1] * 1) / 4);
-    var elo_east = parseFloat((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2] * 1 + peakElos[3] * 1) / 4);
+    if(gametype=="normal"){
+        var elo_west = parseFloat((elos[0] * 0, 5 + elos[1] * 0, 5 + peakElos[0] * 1 + peakElos[1] * 1) / 4);
+        var elo_east = parseFloat((elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[2] * 1 + peakElos[3] * 1) / 4);
+    }
+    else{
+        var elo_west = parseFloat((elos[0] * 0, 5 + elos[1] * 0, 5 + elos[2] * 0, 5 + elos[3] * 0, 5 + peakElos[0] * 1 + peakElos[1] * 1 + peakElos[3] * 1 + peakElos[4] * 1) / 8);
+        var elo_east = parseFloat((elos[5] * 0, 5 + elos[6] * 0, 5 + elos[7] * 0, 5 + elos[8] * 0, 5 + peakElos[5] * 1 + peakElos[6] * 1 + peakElos[7] * 1 + peakElos[8] * 1) / 8);
+    }
+   
     var winchance = 50 * (elo_west / elo_east);
-    for (i = 0; i < 4; i++) {
+    /*for (i = 0; i < 4; i++) {
         if (i < 3) winchance += winsFive[i];
         else winchance -= winsFive[i];
     }
-    winchance = winchance + bonus_w - bonus_e;
+    winchance = winchance + bonus_w - bonus_e;*/
     if (winchance < 0 || winchance > 100) winchance = 50;
     if (duoWest) winchance = winchance + 5;
     if (duoEast) winchance = winchance - 5;
@@ -687,7 +1197,8 @@ function showPlayerDetails(nummer) {
     const details_content = document.getElementById("playername_details");
     details_box.style.display = "";
     parsedPlayer = [];
-    for (var i = 0; i < 4; i++) {
+    if(livegame.players.length == 4 && nummer >= 2) nummer=nummer-2;
+    for (var i = 0; i < livegame.players.length; i++) {
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
     }
     details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 5 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername + "' target='_blank'>Profile</a>)</h3>";
@@ -727,7 +1238,7 @@ function listGames(livegames) {
             else seconds_str = seconds.toString();
             //console.log(currgame);
             if (currgame.gametype === "classic") {
-                classiccontainer.innerHTML += "<div class='game_row_4v4'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + "), <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") VS <b>" + currgame.players[4] + "</b>(" + currgame.elos[4] + "), <b>" + currgame.players[5] + "</b>(" + currgame.elos[5] + "), <b>" + currgame.players[6] + "</b>(" + currgame.elos[6] + "), <b>" + currgame.players[7] + "</b>(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                classiccontainer.innerHTML += "<div class='game_row_4v4' onclick='showLivegame(\"" + currgame.players[0] + "\")'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + "), <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") VS <b>" + currgame.players[4] + "</b>(" + currgame.elos[4] + "), <b>" + currgame.players[5] + "</b>(" + currgame.elos[5] + "), <b>" + currgame.players[6] + "</b>(" + currgame.elos[6] + "), <b>" + currgame.players[7] + "</b>(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
                 counter_c++;
             }
             else {
@@ -768,7 +1279,7 @@ function queryPlayer(playername) {
             console.log("Failed to load player:");
             console.log(playername);
             console.log(result);
-            allPlayers.push({ "playername": "Bot (player not found)", "statistics": {}, "bestFriends": [], "games": {} });
+            allPlayers.push({ "playername": "Bot (player not found)", "statistics": {}, "bestFriends": [], "games": [] });
             document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             //document.getElementById("apierror").style.display = "";
         }
@@ -778,7 +1289,7 @@ function queryPlayer(playername) {
             allPlayers.push(player);
             document.getElementById("loadingstring").innerHTML = "Requesting players... " + allPlayers.length + "/4";
             //finished loading
-            if (allPlayers.length === 4) {
+            if (allPlayers.length === livegame.players.length) {
                 document.getElementById("west").style.display = "";
                 document.getElementById("east").style.display = "";
                 parsePlayers();

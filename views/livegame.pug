@@ -58,6 +58,34 @@ block content
                     option(value="Atlantean") Atlantean
                 #favstart2.favcontainer
                 #leaks2.leaks
+            .player#player3(style="display:none;")
+                #name3
+                #elo3
+                #best_legion3
+                button.showDetails(onclick="showPlayerDetails(2);") Seasonal Stats
+                select#legionp2.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart3.favcontainer
+                #leaks3.leaks
+            .player#player4(style="display:none;")
+                #name4
+                #elo4
+                #best_legion4
+                button.showDetails(onclick="showPlayerDetails(3);") Seasonal Stats
+                select#legionp3.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart4.favcontainer
+                #leaks4.leaks
         #indermitte 
             input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-top:10%; margin-bottom:2%;width:20%; margin-left:40%")
             button.btn.my-sm-0(onclick="getPlayer();") Search
@@ -72,34 +100,62 @@ block content
                 #myBar 50%
                 #myBar2 50%
         .teamcard#east(style="display:none;")
-            .player#player3
-                #name3
-                #elo3
-                #best_legion3
-                button.showDetails(onclick="showPlayerDetails(2);") Seasonal Stats
-                select#legionp2.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+            .player#player5
+                #name5
+                #elo5
+                #best_legion5
+                button.showDetails(onclick="showPlayerDetails(4);") Seasonal Stats
+                select#legionp4.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element
                     option(value="Grove") Grove
                     option(value="Forsaken") Forsaken
                     option(value="Mech") Mech
                     option(value="Atlantean") Atlantean
-                #favstart3.favcontainer
-                #leaks3.leaks
-            .player#player4
-                #name4
-                #elo4
-                #best_legion4
-                button.showDetails(onclick="showPlayerDetails(3);") Seasonal Stats
-                select#legionp3.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                #favstart5.favcontainer
+                #leaks5.leaks
+            .player#player6
+                #name6
+                #elo6
+                #best_legion6
+                button.showDetails(onclick="showPlayerDetails(5);") Seasonal Stats
+                select#legionp5.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
                     option(value="Mastermind") Mastermind
                     option(value="Element") Element
                     option(value="Grove") Grove
                     option(value="Forsaken") Forsaken
                     option(value="Mech") Mech
                     option(value="Atlantean") Atlantean
-                #favstart4.favcontainer
-                #leaks4.leaks
+                #favstart6.favcontainer
+                #leaks6.leaks
+            .player#player7(style="display:none;")
+                #name7
+                #elo7
+                #best_legion7
+                button.showDetails(onclick="showPlayerDetails(6);") Seasonal Stats
+                select#legionp6.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart7.favcontainer
+                #leaks7.leaks
+            .player#player8(style="display:none;")
+                #name8
+                #elo8
+                #best_legion8
+                button.showDetails(onclick="showPlayerDetails(7);") Seasonal Stats
+                select#legionp7.form-control.mr-sm-2(onchange="parsePlayers();" style="display:none;")
+                    option(value="Mastermind") Mastermind
+                    option(value="Element") Element
+                    option(value="Grove") Grove
+                    option(value="Forsaken") Forsaken
+                    option(value="Mech") Mech
+                    option(value="Atlantean") Atlantean
+                #favstart8.favcontainer
+                #leaks8.leaks
     script(src="/js/livegame.js")
     script(src="/js/getGameDetails.js")
     script(src="/js/Chart.js")
