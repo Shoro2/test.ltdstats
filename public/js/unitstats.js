@@ -101,10 +101,13 @@ var unitstats = [
     { name: "soulgate", value: 260 },
     { name: "hellgate", value: 420 },
 
+    //
+    { name: "chainedfist", value: 20},
+    { name: "oathbreaker", value: 95},
 
 
     //buggy api yay
     { name:"atlanteant1", value: 15},
     { name:"atlanteant1u", value: 95},
-    { name:"atlanteant1u2", value: 95},
+    { name:"atlanteant1u2", value: 95}
 ];

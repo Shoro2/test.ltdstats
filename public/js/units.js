@@ -24,7 +24,7 @@ function getPlayer() {
 }
 
 function scanUnits() {
-    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "APS", "MPS", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra", "looter", "pack_rat", "harpy", "sky_queen", "desert_pilgrim", "lost_chieftain"];
+    var units = ["proton", "atom", "aqua_spirit", "fire_elemental", "rogue_wave", "windhawk", "violet", "mudman", "golem", "disciple", "starcaller", "fire_lord", "fenix", "bone_warrior", "bone_crusher", "dark_mage", "fire_archer", "gargoyle", "green_devil", "gateguard", "harbinger", "butcher", "head_chef", "nightmare", "doppelganger", "lord_of_death", "hades", "buzz", "consort", "ranger", "daphne", "wileshroom", "canopie", "honeyflower", "deathcap", "antler", "whitemane", "banana_bunk", "banana_haven", "peewee", "veteran", "bazooka", "pyro", "zeus", "tempest", "leviathan", "APS", "MPS", "berserker", "fatalizer", "millennium", "doomsday_machine", "pollywog", "seraphin", "devilfish", "angler", "bounty_hunter", "kingpi", "sea_serpent", "deepcoiler", "grarl", "king_claw", "ocean_templar","priestess_of_the_abyss", "azeria", "eggsack", "Hydra", "looter", "pack_rat", "harpy", "sky_queen", "desert_pilgrim", "lost_chieftain", "sand_badger", "iron_scales", "great_boar", "red_eyes", "masked_spirit", "false_maiden", "hell_raiser", "nekomata", "infiltrator", "orchid", "eternal_wanderer", "samurai_soul", "yozora", "arctaire", "soul_gate", "hell_gate", "chained_fist", "oathbreaker"];
     units.forEach(unit => {
         switch (unit) {
             //element
@@ -310,7 +310,7 @@ function scanUnits() {
                 break;
             case "pack_rat":
                 url = "/img/icons/PackRat.png";
-                unit_type = "Pack Rat";
+                unit_type = "Pack%20Rat";
                 break;
             case "harpy":
                 url = "/img/icons/Harpy.png";
@@ -318,16 +318,88 @@ function scanUnits() {
                 break;
             case "sky_queen":
                 url = "/img/icons/SkyQueen.png";
-                unit_type = "Sky Queen";
+                unit_type = "Sky%20Queen";
                 break;
             case "desert_pilgrim":
                 url = "/img/icons/DesertPilgrim.png";
-                unit_type = "Desert Pilgrim";
+                unit_type = "Desert%20Pilgrim";
                 break;
             case "lost_chieftain":
                 url = "/img/icons/LostChieftain.png";
-                unit_type = "Lost Chieftain";
+                unit_type = "Lost%20Chieftain";
                 break;
+            case "sand_badger":
+                url = "/img/icons/SandBadger.png";
+                unit_type = "Sand%20Badger";
+                break;
+            case "iron_scales":
+                url = "/img/icons/IronScales.png";
+                unit_type = "Iron%20Scales";
+                break;
+            case "great_boar":
+                url = "/img/icons/GreatBoar.png";
+                unit_type = "Great%20Boar";
+                break;
+            case "red_eyes":
+                url = "/img/icons/RedEyes.png";
+                unit_type = "Red%20Eyes";
+                break;
+            case "masked_spirit":
+                url = "/img/icons/MaskedSpirit.png";
+                unit_type = "Masked%20Spirit";
+                break;
+            case "false_maiden":
+                url = "/img/icons/FalseMaiden.png";
+                unit_type = "False%20Maiden";
+                break;
+            case "hell_raiser":
+                url = "/img/icons/HellRaiser.png";
+                unit_type = "Hell%20Raiser";
+                break;
+            case "nekomata":
+                url = "/img/icons/Nekomata.png";
+                unit_type = "Nekomata";
+                break;
+            case "infiltrator":
+                url = "/img/icons/Infiltrator.png";
+                unit_type = "Infiltrator";
+                break;   
+            case "orchid":
+                url = "/img/icons/Orchid.png";
+                unit_type = "Orchid";
+                break;   
+            case "eternal_wanderer":
+                url = "/img/icons/EternalWanderer.png";
+                unit_type = "Eternal%20Wanderer";
+                break;   
+            case "samurai_soul":
+                url = "/img/icons/SamuraiSoul.png";
+                unit_type = "Samurai%20Soul";
+                break;   
+            case "yozora":
+                url = "/img/icons/Yozora.png";
+                unit_type = "Yozora";
+                break;   
+            case "arctaire":
+                url = "/img/icons/Arctaire.png";
+                unit_type = "Arctaire";
+                break;  
+            case "soul_gate":
+                url = "/img/icons/SoulGate.png";
+                unit_type = "Soul%20Gate";
+                break;    
+            case "hell_gate":
+                url = "/img/icons/HellGate.png";
+                unit_type = "Hell%20Gate";
+                break;   
+            case "chained_fist":
+                url = "/img/icons/ChainedFist.png";
+                unit_type = "Chained%20Fist";
+                break;   
+            case "oathbreaker":
+                url = "/img/icons/Oathbreaker.png";
+                unit_type = "Oathbreaker";
+                break;   
             default:
                 url = "";
                 unit_type = "empty";
@@ -452,7 +524,7 @@ function getFighter(callback, unitname) {
 
 function loadFighter(unitname) {
     getFighter(function (result) {
-        //console.log(result);
+        console.log(result);
         document.getElementById("playername").value = result.unit.name;
         draw(result.unit);
         return result;

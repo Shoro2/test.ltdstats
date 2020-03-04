@@ -7,15 +7,15 @@ const sliderX = value(0, divStyler.set('x'));
 listen(slider, 'mousedown touchstart')
     .start(() => {
         console.log(sliderX.get());
-    if(sliderX.get()<=100 && sliderX.get() > -3800)
+    if(sliderX.get()<=100 && sliderX.get() > -6400)
     {
         pointer({ x: sliderX.get() })
             .pipe(({ x }) => x)
             .start(sliderX);
     }
-    else if(sliderX.get() < -3800)
+    else if(sliderX.get() < -6400)
     {
-        pointer({ x: -3700 })
+        pointer({ x: -6300 })
             .pipe(({ x }) => x)
             .start(sliderX);
     }
