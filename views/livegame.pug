@@ -28,7 +28,6 @@ block content
                     - }
                 #errormsg(style="display:none; text-align:center;")
                     h5 No Games Found
-        #amazon_ad
         .teamcard#west(style="display:none;")
             .player#player1
                 #name1
@@ -87,7 +86,11 @@ block content
                 #favstart4.favcontainer
                 #leaks4.leaks
         #indermitte 
-            input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-top:10%; margin-bottom:2%;width:20%; margin-left:40%")
+            .ad_hor
+                script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+                ins(class="adsbygoogle" style="display:inline-block;width:728px;height:50px" data-ad-client="ca-pub-2408139751926605" data-ad-slot="4967280011")
+                script (adsbygoogle = window.adsbygoogle || []).push({});
+            input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-bottom:2%;width:20%; margin-left:40%")
             button.btn.my-sm-0(onclick="getPlayer();") Search
             p
             | Current Livegames:

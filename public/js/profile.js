@@ -7,18 +7,15 @@ function checkContent() {
     }
     if (document.getElementById("playername").value) {
         document.getElementById("mitte").style.display = "inherit";
+        document.getElementById("googlead").style.display="none";
+        document.getElementById("stats").style.display="";
         queryPlayer(playerurl);
         queryLivegames();
         //queryRank(playerurl);
         queryPlayerOverallGames(playerurl);
     }
     else {
-
-        document.getElementById("tab_box_1").textContent = "Select a player";
-        var banner = '<div id="amazon_ad"></div>';
-        document.getElementById("tab_box_1").innerHTML += banner;
         openTab(1);
-
     }
 }
 
@@ -35,29 +32,21 @@ function setPlayer() {
 
 }
 
-function loadEloGraph(games) {
+function loadEloGraphProfile(games) {
     var graphData = [];
     var counter = 0;
-    var elo = [100];
-    var date = [100];
     games.forEach(function (myEle) {
-        if (counter < 200) {
-			try{
-				if (myEle.queuetype == "Normal") {
-                    var gameDetail = myEle['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == player_name; })[0];
-                    graphData.push({elo: gameDetail.overallElo, date: myEle.ts.substring(0, myEle.ts.indexOf("T"))});
-                    counter++;
-                }
-			}
-			catch(err){
-				console.log("Error loading game: ");
-				console.log(err);
-				console.log(myEle);
-				
-			}
-            
-        }
-
+        try{
+			if (myEle.queuetype == "Normal") {
+                var gameDetail = myEle['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == player_name; })[0];
+                graphData.push({elo: gameDetail.overallElo, date: myEle.ts.substring(0, myEle.ts.indexOf("T"))});
+            }
+		}
+		catch(err){
+			console.log("Error loading game: ");
+			console.log(err);
+			console.log(myEle);
+		}
     });
     graphData.reverse();
     document.getElementById("tab_box_2").innerHTML = "<div class='profile'><h1 id='player_name'>" + player_name + "</h1><div id='chart-container'><canvas id='myChart'></canvas></div></div>";
@@ -107,7 +96,7 @@ function addData(chart, label, data) {
 }
 
 function loadGames() {
-    getGameDetails();
+    getGameDetailsProfile();
 }
 
 function loadStats(player) {
@@ -197,14 +186,15 @@ function loadStats(player) {
         document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level + ".png'>";
     }
     //console.log(player_overall_level);
-    if (player_overall_elo > 1000 && player_overall_elo < 1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Bronze.png'>";
-    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Silver.png'>";
-    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Gold.png'>";
-    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Platinum.png'>";
-    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Diamond.png'>";
-    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Expert.png'>";
-    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/SeniorMaster.png'>";
-    else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Grandmaster.png'>";
+    if (!player_overall_elo) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Unranked.png'>";
+    else if (player_overall_elo > 0 && player_overall_elo < 1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Bronze.png'>";
+    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Silver.png'>";
+    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Gold.png'>";
+    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Platinum.png'>";
+    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Diamond.png'>";
+    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Expert.png'>";
+    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/SeniorMaster.png'>";
+    else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Grandmaster.png'>";
     // mouseover details
     parseStats();
     document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 23% 40%;opacity:1.0;");
@@ -613,8 +603,10 @@ function drawPlayerBuilds(gameX) {
     });
 }
 
-    function listGames() {
-        var selector = document.getElementById("setGame");
+
+
+function listGames() {
+    var selector = document.getElementById("setGame");
         for (i = 0; i < games.length; i++) {
             var option = document.createElement("option");
             //console.log(games[i]);
@@ -642,8 +634,8 @@ function drawPlayerBuilds(gameX) {
             }
 
             var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
-            if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: +" + elochange;
-            else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + gameid_hex + legion + ", Elo: " + elochange;
+            if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].game_id.substring(0,4)+"..."+ games[i].game_id.substring(games[i].game_id.length-4) + legion + ", Elo: +" + elochange;
+            else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].game_id.substring(0,4)+"..."+ games[i].game_id.substring(games[i].game_id.length-4) + legion + ", Elo: " + elochange;
             option.value = i;
             if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
             else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
@@ -654,7 +646,7 @@ function drawPlayerBuilds(gameX) {
         }
     }
 
-    function getGameDetails(pos, games) {
+    function getGameDetailsProfile(pos, games) {
         console.log(games[pos]);
         //console.log(pos);
         meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
@@ -673,7 +665,7 @@ function drawPlayerBuilds(gameX) {
     function drawGameDetails(player_position) {
         try {
             var selectedGame = document.getElementById("setGame").value;
-            getGameDetails(selectedGame, games);
+            getGameDetailsProfile(selectedGame, games);
             if (gameEvent[0]) {
                 if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
                 else var wave = parseInt(document.getElementById("setWave").value);
@@ -699,7 +691,7 @@ function drawPlayerBuilds(gameX) {
                 getPlayerBuild(player_position);
                 //Summary:
 
-                var gameId = dec2hex(games[selectedGame].game_id).toUpperCase();;
+                var gameId = games[selectedGame].game_id;
                 document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
                 document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ") + " UTC";
                 document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
@@ -1082,7 +1074,7 @@ function queryLivegames() {
                 playerGames = result.player.filteredGamesQuery.games;
                 drawPlayerBuilds(playerGames);
                 games = result.player.filteredGamesQuery.games;
-                loadEloGraph(games);
+                loadEloGraphProfile(games);
                 drawGameDetails(0);
                 listGames();
                 document.getElementById("mitte").style.display = "none";

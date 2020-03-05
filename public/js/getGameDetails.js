@@ -240,7 +240,8 @@ function getGameDetails(seasonGames, type, name) {
     let winchance_party = (amount_party_wins / amount_party_games * 100).toFixed(2);
     let winchance_cross = (amount_cross_wins / amount_cross_games * 100).toFixed(2);
 
-    loadEloGraph();
+    if(window.location.href.indexOf("livegames")>0) loadEloGraph();
+    
 
     if (debug) {
         console.log("Averages:");

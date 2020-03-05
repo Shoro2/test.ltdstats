@@ -12,6 +12,11 @@ block content
         .style(style='clear: both;')
         .tab_box#tab_box_1
             .profile
+                .ad_hor#googlead
+                    script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+                    ins(class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2408139751926605" data-ad-slot="8367468970"  data-ad-format="auto" data-full-width-responsive="true")
+                    script (adsbygoogle = window.adsbygoogle || []).push({});
+                    h4 Select a player
                 #ingame Currently ingame 
                 #player_icon1
                 h1#player_name1
@@ -20,7 +25,7 @@ block content
                 h3#player_elo1
                 #rank
                 #playerLevel
-                #stats
+                #stats(style="display:none;")
                     button#toggleseason.btn.btn-outline-success.my-sm-0(style="float:right;") Overall
                     #mittig
                         #general
@@ -266,6 +271,7 @@ block content
     script(src="/js/profile.js")
     script(src="/js/profile_stats.js")
     script(src="/js/Chart.js")
+    script(src="/js/getGameDetails.js")
     script checkContent();openTab(1);
     #divumtable.hidden
         #showhide(onclick="showBuild();") Close

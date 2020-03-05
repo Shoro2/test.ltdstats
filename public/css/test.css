@@ -139,9 +139,10 @@ body
     box-shadow: 0 0 0 0.2rem white;
   }
 
-#amazon_ad {
+.ad_hor {
+    margin-top: 1%;
+    margin-bottom: 1%;
     margin-left:auto;
     margin-right:auto;
-    width:50%;
     text-align:center;
 }

@@ -2,8 +2,11 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/ladder.css')
     .content
+        .ad_hor
+                script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+                ins(class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2408139751926605" data-ad-slot="8367468970"  data-ad-format="auto" data-full-width-responsive="true")
+                script (adsbygoogle = window.adsbygoogle || []).push({});
         .card
-            #amazon_ad
             #filter_display(onclick="expandFilters()") Show filters
             #filter-invis
                 label.filter_label(onclick="getFilters();") Rank
@@ -23,6 +26,7 @@ block content
                 label.filter_label(onclick="getFilters();") Winchance
                     input.filter_input#checkbox7(type="checkbox", name="filter", value="Winchance", onclick='saveTick(25);')
                 label.filter_label#selectall(onclick="selectNone()") Unselect all
+            
             .umdieladder    
                 table.ladder#myladder
                     tr.header
