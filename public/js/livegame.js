@@ -1121,6 +1121,9 @@ function getFighterGames(fightername, playername) {
             spot = i + 1;
         }
     }
+    if(playercount==4 && spot > 2){
+        spot = spot + 2;
+    }
 
     document.getElementById("leaks" + spot).innerHTML = "Leaks: ";
     for (var i = 0; i < leaks.length; i++) {

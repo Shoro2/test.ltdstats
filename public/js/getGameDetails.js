@@ -138,7 +138,7 @@ function getGameDetails(seasonGames, type, name) {
 
             //favorite starts
             //store starting units in favunits[x][0-1]
-            if (gameDetails.unitsPerWave !== null) {
+            if (gameDetails.unitsPerWave) {
                 //lvl 1 units
                 gameDetails.unitsPerWave[0].forEach(function (element) {
                     currunit = element.substring(0, element.indexOf("_unit"));
@@ -146,7 +146,7 @@ function getGameDetails(seasonGames, type, name) {
                         if (currunit !== lastunit) {
                             let anzahl = 0;
                             for (let x = 0; x < unit_cache; x++) {
-                                if (favunits[x][0] !== 0) {
+                                if (favunits[x][1] != 0) {
                                     //unit matching?
                                     if (favunits[x][0] === (currunit)) {
                                         anzahl = favunits[x][1];
@@ -157,7 +157,7 @@ function getGameDetails(seasonGames, type, name) {
                                 }
                             }
                             //no match, add it
-                            if (anzahl > 0 === false) {
+                            if (anzahl == 0) {
                                 for (let x = 0; x < unit_cache; x++) {
                                     if (favunits[x][1] === 0) {
                                         favunits[x][0] = currunit;
@@ -240,7 +240,7 @@ function getGameDetails(seasonGames, type, name) {
     let winchance_party = (amount_party_wins / amount_party_games * 100).toFixed(2);
     let winchance_cross = (amount_cross_wins / amount_cross_games * 100).toFixed(2);
 
-    if(window.location.href.indexOf("livegames")>0) loadEloGraph();
+    if(window.location.href.indexOf("livegame")>0) loadEloGraph();
     
 
     if (debug) {
@@ -343,9 +343,9 @@ function parseResults(wave_leaks, wave_leaks_amount) {
                 row_amount.style.backgroundColor="yellow";
             } 
             else{
-                row_chance.style.backgroundColor="";
-                row_wave.style.backgroundColor="";
-                row_amount.style.backgroundColor="";
+                row_chance.style.backgroundColor="lightgreen";
+                row_wave.style.backgroundColor="lightgreen";
+                row_amount.style.backgroundColor="lightgreen";
             } 
         }
     }
@@ -442,9 +442,9 @@ function changeActiveUnit(unit) {
                     row_amount.style.backgroundColor="yellow";
                 } 
                 else{
-                    row_chance.style.backgroundColor="";
-                    row_wave.style.backgroundColor="";
-                    row_amount.style.backgroundColor="";
+                    row_chance.style.backgroundColor="lightgreen";
+                    row_wave.style.backgroundColor="lightgreen";
+                    row_amount.style.backgroundColor="lightgreen";
                 } 
             }
             break;
