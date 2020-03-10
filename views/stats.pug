@@ -17,6 +17,8 @@ block content
                         img.small_icon(src="/img/icons/Royalty.png")
                     h4(onclick="showFighterStats();") Fighter Pick/Winchances
                         img.small_icon(src="/img/icons/CouncilDecal.png")
+                    h4(onclick="showGamesPerDay();") Games per Day
+                        img.small_icon(src="/img/icons/calendar.png")
                 br
                 #wavestats.divider
                     h3 Per wave:
@@ -45,6 +47,12 @@ block content
                 option(value="version") Patch
                 option(value="tsgte") > Date
                 option(value="tslt") < Date
+            select#seasonselector.inline(onchange="saveSelection();")
+                option(value="rankedGames_5.0") Season 5
+                option(value="rankedGames_4.0") Season 4
+                option(value="rankedGames_3.0") Season 3
+                option(value="rankedGames_2.4") Season 2 Patch 4
+                option(value="rankedGames_2.0") Season 2 Patch 0-3
             input#value_textField.inline(type="text", style="display:none;", placeholder='Patch e.g. 2.44 ')
             input#value_eloField.inline(type="text", style="display:none;", placeholder='Min. Elo')
             input#value_fighterField.inline(type="text", style="display:none;", placeholder="Fighter's name")

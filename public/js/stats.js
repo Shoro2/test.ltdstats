@@ -439,6 +439,11 @@ function createBarGraph(data) {
             var pickchance = (data.pickchance*100).toFixed(2);
             var meinText = data.fighter.charAt(0).toUpperCase()+data.fighter.slice(1)+"'s Pick- and Winchance";
             break;
+        case "gamesperday":
+            var gamecount = JSON.parse(data);
+            var meinText = "Games per Day";
+            console.log(data);
+            break;
     }
     var ctx = document.getElementById("myChart");
     ctx.height = 500;
@@ -629,6 +634,16 @@ function createBarGraph(data) {
             myChart.data.datasets[0].data.push(pickchance);
             myChart.update();
             break;
+        case "gamesperday":
+            myChart.data.labels.push("Games per Day");
+            myChart.data.datasets.push({label: "# Games", data: [], backgroundColor:graphColor[0],borderColor:'rgba(1,1,1,1)', borderWidth: 1 });
+            myChart.update();
+            gamecount.forEach(function(ele){
+                addData(myChart, ele._id.day, ele.count);
+                myChart.update();
+            });
+            
+            
     }
 
 }
@@ -676,6 +691,7 @@ function showWinPickrates() {
     hideSelector();
     showElo();
     hideFighterName();
+    hideSeason();
     abfrage = "winrates";
 }
 function showWorkersPerWave() {
@@ -686,6 +702,7 @@ function showWorkersPerWave() {
     showSelector();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "workersperwave";
 }
 function showNetworthPerWave() {
@@ -696,6 +713,7 @@ function showNetworthPerWave() {
     showSelector();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "networthperwave";
 }
 function showValueOnEnd() {
@@ -706,6 +724,7 @@ function showValueOnEnd() {
     showSelector();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "valueonend";
 }
 function showIncomeOnEnd() {
@@ -716,6 +735,7 @@ function showIncomeOnEnd() {
     showSelector();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "incomeonend";
 }
 function showWorkersOnEnd() {
@@ -726,6 +746,7 @@ function showWorkersOnEnd() {
     showSelector();
     hideFighterName();
     hideElo();
+    hideSeason();
     abfrage = "workersonend";
 }
 function showLeaksOnEnd() {
@@ -736,11 +757,13 @@ function showLeaksOnEnd() {
     showSelector();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "leaksonend";
 }
 function showUnitStatSheet() {
     showStatsPage();
     showWave();
+    hideSeason();
     hideInputs();
     hideElo();
     hideFighterName();
@@ -756,6 +779,7 @@ function showGameEndingWaves() {
     showStatsPage();
     hideElo();
     hideFighterName();
+    hideSeason();
     abfrage = "gameendingwave";
 }
 
@@ -766,9 +790,31 @@ function showFighterStats() {
     hideSelector();
     showFighterName();
     showGameType();
+    hideSeason();
     abfrage = "fighterstats";
 }
 
+function showGamesPerDay(){
+    document.getElementById("chartContainer").style.display = "";
+    hideSelector();
+    hideWave();
+    showStatsPage();
+    hideElo();
+    hideFighterName();
+    showSeason();
+    abfrage="gamesperday";
+
+}
+
+function showSeason(){
+    document.getElementById("seasonselector").style.display="";
+    document.getElementById("value_textField").style.display = "none";
+}
+
+function hideSeason(){
+    document.getElementById("seasonselector").style.display="none";
+    document.getElementById("value_textField").style.display = "";
+}
 
 function showFighterName() {
     document.getElementById("value_fighterField").style.display = "";
@@ -811,7 +857,6 @@ function readSelection() {
     if (document.getElementById("value_textField").style.display == "") var meineValue = document.getElementById("value_textField").value;
     else var meineValue = document.getElementById("value_dateField").value;
 
-    value_fighterField
     switch (abfrage) {
         case "winrates":
             var minElo = parseInt(document.getElementById("value_eloField").value);
@@ -843,6 +888,10 @@ function readSelection() {
             var fightername = document.getElementById("value_fighterField").value;
             var gametype = document.getElementById("value_gametype").value;
             queryFighterStats(meineValue, fightername, minElo, gametype);
+            break;
+        case "gamesperday":
+            var season = document.getElementById("seasonselector").value;
+            queryGamesPerDay(season);
             break;
         default:
             console.log("Fehler readselection: " + abfrage);
@@ -1186,6 +1235,25 @@ function queryAvgIncEnd(type, value) {
         return result;
     }, type, value);
 }
+
+function getGamesPerDay(callback, db) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(xhttp.response));
+        }
+    };
+    xhttp.open("GET", "/mongo/getGamesCount?db="+db, true);
+    xhttp.send();
+}
+function queryGamesPerDay(db) {
+    showLoad();
+    getGamesPerDay(function (result) {
+        createBarGraph(result);
+        return result;
+    }, db);
+}
+
 
 
 function getAvgWorkersEnd(callback, type, value) {
