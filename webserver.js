@@ -16,7 +16,7 @@ const debug = true;
 require('isomorphic-fetch');
 // Constants
 const PORT = 3000;
-const HOST = '10.128.0.10';
+const HOST = '127.0.0.1';
 const http = require('http');
 const https = require('https');
 
@@ -247,6 +247,7 @@ app.get('/guides', (req, res) => {
                 title: 'OP Mech, get 2k+ elo easily, 80-90% winrate'
             });
             break;
+        //atlantean
         case "sleepwiththefishes":
             res.render('guides/atlantean/sleepwiththefishes', {
                 title: 'Guide build order for Classic Atlantean'
@@ -319,6 +320,11 @@ app.get('/guides', (req, res) => {
             });
             break;
         //general
+        case "countersuicide":
+                res.render('guides/general/countersuicide', {
+                    title: 'Suicide/NoBuild Counter Guide'
+                });
+                break;
         case "howto":
                 res.render('guides/general/howto', {
                     title: 'Legion TD 2 - Gameplay Guide'
@@ -422,13 +428,13 @@ app.get('/guides', (req, res) => {
             var version = req.query.version;
             var section = req.query.section;
             var title = req.query.title;
-            /*var url = 'http://10.128.0.10:3666/guides/upload?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble;
+            /*var url = 'http://127.0.0.1:3666/guides/upload?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble;
             if (url.includes("<script") || url.includes("<button") || url.includes("onclick")) {
                 res.send("bad url");
             }
             else {*/
                 writeLog("sending request---");
-            http.get('http://10.128.0.10:3666/guides/uploadGuide?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble, (resp) => {
+            http.get('http://127.0.0.1:3666/guides/uploadGuide?waves=' + waves + '&author=' + author + '&version=' + version + '&section=' + section + '&title=' + title + '&preamble=' + preamble, (resp) => {
                     writeLog("resp");
                     let data = '';
 
@@ -639,7 +645,7 @@ app.get('/users/checkname', (req, res) => {
 */
 
 app.get('/sql/getGuides', (req, res) => {
-    http.get('http://10.128.0.10:3666/guides?action=list', (resp) => {
+    http.get('http://127.0.0.1:3666/guides?action=list', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -659,7 +665,7 @@ app.get('/sql/getGuides', (req, res) => {
 });
 
 app.get('/quiz/getScores', (req, res) => {
-    http.get('http://10.128.0.10:3666/quiz/getScores?', (resp) => {
+    http.get('http://127.0.0.1:3666/quiz/getScores?', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -680,7 +686,7 @@ app.get('/quiz/getScores', (req, res) => {
 
 app.get('/sql/getLivegame', (req, res) => {
     var pname = req.query.playername;
-    http.get('http://10.128.0.10:3666/db/livegames?myobj=' + pname, (resp) => {
+    http.get('http://127.0.0.1:3666/db/livegames?myobj=' + pname, (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -701,7 +707,7 @@ app.get('/sql/getLivegame', (req, res) => {
 });
 
 app.get('/api/getLivegames', (req, res) => {
-    http.get('http://10.128.0.10:3666/db/livegames?t', (resp) => {
+    http.get('http://127.0.0.1:3666/db/livegames?t', (resp) => {
         let data = '';
         // A chunk of data has been recieved.
         resp.on('data', (chunk) => {
@@ -727,8 +733,8 @@ app.get('/api/getLivegames', (req, res) => {
 app.get('/sql/stats/wavegamesended', (req, res) => {
     var version = req.query.version;
     if (version.substring(0, 1) === "v") version = version.substring(1);
-    writeLog('http://10.128.0.10:3666/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version);
-    http.get('http://10.128.0.10:3666/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version, (resp) => {
+    writeLog('http://127.0.0.1:3666/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version);
+    http.get('http://127.0.0.1:3666/stats/patch?db=rankedGames_' + version.substring(0,3) + '&type=gameendingwave&version=' + version, (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -753,8 +759,8 @@ app.get('/mongo/stats/legions/winrate', (req, res) => {
     var version = req.query.version;
     var minElo = req.query.minelo;
     if (version.substring(0, 1) === "v") version = version.substring(1);
-    if(parseInt(version.substring(0, 1))<3) var queryurl = 'http://10.128.0.10:3666/stats/patch?db=rankedGames_';
-    else queryurl = 'http://10.128.0.10:3666/stats/patch?db=classicGames_';
+    if(parseInt(version.substring(0, 1))<3) var queryurl = 'http://127.0.0.1:3666/stats/patch?db=rankedGames_';
+    else queryurl = 'http://127.0.0.1:3666/stats/patch?db=classicGames_';
     writeLog( queryurl+ version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo);
     http.get( queryurl + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo, (resp) => {
         let data = '';
@@ -847,10 +853,10 @@ app.get('/mongo/getFighterStats', (req, res) => {
     gamecheck.part2 = parseInt(targetVersion.substring(2,3));
     var gametype = req.query.gametype;
     if(gamecheck.part1 > 2){
-        var request_url = "http://10.128.0.10:3666/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo+"&gametype="+gametype;
+        var request_url = "http://127.0.0.1:3666/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo+"&gametype="+gametype;
     }
     else{
-        request_url = "http://10.128.0.10:3666/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo;
+        request_url = "http://127.0.0.1:3666/stats/patch?type=fighterstats&version="+targetVersion+"&fightername="+fighterName+"&elo="+minElo;
     }
     
     writeLog(request_url);
@@ -872,7 +878,26 @@ app.get('/mongo/getFighterStats', (req, res) => {
     });
 });
 
+app.get('/mongo/getGamesCount', (req,res) => {
+    var targetDb = req.query.db;
+    var request_url = "http://127.0.0.1:3666/count?targetdb="+targetDb;
+    http.get(request_url, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
 
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data) res.json(data);
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        writeLog("Error: " + err.message);
+    });
+});
 
 app.get('/mongo/getGames', (req, res) => {
     var type = req.query.type;
@@ -883,30 +908,30 @@ app.get('/mongo/getGames', (req, res) => {
     switch (type) {
         case "id":
             var search_id = req.query.id;
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=" + target_db + "&type=id&limit=" + myLimit + "&formating=" + formating + "&id=" + search_id;
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=id&limit=" + myLimit + "&formating=" + formating + "&id=" + search_id;
             break;
         case "playername":
             var search_name = req.query.name;
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=" + target_db + "&type=playername&limit=" + myLimit + "&formating=" + formating + "&name=" + search_name;
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=playername&limit=" + myLimit + "&formating=" + formating + "&name=" + search_name;
             break;
         case "version":
             var search_version = req.query.version;
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=" + target_db + "&type=version&limit=" + myLimit + "&formating=" + formating + "&version=" + search_version;
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=version&limit=" + myLimit + "&formating=" + formating + "&version=" + search_version;
             break;
         case "date":
             var search_from = req.query.from;
             var search_to = req.query.to;
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=" + target_db + "&type=date&limit=" + myLimit + "&formating=" + formating + "&from=" + search_from + "&to=" + search_to;
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=date&limit=" + myLimit + "&formating=" + formating + "&from=" + search_from + "&to=" + search_to;
             break;
         //http://ltdstats.com/mongo/getGames?type=all&db=rankedGames
         case "all":
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=" + target_db + "&type=all&limit=0&formating=none";
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=all&limit=0&formating=none";
             break;
         case "duoplayer":
             //http://ltdstats.com/mongo/getGames?type=duoplayer&db=rankedGames3.1&limit=0&formating=none&name1=Egekaer&name2=Haviland%20Tuf
             var name1 = req.query.name1;
             var name2 = req.query.name2;
-            request_url = "http://10.128.0.10:3666/db/games?action=search&db=rankedGames_3.1&type=duoplayer&name1="+name1+"&name2="+name2+"&formating=none&limit=0";
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=rankedGames_3.1&type=duoplayer&name1="+name1+"&name2="+name2+"&formating=none&limit=0";
             break;
 
     }
@@ -964,7 +989,7 @@ app.get('/api/playerElo', (req, res) => {
             }
         }).then(function (data) {
             data.data.player.statistics = JSON.parse(data.data.player.statistics);
-            http.get('http://10.128.0.10:3666/db/livegames?myobj=' + playername, (resp) => {
+            http.get('http://127.0.0.1:3666/db/livegames?myobj=' + playername, (resp) => {
                 let result = '';
 
                 // A chunk of data has been recieved.
