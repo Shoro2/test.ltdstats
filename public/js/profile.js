@@ -100,107 +100,114 @@ function loadGames() {
 }
 
 function loadStats(player) {
-    player_name = player.playername;
-    player_id = player.id;
-    player_icon = player.avatarUrl;
-    player_icon = "/img/i"+player_icon.substring(1);
-    //general
-    player_totalgames = player.statistics.gamesPlayed; //total ranked games
-    player_totalwins = player.statistics.wins; //overall ranked wins
-    if (typeof player.statistics.wins == 'undefined') player_totalwins = 0;
-    player_totalwinchance = player.statistics.winRate;
-    if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
-    player_ties = player.statistics.ties;
-    if (typeof player.statistics.ties == 'undefined') player_ties = 0;
-    player_quits = player.statistics.quits;
-    if (typeof player.statistics.quits == 'undefined') player_quits = 0;
-    player_overall_elo = player.statistics.overallElo; //current elo season
-    if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
-    else player_overall_peakelo = player.statistics.overallPeakElo;
-    player_overall_xp = player.statistics.totalXp;
-    player_overall_level = getPlayerLevel(player_overall_xp);
-    player_winningstreak = player.statistics.winStreak;
-    player_bestfriends = "";
-    if (player.bestFriends !== undefined && player.bestFriends[0]!== undefined) {
-       
-        player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
-        if (player.bestFriends[1].player !== null) {
-            player_bestfriends += ", " + player.bestFriends[1].player.playername + " (" + player.bestFriends[1].gameCount + ")";
-            if (player.bestFriends[2].player !== null) {
-                player_bestfriends += ", " + player.bestFriends[2].player.playername + " (" + player.bestFriends[2].gameCount + ")";
+    try{
+        player_name = player.playername;
+        player_id = player.id;
+        player_icon = player.avatarUrl;
+        player_icon = "/img/i"+player_icon.substring(1);
+        //general
+        player_totalgames = player.statistics.gamesPlayed; //total ranked games
+        player_totalwins = player.statistics.wins; //overall ranked wins
+        if (typeof player.statistics.wins == 'undefined') player_totalwins = 0;
+        player_totalwinchance = player.statistics.winRate;
+        if (player_totalwinchance == 'NaN') player_totalwinchance = 0;
+        player_ties = player.statistics.ties;
+        if (typeof player.statistics.ties == 'undefined') player_ties = 0;
+        player_quits = player.statistics.quits;
+        if (typeof player.statistics.quits == 'undefined') player_quits = 0;
+        player_overall_elo = player.statistics.overallElo; //current elo season
+        if (typeof player.statistics.overallPeakElo == 'undefined') player_overall_peakelo = player.statistics.overallPeakEloThisSeason;
+        else player_overall_peakelo = player.statistics.overallPeakElo;
+        player_overall_xp = player.statistics.totalXp;
+        player_overall_level = getPlayerLevel(player_overall_xp);
+        player_winningstreak = player.statistics.winStreak;
+        player_bestfriends = "";
+        if (player.bestFriends !== undefined && player.bestFriends[0]!== undefined) {
+        
+            player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
+            if (player.bestFriends[1].player !== null) {
+                player_bestfriends += ", " + player.bestFriends[1].player.playername + " (" + player.bestFriends[1].gameCount + ")";
+                if (player.bestFriends[2].player !== null) {
+                    player_bestfriends += ", " + player.bestFriends[2].player.playername + " (" + player.bestFriends[2].gameCount + ")";
+                }
             }
         }
+
+        if(typeof player.statistics.rankedTiesThisSeason == 'undefined') player_seasonal_ties = 0;
+        player_seasonal_wins = player.statistics.rankedWinsThisSeason;
+        player_seasonal_losses = player.statistics.rankedLossesThisSeason;
+        player_seasonal_games = player_seasonal_wins + player_seasonal_losses + player_seasonal_ties;
+
+        player_seasonal_classic_wins = player.statistics.classicWinsThisSeason;
+        player_seasonal_classic_losses = player.statistics.classicLossesThisSeason;
+        player_seasonal_classic_games = player_seasonal_classic_wins + player_seasonal_classic_losses;
+        player_seasonal_classic_elo = player.statistics.classicElo;
+        player_seasonal_classic_peakelo = player.statistics.classicPeakEloThisSeason;
+
+        player_atlantean_games = player.statistics.atlanteanPlayed;
+        if(!player_atlantean_games) player_atlantean_games = 0;
+        player_atlantean_wins = player.statistics.atlanteanWins;
+        if(!player_atlantean_wins) player_atlantean_wins= 0;
+        player_element_games = player.statistics.elementPlayed;
+        if(!player_element_games) player_element_games= 0;
+        player_element_wins = player.statistics.elementWins;
+        if(!player_element_wins) player_element_wins= 0;
+        player_grove_games = player.statistics.grovePlayed;
+        if(!player_grove_games)player_grove_games = 0;
+        player_grove_wins = player.statistics.groveWins;
+        if(!player_grove_wins)player_grove_wins = 0;
+        player_mech_games = player.statistics.mechPlayed;
+        if(!player_mech_games) player_mech_games= 0;
+        player_mech_wins = player.statistics.mechWins;
+        if(!player_mech_wins)player_mech_wins = 0;
+        player_forsaken_games = player.statistics.forsakenPlayed;
+        if(!player_forsaken_games)player_forsaken_games = 0;
+        player_forsaken_wins = player.statistics.forsakenWins;
+        if(!player_forsaken_wins)player_forsaken_wins = 0;
+        player_nomad_games = player.statistics.nomadPlayed;
+        if(!player_nomad_games)player_nomad_games = 0;
+        player_nomad_wins = player.statistics.nomadWins;
+        if(!player_nomad_wins) player_nomad_wins= 0;
+        player_shrine_games = player.statistics.shrinePlayed;
+        if(!player_shrine_games) player_shrine_games = 0;
+        player_shrine_wins = player.statistics.shrineWins;
+        if(!player_shrine_wins) player_shrine_wins= 0;
+        
+        //icon für race mit meisten wins
+        var bgimage = "mastermind_2.png";
+        //parse
+        document.getElementById("player_name1").textContent = player_name;
+        document.getElementById("player_elo1").textContent = player_overall_elo + " (" + player_overall_peakelo + ")";
+        //badges
+        if (player_overall_level < 10) {
+            document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/0" + player_overall_level + ".png'>";
+        }
+        else {
+
+            document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level + ".png'>";
+        }
+        //console.log(player_overall_level);
+        if (!player_overall_elo) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Unranked.png'>";
+        else if (player_overall_elo > 0 && player_overall_elo < 1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Bronze.png'>";
+        else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Silver.png'>";
+        else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Gold.png'>";
+        else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Platinum.png'>";
+        else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Diamond.png'>";
+        else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Expert.png'>";
+        else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/SeniorMaster.png'>";
+        else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Grandmaster.png'>";
+        // mouseover details
+        parseStats();
+        document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 23% 40%;opacity:1.0;");
+        document.title = "LTDStats - " + player_name + "'s Profile";
+
+        document.getElementById("player_icon1").innerHTML ="<img id='img_playericon' src='"+player_icon+"'></img>";
     }
-
-    if(typeof player.statistics.rankedTiesThisSeason == 'undefined') player_seasonal_ties = 0;
-    player_seasonal_wins = player.statistics.rankedWinsThisSeason;
-    player_seasonal_losses = player.statistics.rankedLossesThisSeason;
-    player_seasonal_games = player_seasonal_wins + player_seasonal_losses + player_seasonal_ties;
-
-    player_seasonal_classic_wins = player.statistics.classicWinsThisSeason;
-    player_seasonal_classic_losses = player.statistics.classicLossesThisSeason;
-    player_seasonal_classic_games = player_seasonal_classic_wins + player_seasonal_classic_losses;
-    player_seasonal_classic_elo = player.statistics.classicElo;
-    player_seasonal_classic_peakelo = player.statistics.classicPeakEloThisSeason;
-
-    player_atlantean_games = player.statistics.atlanteanPlayed;
-    if(!player_atlantean_games) player_atlantean_games = 0;
-    player_atlantean_wins = player.statistics.atlanteanWins;
-    if(!player_atlantean_wins) player_atlantean_wins= 0;
-    player_element_games = player.statistics.elementPlayed;
-    if(!player_element_games) player_element_games= 0;
-    player_element_wins = player.statistics.elementWins;
-    if(!player_element_wins) player_element_wins= 0;
-    player_grove_games = player.statistics.grovePlayed;
-    if(!player_grove_games)player_grove_games = 0;
-    player_grove_wins = player.statistics.groveWins;
-    if(!player_grove_wins)player_grove_wins = 0;
-    player_mech_games = player.statistics.mechPlayed;
-    if(!player_mech_games) player_mech_games= 0;
-    player_mech_wins = player.statistics.mechWins;
-    if(!player_mech_wins)player_mech_wins = 0;
-    player_forsaken_games = player.statistics.forsakenPlayed;
-    if(!player_forsaken_games)player_forsaken_games = 0;
-    player_forsaken_wins = player.statistics.forsakenWins;
-    if(!player_forsaken_wins)player_forsaken_wins = 0;
-    player_nomad_games = player.statistics.nomadPlayed;
-    if(!player_nomad_games)player_nomad_games = 0;
-    player_nomad_wins = player.statistics.nomadWins;
-    if(!player_nomad_wins) player_nomad_wins= 0;
-    player_shrine_games = player.statistics.shrinePlayed;
-    if(!player_shrine_games) player_shrine_games = 0;
-    player_shrine_wins = player.statistics.shrineWins;
-    if(!player_shrine_wins) player_shrine_wins= 0;
+    catch(err){
+        console.log("Failed to load player: "+err);
+        console.log(player);
+    }
     
-    //icon für race mit meisten wins
-    var bgimage = "mastermind_2.png";
-    //parse
-    document.getElementById("player_name1").textContent = player_name;
-    document.getElementById("player_elo1").textContent = player_overall_elo + " (" + player_overall_peakelo + ")";
-    //badges
-    if (player_overall_level < 10) {
-        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/0" + player_overall_level + ".png'>";
-    }
-    else {
-
-        document.getElementById("playerbadge_level").innerHTML = "<img id='img_level' src='/img/icons/" + player_overall_level + ".png'>";
-    }
-    //console.log(player_overall_level);
-    if (!player_overall_elo) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Unranked.png'>";
-    else if (player_overall_elo > 0 && player_overall_elo < 1200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Bronze.png'>";
-    else if (player_overall_elo > 1200 && player_overall_elo < 1400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Silver.png'>";
-    else if (player_overall_elo > 1400 && player_overall_elo < 1600) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Gold.png'>";
-    else if (player_overall_elo > 1600 && player_overall_elo < 1800) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Platinum.png'>";
-    else if (player_overall_elo > 1800 && player_overall_elo < 2000) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Diamond.png'>";
-    else if (player_overall_elo > 2000 && player_overall_elo < 2200) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Expert.png'>";
-    else if (player_overall_elo > 2200 && player_overall_elo < 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/SeniorMaster.png'>";
-    else if (player_overall_elo > 2400) document.getElementById("playerbadge_rank").innerHTML = "<img id='img_rank' src='/img/icons/Ranks/Grandmaster.png'>";
-    // mouseover details
-    parseStats();
-    document.getElementsByClassName("main-content")[0].setAttribute("style", "background-image: url('/img/" + bgimage + "');background-repeat: no-repeat;background-position:center;background-size: 23% 40%;opacity:1.0;");
-    document.title = "LTDStats - " + player_name + "'s Profile";
-
-    document.getElementById("player_icon1").innerHTML ="<img id='img_playericon' src='"+player_icon+"'></img>";
 }
 
 function getPlayerLevel(totalXp) {
@@ -1042,9 +1049,17 @@ function queryLivegames() {
             else {
                 result.player.statistics = JSON.parse(result.player.statistics);
                 player = result.player;
-                loadStats(player);
-                parseStats(player);
-                hideLoad();
+                try{
+                    loadStats(player);
+                    parseStats(player);
+                    hideLoad();
+                }
+                catch(err){
+                    console.log("Error parsing player: "+err);
+                    console.log(player);
+                    document.getElementById("stats").innerHTML="<h3>Error parsing player " + player.playername + ". Check the name again or report this issue if it still exists.</h3>";
+                }
+                
                 return player;
             }
 

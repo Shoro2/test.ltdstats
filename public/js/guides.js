@@ -120,7 +120,7 @@ function parsePatches() {
     }
     patches.sort();
     selector = document.getElementById("patch");
-    for (i = 0; i < patches.length; i++) {
+    for (i = patches.length-1; i > 0; i--) {
         var option = document.createElement("option");
         option.text = "v" + patches[i];
         option.value = patches[i];
