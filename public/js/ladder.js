@@ -157,7 +157,7 @@ function parsePlayers(myPlayers, type) {
                 var winchance_mastermind = (players[i].statistics.mastermindWins / players[i].statistics.mastermindPlayed * 100).toFixed(2);
                 if (winchance_mastermind === "NaN") winchance_mastermind = 0;
                 cell[0].innerHTML = i + 1;
-                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].name + '">' + players[i].name + '</a>';
                 cell[2].innerHTML = players[i].statistics.overallElo;
                 cell[3].innerHTML = players[i].statistics.overallPeakEloThisSeason;
                 cell[4].innerHTML = totalgames;
@@ -183,7 +183,7 @@ function parsePlayers(myPlayers, type) {
                 winchance_classic = (totalwins / totalgames * 100).toFixed(2);
                 if (winchance_classic === "NaN") winchance_classic = 0;
                 cell[0].innerHTML = i + 1;
-                cell[1].innerHTML = '<a href="/profile?player=' + players[i].playername + '">' + players[i].playername + '</a>';
+                cell[1].innerHTML = '<a href="/profile?player=' + players[i].name + '">' + players[i].name + '</a>';
                 cell[2].innerHTML = players[i].statistics.classicElo;
                 cell[3].innerHTML = players[i].statistics.classicPeakElo;
                 cell[4].innerHTML = totalgames;

@@ -47,11 +47,14 @@ function parsePlayers() {
     gametype ="";
     if(playercount==4) gametype = "normal";
     else gametype = "classic";
+    console.log(allPlayers);
+    console.log(livegame.players);
+    console.log(parsedPlayer);
     for (var i = 0; i < playercount; i++) {
-        //parsedPlayer[i] = allPlayers.filter(filteredPlayer => filteredPlayer.playername == livegame.players[i])[0];
-        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername === livegame.players[i]; })[0];
+        console.log(allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === livegame.players[i];})[0]);
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === livegame.players[i];})[0];
         if (parsedPlayer[i] === undefined) {
-            parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername === "Bot (player not found)"; })[0];
+            parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === "Bot (player not found)"; })[0];
         }
         //console.log(parsedPlayer[i]);
     }
@@ -61,11 +64,11 @@ function parsePlayers() {
         if(playercount==4) gametype = "normal";
         else gametype = "classic";
         if(i>=2 && gametype=="normal"){
-            document.getElementById("name" + (i + 3)).innerHTML = "<b onclick='showPlayerDetails(" + (i) + ");'>" + parsedPlayer[i].playername + "</b>";
+            document.getElementById("name" + (i + 3)).innerHTML = "<b onclick='showPlayerDetails(" + (i) + ");'>" + parsedPlayer[i].name + "</b>";
             document.getElementById("elo" + (i + 3)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
         }
         else{
-            document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails(" + i + ");'>" + parsedPlayer[i].playername + "</b>";
+            document.getElementById("name" + (i + 1)).innerHTML = "<b onclick='showPlayerDetails(" + i + ");'>" + parsedPlayer[i].name + "</b>";
             document.getElementById("elo" + (i + 1)).innerHTML = parsedPlayer[i].statistics.overallElo + " (" + parsedPlayer[i].statistics.overallPeakEloThisSeason + ")";
         }
         
@@ -867,7 +870,7 @@ function parsePlayers() {
                 //console.log(parsedPlayer[i].bestFriends);
                 for (var e = 0; e < parsedPlayer[i].bestFriends.length; e++) {
                     //console.log(parsedPlayer[i].bestFriends[e]);
-                    friends[i][e] = parsedPlayer[i].bestFriends[e].player.playername;
+                    friends[i][e] = parsedPlayer[i].bestFriends[e].player.name;
                 }
             }
         }
@@ -879,11 +882,11 @@ function parsePlayers() {
     var meinCounter = 0;
     friends.forEach(function (ele) {
         //console.log(ele);
-        if ((meinCounter === 0 || meinCounter === 1) && (ele.includes(parsedPlayer[0].playername) || ele.includes(parsedPlayer[1].playername))) {
+        if ((meinCounter === 0 || meinCounter === 1) && (ele.includes(parsedPlayer[0].name) || ele.includes(parsedPlayer[1].name))) {
             //west duo
             duoWest = true;
         }
-        if ((meinCounter === 2 || meinCounter === 3) && (ele.includes(parsedPlayer[2].playername) || ele.includes(parsedPlayer[3].playername))) {
+        if ((meinCounter === 2 || meinCounter === 3) && (ele.includes(parsedPlayer[2].name) || ele.includes(parsedPlayer[3].name))) {
             //west duo
             duoEast = true;
         }
@@ -913,7 +916,7 @@ function parsePlayers() {
                 if (parsedPlayer[i].games.games.length < 5 && e === 0) e = 5 - games.games.length;
                 if (parsedPlayer[i].games.games[e] !== undefined) {
                     if(i>=2 && gametype=="normal"){
-                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
+                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playerProfile.name === parsedPlayer[i].name; })[0];
                         if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 3)).innerHTML += "W";
                         else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 3)).innerHTML += "T";
                         else {
@@ -923,9 +926,9 @@ function parsePlayers() {
                         if (e < 4) document.getElementById("gameresult" + (i + 3)).innerHTML += "/";
                     }
                     else{
-                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playername === parsedPlayer[i].playername; })[0];
-                        if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 1)).innerHTML += "W";
-                        else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 1)).innerHTML += "T";
+                        var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playerProfile.name === parsedPlayer[i].name; })[0];
+                        if (gameDetail.gameResult === "won") document.getElementById("gameresult" + (i + 1)).innerHTML += "W";
+                        else if (gameDetail.gameResult === "tied") document.getElementById("gameresult" + (i + 1)).innerHTML += "T";
                         else {
                             document.getElementById("gameresult" + (i + 1)).innerHTML += "L";
                             winsFive[i]--;

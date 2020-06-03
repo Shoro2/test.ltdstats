@@ -37,8 +37,8 @@ function loadEloGraphProfile(games) {
     var counter = 0;
     games.forEach(function (myEle) {
         try{
-			if (myEle.queuetype == "Normal") {
-                var gameDetail = myEle['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == player_name; })[0];
+			if (myEle.queueType == "Normal") {
+                var gameDetail = myEle['gameDetails'].filter(function (gameDetail) { return gameDetail.playerProfile.name == player_name; })[0];
                 graphData.push({elo: gameDetail.overallElo, date: myEle.ts.substring(0, myEle.ts.indexOf("T"))});
             }
 		}
@@ -101,7 +101,7 @@ function loadGames() {
 
 function loadStats(player) {
     try{
-        player_name = player.playername;
+        player_name = player.name;
         player_id = player.id;
         player_icon = player.avatarUrl;
         player_icon = "/img/i"+player_icon.substring(1);
@@ -124,11 +124,11 @@ function loadStats(player) {
         player_bestfriends = "";
         if (player.bestFriends !== undefined && player.bestFriends[0]!== undefined) {
         
-            player_bestfriends += player.bestFriends[0].player.playername + " (" + player.bestFriends[0].gameCount + ")";
+            player_bestfriends += player.bestFriends[0].player.name + " (" + player.bestFriends[0].gameCount + ")";
             if (player.bestFriends[1].player !== null) {
-                player_bestfriends += ", " + player.bestFriends[1].player.playername + " (" + player.bestFriends[1].gameCount + ")";
+                player_bestfriends += ", " + player.bestFriends[1].player.name + " (" + player.bestFriends[1].gameCount + ")";
                 if (player.bestFriends[2].player !== null) {
-                    player_bestfriends += ", " + player.bestFriends[2].player.playername + " (" + player.bestFriends[2].gameCount + ")";
+                    player_bestfriends += ", " + player.bestFriends[2].player.name + " (" + player.bestFriends[2].gameCount + ")";
                 }
             }
         }
@@ -336,14 +336,9 @@ function toggleFilters() {
 }
 
 function drawPlayerBuilds(gameX) {
-    //player = JSON.parse(jsonResponse);
-    player_name = player.playername;
+    player_name = player.name;
     player_id = player.id;
-    //console.log("drawPlayerBuilds player name: " + player_name);
-    console.log(gameX);
     game = gameX;
-    //console.log("drawPlayerBuilds game:");
-    //console.log(game);
     player_count = 51; //amount of games
     games = [0, 0, 0, 0, 0, 0];
     gamesNeu = [0, 0, 0, 0, 0, 0];
@@ -401,7 +396,7 @@ function drawPlayerBuilds(gameX) {
         4=Mech
         5=Atlantean
         */
-        if (game[i].queuetype === "Normal") //ranked only
+        if (game[i].queueType === "Normal") //ranked only
         {
             wave = parseInt(game[i].wave);
             //if (wave > 15) console.log(wave);
@@ -434,7 +429,7 @@ function drawPlayerBuilds(gameX) {
             //wins
             if (game[i].gameresult === "won") wins[raceint]++;
             //check leaks for every wave and store them in leaks[][]
-            //console.log(player.filteredGamesQuery.games[i].unitsPerWave);
+            //console.log(player.games.games[i].unitsPerWave);
             for (var e = 0; e < wave - 1; e++) {
                 //check for newer data
                 //Chance to leak:
@@ -622,14 +617,14 @@ function listGames() {
             var currelo = 0;
             var pastelo = 0;
             try {
-                var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                var gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail.playerProfile['name'] == player.name)[0];
                 legion = ", Legion: " + gameDetail['legion'];
                 if (i > 0) {
-                    gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                    gameDetail = games[i - 1]['gameDetails'].filter(gameDetail => gameDetail.playerProfile['name'] == player.name)[0];
                     currelo = gameDetail['overallElo'];
                 }
                 else currelo = parseInt(player.statistics.overallElo);
-                gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail['playername'] == player.playername)[0];
+                gameDetail = games[i]['gameDetails'].filter(gameDetail => gameDetail.playerProfile['name'] == player.name)[0];
                 pastelo = gameDetail['overallElo'];
                 var elochange = 0;
                 elochange = currelo - pastelo;
@@ -637,15 +632,16 @@ function listGames() {
             } catch (err) {
                 // Catch games that error out with no game detail.
                 console.log(err);
-				console.log(games[i]);
+                console.log(games[i]);
+                console.log(player);
             }
 
-            var gameid_hex = dec2hex(games[i].game_id).toUpperCase();
-            if (elochange > 0) option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].game_id.substring(0,4)+"..."+ games[i].game_id.substring(games[i].game_id.length-4) + legion + ", Elo: +" + elochange;
-            else option.text = games[i].queuetype + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].game_id.substring(0,4)+"..."+ games[i].game_id.substring(games[i].game_id.length-4) + legion + ", Elo: " + elochange;
+            var gameid_hex = dec2hex(games[i].id).toUpperCase();
+            if (elochange > 0) option.text = games[i].queueType + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].id + legion + ", Elo: +" + elochange;
+            else option.text = games[i].queueType + ": " + timestamp.substring(0, timestamp.length - 3) + " UTC, ID: " + games[i].id + legion + ", Elo: " + elochange;
             option.value = i;
-            if (games[i].gameresult == "lost") option.style = "background-color: #FCA8A8;"
-            else if (games[i].gameresult == "won") option.style = "background-color: #B7FBA3;"
+            if (gameDetail.gameResult == "lost") option.style = "background-color: #FCA8A8;"
+            else if (gameDetail.gameResult == "won") option.style = "background-color: #B7FBA3;"
             else option.style = "background-color: #e6e3e3;"
             //selector.remove(0);
             selector.add(option);
@@ -654,15 +650,12 @@ function listGames() {
     }
 
     function getGameDetailsProfile(pos, games) {
-        console.log(games[pos]);
-        //console.log(pos);
+        savedGame = games[pos];
         meinString = games[pos].gameDetails.filter(meinString => meinString.position == 1)[0];
         meinString1 = games[pos].gameDetails.filter(meinString => meinString.position == 2)[0];
         meinString2 = games[pos].gameDetails.filter(meinString => meinString.position == 5)[0];
         meinString3 = games[pos].gameDetails.filter(meinString => meinString.position == 6)[0];
         gameEvent = [meinString, meinString1, meinString2, meinString3];
-        
-        //console.log(gameEvent);
     }
 
     function getPlayerAmount() {
@@ -673,20 +666,21 @@ function listGames() {
         try {
             var selectedGame = document.getElementById("setGame").value;
             getGameDetailsProfile(selectedGame, games);
+            console.log(gameEvent);
             if (gameEvent[0]) {
-                if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave) - 1;
+                if (document.getElementById("setWave").value == "all") var wave = parseInt(selectedGame.endingWave) - 1;
                 else var wave = parseInt(document.getElementById("setWave").value);
                 for (var i = 0; i < 4; i++) {
                     var neuesI = i + 1;
                     try {
-                        document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playername + "'>" + gameEvent[i].playername + "</a>";
+                        document.getElementById("name_" + neuesI).innerHTML = "<a href='/profile?player=" + gameEvent[i].playerProfile.name + "'>" + gameEvent[i].playerProfile.name + "</a>";
                         document.getElementById("elo_" + neuesI).textContent = gameEvent[i].overallElo;
                         document.getElementById("legion_" + neuesI).textContent = gameEvent[i].legion;
                         document.getElementById("value_" + neuesI).textContent = getPlayerValue(i, wave);
                         document.getElementById("worker_" + neuesI).textContent = gameEvent[i].workersPerWave[wave - 1];
                         document.getElementById("income_" + neuesI).textContent = getPlayerIncome(i, wave);
                         document.getElementById("leaks_" + neuesI).textContent = getPlayerLeaks(i);
-                        if (gameEvent[i].playername == player_name) var position = i;
+                        if (gameEvent[i].name == player_name) var position = i;
                     }
                     catch{
                         console.log("failed to write game details");
@@ -698,12 +692,18 @@ function listGames() {
                 getPlayerBuild(player_position);
                 //Summary:
 
-                var gameId = games[selectedGame].game_id;
+                var gameId = games[selectedGame].id;
+                var index = 0;
+                if(player_position== 0) index=0;
+                else if(player_position==1) index=1;
+                else if(player_position==4) index=2;
+                else if(player_position==5) index=3;
+
                 document.getElementById("game_id").innerHTML = "Game #" + selectedGame + ",  ID: <a href='/replay?gameid=" + gameId + "'>" + gameId + "</a>";
                 document.getElementById("game_date").textContent = "Date: " + games[selectedGame].ts.substring(0, games[selectedGame].ts.indexOf(".")).replace("T", " ") + " UTC";
-                document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameresult;
-                document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].wave;
-                document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].time / 60).toFixed(2) + " min";
+                document.getElementById("game_result").textContent = "Result: " + games[selectedGame].gameDetails[index].gameResult;
+                document.getElementById("game_wave").textContent = "Wave: " + games[selectedGame].endingWave;
+                document.getElementById("game_time").textContent = "Time: " + (games[selectedGame].gameLength / 60).toFixed(2) + " min";
             }
         }
         catch (err) {
@@ -729,6 +729,7 @@ function listGames() {
     function getPlayerValue(player, level) {
         try {
             var networth = gameEvent[player].netWorthPerWave[level - 1];
+            console.log(gameEvent[player]);
             //value = networth - workerval - gold für wave - gold für mercs auf wave
             var worker_cost = 50;
             var wave_value = 72;
@@ -755,12 +756,13 @@ function listGames() {
 
     function getPlayerBuild(player) {
         savedValue = player;
-        //console.log(player);
         clearPictures();
         drawSquares();
         document.getElementById("gamedetails_build").innerHTML = "";
-        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(savedGame.endingWave);
         else var wave = parseInt(document.getElementById("setWave").value);
+        if(player == 5) player = 2;
+        else if(player == 6) player = 3;
         var meinBuild = gameEvent[player].unitsPerWave[wave - 1];
         counter = 0;
         try {
@@ -775,6 +777,7 @@ function listGames() {
         }
         catch (error) {
             console.log(error);
+            console.log(player);
         }
         
         getPlayerMercsSent(player);
@@ -783,8 +786,10 @@ function listGames() {
 
     function getPlayerMercsSent(player) {
         document.getElementById("gamedetails_mercs_sent").innerHTML = "";
-        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(savedGame.endingWave);
         else var wave = parseInt(document.getElementById("setWave").value);
+        if(player == 5) player = 2;
+        else if(player == 6) player = 3;
         var meinBuild = gameEvent[player].mercsSentPerWave[wave - 1];
         meinBuild.forEach(element => {
             document.getElementById("gamedetails_mercs_sent").innerHTML += element + "<br>";
@@ -793,8 +798,10 @@ function listGames() {
 
     function getPlayerMercsReceived(player) {
         document.getElementById("gamedetails_mercs_received").innerHTML = "";
-        if (document.getElementById("setWave").value == "all") var wave = parseInt(gameEvent[0].wave);
+        if (document.getElementById("setWave").value == "all") var wave = parseInt(savedGame.endingWave);
         else var wave = parseInt(document.getElementById("setWave").value);
+        if(player == 5) player = 2;
+        else if(player == 6) player = 3;
         var meinBuild = gameEvent[player].mercsReceivedPerWave[wave - 1];
         meinBuild.forEach(element => {
             document.getElementById("gamedetails_mercs_received").innerHTML += element + "<br>";
@@ -1057,7 +1064,7 @@ function queryLivegames() {
                 catch(err){
                     console.log("Error parsing player: "+err);
                     console.log(player);
-                    document.getElementById("stats").innerHTML="<h3>Error parsing player " + player.playername + ". Check the name again or report this issue if it still exists.</h3>";
+                    document.getElementById("stats").innerHTML="<h3>Error parsing player " + player.name + ". Check the name again or report this issue if it still exists.</h3>";
                 }
                 
                 return player;
@@ -1086,9 +1093,9 @@ function queryLivegames() {
                 document.getElementById("apierror").style.display = "";
             }
             else {
-                playerGames = result.player.filteredGamesQuery.games;
+                playerGames = result.player.games.games;
                 drawPlayerBuilds(playerGames);
-                games = result.player.filteredGamesQuery.games;
+                games = result.player.games.games;
                 loadEloGraphProfile(games);
                 drawGameDetails(0);
                 listGames();
