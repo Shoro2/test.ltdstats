@@ -149,6 +149,14 @@ html
                         .form-inline.my-2.my-lg-0
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Player 1', aria-label='Player 1')
                             input#playername2.form-control.mr-sm-2(type='text', placeholder='Player 2', aria-label='Player 2')
+                            select#versionselect.form-control.mr-sm-2
+                                option(value="rankedGames_6.0") Season 6
+                                option(value="rankedGames_5.0") Season 5 
+                                option(value="rankedGames_4.0") Season 4 
+                                option(value="rankedGames_3.0") Season 3 
+                                option(value="rankedGames_2.4") Season 2.4 
+                                option(value="rankedGames_2.3") Season 2.3 
+                                option(value="rankedGames_2.0") Season 2.0 
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Compare
                     if(title.includes("Replay"))
                         .form-inline.my-2.my-lg-0

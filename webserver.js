@@ -44,7 +44,7 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 var options = {
     key: fs.readFileSync('./private/_.ltdstats.com_private_key.key'),
-    cert: fs.readFileSync('./private/ltdstats.com_ssl_certificate.cer')
+    cert: fs.readFileSync('./private/ltdstats.com_ssl_certificate_chain.cer')
 };
 var sslPort = 443;
 app.use(redirectToHttps);
@@ -968,7 +968,7 @@ app.get('/mongo/getGames', (req, res) => {
             //http://ltdstats.com/mongo/getGames?type=duoplayer&db=rankedGames3.1&limit=0&formating=none&name1=Egekaer&name2=Haviland%20Tuf
             var name1 = req.query.name1;
             var name2 = req.query.name2;
-            request_url = "http://127.0.0.1:3666/db/games?action=search&db=rankedGames_3.1&type=duoplayer&name1="+name1+"&name2="+name2+"&formating=none&limit=0";
+            request_url = "http://127.0.0.1:3666/db/games?action=search&db=" + target_db + "&type=duoplayer&name1="+name1+"&name2="+name2+"&formating=none&limit=0";
             break;
 
     }

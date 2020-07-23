@@ -1,5 +1,6 @@
 function parseStats(player) {
-    playername[counter] = player.playername;
+    console.log(player);
+    playername[counter] = player.name;
     gamesPlayed[counter] = player.statistics.gamesPlayed;
     wins[counter] = player.statistics.wins;
     losses[counter] = player.statistics.losses;
@@ -355,6 +356,7 @@ function parseStats(player) {
 }
 
 function getPlayer() {
+    console.log("parsing player")
     counter = 0;
     anzahlSpieler = 2;
     playername = [2];
@@ -406,6 +408,7 @@ function getPlayer() {
     mastermindLosses = [2];
     mastermindXp = [2];
     player = [2];
+
     queryPlayer(document.getElementById("playername").value);
     queryBothPlayers(document.getElementById("playername").value, document.getElementById("playername2").value);
 }
@@ -416,30 +419,51 @@ function gamesTogether(games_together, name1, name2){
     let games_against_amount = 0;
     let games_against_p1 = 0;
     let games_against_p2 = 0;
+    games_together = convertGameToNew(games_together);
     for(var i=0;i<games_together.length;i++){
         //together in one team
-        if((games_together[i].gameDetails[0].playername == name1 && games_together[i].gameDetails[1].playername == name2) || (games_together[i].gameDetails[1].playername == name1 && games_together[i].gameDetails[0].playername == name2) || (games_together[i].gameDetails[2].playername == name1 && games_together[i].gameDetails[3].playername == name2) || (games_together[i].gameDetails[3].playername == name1 && games_together[i].gameDetails[2].playername == name2) ){
-            games_together_amount++;
-            if(games_together[i].gameDetails.filter(meinName => meinName.playername == name1)[0].gameresult =="won"){
+        try{
+            if(games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name1.toUpperCase())[0].gameResult =="won" && games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name2.toUpperCase())[0].gameResult =="won"){
+                games_together_amount++;
                 games_together_wins++;
             }
-        }
-        else{
-            //played against eachother
-            games_against_amount++;
-            if(games_together[i].gameDetails.filter(meinName => meinName.playername == name1)[0].gameresult =="won"){
+            else if(games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name1.toUpperCase())[0].gameResult =="lost" && games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name2.toUpperCase())[0].gameResult =="lost"){
+                games_together_amount++;
+            }
+            //against each other
+            else if(games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name1.toUpperCase())[0].gameResult =="won" && games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name2.toUpperCase())[0].gameResult =="lost"){
+                games_against_amount++;
                 games_against_p1++;
             }
-            else{
+            else if(games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name1.toUpperCase())[0].gameResult =="lost" && games_together[i].gameDetails.filter(meinName => meinName.playerProfile.name.toUpperCase() == name2.toUpperCase())[0].gameResult =="won"){
+                games_against_amount++;
                 games_against_p2++;
             }
         }
+        catch(err){
+            console.log(err);
+            console.log(games_together[i]);
+        }
+        
     }
-    document.getElementById("games_together").innerHTML="Games together: "+games_together_amount;  
-    document.getElementById("wins_together").innerHTML="Wins together: "+games_together_wins;
+    document.getElementById("games_together").innerHTML="<b>Seasonal</b><br>Games together: "+games_together_amount; 
+    if(games_together_amount>0){
+        document.getElementById("wins_together").innerHTML="Wins together: "+games_together_wins +" ("+(games_together_wins/games_together_amount*100).toFixed(2)+"%)";
+    }
+    else{
+        document.getElementById("wins_together").innerHTML="Wins together: "+games_together_wins;
+    }
+    
     document.getElementById("games_against").innerHTML="Games against: "+games_against_amount;  
-    document.getElementById("wins_player1").innerHTML="Wins "+name1+": "+games_against_p1; 
-    document.getElementById("wins_player2").innerHTML="Wins "+name2+": "+games_against_p2; 
+    if(games_against_amount>0){
+        document.getElementById("wins_player1").innerHTML="Wins "+playername[0]+": "+games_against_p1+" ("+(games_against_p1/games_against_amount*100).toFixed(2)+"%)";
+        document.getElementById("wins_player2").innerHTML="Wins "+playername[1]+": "+games_against_p2+" ("+(games_against_p2/games_against_amount*100).toFixed(2)+"%)";
+    }
+    else{
+        document.getElementById("wins_player1").innerHTML="Wins "+playername[0]+": "+games_against_p1;
+        document.getElementById("wins_player2").innerHTML="Wins "+playername[1]+": "+games_against_p2;
+    }
+    
 }
 
 function apiGetPlayer(callback, playername) {
@@ -449,12 +473,18 @@ function apiGetPlayer(callback, playername) {
             var player = JSON.parse(xhttp.response);
             callback(player);
         }
+        else{
+            console.log("Error requesting player "+playername+".");
+            console.log(xhttp.statusText);
+            console.log(xhttp.responseType);
+        }
     };
     xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
     xhttp.send();
 }
 
 function queryPlayer(playername) {
+    console.log("query player "+playername);
     apiGetPlayer(function (result) {
         result.player.statistics = JSON.parse(result.player.statistics);
         player = result.player;
@@ -471,7 +501,8 @@ function apiGetBothPlayers(callback, playername1, playername2) {
             callback(player);
         }
     };
-    xhttp.open("GET", "/mongo/getGames?type=duoplayer&db=rankedGames_3.1&limit=0&formating=none&name1="+playername1+"&name2="+playername2, true);
+    targetDb = document.getElementById("versionselect").value;
+    xhttp.open("GET", "/mongo/getGames?type=duoplayer&db="+targetDb+"&limit=0&formating=none&name1="+playername1+"&name2="+playername2, true);
     xhttp.send();
 }
 
@@ -479,6 +510,7 @@ function queryBothPlayers(playername1, playername2) {
     apiGetBothPlayers(function (result) {
         games_together = JSON.parse(result);
         gamesTogether(games_together, playername1, playername2);
+        console.log(games_together);
         return games_together;
     }, playername1, playername2);
 }
